@@ -1,0 +1,94 @@
+<style>
+  div.container-fluid{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+</style>
+<div class="row" style="background: #fff; margin: 3px; padding: 10px 0;">
+  <div class="col-md-3 clear-disabled">
+    <ng-select [items]="projects" bindValue="id" bindLabel="displayName" id="project" name="project"
+      placeholder="-Select-" [(ngModel)]="projectId" (change)="projectChanged()"></ng-select>
+  </div>
+  <div class="col-md-3 clear-disabled" *ngIf="tabName!='generalReport' && hasSprint()">
+    <ng-select [items]="sprints" bindValue="id" bindLabel="displayName" id="sprint" name="sprint" placeholder="-Select-"
+      [(ngModel)]="sprintId" (change)="sprintChanged()"></ng-select>
+  </div>
+</div>
+
+<div class="row tab-view-project-detail">
+  <div class="tab-holder">
+    <tabset>
+      <tab heading="Epics" [active]="tabName=='epics'" (selectTab)="changeTab('epics')">
+        <app-epic [projectId]="projectId" *ngIf="tabName=='epics'"></app-epic>
+      </tab>
+      <tab heading="Sprints" [active]="tabName=='sprints'" (selectTab)="changeTab('sprints')">
+        <app-sprint [projectId]="projectId" *ngIf="tabName=='sprints'"></app-sprint>
+      </tab>
+      <tab heading="Stories" [active]="tabName=='stories'" [disabled]="IsDisabled()" (selectTab)="changeTab('stories')">
+        <app-stories [projectId]="projectId" [sprintId] = "sprintId"  *ngIf="tabName=='stories'"></app-stories>
+      </tab>
+      <tab heading="Story Board" [disabled]="IsDisabled()" [active]="tabName=='storyboard'" (selectTab)="changeTab('storyboard')">
+        <app-pmstory-board [projectId]="projectId" [sprintId] = "sprintId"  *ngIf="tabName=='storyboard'"></app-pmstory-board>
+      </tab>
+      <tab heading="Tasks" *ngIf="displayRoleName != 'client'" [active] ="tabName=='tasks'" [disabled]="IsDisabled()" (selectTab)="changeTab('tasks')">
+          <app-pmtask [projectId]="projectId" [sprintId] = "sprintId" *ngIf="tabName=='tasks'" ></app-pmtask>
+      </tab>
+      <tab heading="Task Board" *ngIf="displayRoleName != 'client'" [disabled]="IsDisabled()" [active]="tabName=='taskboard'" (selectTab)="changeTab('taskboard')">
+          <app-pmtask-board [projectId]="projectId" [sprintId] = "sprintId" *ngIf="tabName=='taskboard'"></app-pmtask-board>
+      </tab>
+      <tab heading="Bugs" [disabled]="IsDisabled()" [active]="tabName=='bugs'" (selectTab)="changeTab('bugs')">
+        <app-task-bugs [projectId]="projectId" [sprintId] = "sprintId" *ngIf="tabName=='bugs'"></app-task-bugs>
+      </tab>
+      <tab heading="Bugs Board" [disabled]="IsDisabled()" [active]="tabName=='bugboard'" (selectTab)="changeTab('bugboard')">
+        <app-bugs-board [projectId]="projectId" [sprintId] = "sprintId" *ngIf="tabName=='bugboard'"></app-bugs-board>
+      </tab>
+      <tab heading="Story Estimation" *ngIf="displayRoleName != 'client'" [disabled]="IsDisabled()" [active]="tabName=='storyestimation'" (selectTab)="changeTab('storyestimation')">
+        <app-member-story-estimation [projectId]="projectId" [sprintId] = "sprintId" *ngIf="tabName=='storyestimation'"></app-member-story-estimation>
+      </tab>
+      <tab heading="General Report" *ngIf="displayRoleName != 'client'" [disabled]="IsDisabled()" [active]="tabName=='generalreport'" (selectTab)="changeTab('generalreport')">
+        <app-general-report [projectId]="projectId" [sprintId] = "sprintId" *ngIf="tabName=='generalreport'"></app-general-report>
+      </tab>
+
+
+    </tabset>
+    <!-- <a [routerLink]="['/pm/epic', projectId]" *ngIf="tabName!='epics'">Epics</a>
+    <span *ngIf="tabName=='epics'">Epics</span>
+
+    <a [routerLink]="['/pm/sprint', projectId]" *ngIf="tabName!='sprints'">Sprints</a>
+    <span *ngIf="tabName=='sprints'">Sprint</span>
+
+    <a [routerLink]="['/pm/story/stories', sprintId]" *ngIf="tabName!='stories' && sprintId>0">Stories</a>
+    <span *ngIf="tabName=='stories' && sprintId>0">Stories</span>
+    <a href="javascript:void(0)" class="disabled" *ngIf="sprintId==-1">Stories</a>
+
+    <a [routerLink]="['/pm/story/storyboard', sprintId]" *ngIf="tabName!='storyboard' && sprintId>0">Storyboard</a>
+    <span *ngIf="tabName=='storyboard' && sprintId>0">Storyboard</span>
+    <a href="javascript:void(0)" class="disabled" *ngIf="sprintId==-1">Storyboard</a>
+
+    <a [routerLink]="['/pm/pmtasks', sprintId]" *ngIf="tabName!='tasks' && sprintId>0">Tasks</a>
+    <span *ngIf="tabName=='tasks' && sprintId>0">Tasks</span>
+    <a href="javascript:void(0)" class="disabled" *ngIf="sprintId==-1">Tasks</a>
+
+    <a [routerLink]="['/pm/taskboard', sprintId]" *ngIf="tabName!='taskboard' && sprintId>0">Taskboard</a>
+    <span *ngIf="tabName=='taskboard' && sprintId>0">Taskboard</span>
+    <a href="javascript:void(0)" class="disabled" *ngIf="sprintId==-1">Taskboard</a>
+
+    <a [routerLink]="['/bugmanagement/taskbugs', sprintId]" *ngIf="tabName!='bugs' && sprintId>0">Bugs</a>
+    <span *ngIf="tabName=='bugs' && sprintId>0">Bugs</span>
+    <a href="javascript:void(0)" class="disabled" *ngIf="sprintId==-1">Bugs</a>
+
+    <a [routerLink]="['/bugmanagement/bugsboard', sprintId]" *ngIf="tabName!='bugsboard' && sprintId>0">Bugs Board</a>
+    <span *ngIf="tabName=='bugsboard' && sprintId>0">Bugs Board</span>
+    <a href="javascript:void(0)" class="disabled" *ngIf="sprintId==-1">Bugs Board</a>
+
+    <a [routerLink]="['/memberStoryEstimation', sprintId]" *ngIf="tabName!='storyestimation' && sprintId>0">Story
+      Estimation</a>
+    <span *ngIf="tabName=='storyestimation' && sprintId>0">Story Estimation</span>
+    <a href="javascript:void(0)" class="disabled" *ngIf="sprintId==-1">Story Estimation</a>
+
+    <a [routerLink]="['/generalreport', sprintId]" *ngIf="tabName!='generalReport' && sprintId>0">General Report</a>
+    <span *ngIf="tabName=='generalReport' && sprintId>0">General Report</span>
+    <a href="javascript:void(0)" class="disabled" *ngIf="sprintId==-1">General Report</a> -->
+
+  </div>
+</div>

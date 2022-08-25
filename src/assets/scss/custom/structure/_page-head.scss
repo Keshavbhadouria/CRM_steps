@@ -1,0 +1,21 @@
+// 
+// Page-title
+// 
+
+.page-title-box {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background: #fff;
+    border-radius: 7px;
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+    }
+
+    h4 {
+        font-weight: 600;
+        font-size: 16px !important;
+        color: #5D8FB5 !important;
+    }
+}

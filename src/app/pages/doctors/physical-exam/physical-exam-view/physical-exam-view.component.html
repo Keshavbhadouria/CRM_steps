@@ -1,0 +1,97 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewPhysicalExam' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{"FC" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.fc }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Pulso" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.pulso }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"TA" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.ta }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Temperatura" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.temperatura }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Talla_Pies" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.talla_Pies }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Talla_pulgadas" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.talla_pulgadas }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Peso" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.peso }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"SCm2" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.sCm2 }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Palidez" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.palidez }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Ictericia" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.ictericia }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Pelo" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.pelo }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Unas" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.unas }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Comentarios" | translate }}</label>
+            <p>
+                {{ item.historiaClinicaExamenFisico.comentarios }}
+            </p>
+        </div>
+
+        <div class="col-6 mb-3">
+            <label>({{"Contact" | translate }}) {{"Company" | translate }}</label>
+            <p>
+                {{item.contactCompany}}
+            </p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

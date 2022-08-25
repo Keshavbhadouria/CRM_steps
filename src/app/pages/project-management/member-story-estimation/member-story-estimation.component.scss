@@ -1,0 +1,22 @@
+.story-section-list{
+    display: flex;
+    align-items: center;
+    input{
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    label{
+        cursor: pointer;
+    }
+}
+.estimate-list{
+    display: inline-flex;
+    align-items: center;
+    input{
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    label{
+        cursor: pointer;
+    }
+}

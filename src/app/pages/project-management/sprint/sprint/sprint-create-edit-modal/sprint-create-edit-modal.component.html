@@ -1,0 +1,90 @@
+<form #pmSprintForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'Pages.Sprint.EditSprint' | translate}}
+      </span> <span *ngIf="data == null"> {{'Pages.Sprint.CreateSprint' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="pmSprint_Name">Sprint Name*</label>
+          <input type="text" #pmSprint_Name="ngModel" id="pmSprint_Name" class="form-control"
+            [(ngModel)]="pmSprint.sprint" name="sprint" required />
+          <validation-messages [formCtrl]="pmSprint_Name"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="project">Project*</label>
+          <ng-select [items]="allProjects" bindValue="id" #project="ngModel" bindLabel="displayName" name="pmSprint.project"
+            [(ngModel)]="pmSprint.project" [disabled]="pmSprint.project!=0" required></ng-select>
+            <validation-messages [formCtrl]="project"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="PMIndustryIndustry">Status</label>
+          <ng-select name="pmSprint.status" (change)="sprintStatusChanged()" [(ngModel)]="pmSprint.stage" [items]="allSprintStatus" bindValue="id"
+            bindLabel="displayName"></ng-select>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="showMoveToNewStory==true">
+        <div class="form-group m-form__group">
+          <label for="pmSprint_moveToSprint">Move Backlog or Open to Sprint</label>
+          <ng-select id="pmSprint_moveToSprint" name="pmSprint.moveToSprint" [(ngModel)]="pmSprint.moveToSprintId" [items]="allOpenSprints" bindValue="id"
+            bindLabel="displayName"></ng-select>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="pmSprint_Goal">Description*</label>
+          <ckeditor [editor]="Editor" #pmSprint_description="ngModel" id="pmSprint_description" [(ngModel)]="pmSprint.description" name="pmSprint_description"></ckeditor>
+          <validation-messages [formCtrl]="pmSprint_description"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="pmSprint_StartDate">Start Date*</label>
+          <input required class="form-control m-input" #pmSprint_startDate="ngModel" id="pmSprint_startDate" type="date" [ngModel]="pmSprint.startDate | date:'yyyy-MM-dd'"
+            (ngModelChange)="pmSprint.startDate = $event" id="pmSprint_StartDate"
+            name="pmSprint_StartDate">
+          <validation-messages [formCtrl]="pmSprint_startDate"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="pmSprint_TargetDate">End Date*</label>
+          <input required class="form-control m-input" #pmSprint_endDate="ngModel" id="pmSprint_endDate" type="date" [ngModel]="pmSprint.endDate | date:'yyyy-MM-dd'"
+            (ngModelChange)="pmSprint.endDate = $event" id="pmSprint_TargetDate" name="pmSprint_endDate">
+          <validation-messages [formCtrl]="pmSprint_endDate"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="pmSprint_TargetDate">Release Date*</label>
+          <input required class="form-control m-input" #pmSprint_releaseDate="ngModel" id="pmSprint_releaseDate" type="date" [ngModel]="pmSprint.releaseDate | date:'yyyy-MM-dd'"
+            (ngModelChange)="pmSprint.releaseDate = $event" name="pmSprint_releaseDate">
+          <validation-messages [formCtrl]="pmSprint_releaseDate"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="pmSprint_ActualVelocity">Story Points</label>
+          <input type="number" #pmSprint_storyPoints="ngModel" id="pmSprint_storyPoints" class="form-control"
+            [(ngModel)]="pmSprint.storyPoints" name="pmSprint_storyPoints" />
+          <validation-messages [formCtrl]="pmSprint_storyPoints"></validation-messages>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!pmSprintForm.form.valid"> <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+        *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

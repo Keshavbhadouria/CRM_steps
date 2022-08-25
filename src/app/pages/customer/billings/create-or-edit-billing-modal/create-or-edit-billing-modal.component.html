@@ -1,0 +1,131 @@
+<form #billingInfoForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditBillingInfo' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewBillingInfo' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_CardName">{{ 'CardName' | translate }} *</label>
+                    <input type="text" #Billing_CardName="ngModel" id="Billing_CardName"
+                        class="form-control" [(ngModel)]="billing.cardName" name="cardName" required />
+                    <validation-messages [formCtrl]="Billing_CardName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_CardNumber">{{ 'CardNumber' | translate }} *</label>
+                    <input type="text" #Billing_CardNumber="ngModel" id="Billing_CardNumber"
+                        class="form-control" [(ngModel)]="billing.cardNumber" name="cardNumber" required  (keypress)="numberOnly($event)"/>
+                    <validation-messages [formCtrl]="Billing_CardNumber"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_ExpirationMonth">{{ 'ExpirationMonth' | translate }}</label>
+                    <input type="text" #Billing_ExpirationMonth="ngModel" id="Billing_ExpirationMonth"
+                        class="form-control" [(ngModel)]="billing.expirationMonth" name="expirationMonth" (keypress)="numberOnly($event)"/>
+                    <validation-messages [formCtrl]="Billing_ExpirationMonth"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_ExpirationYear">{{ 'ExpirationYear' | translate }}</label>
+                    <input type="text" #Billing_ExpirationYear="ngModel" id="Billing_ExpirationYear"
+                        class="form-control" [(ngModel)]="billing.expirationYear" name="expirationYear" (keypress)="numberOnly($event)"/>
+                    <validation-messages [formCtrl]="Billing_ExpirationYear"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_CVV">{{ 'CVV' | translate }}</label>
+                    <input type="text" #Billing_CVV="ngModel" id="Billing_CVV"
+                        class="form-control" [(ngModel)]="billing.cvv" name="cvv" (keypress)="numberOnly($event)"/>
+                    <validation-messages [formCtrl]="Billing_CVV"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_Address1">{{ 'Address1' | translate }}</label>
+                    <input type="text" #Billing_Address1="ngModel" id="Billing_Address1"
+                        class="form-control" [(ngModel)]="billing.address1" name="address1" />
+                    <validation-messages [formCtrl]="Billing_Address1"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_Address2">{{ 'Address2' | translate }}</label>
+                    <input type="text" #Billing_Address2="ngModel" id="Billing_Address2"
+                        class="form-control" [(ngModel)]="billing.address2" name="address2" />
+                    <validation-messages [formCtrl]="Billing_Address2"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_City">{{ 'City' | translate }}</label>
+                    <input type="text" #Billing_City="ngModel" id="Billing_City"
+                        class="form-control" [(ngModel)]="billing.city" name="city" />
+                    <validation-messages [formCtrl]="Billing_City"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_State">{{ 'State' | translate }}</label>
+                    <input type="text" #Billing_State="ngModel" id="Billing_State"
+                        class="form-control" [(ngModel)]="billing.state" name="state" />
+                    <validation-messages [formCtrl]="Billing_State"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_Country">{{ 'Country' | translate }}</label>
+                    <input type="text" #Billing_Country="ngModel" id="Billing_Country"
+                        class="form-control" [(ngModel)]="billing.country" name="country" />
+                    <validation-messages [formCtrl]="Billing_Country"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_ZipCode">{{ 'ZipCode' | translate }}</label>
+                    <input type="text" #Billing_ZipCode="ngModel" id="Billing_ZipCode"
+                        class="form-control" [(ngModel)]="billing.zipcode" name="zipcode" (keypress)="numberOnly($event)"/>
+                    <validation-messages [formCtrl]="Billing_ZipCode"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_Gateway">{{ 'Gateway' | translate }}</label>
+                    <input type="text" #Billing_Gateway="ngModel" id="Billing_Gateway"
+                        class="form-control" [(ngModel)]="billing.gateway" name="gateway" />
+                    <validation-messages [formCtrl]="Billing_Gateway"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_GatewayCustomerCode">{{ 'GatewayCustomerCode' | translate }}</label>
+                    <input type="text" #Billing_GatewayCustomerCode="ngModel" id="Billing_GatewayCustomerCode"
+                        class="form-control" [(ngModel)]="billing.gatewayCustomerCode" name="gatewayCustomerCode" />
+                    <validation-messages [formCtrl]="Billing_GatewayCustomerCode"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Billing_GatewayToken">{{ 'GatewayToken' | translate }}</label>
+                    <input type="text" #Billing_GatewayCustomerCode="ngModel" id="Billing_GatewayCustomerCode"
+                        class="form-control" [(ngModel)]="billing.gatewayToken" name="gatewayToken" />
+                    <validation-messages [formCtrl]="Billing_GatewayCustomerCode"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!billingInfoForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

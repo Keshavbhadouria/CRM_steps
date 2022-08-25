@@ -1,0 +1,107 @@
+<div class="container-fluid">
+  <app-page-title title="{{'ContactDocuments' | translate }}" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-9">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i class="bx
+                                      bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3" *ngIf="contactId === 0">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'CreateNewContactDocument' | translate}}</button>
+            </div>
+          </div>
+
+          <!-- Advanced Filter  -->
+          <div class="row" [hidden]="!advancedFiltersAreShown">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="DocumentNameFilter">{{'DocumentName' | translate }}</label>
+                <input type="text" class="form-control" id="DocumentNameFilter" name="documentNameFilter"
+                  [(ngModel)]="documentNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="Location_AisleFilter">{{'Location_Aisle' | translate }}</label>
+                <input type="text" class="form-control" id="Location_AisleFilter" name="location_AisleFilter"
+                  [(ngModel)]="location_AisleFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="Location_BoxFilter">{{'Location_Box' | translate }}</label>
+                <input type="text" class="form-control" id="Location_BoxFilter" name="location_BoxFilter"
+                  [(ngModel)]="location_BoxFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="Location_FolderFilter">{{'Location_Folder' | translate }}</label>
+                <input type="text" class="form-control" id="Location_FolderFilter" name="location_FolderFilter"
+                  [(ngModel)]="location_FolderFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactCompanyFilter">({{'Contact' | translate }}) {{'Company' | translate }}</label>
+                <input type="text" class="form-control" id="ContactCompanyFilter" name="contactCompanyFilter"
+                  [(ngModel)]="contactCompanyFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="StepDocumentsDocumentFilter">({{'StepDocuments' | translate }}) {{'Document' | translate
+                  }}</label>
+                <input type="text" class="form-control" id="StepDocumentsDocumentFilter"
+                  name="stepDocumentsDocumentFilter" [(ngModel)]="stepDocumentsDocumentFilter">
+              </div>
+            </div>
+          </div>
+
+          <!-- Show Hide Filters -->
+          <div class="row mb-2 mt-2">
+            <div class="col-sm-12">
+              <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i>
+                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+              <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i>
+                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table>
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-create-or-edit-contact-document-modal [modal]="modal" ($modalClose)='modalEmitEvent()'
+    [data]="editContactDocument">
+  </app-create-or-edit-contact-document-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-contact-document-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewPhoneCall">
+  </app-contact-document-view-modal>
+</ng-template>

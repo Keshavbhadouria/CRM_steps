@@ -1,0 +1,66 @@
+<form #pbxForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditPBXConfiguration' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreatePBXConfiguration' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="host">Host</label>
+          <input type="text" #host="ngModel" id="host" class="form-control"
+            [(ngModel)]="pbx.host" name="host" required minlength="2"  maxlength="100" />
+          <validation-messages [formCtrl]="host"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" #username="ngModel" id="username" class="form-control"
+            [(ngModel)]="pbx.username" name="username" required minlength="2"  maxlength="100" />
+          <validation-messages [formCtrl]="username"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="host">Passwrod</label>
+          <input type="text" #password="ngModel" id="password" class="form-control"
+            [(ngModel)]="pbx.password" name="password" required minlength="2"  maxlength="100" />
+          <validation-messages [formCtrl]="password"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="host">CDR</label>
+          <input type="text" #cdr="ngModel" id="cdr" class="form-control"
+            [(ngModel)]="pbx.cdr" name="cdr" required minlength="2"  maxlength="100" />
+          <validation-messages [formCtrl]="cdr"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="clickToCallURL">ClickToCallURL</label>
+          <input type="text" #clickToCallURL="ngModel" id="clickToCallURL" class="form-control"
+            [(ngModel)]="pbx.clickToCallURL" name="clickToCallURL" required minlength="2"  maxlength="100" />
+          <validation-messages [formCtrl]="clickToCallURL"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="databaseName">DatabaseName</label>
+          <input type="text" #databaseName="ngModel" id="databaseName" class="form-control"
+            [(ngModel)]="pbx.databaseName" name="databaseName" required minlength="2"  maxlength="100" />
+          <validation-messages [formCtrl]="databaseName"></validation-messages>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!pbxForm.form.valid" > <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+        *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

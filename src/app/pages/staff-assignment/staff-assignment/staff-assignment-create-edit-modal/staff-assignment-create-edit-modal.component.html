@@ -1,0 +1,46 @@
+<form #contactAssignParalegalForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditcontactAssignParalegal' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreatecontactAssignParalegal' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="contacts">{{ 'Contact' | translate }}</label>
+          <ng-select [items]="allContacts" #contacts="ngModel" bindValue="id" bindLabel="displayName"
+              id="TaskBug_Project" name="project" [(ngModel)]="contactAssignParalegal.contactId">
+          </ng-select>
+          <validation-messages [formCtrl]="contacts"></validation-messages>
+      </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="lawyer">{{ 'Lawyer' | translate }}</label>
+          <ng-select [items]="allLawyers" #lawyer="ngModel" bindValue="id" bindLabel="displayName"
+              id="lawyer" name="lawyer" [(ngModel)]="contactAssignParalegal.userId">
+          </ng-select>
+          <validation-messages [formCtrl]="lawyer"></validation-messages>
+      </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group m-form__group">
+          <label for="contacts">{{ 'Paralegal Staff' | translate }}</label>
+          <ng-select multiple="true" [items]="allParalegals" #paralegals="ngModel" bindValue="id" bindLabel="displayName"
+              id="paralegals" name="paralegals" [(ngModel)]="selectedParalegals">
+          </ng-select>
+          <validation-messages [formCtrl]="paralegals"></validation-messages>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!contactAssignParalegalForm.form.valid" > <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+        *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

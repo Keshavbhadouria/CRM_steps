@@ -1,0 +1,72 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewTaskBug' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Title' | translate}}</label>
+                <p> {{taskBug.taskBug.title}} </p>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>{{'Description' | translate}}</label>
+                <p [innerHtml]="taskBug.taskBug.description"></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'ProjectName' | translate}}</label>
+                <p> {{taskBug.pmProjectProjectName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'BugStatus' | translate}}</label>
+                <p> {{taskBug.bugStatusStatus}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Username' | translate}}</label>
+                <p> {{taskBug.userName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'TaskTitle' | translate}}</label>
+                <p> {{taskBug.pMtaskTitle}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Sprint' | translate}}</label>
+                <p> {{taskBug.pmSprintSprint}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Severity' | translate}}</label>
+                <p> {{taskBug.bugSeverity}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+            <label>{{ 'DueDate' | translate}}</label>
+            <p>{{taskBug.taskBug.dueDate | date: 'dd/MM/yyyy hh:mm a'}}</p>
+        </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+            <label>Screen Name</label>
+            <p>{{taskBug.taskBug.screenName}}</p>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

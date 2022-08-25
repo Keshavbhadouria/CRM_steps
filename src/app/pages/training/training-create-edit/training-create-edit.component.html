@@ -1,0 +1,66 @@
+<form #trainingVideosForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditTrainingVideo' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateTrainingVideo' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group m-form__group">
+                    <label for="LawfirmServiceServicesName">{{"Service" | translate}}</label>
+                    <ng-select [items]="allServices" bindValue="id" bindLabel="displayName"
+                        name="trainingVideos.lawfirmServiceId" [(ngModel)]="trainingVideos.lawfirmServiceId">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="TrainingVideos_Title">{{"Title" | translate}} *</label>
+                    <input type="text" #TrainingVideos_Title="ngModel" id="TrainingVideos_Title" class="form-control"
+                        [(ngModel)]="trainingVideos.title" name="Title" required />
+                    <validation-messages [formCtrl]="TrainingVideos_Title"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="TrainingVideos_Description">{{"Description" | translate}} *</label>
+                    <ckeditor [editor]="Editor" #TrainingVideos_Description="ngModel"
+                        [(ngModel)]="trainingVideos.description" name="trainingVideos.description"></ckeditor>
+                    <validation-messages [formCtrl]="TrainingVideos_Description"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="TrainingVideos_Url">{{"Url"| translate }} *</label>
+                    <input type="text" #TrainingVideos_Url="ngModel" id="TrainingVideos_Url" class="form-control"
+                        [(ngModel)]="trainingVideos.url" name="Url" required />
+                    <validation-messages [formCtrl]="TrainingVideos_Url"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="TrainingVideos_DownloadableTemplate">{{"DownloadableTemplate"| translate }} *</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile" accept="image/*" (change)="handleUpload($event)" required> 
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+                        <img src="{{baseURL + trainingVideos.downloadableTemplate}}" style="height: 50px;width:auto;" alt="">
+                    </div>
+                    <!-- <validation-messages [formCtrl]="myInputFile"></validation-messages> -->
+                    <!-- <input type="file" #TrainingVideos_DownloadableTemplate="ngModel"
+                        id="TrainingVideos_DownloadableTemplate" class="form-control"
+                        [(ngModel)]="trainingVideos.downloadableTemplate" name="DownloadableTemplate" (change)="onSelectedFile($event)" /> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!trainingVideosForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

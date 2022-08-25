@@ -1,0 +1,64 @@
+<form #commissionTrackingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditCommissionTracking' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewCommissionTracking' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="CommissionTracking_CampaignId">{{ 'CampaignName' | translate }} *</label>
+                    <ng-select [items]="campaigns" #CommissionTracking_CampaignId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="CommissionTracking_CampaignId" name="campaignId" [(ngModel)]="commissionTracking.campaignId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="CommissionTracking_CampaignId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="CommissionTracking_InvoiceId">{{ 'Invoice' | translate }} *</label>
+                    <ng-select [items]="invoices" #CommissionTracking_InvoiceId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="CommissionTracking_InvoiceId" name="invoiceId" [(ngModel)]="commissionTracking.invoiceId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="CommissionTracking_InvoiceId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="CommissionTracking_CommissionStatusId">{{ 'CommissionStatus' | translate }}</label>
+                    <ng-select [items]="invoices" #CommissionTracking_CommissionStatusId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="CommissionTracking_CommissionStatusId" name="commissionStatusId" [(ngModel)]="commissionTracking.commissionStatusId">
+                    </ng-select>
+                    <validation-messages [formCtrl]="CommissionTracking_CommissionStatusId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="CommissionTracking_EarnedAmount">{{ 'EarnedAmount' | translate }}</label>
+                    <input type="number" #CommissionTracking_EarnedAmount="ngModel" id="CommissionTracking_EarnedAmount" class="form-control"
+                        [(ngModel)]="commissionTracking.earnedAmount" name="earnedAmount" min="0" />
+                    <validation-messages [formCtrl]="CommissionTracking_EarnedAmount"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="CommissionTracking_PaymentDate">{{ 'PaymentDate' | translate }} *</label>
+                    <input class="form-control m-input" #CommissionTracking_PaymentDate="ngModel" type="date"
+                        [ngModel]="commissionTracking.paymentDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="commissionTracking.paymentDate = $event" id="CommissionTracking_PaymentDate"
+                        name="paymentDate" />
+                    <validation-messages [formCtrl]="CommissionTracking_PaymentDate"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!commissionTrackingForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

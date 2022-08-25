@@ -1,0 +1,115 @@
+<div class="container-fluid">
+  <app-page-title title="Project Status List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <!-- Filters -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i
+                      class="bx bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'Pages.Project.CreateProjectStatus' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table List -->
+  <!-- <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive" style="min-height: 40vh;">
+            <table class="table align-middle  table-nowrap table-hover">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" style="width:10%;">#</th>
+                  <th scope="col" style="width:80%;">Status</th>
+                  <th scope="col" style="width:10%;">Action</th>
+                </tr>
+              </thead>
+              <tbody [busyIf]="loading">
+                <tr *ngFor="let item of projectList ; let i = index">
+                  <td>
+                    <div class="avatar-xs">
+                      <span class="avatar-title rounded-circle">
+                        {{ i + 1 }}
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <h5 class="font-size-14 mb-1"><a href="javascript: void(0);"
+                        class="text-dark">{{item.pmProjectStatus.status}}</a>
+                    </h5>
+                  </td>
+                  <td>
+                    <div class="dropdown justify-content-end" ngbDropdown placement="bottom-right">
+                      <a href="javascript: void(0);" class="dropdown-toggle card-drop" ngbDropdownToggle>
+                        <i class="mdi mdi-dots-horizontal font-size-18"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                        <a class="dropdown-item pointer" href="javascript: void(0);"
+                          (click)="onViewProject(item , viewModal)"><img src="../../../../assets/icons/Visual.png"
+                            alt="visual" height="24px" class="mr-2">
+                          <span class="ms-2 fw-bold">View</span> </a>
+                        <a class="dropdown-item pointer" (click)="onEditProject(item , createModal)"><img
+                            src="../../../../assets/icons/editIcon.svg" alt="visual" height="24px" class="mr-2">
+                          <span class="ms-2 fw-bold">Edit</span> </a>
+                        <a class="dropdown-item pointer" href="javascript: void(0);" (click)="onDelete(item)"><img
+                            src="../../../../assets/icons/deleteIcon.svg" alt="visual" height="24px" class="mr-2">
+                          <span class="ms-2 fw-bold">Delete</span> </a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings" [pagination]="paginationSettings" >
+  </app-dynamic-table>
+
+  <!-- end row -->
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-project-status-create-edit-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editProject">
+  </app-project-status-create-edit-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-project-status-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewProject">
+  </app-project-status-view-modal>
+</ng-template>
+
+
+
+
+
+<!-- End Create Model -->
+
+<!-- View Model -->
+
+
+<!-- View Model -->

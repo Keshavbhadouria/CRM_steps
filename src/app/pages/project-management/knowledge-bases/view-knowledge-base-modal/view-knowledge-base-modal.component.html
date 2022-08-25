@@ -1,0 +1,55 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewStory' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ProjectName' | translate }}</label>
+                <p> {{knowledgeBase.pmProjectProjectName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Title' | translate }}</label>
+                <p> {{knowledgeBase.knowledgeBase.title}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Attachment' | translate }}</label>
+                <div *ngIf="attachmentUrl.length > 0">
+                    <div *ngIf="fileType == 'doc' || fileType == 'docx' ">
+                        <img style="height: 50px; max-width: 100%;" class="card-img-left"
+                            src="../../../../assets/images/microsoft-doc.png" alt="image" />
+                    </div>
+                    <div *ngIf="fileType == 'xlsx' || fileType == 'xls' ">
+                        <img style="height: 50px; max-width: 100%;" class="card-img-left"
+                            src="../../../../assets/images/microsoft-excel.png" alt="image" />
+                    </div>
+                    <div *ngIf="fileType == 'pdf' ">
+                        <img style="height: 50px; max-width: 100%;" class="card-img-left"
+                            src="../../../../assets/images/icons8-pdf.png" alt="image" />
+                    </div>
+                    <div *ngIf="fileType == 'png' || fileType == 'jpg' || fileType == 'jpeg' ">
+                        <img style="height: 50px; max-width: 100%;" class="card-img-left" [src]="remoteUrl + '/' +  attachmentUrl"
+                            alt="image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>{{ 'Comments' | translate }}</label>
+                <p [innerHtml]="knowledgeBase.knowledgeBase.comments"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

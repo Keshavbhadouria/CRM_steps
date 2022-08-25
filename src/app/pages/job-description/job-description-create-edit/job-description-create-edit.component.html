@@ -1,0 +1,47 @@
+<form #jobDesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditJobDescription' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateJobDescription' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group m-form__group">
+                    <label for="UserName">{{"DirectSupervisor" | translate}}</label>
+                    <ng-select [items]="allUsers" bindValue="id" bindLabel="displayName"
+                    name="jobDescription.directSupervisor" [(ngModel)]="jobDescription.directSupervisor"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="JobDescription_Title">{{"Title" | translate}} *</label>
+                    <input type="text" #JobDescription_Title="ngModel" id="JobDescription_Title" class="form-control" [(ngModel)]="jobDescription.title" name="Title"     required/>
+                    <validation-messages [formCtrl]="JobDescription_Title"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="JobDescription_Description">{{"Description" | translate}} *</label>
+                    <ckeditor [editor]="Editor" #JobDescription_Description="ngModel" [(ngModel)]="jobDescription.description" name="jobDescription.description"></ckeditor>
+                    <validation-messages [formCtrl]="JobDescription_Description"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="JobDescription_Functions">{{"Functions" | translate}} *</label>
+                    <ckeditor [editor]="Function_Editor" #JobDescription_Functions="ngModel" [(ngModel)]="jobDescription.functions" name="jobDescription.functions"></ckeditor>
+                    <validation-messages [formCtrl]="JobDescription_Functions"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!jobDesForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

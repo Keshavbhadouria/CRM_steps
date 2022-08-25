@@ -1,0 +1,76 @@
+<form #campaignForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditCampaign' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewCampaign' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Campaign_CampaignName">{{'CampaignName' | translate}} *</label>
+                    <input type="text" #Campaign_CampaignName="ngModel" id="Campaign_CampaignName" class="form-control" [(ngModel)]="campaign.campaignName" name="CampaignName"     required/>
+                    <validation-messages [formCtrl]="Campaign_CampaignName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Campaign_objectiveId">{{'CampaignObjective' | translate}} </label>
+                    <ng-select [items]="objectives" bindValue="id" bindLabel="displayName" id="Campaign_objectiveId"
+                        name="campaign.campaignObjetiveId" [(ngModel)]="campaign.campaignObjetiveId"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="campaign_lead">{{'LeadSources' | translate}} </label>
+                    <ng-select [items]="leads" bindValue="id" bindLabel="displayName" id="campaign_leadId"
+                        name="campaign.leadSourceId" [(ngModel)]="campaign.leadSourceId"></ng-select>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Campaign_StartDate">{{'StartDate' | translate}} </label>
+                    <input class="form-control m-input" #startDate type="date"
+                    [ngModel]="campaign.startDate | date:'yyyy-MM-dd'" (ngModelChange)="campaign.startDate = $event"
+                    id="campaign_StartDate" name="campaign.startDate" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Campaign_EndDate">{{'EndDate' | translate}} </label>
+                    <input class="form-control m-input" #endDate type="date"
+                    [ngModel]="campaign.endDate | date:'yyyy-MM-dd'" (ngModelChange)="campaign.endDate = $event"
+                    id="Campaign_EndDate" name="campaign.endDate" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Campaign_Budget">{{'Budget' | translate}}</label>
+                    <input type="number" #Campaign_Budget="ngModel" id="Campaign_Budget" class="form-control" [(ngModel)]="campaign.budget" name="Budget"   />
+                    <validation-messages [formCtrl]="Campaign_Budget"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Campaign_SpecialCode">{{'SpecialCode' | translate}}</label>
+                    <div class="special-code">{{campaign.specialCode}}</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Campaign_ExpectedOutcome">{{'ExpectedOutcome' | translate}} </label>
+                    <input type="number" #Campaign_ExpectedOutcome="ngModel" id="Campaign_ExpectedOutcome" class="form-control" [(ngModel)]="campaign.expectedOutcome" name="ExpectedOutcome"   />
+                    <validation-messages [formCtrl]="Campaign_ExpectedOutcome"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!campaignForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

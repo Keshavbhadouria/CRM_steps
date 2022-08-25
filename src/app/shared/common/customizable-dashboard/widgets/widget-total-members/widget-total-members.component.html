@@ -1,0 +1,60 @@
+<div class="card" style="padding: 0rem 1.25rem;">
+    <div class="card-body container-fluid">
+        <div class="row" [busyIf]="totalMembersNumberChart.loading">
+            <label class="box-label">{{'TotalMembers' | translate}}</label>
+            <div class="col-md-3">
+                <div class="box-dashboard orange">
+                    <div class="img-section"><img src="../../../assets/images/calendar-seven.png" alt=""></div>
+                    <div class="text">{{'ThisWeek' | translate}}</div>
+                    <div class="records">{{totalMembersNumberChart.data.thisWeek}}</div>
+                    <!-- <div class="amt"><span>{{data.todaysTenantAmt | currency}}</span></div> -->
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="box-dashboard orange">
+                    <div class="img-section"><img src="../../../assets/images/calendar-thirty-one.png" alt=""></div>
+                    <div class="text">{{'ThisMonth' | translate}}</div>
+                    <div class="records">{{totalMembersNumberChart.data.thisMonth}}</div>
+                    <!-- <div class="amt"><span>{{data.thisWeekTenantAmt | currency}}</span></div> -->
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="box-dashboard orange">
+                    <div class="img-section"><img src="../../../assets/images/calendar-3-month.png" alt=""></div>
+                    <div class="text">{{'Last3Month' | translate}}</div>
+                    <div class="records">{{totalMembersNumberChart.data.last3Months}}</div>
+                    <!-- <div class="amt"><span>{{data.thisMonthTenantAmt | currency}}</span></div> -->
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="box-dashboard orange">
+                    <div class="img-section"><img src="../../../assets/images/calendar-6-month.png" alt=""></div>
+                    <div class="text">{{'Last6Month' | translate}}</div>
+                    <div class="records">{{totalMembersNumberChart.data.last6Months}}</div>
+                    <!-- <div class="amt"><span>{{data.thisMonthTenantAmt | currency}}</span></div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="card card-custom h-100">
+    <div class="card-header align-items-center border-0">
+        <div class="card-title">
+            <h3 class="card-label text-dark">
+                <small class="text-muted">{{'TotalMembers' | translate}}</small>
+            </h3>
+        </div>
+    </div>
+    <div class="card-body" [perfectScrollbar]>
+        <div>
+            <div class="row">
+                <div class="col-lg- 6 col-md-12" style="max-height:300px ">
+                    <ngx-charts-number-card [view]="view" [scheme]="totalMembersNumberChart.scheme" [results]="totalMembersNumberChart.chartData"
+                        [cardColor]="cardColor">
+                    </ngx-charts-number-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

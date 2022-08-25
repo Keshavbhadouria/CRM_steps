@@ -1,0 +1,263 @@
+<form #pmTaskForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'Pages.Project.EditTask' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'Pages.Project.CreateTask' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="pmTask_Title">{{'Title' | translate}} *</label>
+                    <input type="text" #pmTask_Title="ngModel" id="pmTask_Title" class="form-control"
+                        [(ngModel)]="pmTask.title" name="Title" required />
+                    <validation-messages [formCtrl]="pmTask_Title"></validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="PMProjectProjectName">{{'Project' | translate}} *</label>
+                    <ng-select [items]="allPMProjects" bindValue="id" bindLabel="displayName" name="pmTask.project"
+                        [(ngModel)]="pmTask.project" #PMProjectProjectName="ngModel" (change)="changeProject($event)"
+                        [disabled]="sprintId!=0"></ng-select>
+                    <validation-messages [formCtrl]="PMProjectProjectName"></validation-messages>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="PMProjectProjectName">{{'Sprint' | translate}}</label>
+                    <ng-select [items]="allPMSprints" bindValue="id" bindLabel="displayName" name="pmTask.sprint"
+                        [(ngModel)]="pmTask.sprint"></ng-select>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="pmTask_ParentID">{{'ParentID' | translate}}</label>
+                    <ng-select [items]="allTask" bindValue="id" bindLabel="displayName" name="pmTask.parentID"
+                        [(ngModel)]="pmTask.parentID"></ng-select>
+
+                    <!-- <input type="number" #pmTask_ParentID="ngModel" id="pmTask_ParentID" class="form-control"
+                        [(ngModel)]="pmTask.parentID" name="ParentID" />
+                    <validation-messages [formCtrl]="pmTask_ParentID"></validation-messages> -->
+                </div>
+            </div>
+
+
+
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="PMProjectProjectName">{{'Stage' | translate}}</label>
+                    <ng-select [items]="allTaskStage" bindValue="id" bindLabel="displayName" name="pmTask.pmTaskStageId"
+                        [(ngModel)]="pmTask.pmTaskStageId"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="pmTask_Dependency">{{'Dependency' | translate}}</label>
+                    <ng-select [items]="allTask" bindValue="id" bindLabel="displayName" name="pmTask.dependency"
+                        [(ngModel)]="pmTask.dependency"></ng-select>
+
+                    <!-- <input type="number" #pmTask_Dependency="ngModel" id="pmTask_Dependency" class="form-control"
+                        [(ngModel)]="pmTask.dependency" name="Dependency" />
+                    <validation-messages [formCtrl]="pmTask_Dependency"></validation-messages> -->
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="PMProjectProjectName">{{'Responsible' | translate}}</label>
+                    <ng-select [items]="allUsers" bindValue="id" bindLabel="displayName" name="pmTask.responsible"
+                        [(ngModel)]="pmTask.responsible"></ng-select>
+                </div>
+            </div>
+
+
+            <div class="col-md-12 mt-2">
+                <div class="form-group m-form__group">
+                    <label for="summary">{{'Summary' | translate}} *</label>
+                    <ckeditor [editor]="Editor" #summary="ngModel" required [(ngModel)]="pmTask.summary"
+                        name="pmTask.summary"></ckeditor>
+                    <validation-messages [formCtrl]="summary"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12 mt-2">
+                <div class="form-group m-form__group">
+                    <label for="acceptanceCriteria"> {{'AcceptanceCriteria' | translate}} *</label>
+                    <ckeditor [editor]="Editor" #acceptanceCriteria="ngModel" [(ngModel)]="pmTask.acceptanceCriteria" name="pmTask.acceptanceCriteria"
+                        required></ckeditor>
+                    <validation-messages [formCtrl]="acceptanceCriteria"></validation-messages>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="PMProjectProjectName">{{'Type' | translate}}</label>
+                    <ng-select [items]="allPMTaskTypes" bindValue="id" bindLabel="displayName" name="pmTask.typeID"
+                        [(ngModel)]="pmTask.typeID"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="PMProjectProjectName">{{'Story' | translate}}</label>
+                    <ng-select [items]="allPMStories" bindValue="id" bindLabel="displayName" name="pmTask.story"
+                        [(ngModel)]="pmTask.story"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="PMProjectProjectName">{{'Priority' | translate}}</label>
+                    <ng-select [items]="allPMTaskPrioritys" bindValue="id" bindLabel="displayName"
+                        name="pmTask.priority" [(ngModel)]="pmTask.priority"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="PMVelocity">{{'Velocity' | translate}} *</label>
+                    <ng-select required #PMVelocity="ngModel" [items]="allPMTaskVelocities" bindValue="id"
+                        bindLabel="displayName" name="pmTask.velocityID" [(ngModel)]="pmTask.velocityID"></ng-select>
+                    <validation-messages [formCtrl]="PMVelocity"></validation-messages>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="pmTask_DueDate">{{'DueDate' | translate}} *</label>
+                    <input required class="form-control m-input" #dueDate="ngModel" type="date"
+                        [ngModel]="pmTask.dueDate | date:'yyyy-MM-dd'" (ngModelChange)="pmTask.dueDate = $event"
+                        id="pmTask_DueDate" name="pmTask_DueDate">
+                    <validation-messages [formCtrl]="dueDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="PMtask_DueTime">{{'DueTime' | translate}} *</label>
+                    <input required class="form-control m-input" #dueTime="ngModel" type="time"
+                        [ngModel]="pmTask.dueTimeStr" (ngModelChange)="pmTask.dueTimeStr = $event" id="PMtask_DueTime"
+                        name="PMtask_DueTime">
+                    <validation-messages [formCtrl]="dueTime"></validation-messages>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="pmTask_Attachment">{{'Attachment' | translate}}</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile"
+                    accept="image/*,application/pdf,application/vnd.ms-excel" (change)="handleUpload($event)">
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+                        <img src="{{baseUrl + pmTask.attachment}}" style="height: 50px;width:auto;" alt="">
+                    </div>
+                    <!-- <input type="text" #pmTask_Attachment="ngModel" id="pmTask_Attachment" class="form-control" [(ngModel)]="pmTask.attachment" name="Attachment"    /> -->
+                    <!-- <validation-messages [formCtrl]="pmTask_Attachment"></validation-messages> -->
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="PMProjectProjectName">{{'Frequency' | translate}}</label>
+                    <ng-select [items]="allPMTaskFrequiencies" bindValue="id" bindLabel="displayName"
+                        name="pmTask.pmTaskFrequencyId" (change)="changeFrequency($event)"
+                        [(ngModel)]="pmTask.pmTaskFrequencyId"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group" *ngIf="isMontlyRecurrentTask">
+                    <label for="pmTask_DayOnMonth">{{'DayOnMonth' | translate}}</label>
+                    <ng-select [items]="allDays" bindValue="id" bindLabel="displayName" name="pmTask.dayOnMonth"
+                        [(ngModel)]="pmTask.dayOnMonth"></ng-select>
+
+                    <!-- <input type="number" #pmTask_DayOnMonth="ngModel" id="pmTask_DayOnMonth" class="form-control"
+                        [(ngModel)]="pmTask.dayOnMonth" name="DayOnMonth" /> -->
+                    <!-- <validation-messages [formCtrl]="pmTask_DayOnMonth"></validation-messages> -->
+                </div>
+            </div>
+
+            <br />
+            <div class="checkbox-section" *ngIf="isWeeklyRecurrentTask">
+                <div class="m-checkbox-list">
+                    <label for="pmTask_Monday" class="kt-checkbox">
+                        <input id="pmTask_Monday" #pmTask_Monday="ngModel" type="checkbox" name="Monday"
+                            [(ngModel)]="pmTask.monday">
+                        {{'Monday' | translate}}
+                        <span></span>
+                    </label>
+                    <validation-messages [formCtrl]="pmTask_Monday"></validation-messages>
+                </div>
+
+                <div class="m-checkbox-list">
+                    <label for="pmTask_Tuesday" class="kt-checkbox">
+                        <input id="pmTask_Tuesday" #pmTask_Tuesday="ngModel" type="checkbox" name="Tuesday"
+                            [(ngModel)]="pmTask.tuesday">
+                        {{'Tuesday' | translate}}
+                        <span></span>
+                    </label>
+                    <validation-messages [formCtrl]="pmTask_Tuesday"></validation-messages>
+                </div>
+
+                <div class="m-checkbox-list">
+                    <label for="pmTask_Wednesday" class="kt-checkbox">
+                        <input id="pmTask_Wednesday" #pmTask_Wednesday="ngModel" type="checkbox" name="Wednesday"
+                            [(ngModel)]="pmTask.wednesday">
+                        {{'Wednesday' | translate}}
+                        <span></span>
+                    </label>
+                    <validation-messages [formCtrl]="pmTask_Wednesday"></validation-messages>
+                </div>
+
+                <div class="m-checkbox-list">
+                    <label for="pmTask_Thursday" class="kt-checkbox">
+                        <input id="pmTask_Thursday" #pmTask_Thursday="ngModel" type="checkbox" name="Thursday"
+                            [(ngModel)]="pmTask.thursday">
+                        {{'Thursday' | translate}}
+                        <span></span>
+                    </label>
+                    <validation-messages [formCtrl]="pmTask_Thursday"></validation-messages>
+                </div>
+
+                <div class="m-checkbox-list">
+                    <label for="pmTask_Friday" class="kt-checkbox">
+                        <input id="pmTask_Friday" #pmTask_Friday="ngModel" type="checkbox" name="Friday"
+                            [(ngModel)]="pmTask.friday">
+                        {{'Friday' | translate}}
+                        <span></span>
+                    </label>
+                    <validation-messages [formCtrl]="pmTask_Friday"></validation-messages>
+                </div>
+
+                <div class="m-checkbox-list">
+                    <label for="pmTask_Saturday" class="kt-checkbox">
+                        <input id="pmTask_Saturday" #pmTask_Saturday="ngModel" type="checkbox" name="Saturday"
+                            [(ngModel)]="pmTask.saturday">
+                        {{'Saturday' | translate}}
+                        <span></span>
+                    </label>
+                    <validation-messages [formCtrl]="pmTask_Saturday"></validation-messages>
+                </div>
+
+                <div class="m-checkbox-list">
+                    <label for="pmTask_Sunday" class="kt-checkbox">
+                        <input id="pmTask_Sunday" #pmTask_Sunday="ngModel" type="checkbox" name="Sunday"
+                            [(ngModel)]="pmTask.sunday">
+                        {{'Sunday' | translate}}
+                        <span></span>
+                    </label>
+                    <validation-messages [formCtrl]="pmTask_Sunday"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!pmTaskForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

@@ -1,0 +1,28 @@
+<form #pmProjectForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'Pages.Skills.EditSkills' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'Pages.Skills.CreateSkills' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="PMProject_ProjectSkills">Skill Name</label>
+          <input type="text" #PMProject_ProjectSkills="ngModel" id="PMProject_ProjectSkills" class="form-control"
+            [(ngModel)]="pmProjectSkills.skillName" name="ProjectSkills" required minlength="3"  maxlength="40" />
+          <validation-messages [formCtrl]="PMProject_ProjectSkills"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <script></script>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!pmProjectForm.form.valid" > <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+        *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

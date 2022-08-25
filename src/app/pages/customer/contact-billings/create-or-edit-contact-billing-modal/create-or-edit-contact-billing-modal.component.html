@@ -1,0 +1,156 @@
+<form #contactBillingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditContactBilling' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewContactBilling' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactBilling_ContactId">{{ 'Contact' | translate }} *</label>
+                    <ng-select [items]="contacts" #ContactBilling_ContactId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ContactBilling_ContactId" name="contactId"
+                        [(ngModel)]="contactBilling.contactId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactBilling_ContactId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_CardName">{{ 'CardName' | translate }} *</label>
+                    <input type="text" #ContactBilling_CardName="ngModel" id="ContactBilling_CardName"
+                        class="form-control" [(ngModel)]="contactBilling.cardName" name="cardName" required />
+                    <validation-messages [formCtrl]="ContactBilling_CardName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_CardNumber">{{ 'CardNumber' | translate }} *</label>
+                    <input type="text" #ContactBilling_CardNumber="ngModel" id="ContactBilling_CardNumber"
+                        class="form-control" [(ngModel)]="contactBilling.cardNumber" name="cardNumber" required
+                        (keypress)="numberOnly($event)" />
+                    <validation-messages [formCtrl]="ContactBilling_CardNumber"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_ExpirationMonth">{{ 'ExpirationMonth' | translate }}</label>
+                    <input type="text" #ContactBilling_ExpirationMonth="ngModel" id="ContactBilling_ExpirationMonth"
+                        class="form-control" [(ngModel)]="contactBilling.expirationMonth" name="expirationMonth"
+                        (keypress)="numberOnly($event)" />
+                    <validation-messages [formCtrl]="ContactBilling_ExpirationMonth"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_ExpirationYear">{{ 'ExpirationYear' | translate }}</label>
+                    <input type="text" #ContactBilling_ExpirationYear="ngModel" id="ContactBilling_ExpirationYear"
+                        class="form-control" [(ngModel)]="contactBilling.expirationYear" name="expirationYear"
+                        (keypress)="numberOnly($event)" />
+                    <validation-messages [formCtrl]="ContactBilling_ExpirationYear"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_CVV">{{ 'CVV' | translate }}</label>
+                    <input type="text" #ContactBilling_CVV="ngModel" id="ContactBilling_CVV"
+                        class="form-control" [(ngModel)]="contactBilling.cvv" name="cvv" (keypress)="numberOnly($event)"/>
+                    <validation-messages [formCtrl]="ContactBilling_CVV"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4 m-checkbox-list" style="margin: 50px 0px 0px 0px;">
+                <label for="ContactBilling_PrimaryCC" class="kt-checkbox">
+                    <input id="ContactBilling_PrimaryCC" #ContactBilling_PrimaryCC="ngModel" type="checkbox"
+                        name="primaryCC" [(ngModel)]="contactBilling.primaryCC">
+                    {{ "PrimaryCC" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ContactBilling_PrimaryCC"></validation-messages>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_Address1">{{ 'Address1' | translate }}</label>
+                    <input type="text" #ContactBilling_Address1="ngModel" id="ContactBilling_Address1"
+                        class="form-control" [(ngModel)]="contactBilling.address1" name="address1" />
+                    <validation-messages [formCtrl]="ContactBilling_Address1"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_Address2">{{ 'Address2' | translate }}</label>
+                    <input type="text" #ContactBilling_Address2="ngModel" id="ContactBilling_Address2"
+                        class="form-control" [(ngModel)]="contactBilling.address2" name="address2" />
+                    <validation-messages [formCtrl]="ContactBilling_Address2"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_City">{{ 'City' | translate }}</label>
+                    <input type="text" #ContactBilling_City="ngModel" id="ContactBilling_City" class="form-control"
+                        [(ngModel)]="contactBilling.city" name="city" />
+                    <validation-messages [formCtrl]="ContactBilling_City"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_State">{{ 'State' | translate }}</label>
+                    <input type="text" #ContactBilling_State="ngModel" id="ContactBilling_State" class="form-control"
+                        [(ngModel)]="contactBilling.state" name="state" />
+                    <validation-messages [formCtrl]="ContactBilling_State"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_Country">{{ 'Country' | translate }}</label>
+                    <input type="text" #ContactBilling_Country="ngModel" id="ContactBilling_Country"
+                        class="form-control" [(ngModel)]="contactBilling.country" name="country" />
+                    <validation-messages [formCtrl]="ContactBilling_Country"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_ZipCode">{{ 'ZipCode' | translate }}</label>
+                    <input type="text" #ContactBilling_ZipCode="ngModel" id="ContactBilling_ZipCode"
+                        class="form-control" [(ngModel)]="contactBilling.zipcode" name="zipcode"
+                        (keypress)="numberOnly($event)" />
+                    <validation-messages [formCtrl]="ContactBilling_ZipCode"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_Gateway">{{ 'Gateway' | translate }}</label>
+                    <input type="text" #ContactBilling_Gateway="ngModel" id="ContactBilling_Gateway"
+                        class="form-control" [(ngModel)]="contactBilling.gateway" name="gateway" />
+                    <validation-messages [formCtrl]="ContactBilling_Gateway"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_GatewayCustomerCode">{{ 'GatewayCustomerCode' | translate }}</label>
+                    <input type="text" #ContactBilling_GatewayCustomerCode="ngModel"
+                        id="ContactBilling_GatewayCustomerCode" class="form-control"
+                        [(ngModel)]="contactBilling.gatewayCustomerCode" name="gatewayCustomerCode" />
+                    <validation-messages [formCtrl]="ContactBilling_GatewayCustomerCode"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactBilling_GatewayToken">{{ 'GatewayToken' | translate }}</label>
+                    <input type="text" #ContactBilling_GatewayCustomerCode="ngModel"
+                        id="ContactBilling_GatewayCustomerCode" class="form-control"
+                        [(ngModel)]="contactBilling.gatewayToken" name="gatewayToken" />
+                    <validation-messages [formCtrl]="ContactBilling_GatewayCustomerCode"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!contactBillingForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

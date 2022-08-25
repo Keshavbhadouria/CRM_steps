@@ -1,0 +1,93 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewCustomer' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{"FirstName"| translate }}</label>
+            <p>
+                {{ item.crmCustomer.firstName }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Email"| translate }}</label>
+            <p>
+                {{ item.crmCustomer.email }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"PhoneNumber"| translate }}</label>
+            <p>
+                {{ item.crmCustomer.phoneNumber }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"CompanyName"| translate }}</label>
+            <p>
+                {{ item.crmCustomer.companyName }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Website"| translate }}</label>
+            <p>
+                {{ item.crmCustomer.website }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Address"| translate }}</label>
+            <p>
+                {{ item.crmCustomer.address }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"AddressSecondery"| translate }}</label>
+            <p>
+                {{ item.crmCustomer.addressSecondery }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"ZipCode"| translate }}</label>
+            <p>
+                {{ item.crmCustomer.zipCode }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"IsActive"| translate }}</label>
+            <div *ngIf="item.crmCustomer.isActive" class="text-left"><i class="fa fa-check-circle text-success"
+                    title="True"></i></div>
+            <div *ngIf="!item.crmCustomer.isActive" class="text-left"><i class="fa fa-times-circle" title="False"></i>
+            </div>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"QuickbooksCutomerId"| translate }}</label>
+            <p>
+                {{ item.crmCustomer.quickbooksCutomerId }}
+            </p>
+        </div>
+
+        <div class="col-6 mb-3">
+            <label>({{"CRMCountry"| translate }}) {{"CountryName"| translate }}</label>
+            <p>
+                {{item.crmCountryCountryName}}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"CRMState"| translate }}) {{"StateName"| translate }}</label>
+            <p>
+                {{item.crmStateStateName}}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"CRMCity"| translate }}) {{"CityName"| translate }}</label>
+            <p>
+                {{item.crmCityCityName}}
+            </p>
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

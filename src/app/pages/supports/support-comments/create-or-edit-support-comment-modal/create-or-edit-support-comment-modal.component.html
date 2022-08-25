@@ -1,0 +1,55 @@
+<form #supportCommentForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditSupportComment' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewSupportComment' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="SupportComment_UserId">{{ 'UserName' | translate }}</label>
+                    <ng-select [items]="users" #SupportComment_UserId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="SupportComment_UserId" name="userId" [(ngModel)]="supportComment.userId" required></ng-select>
+                    <validation-messages [formCtrl]="SupportComment_UserId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="SupportComment_SupportId">{{ 'SupportTicket' | translate }}</label>
+                    <ng-select [items]="supportTickets" #SupportComment_SupportId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="SupportComment_SupportId" name="supportId"
+                        [(ngModel)]="supportComment.supportId" required></ng-select>
+                    <validation-messages [formCtrl]="SupportComment_SupportId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="SupportComment_Comment">{{ 'Comment' | translate }} *</label>
+                    <ckeditor #SupportComment_Comment="ngModel" id="SupportComment_Comment" [editor]="editor"
+                        [(ngModel)]="supportComment.comment" name="comment" required></ckeditor>
+                    <validation-messages [formCtrl]="SupportComment_Comment"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="SupportComment_Attachment">{{'Attachment' | translate}}</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile"
+                        accept="image/*" (change)="handleUpload($event)">
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+                        <img [src]="imageUrl" style="height: 50px;width:auto;" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!supportCommentForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

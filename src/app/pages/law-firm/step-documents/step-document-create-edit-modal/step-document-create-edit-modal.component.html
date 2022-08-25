@@ -1,0 +1,118 @@
+<form #stepForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditStepDocuments' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateStepDocuments' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+
+
+    <div class="row">
+      <div class="col-md-4">
+        <label for="lawfirmServiceName">{{'ServicesName' | translate }} *</label>
+        <input type="text" #ServiceNameRef="ngModel" id="lawfirmServiceName" disabled class="form-control"
+          [(ngModel)]="ServiceName" name="lawfirmServiceName" />
+        <input type="text" #lawfirmServiceId="ngModel" id="lawfirmServiceId" hidden class="form-control"
+          [(ngModel)]="StepDocument.lawfirmServiceId" name="lawfirmServiceId" />
+        <validation-messages [formCtrl]="lawfirmServiceId"></validation-messages>
+      </div>
+      <div class="col-md-4">
+        <label for="serviceActivityName">{{'ActivityName' | translate }} *</label>
+        <input type="text" #ServiceActivityRef="ngModel" id="ActivityName" disabled class="form-control"
+          [(ngModel)]="ActivityName" name="ActivityName" />
+        <input type="text" #lawfirmServiceAcitivityId="ngModel" id="serviceActivityId" hidden class="form-control"
+          [(ngModel)]="StepDocument.serviceActivityId" name="serviceActivityId" />
+        <validation-messages [formCtrl]="lawfirmServiceAcitivityId"></validation-messages>
+      </div>
+      <div class="col-md-4">
+        <label for="lawfirmServiceName">{{'StepName' | translate }} *</label>
+        <input type="text" #StepNameRef="ngModel" id="lawfirmServiceName" disabled class="form-control"
+          [(ngModel)]="stepName" name="stepName" />
+        <input type="text" #lawfirmServiceId="ngModel" id="lawfirmServiceId" hidden class="form-control"
+          [(ngModel)]="StepDocument.servicesActivityStepId" name="lawfirmServiceId" />
+        <validation-messages [formCtrl]="StepNameRef"></validation-messages>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="lawfirmFeeTypeId">FeeType</label>
+            <ng-select [items]="allLawfirmFeeTypes" bindValue="id" bindLabel="displayName" name="lawfirmFeeTypeId"
+              [(ngModel)]="StepDocument.lawfirmFeeTypeId" required></ng-select>
+          </div>
+      </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="Document">{{'Document' | translate }} *</label>
+          <input type="text" #StepDocumentNameRef="ngModel" id="Document" class="form-control"
+            [(ngModel)]="StepDocument.document" name="Document" />
+          <validation-messages [formCtrl]="StepDocumentNameRef"></validation-messages>
+          </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="StepDocument_Fee">{{'Fee' | translate }}</label>
+          <input type="number" #StepDocument_Fee="ngModel" id="StepDocument_Fee" class="form-control"
+            [(ngModel)]="StepDocument.fee" name="Fee" />
+          <validation-messages [formCtrl]="StepDocument_Fee"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <div class="m-checkbox-list">
+          <label for="StepDocument_UploadByClientOrDeliverByLawyer" class="kt-checkbox">
+            <input id="StepDocument_UploadByClientOrDeliverByLawyer"
+              #StepDocument_UploadByClientOrDeliverByLawyer="ngModel" type="checkbox"
+              name="UploadByClientOrDeliverByLawyer" [(ngModel)]="StepDocument.uploadByClientOrDeliverByLawyer">
+            {{'UploadByClientOrDeliverByLawyer' | translate }}
+            <span></span>
+          </label>
+          <validation-messages [formCtrl]="StepDocument_UploadByClientOrDeliverByLawyer"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="m-checkbox-list">
+          <label for="StepDocument_NotifyAdmin" class="kt-checkbox">
+            <input id="StepDocument_NotifyAdmin" #StepDocument_NotifyAdmin="ngModel" type="checkbox" name="NotifyAdmin"
+              [(ngModel)]="StepDocument.notifyAdmin">
+            {{'NotifyAdmin' | translate }}
+            <span></span>
+          </label>
+          <validation-messages [formCtrl]="StepDocument_NotifyAdmin"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="m-checkbox-list">
+          <label for="StepDocument_NotifyCustomer" class="kt-checkbox">
+            <input id="StepDocument_NotifyCustomer" #StepDocument_NotifyCustomer="ngModel" type="checkbox"
+              name="NotifyCustomer" [(ngModel)]="StepDocument.notifyCustomer">
+            {{'NotifyCustomer' | translate }}
+            <span></span>
+          </label>
+          <validation-messages [formCtrl]="StepDocument_NotifyCustomer"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="m-checkbox-list">
+          <label for="StepDocument_NotifyLaywer" class="kt-checkbox">
+            <input id="StepDocument_NotifyLaywer" #StepDocument_NotifyLaywer="ngModel" type="checkbox"
+              name="NotifyLaywer" [(ngModel)]="StepDocument.notifyLaywer">
+            {{'NotifyLaywer' | translate }}
+            <span></span>
+          </label>
+          <validation-messages [formCtrl]="StepDocument_NotifyLaywer"></validation-messages>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!stepForm.form.valid"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

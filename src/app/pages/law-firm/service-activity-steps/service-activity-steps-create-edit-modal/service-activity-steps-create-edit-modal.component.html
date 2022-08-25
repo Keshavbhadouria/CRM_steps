@@ -1,0 +1,189 @@
+<form #stepForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditActivityStep' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateActivityStep' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+
+    <div class="row">
+      <div class="col-md-4">
+        <label for="lawfirmServiceName">{{'ServicesName' | translate }} *</label>
+        <input type="text" #ServiceNameRef="ngModel" id="lawfirmServiceName" disabled class="form-control"
+          [(ngModel)]="ServiceName" name="lawfirmServiceName" />
+        <input type="text" #lawfirmServiceId="ngModel" id="lawfirmServiceId" hidden class="form-control"
+          [(ngModel)]="ActivityStep.lawfirmServiceId" name="lawfirmServiceId" />
+        <validation-messages [formCtrl]="lawfirmServiceId"></validation-messages>
+      </div>
+      <div class="col-md-4">
+        <label for="ServiceActivityName">{{'ServiceActivityName' | translate }} *</label>
+        <input type="text" #ActivityNameRef="ngModel" id="ServiceActivityName" disabled class="form-control"
+          [(ngModel)]="ActivityName" name="ServiceActivityName" />
+        <input type="text" #serviceActivityId="ngModel" id="serviceActivityId" hidden class="form-control"
+          [(ngModel)]="ActivityStep.serviceActivityId" name="serviceActivityId" />
+        <validation-messages [formCtrl]="serviceActivityId"></validation-messages>
+      </div>
+      <div class="col-md-4">
+        <label for="PMIndustryIndustry">Contact</label>
+        <ng-select [items]="allContactTaskRoleList" bindValue="id" bindLabel="displayName"
+          name="ActivityStep.contactTaskRoleId" [(ngModel)]="ActivityStep.contactTaskRoleId" required></ng-select>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="ActivityStep_Step">{{'Step' | translate }} *</label>
+          <input type="text" #ActivityStep_Step="ngModel" id="ActivityStep_Step" class="form-control"
+            [(ngModel)]="ActivityStep.step" name="Step" required />
+          <validation-messages [formCtrl]="ActivityStep_Step"></validation-messages>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="ActivityStep_SortIndex">{{'SortIndex' | translate }}</label>
+          <input type="number" #ActivityStep_SortIndex="ngModel" id="ActivityStep_SortIndex" class="form-control"
+            [(ngModel)]="ActivityStep.sortIndex" name="SortIndex" />
+          <validation-messages [formCtrl]="ActivityStep_SortIndex"></validation-messages>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="ActivityStep_DoOnDay">{{'DoOnDay' | translate }}</label>
+          <input type="number" #ActivityStep_DoOnDay="ngModel" id="ActivityStep_DoOnDay" class="form-control"
+            [(ngModel)]="ActivityStep.doOnDay" name="DoOnDay" />
+          <validation-messages [formCtrl]="ActivityStep_DoOnDay"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row mt-2">
+      <div class="m-checkbox-list  col-md-3">
+        <label for="ActivityStep_A_OverDue" class="kt-checkbox">
+          <input id="ActivityStep_A_OverDue" #ActivityStep_A_OverDue="ngModel" type="checkbox" name="A_OverDue"
+            [(ngModel)]="ActivityStep.a_OverDue">
+          {{'A_OverDue' | translate }}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="ActivityStep_A_OverDue"></validation-messages>
+      </div>
+
+      <div class="m-checkbox-list  col-md-3">
+        <label for="ActivityStep_A_Completed" class="kt-checkbox">
+          <input id="ActivityStep_A_Completed" #ActivityStep_A_Completed="ngModel" type="checkbox" name="A_Completed"
+            [(ngModel)]="ActivityStep.a_Completed">
+          {{'A_Completed' | translate }}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="ActivityStep_A_Completed"></validation-messages>
+      </div>
+
+      <div class="m-checkbox-list col-md-3">
+        <label for="ActivityStep_A_Updated" class="kt-checkbox">
+          <input id="ActivityStep_A_Updated" #ActivityStep_A_Updated="ngModel" type="checkbox" name="A_Updated"
+            [(ngModel)]="ActivityStep.a_Updated">
+          {{'A_Updated' | translate }}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="ActivityStep_A_Updated"></validation-messages>
+      </div>
+    </div>
+    <div class="row">
+      <div class="m-checkbox-list col-md-3">
+        <label for="ActivityStep_L_Overdue" class="kt-checkbox">
+          <input id="ActivityStep_L_Overdue" #ActivityStep_L_Overdue="ngModel" type="checkbox" name="L_Overdue"
+            [(ngModel)]="ActivityStep.l_Overdue">
+          {{'L_Overdue' | translate }}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="ActivityStep_L_Overdue"></validation-messages>
+      </div>
+      <div class="m-checkbox-list  col-md-3">
+        <label for="ActivityStep_L_Completed" class="kt-checkbox">
+          <input id="ActivityStep_L_Completed" #ActivityStep_L_Completed="ngModel" type="checkbox" name="L_Completed"
+            [(ngModel)]="ActivityStep.l_Completed">
+          {{'L_Completed' | translate }}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="ActivityStep_L_Completed"></validation-messages>
+      </div>
+
+      <br />
+      <div class="m-checkbox-list col-md-3">
+        <label for="ActivityStep_L_Update" class="kt-checkbox">
+          <input id="ActivityStep_L_Update" #ActivityStep_L_Update="ngModel" type="checkbox" name="L_Update"
+            [(ngModel)]="ActivityStep.l_Update">
+          {{'L_Updated' | translate }}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="ActivityStep_L_Update"></validation-messages>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="m-checkbox-list col-md-3">
+        <label for="ActivityStep_C_Overdue" class="kt-checkbox">
+          <input id="ActivityStep_C_Overdue" #ActivityStep_C_Overdue="ngModel" type="checkbox" name="C_Overdue"
+            [(ngModel)]="ActivityStep.c_Overdue">
+          {{'C_Overdue' | translate }}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="ActivityStep_C_Overdue"></validation-messages>
+      </div>
+
+      <br />
+      <div class="m-checkbox-list col-md-3">
+        <label for="ActivityStep_C_Completed" class="kt-checkbox">
+          <input id="ActivityStep_C_Completed" #ActivityStep_C_Completed="ngModel" type="checkbox" name="C_Completed"
+            [(ngModel)]="ActivityStep.c_Completed">
+          {{'C_Completed' | translate }}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="ActivityStep_C_Completed"></validation-messages>
+      </div>
+
+      <br />
+      <div class="m-checkbox-list col-md-3">
+        <label for="ActivityStep_C_Update" class="kt-checkbox">
+          <input id="ActivityStep_C_Update" #ActivityStep_C_Update="ngModel" type="checkbox" name="C_Update"
+            [(ngModel)]="ActivityStep.c_Update">
+          {{'C_Updated' | translate }}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="ActivityStep_C_Update"></validation-messages>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="ActivityStep_Description">{{'Description' | translate }} *</label>
+          <ckeditor [editor]="Editor" #ActivityStep_Description="ngModel" [(ngModel)]="ActivityStep.description"
+            name="ActivityStep_Description" required></ckeditor>
+          <validation-messages [formCtrl]="ActivityStep_Description"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="m-checkbox-list">
+        <label for="ActivityStep_Active" class="kt-checkbox">
+          <input id="ActivityStep_Active" class="form-checkbox-outline form-check-primary"
+            #ActivityStep_Active="ngModel" type="checkbox" name="Active" [(ngModel)]="ActivityStep.active">
+          {{'Active' | translate }}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="ActivityStep_Active"></validation-messages>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!stepForm.form.valid"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

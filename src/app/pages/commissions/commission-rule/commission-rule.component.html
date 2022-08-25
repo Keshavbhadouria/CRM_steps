@@ -1,0 +1,142 @@
+<div class="container-fluid">
+    <app-page-title title="CommissionRules" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateNewCommissionRule' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-12">
+                            <div class="separator separator-dashed"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinSalesAmountFilter">{{'MinMax' | translate}} {{ 'SalesAmount' | translate
+                                    }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinSalesAmountFilter"
+                                        [(ngModel)]="minSalesAmountFilter" placeholder="MinValue"
+                                        name="minSalesAmountFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxSalesAmountFilter"
+                                        placeholder="MaxValue" name="maxSalesAmountFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinPercentageFilter">{{'MinMax' | translate}} {{ 'Percentage' | translate
+                                    }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinPercentageFilter"
+                                        [(ngModel)]="minPercentageFilter" placeholder="MinValue"
+                                        name="minPercentageFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxPercentageFilter"
+                                        placeholder="MaxValue" name="maxPercentageFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinAffiliateCommissionFilter">{{'MinMax' | translate}} {{
+                                    'AffiliateCommission' | translate }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinAffiliateCommissionFilter"
+                                        [(ngModel)]="minAffiliateCommissionFilter" placeholder="MinValue"
+                                        name="minAffiliateCommissionFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxAffiliateCommissionFilter"
+                                        placeholder="MaxValue" name="maxAffiliateCommissionFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinAffiliateCommissionFilter">{{'MinMax' | translate}} {{ 'PayAfterDays' |
+                                    translate }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinPayAfterDaysFilter"
+                                        [(ngModel)]="minPayAfterDaysFilter" placeholder="MinValue"
+                                        name="minPayAfterDaysFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxPayAfterDaysFilter"
+                                        placeholder="MaxValue" name="maxPayAfterDaysFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ActiveFilter">{{ "Active" | translate}}</label>
+                                <select class="form-control" name="activeFilter" id="ActiveFilter"
+                                    [(ngModel)]="activeFilter">
+                                    <option value="-1">{{ "All" | translate}}</option>
+                                    <option value="0">{{ "False" | translate}}</option>
+                                    <option value="1">{{ "True" | translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="AffiliateTierTierNameFilter">{{ "TierName" | translate}}</label>
+                                <input type="text" class="form-control" id="AffiliateTierTierNameFilter"
+                                    name="affiliateTierTierNameFilter" [(ngModel)]="affiliateTierTierNameFilter">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Shoe Hide Filters -->
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table>
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-create-or-edit-commission-rule-modal [modal]="modal" ($modalClose)='modalEmitEvent()'
+        [data]="editCommissionRule">
+    </app-create-or-edit-commission-rule-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-view-commission-rule-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewCommissionRule">
+    </app-view-commission-rule-modal>
+</ng-template>

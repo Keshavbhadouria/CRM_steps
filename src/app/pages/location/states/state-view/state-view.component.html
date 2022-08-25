@@ -1,0 +1,33 @@
+
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewState' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{"StateName"| translate }}</label>
+            <p>
+                {{ item.crmState.stateName }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"IsActive"| translate }}</label>
+            <div *ngIf="item.crmState.isActive" class="text-left"><i class="fa fa-check-circle text-success"
+                    title="True"></i></div>
+            <div *ngIf="!item.crmState.isActive" class="text-left"><i class="fa fa-times-circle" title="False"></i>
+            </div>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"CRMCountry" | translate}}) {{"CountryName"| translate }}</label>
+            <p>
+                {{item.crmCountryCountryName}}
+            </p>
+        </div>
+    
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

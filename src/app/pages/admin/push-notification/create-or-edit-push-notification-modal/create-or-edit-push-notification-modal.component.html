@@ -1,0 +1,114 @@
+<form #pushNotificationForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditPushNotification' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewPushNotification' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="PushNotification_To">{{ 'To' | translate }}</label>
+                    <input type="text" #PushNotification_To="ngModel" id="PushNotification_To" class="form-control"
+                        [(ngModel)]="pushNotification.to" name="to" />
+                    <validation-messages [formCtrl]="PushNotification_To"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="PushNotification_Title">{{ 'Title' | translate }}</label>
+                    <input type="text" #PushNotification_Title="ngModel" id="PushNotification_Title" class="form-control"
+                        [(ngModel)]="pushNotification.title" name="title" />
+                    <validation-messages [formCtrl]="PushNotification_Title"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="PushNotification_SubTitle">{{ 'SubTitle' | translate }}</label>
+                    <input type="text" #PushNotification_SubTitle="ngModel" id="PushNotification_SubTitle" class="form-control"
+                        [(ngModel)]="pushNotification.subTitle" name="subTitle" />
+                    <validation-messages [formCtrl]="PushNotification_SubTitle"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="PushNotification_Type">{{ 'Type' | translate }}</label>
+                    <input type="text" #PushNotification_Type="ngModel" id="PushNotification_Type" class="form-control"
+                        [(ngModel)]="pushNotification.type" name="type" />
+                    <validation-messages [formCtrl]="PushNotification_Type"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="PushNotification_Body">{{ 'Body' | translate }}</label>
+                    <ckeditor #PushNotification_Body="ngModel" id="PushNotification_Body" [editor]="editor"
+                        [(ngModel)]="pushNotification.body" name="body"></ckeditor>
+                    <validation-messages [formCtrl]="PushNotification_Body"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="PushNotification_UserId">{{ 'UserId' | translate }}</label>
+                    <input type="text" #PushNotification_UserId="ngModel" id="PushNotification_UserId" class="form-control"
+                        [(ngModel)]="pushNotification.userId" name="userId" />
+                    <validation-messages [formCtrl]="PushNotification_UserId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="PushNotification_Priority">{{ 'Priority' | translate }}</label>
+                    <input type="text" #PushNotification_Priority="ngModel" id="PushNotification_Priority" class="form-control"
+                        [(ngModel)]="pushNotification.priority" name="priority" />
+                    <validation-messages [formCtrl]="PushNotification_Priority"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="PushNotification_ContactId">{{ 'ContactId' | translate }}</label>
+                    <input type="text" #PushNotification_ContactId="ngModel" id="PushNotification_ContactId" class="form-control"
+                        [(ngModel)]="pushNotification.contactId" name="contactId" />
+                    <validation-messages [formCtrl]="PushNotification_ContactId"></validation-messages>
+                </div>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="PushNotification_IsSent" class="kt-checkbox">
+                    <input id="PushNotification_IsSent" #PushNotification_IsSent="ngModel" type="checkbox" name="isSent"
+                        [(ngModel)]="pushNotification.isSent">
+                    {{ "IsSent" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="PushNotification_IsSent"></validation-messages>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="PushNotification_ScheduleDateTime">{{ 'ScheduleDatetime' | translate }}</label>
+                    <input class="form-control m-input" #PushNotification_ScheduleDateTime="ngModel" type="date"
+                        [ngModel]="pushNotification.scheduleDatetime | date:'yyyy-MM-dd'"
+                        (ngModelChange)="pushNotification.scheduleDatetime = $event" id="PushNotification_ScheduleDateTime"
+                        name="scheduleDatetime"/>
+                    <validation-messages [formCtrl]="PushNotification_ScheduleDateTime"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="PushNotification_CreatedOn">{{ 'CreatedOn' | translate }}</label>
+                    <input class="form-control m-input" #PushNotification_CreatedOn="ngModel" type="date"
+                        [ngModel]="pushNotification.createdOn | date:'yyyy-MM-dd'"
+                        (ngModelChange)="pushNotification.createdOn = $event" id="PushNotification_CreatedOn"
+                        name="createdOn"/>
+                    <validation-messages [formCtrl]="PushNotification_CreatedOn"></validation-messages>
+                </div>
+            </div>
+        </div>
+        <script></script>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!pushNotificationForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

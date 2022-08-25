@@ -1,0 +1,104 @@
+<form #quizForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditQuiz' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateQuiz' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group m-form__group">
+          <label for="LeadStageStageName">{{'Course Chapter' | translate }}</label>
+          <ng-select #allCourseChapterNews="ngModel" [items]="allCourseChapterNews" bindValue="id" bindLabel="displayName"
+            name="allCourseChapterNews" [(ngModel)]="quiz.chapterId" required></ng-select>
+            <validation-messages [formCtrl]="allCourseChapterNews"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="Quiz">{{'Quiz' | translate }} *</label>
+          <input type="text" #Quiz="ngModel" id="quiz" class="form-control" [(ngModel)]="quiz.quiz" name="quiz" required/>
+            <validation-messages [formCtrl]="Quiz"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="instructions">{{ 'Instructions' | translate }} *</label>
+          <ckeditor [editor]="editor"  debounce="500" #instructions="ngModel" id="instructions"
+            [(ngModel)]="quiz.instructions" name="instructions"></ckeditor>
+          <validation-messages [formCtrl]="instructions"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="dayNo">{{'DayNo' | translate }}</label>
+          <input type="date" #dayNo="ngModel" id="dayNo" class="form-control"
+          [(ngModel)]="quiz.dayNo" name="URL"    />
+            <validation-messages [formCtrl]="dayNo"></validation-messages>
+        </div>
+      </div>
+      <div class="col-sm-3 col-md-4 col-lg-4">
+        <div class="form-group">
+          <label for="LMSCourse_CourseName">{{ 'DayNo.' | translate }} *</label>
+          <div class="p-2 c-b">
+            <div class="row">
+              <div class="col-sm-9 col-md-6 col-lg-8">
+                12
+              </div>
+                <div class="col-sm-1 col-md-1 col-lg-1 pointer chev-b me-1 text-right" (click)="dayNoDown()">
+                  <span>
+                    <i class="fa fa-chevron-left  chev-left" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <div class="col-sm-1 col-md-1 col-lg-1 pointer chev-b text-right" (click)="dayNoUp()">
+                  <span>
+                    <i class="fa fa-chevron-right chev-right" aria-hidden="true"></i>
+                  </span>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row mt-2">
+          <div class="col-md-2">
+            <span class="text-default-d3 text-90 text-600 pl-5">
+              Random Question
+            </span>
+          </div>
+          <div class="col-md-2">
+            <span class="ml-auto text-dark-l2 text-nowrap">
+              <div class="form-check form-switch">
+                <input class="form-check-input text-90" style="font-size: 20px;" type="checkbox" [(ngModel)]="quiz.randomQuestion">
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row mt-2">
+          <div class="col-md-2">
+            <span class="text-default-d3 text-90 text-600 pl-5">
+              Random Answers
+            </span>
+          </div>
+          <div class="col-md-2">
+            <span class="ml-auto text-dark-l2 text-nowrap">
+              <div class="form-check form-switch">
+                <input class="form-check-input text-90" style="font-size: 20px;" type="checkbox" [(ngModel)]="quiz.randomAnswer">
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!quizForm.form.valid" > <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+        *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

@@ -1,0 +1,20 @@
+<div class="card card-custom h-100">
+    <div class="card-header align-items-center border-0" style="background-color: #FB0101;">
+        <div class="card-title">
+            <h3 class="card-label">
+                <small style="color: #fff;">{{'TaskOverdue' | translate}}</small>
+            </h3>
+        </div>
+    </div>
+    <div class="card-body">
+        <div>
+            <div class="row">
+                <div class="col-lg-6 col-md-12" style="max-height:300px ">
+                    <ngx-charts-number-card [scheme]="totalOverDueTaskNumberChart.scheme" [results]="totalOverDueTaskNumberChart.chartData"
+                        [cardColor]="cardColor" >
+                    </ngx-charts-number-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

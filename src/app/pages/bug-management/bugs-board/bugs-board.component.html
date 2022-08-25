@@ -1,0 +1,124 @@
+<div class="container-fluid">
+  <!-- <div class="page-title-box">
+      <h4 class="mb-0 font-size-18">Storyboard</h4>
+    </div> -->
+  <app-page-title title="Bugboard" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <!-- <div *ngIf="sprintId!=0">
+    <app-project-tabs tabName="bugsboard" [projectId]="sprintsDetail.project" [sprintId]="sprintId">
+    </app-project-tabs>
+  </div> -->
+  <div class="row" [busyIf]="loading">
+    <div class="col-lg-12">
+      <div class="card" style="border-top:solid 1px #ddd">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="Search by Bug # or Title" aria-label="Username" aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i class=" bx
+                                  bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2" *ngIf="isGlobal==false">
+              <!-- (click)="openCreateModal(createOrEditContent)" -->
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'CreateNewTaskBug' | translate}}</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group m-form__group">
+                <label for="bug_ownerId">{{ 'Owner' | translate }}</label>
+                <ng-select [items]="owners" bindValue="id" bindLabel="displayName" id="Bug_ownerId"
+                  name="bug.responsibleId" placeholder="-Select-" [(ngModel)]="ownerId"
+                  (change)="owner_loadBugStatusesData()"></ng-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group m-form__group" *ngIf="isGlobal==true">
+                <label for="Bug_pmProjectId">{{ 'Project' | translate }}</label>
+                <ng-select [items]="projects" bindValue="id" bindLabel="displayName" id="Bug_pmProjectId"
+                  name="bug.pmProjectId" placeholder="-Select-" [(ngModel)]="pmProjectId"
+                  (change)="project_loadBugStatusesData()"></ng-select>
+              </div>
+            </div>
+            <div class="col-md-12" style="margin-top:15px">
+              <div *ngFor="let status of allAvailableStatuses" class="col-md-3" style="display: inline-block;">
+                <span>
+                  <label class="switch">
+                    <input type="checkbox" [(ngModel)]="status.isChecked" id="chk{{status.statusId}}"
+                      (change)="loadBugStatusesData()">
+                    <span class="slider round"></span>
+                  </label>
+                  <label style="margin-left: 5px;" for="chk{{status.statusId}}">{{status.statusName}}</label>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body" style="overflow-x: auto;">
+          <div class="board-main-container" [style.width.px]='statusCount'>
+            <!-- <div cdkDropListGroup> -->
+            <div class="status-container" *ngFor="let status of pmBugsStatusData">
+              <h2 [style.background]="status.bgColor">{{status.statusName}}</h2>
+              <div cdkDropList id="status{{status.statusId}}" [cdkDropListData]="status.bugsData"
+                [cdkDropListConnectedTo]="status.connectedTo" class="status-list" (cdkDropListDropped)="drop($event)">
+                <div class="empty-list-placehoder" *ngIf="status.bugsData.length==0">
+                  No Story Found
+                </div>
+                <div class="status-box" *ngFor="let bugItem of status.bugsData; " cdkDrag>
+                  <div class="project" *ngIf="isGlobal==true">{{bugItem.projectName}}</div>
+                  <div class="d-flex justify-content-between">
+                    <img [src]="bugItem.profilePic != null ? bugItem.profilePic:  defaultProfilePic"
+                      class="profile-pic-small" width="30" height="30" *ngIf="bugItem.responsibleId > 0" />
+                    <div *ngIf="bugItem.responsibleId == 0"></div>
+                    <div class="responsible" *ngIf="isGlobal==true">{{bugItem.responsibleName}}</div>
+                    <div class="responsible" *ngIf="isGlobal==false">
+                      <ng-select [items]="projectMembers" bindValue="id" bindLabel="displayName"
+                        id="bugItem_responsibleId" name="bugItem.responsibleId" placeholder="-Select-"
+                        [appendTo]="'body'" [(ngModel)]="bugItem.responsibleId" (change)="responsibleChanged(bugItem)">
+                      </ng-select>
+                    </div>
+                    <a href="javascript:;" class="delete-box" (click)="onDelete(bugItem.bugId)"><i
+                        class="material-icons red-text">delete</i></a>
+                  </div>
+
+                  <div class="d-flex justify-content-between">
+                    <a href="javascript:void(0)" class="item-task-heading"
+                      (click)="showBugDetail(bugItem)">{{bugItem.bugId}} - {{bugItem.bugName}}</a>
+                  </div>
+                  <div>
+                    <input class="form-control m-input" type="date" [ngModel]="bugItem.dueDate | date:'yyyy-MM-dd'"
+                      (ngModelChange)="updateDueDate($event,bugItem.bugId)" id="TaskBug_DueDate" name="dueDate" />
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #createModal role="document" let-modal>
+  <app-create-or-edit-task-bug-modal [modal]="modal" ($modalClose)='saveBugEmitEvent()' [data]="editBugData"
+    [sprintId]="sprintIntId">
+  </app-create-or-edit-task-bug-modal>
+</ng-template>
+
+<ng-template #viewDetailModal role="document" let-modal>
+  <app-bug-detail-modal class="modal-right" [modal]="modal" ($bugUpdated)='onBugUpdated()' [data]="viewBug">
+  </app-bug-detail-modal>
+</ng-template>

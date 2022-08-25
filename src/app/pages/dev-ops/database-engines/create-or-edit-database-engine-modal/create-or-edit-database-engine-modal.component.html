@@ -1,0 +1,35 @@
+<form #databaseEngineForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditDatabaseEngine' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewDatabaseEngine' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="DatabaseEngine_Name">{{ 'Name' | translate }} *</label>
+                    <input type="text" #DatabaseEngine_Name="ngModel" id="DatabaseEngine_Name"
+                        class="form-control" [(ngModel)]="databaseEngine.name" name="name" required />
+                    <validation-messages [formCtrl]="DatabaseEngine_Name"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="DatabaseEngine_DBVersion">{{ 'DBVersion' | translate }}</label>
+                    <input type="text" #DatabaseEngine_DBVersion="ngModel" id="DatabaseEngine_DBVersion"
+                        class="form-control" [(ngModel)]="databaseEngine.dbVersion" name="dbVersion" />
+                    <validation-messages [formCtrl]="DatabaseEngine_DBVersion"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!databaseEngineForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

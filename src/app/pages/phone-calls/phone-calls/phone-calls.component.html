@@ -1,0 +1,121 @@
+<div class="container-fluid">
+    <app-page-title title="CommissionTrackings" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateNewContactPhoneCallHistory' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-12">
+                            <div class="separator separator-dashed"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinDateFilter">{{'DateRange' | translate}} </label>
+                                <div class="input-group clockpicker">
+                                    <input class="form-control m-input " id="MinDateFilter"
+                                        name="minDateFilter" type="date"
+                                        placeholder="{{'Pages.Project.Min' | translate}}"
+                                        [(ngModel)]="minDateFilter">
+                                    <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                    <input class="form-control m-input" id="MaxDateFilter"
+                                        name="maxDateFilter" type="date"
+                                        placeholder="{{'Pages.Project.Max' | translate}}"
+                                        [(ngModel)]="maxDateFilter">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="LeadTempratureFilter">{{ "LeadTemperature" | translate}}</label>
+                                <input type="text" class="form-control" id="LeadTempratureFilter"
+                                    name="leadTempratureFilter" [(ngModel)]="leadTempratureFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ContactCompanyFilter">{{ "ContactName" | translate}}</label>
+                                <input type="text" class="form-control" id="ContactCompanyFilter"
+                                    name="contactCompanyFilter" [(ngModel)]="contactCompanyFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PhoneCallObjetiveObjetiveNameFilter">{{ "PhoneCallObjective" | translate}}</label>
+                                <input type="text" class="form-control" id="PhoneCallObjetiveObjetiveNameFilter"
+                                    name="phoneCallObjetiveObjetiveNameFilter" [(ngModel)]="phoneCallObjetiveObjetiveNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ContactPhoneCallOutcomeOutcomeFilter">{{ "Outcome" | translate}}</label>
+                                <input type="text" class="form-control" id="ContactPhoneCallOutcomeOutcomeFilter"
+                                    name="contactPhoneCallOutcomeOutcomeFilter" [(ngModel)]="contactPhoneCallOutcomeOutcomeFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PhoneCallObjetiveObjetiveName2Filter">{{ "ObjectiveName" | translate}}</label>
+                                <input type="text" class="form-control" id="PhoneCallObjetiveObjetiveName2Filter"
+                                    name="phoneCallObjetiveObjetiveName2Filter" [(ngModel)]="phoneCallObjetiveObjetiveName2Filter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shoe Hide Filters -->
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table>
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-create-or-edit-phone-call-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editPhoneCall">
+    </app-create-or-edit-phone-call-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-view-phone-call-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewPhoneCall">
+    </app-view-phone-call-modal>
+</ng-template>

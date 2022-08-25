@@ -1,0 +1,36 @@
+<form #userForm="ngForm" novalidate autocomplete="off" [busyIf]="loading">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="skill">Skill</label>
+        <ng-select [items]="skills" bindValue="id" bindLabel="displayName" #skill="ngModel" name="skill"
+          [(ngModel)]="collaboratorSkill.SkillId"></ng-select>
+        <validation-messages [formCtrl]="skill">
+        </validation-messages>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="collaborator_roleId">Years Experience</label>
+        <ng-select [items]="years" #year="ngModel" name="year" [(ngModel)]="collaboratorSkill.YearsExperience">
+        </ng-select>
+        <validation-messages [formCtrl]="year">
+        </validation-messages>
+      </div>
+    </div>
+
+    <div class="col-md-4 mt-4">
+      <div class="form-group">
+        <label for="collaborator_roleId"></label>
+        <button type="button" class="btn btn-primary mt-3" [disabled]="!userForm.form.valid" (click)="save()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <app-dynamic-table [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+      [pagination]="paginationSettings">
+    </app-dynamic-table>
+  </div>
+</form>

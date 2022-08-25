@@ -1,0 +1,199 @@
+<div class="container-fluid">
+  <app-page-title title="Collaborators List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <!-- Filters -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i
+                      class="bx bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'Pages.Collaborator.CreateCollaborator' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table List -->
+
+  <div class="row align-items-center" [busyIf]="primengTableHelper.isLoading">
+    <!--<Primeng-Datatable-Start>-->
+    <div class="primeng-datatable-container col-12">
+      <p-table #dataTable (onLazyLoad)="getRecords($event)" [value]="primengTableHelper.records"
+        rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false" [lazy]="true" [scrollable]="true"
+        ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+        [resizableColumns]="primengTableHelper.resizableColumns">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 150px;"> {{'Actions' | translate}}</th>
+
+            <th style="width: 180px" pSortableColumn="userFk.name">
+              {{'UserName'| translate }}
+              <p-sortIcon field="userName"></p-sortIcon>
+              <p-columnFilter type="text" field="userName" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" display="menu"></p-columnFilter>
+            </th>
+            <th style="width: 150px" pSortableColumn="fullname">
+              {{'Fullname'| translate }}
+              <p-sortIcon field="collaborator.fullname"></p-sortIcon>
+              <p-columnFilter type="text" field="fullname" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" display="menu"></p-columnFilter>
+            </th>
+            <th style="width: 200px" pSortableColumn="jobDescriptionFk.title">
+              {{'Title'| translate }}
+              <p-sortIcon field="jobDescriptionTitle"></p-sortIcon>
+              <p-columnFilter type="text" field="jobDescriptionTitle" display="menu" [showMatchModes]="false"
+                [showOperator]="false" [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-dropdown [(ngModel)]="jobDescriptionTitleFilter" [options]="allJobDescriptions"
+                    optionLabel="displayName" optionValue="id" placeholder="Any"
+                    (onChange)="customFilterCallback(filter, $event.value)" [showClear]="true">
+                    <ng-template let-option pTemplate="item">
+                      <span [class]="'customer-badge status-' + option.displayName">{{option.displayName}}</span>
+                    </ng-template>
+                  </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th style="width: 150px" pSortableColumn="timezone">
+              {{'Timezone'| translate }}
+              <p-sortIcon field="collaborator.timezone"></p-sortIcon>
+              <p-columnFilter type="text" field="timezone" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" display="menu"></p-columnFilter>
+
+            </th>
+            <th style="width: 250px" pSortableColumn="weeklyHoursAvailabilty">
+              {{'WeeklyHoursAvailabilty'| translate }}
+              <p-sortIcon field="collaborator.weeklyHoursAvailabilty"></p-sortIcon>
+            </th>
+            <th style="width: 260px" pSortableColumn="workingTimeFromToEstTime">
+              {{'WorkingTimeFromToEstTime'| translate }}
+              <p-sortIcon field="collaborator.workingTimeFromToEstTime"></p-sortIcon>
+            </th>
+            <th style="width: 150px" pSortableColumn="active">
+              {{'Active'| translate }}
+              <p-sortIcon field="collaborator.active"></p-sortIcon>
+              <p-columnFilter type="text" field="active" display="menu" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-dropdown [(ngModel)]="activeFilter" [options]="yesNolst" optionLabel="displayName" optionValue="id"
+                    placeholder="Any" (onChange)="customFilterCallback(filter, $event.value)" [showClear]="true">
+                    <ng-template let-option pTemplate="item">
+                      <span [class]="'customer-badge status-' + option.displayName">{{option.displayName}}</span>
+                    </ng-template>
+                  </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+          <tr>
+            <td style="width: 150px;">
+              <div class="btn-group dropdown" dropdown container="body">
+                <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
+                    <i class="fa fa-plus-circle"></i> 
+                    {{"Actions" | translate}}
+                </button>
+                <ul class="dropdown-menu custom-dropdown" *dropdownMenu>
+                  
+                    <li>
+                        <img
+                        src="../../../../../assets/icons/editIcon.png">
+                        <a href="javascript:;" class="dropdown-item"
+                            (click)="onEditCollaborator(record)">{{'Edit' | translate}}</a>
+                    </li>
+                    <li>
+                        <img
+                        src="../../../../../assets/icons/deleteIcon.png">
+                        <a href="javascript:;" class="dropdown-item"
+                            (click)="onDelete(record.collaborator.id)">{{'Delete' | translate}}</a>
+                    </li>
+                   
+                </ul>
+            </div>
+             
+            </td>
+            <td style="width:180px">
+              <span class="ui-column-title"> {{'Name'| translate }}</span>
+              {{record.userName}}
+            </td>
+            <td style="width:150px">
+              <span class="ui-column-title"> {{'Fullname'| translate }}</span>
+              {{record.collaboratorNew.fullname}}
+            </td>
+            <td style="width:200px">
+              <span class="ui-column-title"> {{'Title'| translate }}</span>
+              {{record.jobDescriptionTitle}}
+            </td>
+            <td style="width:150px">
+              <span class="ui-column-title"> {{'Timezone'| translate }}</span>
+              {{record.collaboratorNew.timezone}}
+            </td>
+            <td style="width:250px">
+              <span class="ui-column-title"> {{'WeeklyHoursAvailabilty'| translate }}</span>
+              {{record.collaboratorNew.weeklyHoursAvailabilty}}
+            </td>
+            <td style="width:260px">
+              <span class="ui-column-title"> {{'WorkingTimeFromToEstTime'| translate }}</span>
+              {{record.collaboratorNew.workingTimeFromToEstTime}}
+            </td>
+            <td style="width:150px">
+              <span class="ui-column-title"> {{'Active'| translate }}</span>
+              <div *ngIf="record.collaboratorNew.active" class="text-center"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+              <div *ngIf="!record.collaboratorNew.active" class="text-center"><i class="fa fa-times-circle"
+                  title="False"></i></div>
+            </td>
+
+
+          </tr>
+
+        </ng-template>
+      </p-table>
+      <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+        {{'NoData'| translate }}
+      </div>
+      <div class="primeng-paging-container">
+        <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+          (onPageChange)="getRecords($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+          [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage" [showCurrentPageReport]="true"
+          [currentPageReportTemplate]="'TotalRecordsCount' | translate:primengTableHelper.totalRecordsCount">
+        </p-paginator>
+      </div>
+    </div>
+    <!--<Primeng-Datatable-End>-->
+  </div>
+  <!-- <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table> -->
+
+  <!-- end row -->
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-collaborator-new-ui [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editCollaborator">
+  </app-collaborator-new-ui>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-collaborators-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewCollaborator">
+  </app-collaborators-view-modal>
+</ng-template>

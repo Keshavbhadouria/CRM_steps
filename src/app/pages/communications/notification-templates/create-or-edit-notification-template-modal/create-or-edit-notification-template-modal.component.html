@@ -1,0 +1,47 @@
+<form #notificationTempForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditNotificationTemplate' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewNotificationTemplate' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group m-form__group">
+                    <label for="NotificationTemplate_NotificationEventId">{{ 'NotificationEvent' | translate }} *</label>
+                    <ng-select [items]="notificationEvents" #NotificationTemplate_NotificationEventId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="NotificationTemplate_NotificationEventId" name="notificationEventId" [(ngModel)]="notificationTemplate.notificationEventId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="NotificationTemplate_NotificationEventId"></validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="NotificationTemplate_Subject">{{ 'Subject' | translate }} *</label>
+                    <input type="text" #NotificationTemplate_Subject="ngModel" id="NotificationTemplate_Subject" class="form-control"
+                        [(ngModel)]="notificationTemplate.subject" name="subject" required/>
+                    <validation-messages [formCtrl]="NotificationTemplate_Subject"></validation-messages>
+                </div>
+            </div>
+           
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="NotificationTemplate_Body">{{ 'Body' | translate }} *</label>
+                    <ckeditor #NotificationTemplate_Body="ngModel" id="NotificationTemplate_Body" [editor]="editor"
+                        [(ngModel)]="notificationTemplate.body" name="body" required></ckeditor>
+                    <validation-messages [formCtrl]="NotificationTemplate_Body"></validation-messages>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!notificationTempForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

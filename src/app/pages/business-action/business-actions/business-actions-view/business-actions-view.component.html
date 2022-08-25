@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewBusinessAction' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{"DayNo" | translate }}</label>
+            <p>{{ businessAction.businessActionScript.dayNo }}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"ContentScript" | translate }}</label>
+            <p [innerHtml]="businessAction.businessActionScript.contentScript"></p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Active" | translate }}</label>
+            <div *ngIf="businessAction.businessActionScript.active" class="text-left"><i class="fa fa-check-circle text-success"
+                    title="True"></i></div>
+            <div *ngIf="!businessAction.businessActionScript.active" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+        </div>                    <div class="col-6 mb-3">
+            <label>{{"Title" | translate }}</label>
+            <p>{{ businessAction.businessActionScript.title }}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"WeekNo" | translate }}</label>
+            <p>{{ businessAction.businessActionScript.weekNo }}</p>
+        </div>
+
+        <div class="col-6 mb-3">
+            <label>{{"ActionType" | translate }} {{"ActionName" | translate }}</label>
+            {{businessAction.actionTypeActionName}}
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"LeadTemperature" | translate}} {{"Temperature" | translate }}</label>
+            {{businessAction.leadTemperatureTemperature}}
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"TargetTitle | translate"}} {{"Title" | translate }}</label>
+            {{businessAction.targetTitleTitle}}
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"LawfirmService" | translate}} {{"ServicesName" | translate }}</label>
+            <p>{{businessAction.lawfirmServiceServicesName}}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"ServiceActivity" | translate}} {{"ActivityName"| translate }}</label>
+            <p>{{businessAction.serviceActivityActivityName}}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"ServicesActivityStep" | translate}} {{"Step" | translate }}</label>
+            <p>{{businessAction.servicesActivityStepStep}}</p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

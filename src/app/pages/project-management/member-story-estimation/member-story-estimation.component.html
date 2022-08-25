@@ -1,0 +1,48 @@
+<div class="container-fluid" [busyIf]="loading">
+    <app-page-title title="StoryEstimation" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <!-- <div *ngIf="sprintId!=0"> -->
+        <!-- <app-project-tabs class="tab-holder" tabName="storyestimation" [projectId]="sprintsDetail.project" [sprintId]="sprintId"></app-project-tabs> -->
+        <!-- </div> -->
+        <div class="d-flex justify-content-between" [busyIf]="loading" style="background: #fff;">
+            <div class="story-block" style="background: #fff; border-right: 5px solid #ccc;border-radius:0px" *ngIf="data.lstStoryInfo.length > 0">
+                <div class="sprint-header">
+                    <h4>Backlog</h4>
+                </div>
+
+                <div class="story-section" *ngFor="let story of data.lstStoryInfo">
+                    <label class="checkbox_container">
+                        <div>{{story.story}}</div>
+                        <input type="radio" name="rdoStory" (change)="changeStory(story.id)">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+
+            </div>
+            <div class="story-block-detail" *ngIf="data.lstStoryInfo.length > 0">
+                <div class="sprint-header">
+                    <h4>Story Estimation</h4>
+                </div>
+                <div class="d-flex justify-content-center" style="flex-wrap: wrap;">
+                    <div class="estimate-list" [class.active]="es.isSelected" *ngFor="let es of data.lstStoryEstimate" (click)="changeEstimate(es)">
+                        <div style="background-color: dodgerblue;
+                        color: white;position: relative;">
+                            <div class="estimate-section">{{es.estimation}}</div>
+                            <img src="./../../../assets/CRMSteps/Crm_back.jpg" style="width: 100px;
+                            height: 120px" alt="Avatar">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3 justify-content-center d-flex" *ngIf="data.lstStoryInfo.length > 0">
+                    <button class="btn btn-primary text-center text-uppercase" (click)="estimateStory()">{{'Estimate' |
+                        translate}}</button>
+                </div>
+            </div>
+            <div class="card" *ngIf="data.lstStoryInfo.length == 0" style="width: 100%;">
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+    
+</div>

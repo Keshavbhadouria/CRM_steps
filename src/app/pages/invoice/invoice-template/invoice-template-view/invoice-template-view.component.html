@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewInvoiceTemplate' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{"Name" | translate }}</label>
+            <p>
+                {{ item.invoiceTemplate.name }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Template" | translate }}</label>
+            <p>
+                {{ item.invoiceTemplate.template }}
+            </p>
+            
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"IsDefault" | translate }}</label>
+            <div *ngIf="item.invoiceTemplate.isDefault" class="text-left"><i class="fa fa-check-circle text-success"
+                    title="True"></i></div>
+            <div *ngIf="!item.invoiceTemplate.isDefault" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

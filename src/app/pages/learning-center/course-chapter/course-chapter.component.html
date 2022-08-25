@@ -1,0 +1,212 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Section Left -->
+    <div class="col-md-9">
+      <div class="row">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="mb-0 font-size-18" style="color: #2e7dba;"><img
+                src="../../../../assets/CRMSteps/MenuIcons/invoice-templates.png">
+              {{'Courses' | translate }} </h4>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Section New Chapter -->
+      <div class="row">
+        <div class="card">
+          <div class="card-body modal-body">
+            <div class="row" [busyIf]="loading">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="NewChapterSection">{{ 'NewChapterSection' | translate }} *</label>
+                  <input type="text" #NewChapterSection="ngModel" id="NewChapterSection" class="form-control"
+                    [(ngModel)]="lcChapter.title" name="NewChapterSection" required />
+                  <validation-messages [formCtrl]="NewChapterSection"></validation-messages>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="objetives">{{ 'Objetives' | translate }} *</label>
+                  <ckeditor [editor]="editor"  debounce="500" #objetives="ngModel" id="objetives"
+                    [(ngModel)]="lcChapter.objetives" name="objetives"></ckeditor>
+                  <validation-messages [formCtrl]="objetives"></validation-messages>
+                </div>
+              </div>
+              <div class="col-sm-3 col-md-4 col-lg-4">
+                <div class="form-group">
+                  <label for="LMSCourse_CourseName">{{ 'DayNo.' | translate }} *</label>
+                  <div class="p-3 c-b mt-1">
+                    <div class="row">
+                      <div class="col-sm-9 col-md-6 col-lg-8">
+                        {{lcChapter.dayNo}}
+                      </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1 pointer chev-b me-1 text-right" (click)="dayNoDown()">
+                          <span>
+                            <i class="fa fa-chevron-left  chev-left" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1 pointer chev-b text-right" (click)="dayNoUp()">
+                          <span>
+                            <i class="fa fa-chevron-right chev-right" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+              <div class="col-md-12 mt-3">
+                <button type="button" (click)="onSave()" class="btn btn-primary pull-right cus-primary">{{'Save' |
+                  translate}}</button>
+                <button type="button" (click)="onCancel()" class="me-3 btn btn-light pull-right"
+                  style="border-color: #2e7dba;">{{'Cancel' |
+                  translate}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Chapter List -->
+      <div class="row">
+        <div class="card">
+          <div class="card-body">
+            <div class="mb-4">
+              <h4 class="mb-0 font-size-18" style="color: #2e7dba;"><img
+                  src="../../../../assets/CRMSteps/MenuIcons/invoice-templates.png">
+                {{'Chapters' | translate }} </h4>
+            </div>
+            <div class="container-fluid">
+              <div class="row flex-row flex-nowrap  course-list-overflow" style="overflow-x: auto ;">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6" *ngFor="let item of myData;let i = index">
+                  <div class="card card-block pointer" (click)="setSelectedIndex(i)">
+                    <div [ngClass]=" selectedIndex == i ? 'active-item-section':'inactive-item-section'">
+                      <div [ngClass]=" selectedIndex == i ? 'active-item-header':'inactive-item-header'">
+                        <p>
+                          {{item.courseNew.title}}
+                        </p>
+                      </div>
+                      <div class="activity-item-section-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="course-lbl">
+                              <label for="LMSCourse_Title">{{ 'Title' | translate }}</label>
+                              <p class="fw-bold">{{item.courseNew.title}}</p>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="course-lbl">
+                              <label for="LMSCourse_Description">{{ 'Description' | translate }}</label>
+                              <p class="fw-bold" [innerHtml]="item.courseNew.description | customslice : 30"></p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mt-1">
+                          <div class="col-md-6">
+                            <div class="course-lbl">
+                              <label for="LMSCourse_Student">{{ 'Student' | translate }}</label>
+                              <p class="fw-bold">Lorem IPsum</p>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="course-lbl">
+                              <label for="LMSCourse_Completion">{{ 'Completion' | translate }}</label>
+                              <p class="fw-bold">Lorem IPsum</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Section Right -->
+    <div class="col-md-3" id="course-material">
+      <div class="card">
+        <div class="card-body course-list-overflow">
+          <div class="row mb-2">
+            <div class="col-md-8">
+              <h4 class="mb-0 font-size-18" style="color: #2e7dba;"><img
+                  src="../../../../assets/CRMSteps/MenuIcons/invoice-templates.png">
+                {{'Courses' | translate }} </h4>
+            </div>
+            <div class="col-md-4 text-right">
+              <button type="button" class="btn btn-secondery btn-delete" (click)="openCreateModal(createModal)">
+                {{'Delete' | translate}}
+              </button>
+            </div>
+          </div>
+          <div class="row" [busyIf]="listLoader">
+            <div class="col-md-12" style="margin-bottom: 10px;" *ngFor="let item of chapterMaterils">
+              <div class="activity-item-section">
+                <div class="activity-item-section-header">
+                  <p>
+                    {{item.name}}
+                  </p>
+                  <p>
+                    <i class="fa fa-plus-circle fs-16 pointer" aria-hidden="true" (click)="openModal(item.id)"></i>
+                  </p>
+                </div>
+                <div class="activity-item-section-body">
+                  <div class="c-m-p c-m-b mt-1">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <p class="f-c-p fw-bolder">File :</p>
+                        <p>lorum-ipsum</p>
+                      </div>
+                      <div class="col-md-3 c-m-chev fs-16 text-right">
+                        <i class="fa fa-times-circle pointer" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-course-new-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewCourse">
+  </app-course-new-view-modal>
+</ng-template>
+
+<!-- Create Model -->
+<ng-template #createMaterialModal role="document" let-modal>
+  <app-course-chapter-material [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="">
+  </app-course-chapter-material>
+</ng-template>
+
+<!-- Create AssignmentModal -->
+<ng-template #createAssignmentModal role="document" let-modal>
+  <app-course-chapter-assignments [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="">
+  </app-course-chapter-assignments>
+</ng-template>
+
+<!-- Create AssignmentModal -->
+<ng-template #createContentModal role="document" let-modal>
+  <app-course-chapter-content [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="">
+  </app-course-chapter-content>
+</ng-template>
+
+<!-- Create Model -->
+<ng-template #createQuizModal role="document" let-modal>
+  <app-course-chapter-quiz [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="">
+  </app-course-chapter-quiz>
+</ng-template>
+

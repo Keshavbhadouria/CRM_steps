@@ -1,0 +1,47 @@
+<form #reteinerSectionForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditReteinerSection' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewReteinerSection' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="ReteinerSection_ContractSectionId">{{ 'ContractSection' | translate }} *</label>
+                    <ng-select [items]="contractSections" #ReteinerSection_ContractSectionId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="ReteinerSection_ContractSectionId" name="contractSectionId" [(ngModel)]="reteinerSection.contractSectionId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="ReteinerSection_ContractSectionId"></validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ReteinerSection_SortIndex">{{ 'SortIndex' | translate }} *</label>
+                    <input type="number" #ReteinerSection_SortIndex="ngModel" id="ReteinerSection_SortIndex" class="form-control"
+                        [(ngModel)]="reteinerSection.sortIndex" name="sortIndex" (keypress)="numberOnly($event)" min="0" required/>
+                    <validation-messages [formCtrl]="ReteinerSection_SortIndex"></validation-messages>
+                </div>
+            </div>
+           
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ReteinerSection_ParagraphNo">{{ 'ParagraphNo' | translate }}</label>
+                    <input type="text" #ReteinerSection_ParagraphNo="ngModel" id="ReteinerSection_ParagraphNo" class="form-control"
+                        [(ngModel)]="reteinerSection.paragraphNo" name="paragraphNo"/>
+                    <validation-messages [formCtrl]="ReteinerSection_ParagraphNo"></validation-messages>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!reteinerSectionForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

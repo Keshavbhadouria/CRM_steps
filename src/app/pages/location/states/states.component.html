@@ -1,0 +1,90 @@
+<div class="container-fluid">
+    <app-page-title title="States" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <!-- Filters -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- (click)="openCreateModal(createOrEditContent)" -->
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateState' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="StateNameFilter">{{"StateName"| translate }} </label>
+                                <input type="text" class="form-control" id="StateNameFilter" name="stateNameFilter" [(ngModel)]="stateNameFilter">
+                            </div>
+                        </div>	
+                        <div class="col-md-3">
+                            <label for="IsActiveFilterSelect">{{"IsActive"| translate }} </label>
+                            <select class="form-control" name="IsActiveFilter" id="IsActiveFilterSelect" [(ngModel)]="isActiveFilter">
+                            <option value="-1">{{"All"| translate }} </option>
+                            <option value="0">{{"False"| translate }} </option>
+                            <option value="1">{{"True"| translate }} </option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CRMCountryCountryNameFilter">({{"CRMCountry"| translate }} ) {{"CountryName"| translate }} </label>
+                                <input type="text" class="form-control" id="CRMCountryCountryNameFilter" name="crmCountryCountryNameFilter" [(ngModel)]="crmCountryCountryNameFilter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shoe Hide Filters -->
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table List -->
+
+    <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table>
+</div>
+
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-state-create-edit [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editStatus">
+    </app-state-create-edit>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-state-view [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewStatus">
+    </app-state-view>
+</ng-template>

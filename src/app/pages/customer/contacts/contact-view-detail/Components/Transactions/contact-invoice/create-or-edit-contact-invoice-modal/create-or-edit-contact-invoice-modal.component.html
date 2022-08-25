@@ -1,0 +1,205 @@
+<form #contactInvoiceForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditContactInvoiceHeader' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewContactInvoiceHeader' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactInvoice_ContactId">{{'Contact' | translate }} *</label>
+                    <ng-select [items]="contacts" #ContactInvoice_ContactId="ngModel"
+                        bindValue="id" bindLabel="displayName" id="ContactInvoice_ContactId"
+                        name="contactId" [(ngModel)]="contactInvoice.contactId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactInvoice_ContactId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactInvoice_ContactQuoteHeaderId">{{'ContactQuoteHeader' | translate }}</label>
+                    <ng-select [items]="contactQuoteHeaders" #ContactInvoice_ContactQuoteHeaderId="ngModel"
+                        bindValue="id" bindLabel="displayName" id="ContactInvoice_ContactQuoteHeaderId"
+                        name="contactQuoteHeaderId" [(ngModel)]="contactInvoice.contactQuoteHeaderId">
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactInvoice_ContactQuoteHeaderId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_ReteinerCode">{{ 'ReteinerCode' | translate }} *</label>
+                    <input type="text" #ContactInvoice_ReteinerCode="ngModel" id="ContactInvoice_ReteinerCode"
+                        class="form-control" [(ngModel)]="contactInvoice.reteinerCode" name="reteinerCode" required />
+                    <validation-messages [formCtrl]="ContactInvoice_ReteinerCode"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_SubTotal">{{ 'SubTotal' | translate }} *</label>
+                    <input type="number" #ContactInvoice_SubTotal="ngModel" id="ContactInvoice_SubTotal"
+                        class="form-control" [(ngModel)]="contactInvoice.subTotal" name="subTotal"
+                        (keypress)="numberOnly($event)" min="0" required />
+                    <validation-messages [formCtrl]="ContactInvoice_SubTotal"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_Tax">{{ 'Tax' | translate }} *</label>
+                    <input type="number" #ContactInvoice_Tax="ngModel" id="ContactInvoice_Tax" class="form-control"
+                        [(ngModel)]="contactInvoice.tax" name="tax" (keypress)="numberOnly($event)" min="0" required />
+                    <validation-messages [formCtrl]="ContactInvoice_Tax"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_Total">{{ 'Total' | translate }} *</label>
+                    <input type="number" #ContactInvoice_Total="ngModel" id="ContactInvoice_Total" class="form-control"
+                        [(ngModel)]="contactInvoice.total" name="total" (keypress)="numberOnly($event)" min="0"
+                        required />
+                    <validation-messages [formCtrl]="ContactInvoice_Total"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4 m-checkbox-list" style="margin: 50px 0px 0px 0px;">
+                <label for="ContactInvoice_Paid" class="kt-checkbox">
+                    <input id="ContactInvoice_Paid" #ContactInvoice_Paid="ngModel" type="checkbox" name="paid"
+                        [(ngModel)]="contactInvoice.paid">
+                    {{ "Paid" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ContactInvoice_Paid"></validation-messages>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_Gateway">{{ 'Gateway' | translate }}</label>
+                    <input type="text" #ContactInvoice_Gateway="ngModel" id="ContactInvoice_Gateway"
+                        class="form-control" [(ngModel)]="contactInvoice.gateway" name="gateway" />
+                    <validation-messages [formCtrl]="ContactInvoice_Gateway"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_TransactionID">{{ 'TransactionID' | translate }}</label>
+                    <input type="text" #ContactInvoice_TransactionID="ngModel" id="ContactInvoice_TransactionID"
+                        class="form-control" [(ngModel)]="contactInvoice.transactionID" name="transactionID" />
+                    <validation-messages [formCtrl]="ContactInvoice_TransactionID"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_GatewayResponse">{{ 'GatewayResponse' | translate }}</label>
+                    <input type="text" #ContactInvoice_GatewayResponse="ngModel" id="ContactInvoice_GatewayResponse"
+                        class="form-control" [(ngModel)]="contactInvoice.gatewayResponse" name="gatewayResponse" />
+                    <validation-messages [formCtrl]="ContactInvoice_GatewayResponse"></validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-4 m-checkbox-list" style="margin: 50px 0px 0px 0px;">
+                <label for="ContactInvoice_Refunded" class="kt-checkbox">
+                    <input id="ContactInvoice_Refunded" #ContactInvoice_Refunded="ngModel" type="checkbox"
+                        name="refunded" [(ngModel)]="contactInvoice.refunded">
+                    {{ "Refunded" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ContactInvoice_Refunded"></validation-messages>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_RefundedDate">{{ 'RefundedDate' | translate }} *</label>
+                    <input class="form-control m-input" #ContactInvoice_RefundedDate="ngModel" type="date"
+                        [ngModel]="contactInvoice.refundedDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="contactInvoice.refundedDate = $event" id="ContactInvoice_RefundedDate"
+                        name="refundedDate" required />
+                    <validation-messages [formCtrl]="ContactInvoice_RefundedDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_RefundedAmount">{{ 'RefundedAmount' | translate }} *</label>
+                    <input type="number" #ContactInvoice_RefundedAmount="ngModel" id="ContactInvoice_RefundedAmount"
+                        class="form-control" [(ngModel)]="contactInvoice.refundedAmount" name="refundedAmount"
+                        (keypress)="numberOnly($event)" min="0" required />
+                    <validation-messages [formCtrl]="ContactInvoice_RefundedAmount"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_RefundedReason">{{ 'RefundedReason' | translate }}</label>
+                    <input type="text" #ContactInvoice_RefundedReason="ngModel" id="ContactInvoice_RefundedReason"
+                        class="form-control" [(ngModel)]="contactInvoice.refundedReason" name="refundedReason" />
+                    <validation-messages [formCtrl]="ContactInvoice_RefundedReason"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_RefundedBy">{{ 'RefundedBy' | translate }}</label>
+                    <input type="text" #ContactInvoice_RefundedBy="ngModel" id="ContactInvoice_RefundedBy"
+                        class="form-control" [(ngModel)]="contactInvoice.refundedBy" name="refundedBy" />
+                    <validation-messages [formCtrl]="ContactInvoice_RefundedBy"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4 m-checkbox-list" style="margin: 50px 0px 0px 0px;">
+                <label for="ContactInvoice_Voided" class="kt-checkbox">
+                    <input id="ContactInvoice_Voided" #ContactInvoice_Voided="ngModel" type="checkbox" name="void"
+                        [(ngModel)]="contactInvoice.voided">
+                    {{ "Voided" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ContactInvoice_Voided"></validation-messages>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_VoidedBy">{{ 'VoidedBy' | translate }}</label>
+                    <input type="text" #ContactInvoice_VoidedBy="ngModel" id="ContactInvoice_VoidedBy"
+                        class="form-control" [(ngModel)]="contactInvoice.voidedBy" name="voidedBy" />
+                    <validation-messages [formCtrl]="ContactInvoice_VoidedBy"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_VoidedDate">{{ 'VoidedDate' | translate }}</label>
+                    <input class="form-control m-input" #ContactInvoice_VoidedDate="ngModel" type="date"
+                        [ngModel]="contactInvoice.voidedDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="contactInvoice.voidedDate = $event" id="ContactInvoice_VoidedDate"
+                        name="voidedDate" required />
+                    <validation-messages [formCtrl]="ContactInvoice_VoidedDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_QuickBookTransactionID">{{ 'QuickBookTransactionID' | translate
+                        }}</label>
+                    <input type="text" #ContactInvoice_QuickBookTransactionID="ngModel"
+                        id="ContactInvoice_QuickBookTransactionID" class="form-control"
+                        [(ngModel)]="contactInvoice.quickBookTransactionID" name="quickBookTransactionID" />
+                    <validation-messages [formCtrl]="ContactInvoice_QuickBookTransactionID"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4 m-checkbox-list" style="margin: 50px 0px 0px 0px;">
+                <label for="ContactInvoice_PostedQuickBook" class="kt-checkbox">
+                    <input id="ContactInvoice_PostedQuickBook" #ContactInvoice_PostedQuickBook="ngModel" type="checkbox"
+                        name="postedQuickBook" [(ngModel)]="contactInvoice.postedQuickBook">
+                    {{ "PostedQuickBook" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ContactInvoice_PostedQuickBook"></validation-messages>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactInvoice_InvoiceCode">{{ 'InvoiceCode' | translate }}</label>
+                    <input type="text" #ContactInvoice_InvoiceCode="ngModel" id="ContactInvoice_InvoiceCode"
+                        class="form-control" [(ngModel)]="contactInvoice.invoiceCode" name="invoiceCode" />
+                    <validation-messages [formCtrl]="ContactInvoice_InvoiceCode"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!contactInvoiceForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

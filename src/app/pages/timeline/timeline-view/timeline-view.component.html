@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewTimeline' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{"Completed"| translate }}</label>
+            <div *ngIf="item.contactActionsHistory.completed" class="text-left"><i
+                    class="fa fa-check-circle text-success" title="True"></i></div>
+            <div *ngIf="!item.contactActionsHistory.completed" class="text-left"><i class="fa fa-times-circle"
+                    title="False"></i></div>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"DueDate"| translate }}</label>
+            <p>
+                {{ item.contactActionsHistory.dueDate |  date: 'dd/MM/yyyy' }}
+            </p>
+        </div>
+
+        <div class="col-6 mb-3">
+            <label>({{"BusinessActionScript"| translate }}) {{"Title"| translate }}</label>
+            <p>
+                {{item.businessActionScriptTitle}}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"Contact"| translate }}) {{"Company"| translate }}</label>
+            <p>
+                {{item.contactCompany}}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"ActivityTaskStage"| translate }}) {{"StageName"| translate }}</label>
+            <p>
+                {{item.activityTaskStageStageName}}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"User"| translate }}) {{"Name"| translate }}</label>
+            <p>
+                {{item.userName}}
+            </p>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

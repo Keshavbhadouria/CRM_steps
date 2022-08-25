@@ -1,0 +1,254 @@
+<div class="container-fluid">
+  <app-page-title title="Projects List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <!-- Filters -->
+  <div class="row" [busyIf]="loading">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i
+                      class="bx bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2" *ngIf="displayRoleName != 'client'">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'Pages.Project.CreateProject' | translate}}</button>
+            </div>
+          </div>
+
+          <!-- Advanced Filter  -->
+          <div class="row" [hidden]="!advancedFiltersAreShown">
+            <div class="col-md-12">
+              <div class="separator separator-dashed"></div>
+            </div>
+
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ProjectNameFilter">{{'Pages.Project.ProjectName' | translate}}</label>
+                <input type="text" class="form-control" id="ProjectNameFilter" name="projectNameFilter"
+                  [(ngModel)]="projectNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="GoalFilter">{{'Pages.Project.Goal' | translate}}</label>
+                <input type="text" class="form-control" id="GoalFilter" name="goalFilter" [(ngModel)]="goalFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinStartDateFilter">{{'Pages.Project.StartDateRange' | translate}}</label>
+                <div class="input-group clockpicker">
+                  <input class="form-control m-input " id="MinStartDateFilter" name="MinStartDateFilter" type="date"
+                    placeholder="{{'Pages.Project.Min' | translate}}" [(ngModel)]="minStartDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxStartDateFilter" name="MaxStartDateFilter" type="date"
+                    placeholder="{{'Pages.Project.Max' | translate}}" [(ngModel)]="maxStartDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinTargetDateFilter">{{'Pages.Project.TargetDateRange' | translate}}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinTargetDateFilter" name="MinTargetDateFilter" type="date"
+                    placeholder="{{'Pages.Project.Min' | translate}}" [(ngModel)]="minTargetDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxTargetDateFilter" name="MaxTargetDateFilter" type="date"
+                    placeholder="{{'Pages.Project.Max' | translate}}" [(ngModel)]="maxTargetDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinBaselineVelocityFilter">{{'Pages.Project.MinMax' | translate}}
+                  {{'Pages.Project.BaselineVelocity' | translate}}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinBaselineVelocityFilter"
+                    [(ngModel)]="minBaselineVelocityFilter" placeholder="{{'Pages.Project.Min' | translate}}"
+                    name="minBaselineVelocityFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxBaselineVelocityFilter"
+                    placeholder="{{'Pages.Project.Max' | translate}}" name="maxBaselineVelocityFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinActualVelocityFilter">{{'Pages.Project.MinMax' | translate}}
+                  {{'Pages.Project.ActualVelocity' | translate}}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinActualVelocityFilter"
+                    [(ngModel)]="minActualVelocityFilter" placeholder="{{'Pages.Project.Min' | translate}}"
+                    name="minActualVelocityFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxActualVelocityFilter"
+                    placeholder="{{'Pages.Project.Max' | translate}}" name="maxActualVelocityFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="TeamChannelFilter">{{'Pages.Project.TeamChannel' | translate}}</label>
+                <input type="text" class="form-control" id="TeamChannelFilter" name="teamChannelFilter"
+                  [(ngModel)]="teamChannelFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="LogoFilter">{{'Pages.Project.Logo' | translate}}</label>
+                <input type="text" class="form-control" id="LogoFilter" name="logoFilter" [(ngModel)]="logoFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactCompanyFilter">({{'Pages.Project.Contact' | translate}}) {{'Pages.Project.Company' |
+                  translate}}</label>
+                <input type="text" class="form-control" id="ContactCompanyFilter" name="contactCompanyFilter"
+                  [(ngModel)]="contactCompanyFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="PMIndustryIndustryFilter">{{'Pages.Project.PMIndustry' | translate}}</label>
+                <input type="text" class="form-control" id="PMIndustryIndustryFilter" name="pmIndustryIndustryFilter"
+                  [(ngModel)]="pmIndustryIndustryFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="UserNameFilter">{{'Pages.Project.Username' | translate}}</label>
+                <input type="text" class="form-control" id="UserNameFilter" name="userNameFilter"
+                  [(ngModel)]="userNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="PMTaskPriorityPriorityFilter">{{'Pages.Project.PMTaskPriority' | translate}}</label>
+                <input type="text" class="form-control" id="PMTaskPriorityPriorityFilter"
+                  name="pmTaskPriorityPriorityFilter" [(ngModel)]="pmTaskPriorityPriorityFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="PMProjectStatusStatusFilter">{{'Pages.Project.PMProjectStatus' | translate}}</label>
+                <input type="text" class="form-control" id="PMProjectStatusStatusFilter"
+                  name="pmProjectStatusStatusFilter" [(ngModel)]="pmProjectStatusStatusFilter">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Shoe Hide Filters -->
+          <div class="row mb-2 mt-2">
+            <div class="col-sm-12">
+              <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i>
+                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+              <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i>
+                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table List -->
+  <div class="row">
+    <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row projects">
+          <div class="col-xl-4 col-md-6" *ngFor="let data of myData" data-id="{{data.pmProject.id}}">
+            <div class="card gradient-45deg-light-gray-lightgray gradient-shadow" style="border-radius:5px!important;">
+              <div class="card-header pb-0 border-bottom-0 ">
+                  <span class="badge badge-pill badge-success mr-1 mb-1 mt-1">{{data.pmProjectStatusStatus}}</span>
+                  <h2 class="card-title ml-1">
+                      <a href="Javascript:void(0)" [routerLink]="['../../projectDetail', data.pmProject.publicId]">{{data.pmProject.projectName}}</a> 
+                  </h2>
+
+                  <div class="card-options actions">
+                    <a class="btnView" data-id="{{data.pmProject.publicId}}" (click)="onViewProject(data,viewModal)" alt="view"><i class="fas fa-eye"></i></a>
+                      <a class="btnEdit" *ngIf="displayRoleName != 'client'" data-id="{{data.pmProject.publicId}}" (click)="editProjectFun(data,createModal)" alt="edit"><i class="fas fa-edit"></i></a>
+                      <a class="btnDel text-danger" *ngIf="displayRoleName != 'client'" data-id="{{data.pmProject.publicId}}" (click) = onDelete(data)><i class="fas fa-trash"></i></a>
+                  </div>
+              </div>
+              <div class="card-body pt-0">
+                  <div class="row">
+                      <div class="col-sm-4">
+                          <img class="img-responsive" [src]="data.pmProject.logo != null ? baseURL + data.pmProject.logo : defaultProjectPic" style="width:90px;height:55px;">
+                      </div>
+                      <div class="col-sm-8">
+                          <p class="mb-0">Leader <span class="text-info">{{data.userName}}</span></p>
+                          <p class="mb-0">Customer <span class="text-info">{{data.contactCompany}}</span></p>
+                      </div>
+                  </div>
+                  <hr />
+                  <div class="row proj-counters" style="margin-bottom:10px">
+                    <table>
+                      <tr>
+                        <td>
+                          <div class="counter-head">Epics</div> <a class="counter-num" href="Javascript:void(0)" [routerLink]="['/pm/epic', data.pmProject.publicId]"><span style="font-weight: bold;">{{data.epicCount}}</span></a>
+                        </td>
+                        <td>
+                          <div class="counter-head">Sprints</div> <a class="counter-num" href="Javascript:void(0)" [routerLink]="['/pm/sprint', data.pmProject.publicId]"><span style="font-weight: bold;">{{data.sprintCount}}</span></a>
+                        </td>
+                        <td>
+                          <div class="counter-head">Stories</div> <span class="counter-num" style="font-weight: bold;">{{data.storyCount}}</span>
+                        </td>
+                        <td *ngIf="displayRoleName != 'client'">
+                          <div class="counter-head" >Tasks</div> <span class="counter-num" style="font-weight: bold;">{{data.taskCount}}</span>
+                        </td>
+                        <td>
+                          <div class="counter-head">Bugs</div> <span class="counter-num" style="font-weight: bold;">{{data.bugCount}}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div style="bottom: 3px; position: absolute; right: 10px;">
+                      Members <span class="member-count">{{data.teamMemberCount}}</span>
+                      <a *ngIf="displayRoleName != 'client'" class="addMembers" data-id="42" data-toggle="tooltip" title="Add Team Members" (click)="openTeamMemberModal(data,teamMemberModal)"><i class="fa fa-user-plus text-primary"></i></a>
+                  </div> 
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table> -->
+
+  <!-- end row -->
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-project-create-edit-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editProject">
+  </app-project-create-edit-modal>
+</ng-template>
+
+<ng-template #teamMemberModal role="document" let-modal>
+  <app-team-members-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="manageTeam">
+  </app-team-members-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-project-view-modal class="modal-right" [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewProject">
+  </app-project-view-modal>
+</ng-template>

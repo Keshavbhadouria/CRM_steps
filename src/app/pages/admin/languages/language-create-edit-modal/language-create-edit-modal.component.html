@@ -1,0 +1,60 @@
+<form #userForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+      <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="languageId > 0"> {{'EditLanguage' |
+              translate}}
+          </span> <span *ngIf="!languageId"> {{'CreateLanguage' | translate}} </span> </h5>
+      <button type="button" class="btn-close" aria-hidden="true" (click)="close()"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+
+    <div class="row">
+      <div class="col-md-12">
+        <label for="language">{{ 'Language' | translate }} *</label>
+        <div class="form-group m-form__group">
+          <ng-select [items]="languageNamesSelectItems" bindValue="value" bindLabel="label"
+          name="name" [(ngModel)]="language.name" required></ng-select>
+        </div>
+
+      </div>
+      <div class="col-md-12 mt-2">
+
+        <!-- <div class="form-group m-form__group">
+          <label for="Flag">{{ 'Flag' | translate }} *</label>
+          <ng-select [items]="flagsSelectItems" bindValue="value" bindLabel="label"
+          name="language.icon" [(ngModel)]="language.icon" required></ng-select>
+        </div> -->
+
+        <div class="form-group">
+          <p-dropdown #iconCombobox name="languageIcon" [options]="flagsSelectItems"
+              [(ngModel)]="language.icon" [filter]="true" [virtualScroll]="true" [itemSize]="30" [style]="{'width':'100%'}">
+              <ng-template let-item pTemplate="selectedItem">
+                  <i class="me-1 d-inline-block" [ngClass]="item.value"></i>
+                  <span style="vertical-align:middle;">{{item.label}}</span>
+              </ng-template>
+              <ng-template let-flag pTemplate="item">
+                  <i class="me-1 d-inline-block" [ngClass]="flag.value"></i>
+                  <span style="vertical-align:middle">{{flag.label}}</span>
+              </ng-template>
+          </p-dropdown>
+      </div>
+
+
+      </div>
+      <div class="checkbox-list mt-2">
+        <label for="EditLanguage_IsEnabled" class="checkbox">
+            <input id="EditLanguage_IsEnabled" type="checkbox" name="languageIsEnabled"
+                [(ngModel)]="language.isEnabled">
+            {{"IsEnabled" | translate}}
+            <span></span>
+        </label>
+    </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="close()">Close</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!userForm.form.valid">
+          <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+          {{ 'Common.Label.Save' | translate}}
+      </button>
+  </div>
+</form>

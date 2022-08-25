@@ -1,0 +1,69 @@
+<form #commissionRuleForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditCommissionRule' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewCommissionRule' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="CommissionRule_AffiliateTierId">{{ 'AffiliateTier' | translate }} *</label>
+                    <ng-select [items]="affiliateTiers" #CommissionRule_AffiliateTierId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="CommissionRule_AffiliateTierId" name="affiliateTierId" [(ngModel)]="commissionRule.affiliateTierId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="CommissionRule_AffiliateTierId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="CommissionRule_SalesAmount">{{ 'SalesAmount' | translate }}</label>
+                    <input type="number" #CommissionRule_SalesAmount="ngModel" id="CommissionRule_SalesAmount" class="form-control"
+                        [(ngModel)]="commissionRule.salesAmount" name="salesAmount" min="0" />
+                    <validation-messages [formCtrl]="CommissionRule_SalesAmount"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="CommissionRule_Percentage">{{ 'Percentage' | translate }}</label>
+                    <input type="number" #CommissionRule_Percentage="ngModel" id="CommissionRule_Percentage" class="form-control"
+                        [(ngModel)]="commissionRule.percentage" name="percentage" min="0" max="100" />
+                    <validation-messages [formCtrl]="CommissionRule_Percentage"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="CommissionRule_AffiliateCommission">{{ 'AffiliateCommission' | translate }}</label>
+                    <input type="number" #CommissionRule_AffiliateCommission="ngModel" id="CommissionRule_AffiliateCommission" class="form-control"
+                        [(ngModel)]="commissionRule.affiliateCommission" name="affiliateCommission" min="0" />
+                    <validation-messages [formCtrl]="CommissionRule_AffiliateCommission"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="CommissionRule_PayAfterDays">{{ 'PayAfterDays' | translate }}</label>
+                    <input type="number" #CommissionRule_PayAfterDays="ngModel" id="CommissionRule_PayAfterDays" class="form-control"
+                        [(ngModel)]="commissionRule.payAfterDays" name="payAfterDays" min="0" />
+                    <validation-messages [formCtrl]="CommissionRule_PayAfterDays"></validation-messages>
+                </div>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="CommissionRule_Active" class="kt-checkbox">
+                    <input id="CommissionRule_Active" #CommissionRule_Active="ngModel" type="checkbox"
+                        name="active" [(ngModel)]="commissionRule.active">
+                    {{ "Active" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="CommissionRule_Active"></validation-messages>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!commissionRuleForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

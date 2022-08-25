@@ -1,0 +1,344 @@
+<div class="container-fluid" style="position: relative;">
+    <app-page-title title="Security" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+        <button style="position: absolute; top: 1px; right: 19px;" class="btn btn-primary" (click)="saveAll()"><i class="la la-floppy-o"></i>
+            {{"SaveAll" | translate}}</button>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row" [busyIf]="loading">
+                        <tabset *ngIf="settings">
+                            <tab class="p-5" *ngIf="true" heading="{{'UserManagement' | translate}}">
+                                <div class="form">
+                                    <h5>{{"FormBasedRegistration" | translate}}</h5>
+                                    <div class="checkbox-list">
+                                        <div class="form-group">
+                                            <label for="Setting_AllowSelfRegistration" class="checkbox"
+                                                style="margin-bottom: 0">
+                                                <input id="Setting_AllowSelfRegistration" class="check" type="checkbox"
+                                                    name="AllowSelfRegistration"
+                                                    [(ngModel)]="settings.userManagement.allowSelfRegistration">
+                                                {{"AllowUsersToRegisterThemselves" | translate}}
+                                                <span></span>
+                                            </label>
+                                            <br>
+                                            <span
+                                                class="form-text text-muted">{{"AllowUsersToRegisterThemselves_Hint" | translate}}</span>
+                                        </div>
+                                        <div class="form-group" [hidden]="!settings.userManagement.allowSelfRegistration">
+                                            <label for="Setting_IsNewRegisteredUserActiveByDefault" class="checkbox"
+                                                style="margin-bottom: 0">
+                                                <input id="Setting_IsNewRegisteredUserActiveByDefault" type="checkbox"
+                                                    name="IsNewRegisteredUserActiveByDefault"
+                                                    [(ngModel)]="settings.userManagement.isNewRegisteredUserActiveByDefault">
+                                                {{"NewRegisteredUsersIsActiveByDefault" | translate}}
+                                                <span></span>
+                                            </label>
+                                            <br>
+                                            <span
+                                                class="form-text text-muted">{{"NewRegisteredUsersIsActiveByDefault_Hint" | translate}}</span>
+                                        </div>
+                                        <div class="form-group" [hidden]="!settings.userManagement.allowSelfRegistration">
+                                            <label for="Setting_UseCaptchaOnRegistration" class="checkbox">
+                                                <input id="Setting_UseCaptchaOnRegistration" type="checkbox"
+                                                    name="UseCaptchaOnRegistration"
+                                                    [(ngModel)]="settings.userManagement.useCaptchaOnRegistration">
+                                                {{"UseCaptchaOnRegistration" | translate}}
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group" [hidden]="!settings.userManagement.allowSelfRegistration">
+                                            <label for="Setting_UseCaptchaOnLogin" class="checkbox">
+                                                <input id="Setting_UseCaptchaOnLogin" type="checkbox"
+                                                    name="UseCaptchaOnLogin"
+                                                    [(ngModel)]="settings.userManagement.useCaptchaOnLogin">
+                                                {{"UseCaptchaOnLogin" | translate}}
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <h5>{{"CookieConsent" | translate}}</h5>
+                                        <label for="Settings_IsCookieConsentEnabled" class="checkbox">
+                                            <input id="Settings_IsCookieConsentEnabled" class="md-check" type="checkbox"
+                                                name="IsCookieConsentEnabled"
+                                                [(ngModel)]="settings.userManagement.isCookieConsentEnabled">
+                                            {{"IsCookieConsentEnabled" | translate}}
+                                            <span></span>
+                                        </label>
+                                        <h5>{{"SessionTimeOut" | translate}}</h5>
+                                        <label for="Setting_IsSessionTimeOutEnabled" class="checkbox">
+                                            <input id="Setting_IsSessionTimeOutEnabled" class="md-check" type="checkbox"
+                                                name="IsEnabled"
+                                                [(ngModel)]="settings.userManagement.sessionTimeOutSettings.isEnabled">
+                                            {{"IsSessionTimeOutEnabled" | translate}}
+                                            <span></span>
+                                        </label>
+                                        <br>
+                                        <label *ngIf="settings.userManagement.sessionTimeOutSettings.isEnabled"
+                                            for="Setting_ShowLockScreenWhenTimedOut" class="checkbox">
+                                            <input id="Setting_ShowLockScreenWhenTimedOut" class="md-check" type="checkbox"
+                                                name="IsEnabled"
+                                                [(ngModel)]="settings.userManagement.sessionTimeOutSettings.showLockScreenWhenTimedOut">
+                                            {{"ShowLockScreenWhenTimedOut" | translate}}
+                                            <span></span>
+                                        </label>
+                                        <div class="form-group"
+                                            *ngIf="settings.userManagement.sessionTimeOutSettings.isEnabled">
+                                            <label
+                                                for="Setting_SessionTimeOutSecond">{{"SessionTimeOutSecond" | translate}}</label>
+                                            <input id="Setting_SessionTimeOutSecond" type="number" name="TimeOutSecond"
+                                                class="form-control" min="1"
+                                                [ngClass]="{'edited':settings.userManagement.sessionTimeOutSettings.timeOutSecond}"
+                                                [(ngModel)]="settings.userManagement.sessionTimeOutSettings.timeOutSecond">
+                                        </div>
+                                        <div class="form-group"
+                                            *ngIf="settings.userManagement.sessionTimeOutSettings.isEnabled">
+                                            <label
+                                                for="Setting_ShowTimeOutNotificationSecond">{{"ShowTimeOutNotificationSecond" | translate}}</label>
+                                            <input id="Setting_ShowTimeOutNotificationSecond" type="number"
+                                                name="ShowTimeOutNotificationSecond" class="form-control" min="1"
+                                                [ngClass]="{'edited':settings.userManagement.sessionTimeOutSettings.showTimeOutNotificationSecond}"
+                                                [(ngModel)]="settings.userManagement.sessionTimeOutSettings.showTimeOutNotificationSecond">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="settings.ldap.isModuleEnabled">
+                                    <h5 class="mt-4">{{"LdapSettings" | translate}}</h5>
+                                    <label for="Setting_LdapIsEnabled" class="checkbox">
+                                        <input id="Setting_LdapIsEnabled" type="checkbox" name="LdapIsEnabled"
+                                            [(ngModel)]="settings.ldap.isEnabled"> {{"EnableLdapAuthentication" | translate}}
+                                        <span></span>
+                                    </label>
+                                    <div class="form-group" [hidden]="!settings.ldap.isEnabled">
+                                        <label for="LdapDomainName">{{"DomainName" | translate}}</label>
+                                        <input id="LdapDomainName" type="text" name="LdapDomainName" class="form-control"
+                                            [(ngModel)]="settings.ldap.domain" maxlength="128">
+                                    </div>
+                                    <div class="form-group" [hidden]="!settings.ldap.isEnabled">
+                                        <label for="LdapUserName">{{"UserName" | translate}}</label>
+                                        <input id="LdapUserName" type="text" name="LdapUserName" class="form-control"
+                                            [(ngModel)]="settings.ldap.userName" maxlength="128">
+                                    </div>
+                                    <div class="form-group" [hidden]="!settings.ldap.isEnabled">
+                                        <label for="LdapPassword">{{"Password" | translate}}</label>
+                                        <input id="LdapPassword" type="password" name="LdapPassword" class="form-control"
+                                            [(ngModel)]="settings.ldap.password" maxlength="128">
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="mt-4">{{"OtherSettings" | translate}}</h5>
+                                    <label for="Setting_IsEmailConfirmationRequiredForLogin" class="checkbox">
+                                        <input id="Setting_IsEmailConfirmationRequiredForLogin" type="checkbox"
+                                            name="IsEmailConfirmationRequiredForLogin"
+                                            [(ngModel)]="settings.userManagement.isEmailConfirmationRequiredForLogin">
+                                        {{"EmailConfirmationRequiredForLogin" | translate}}
+                                        <span></span>
+                                    </label>
+                                    <h5>{{"Profile" | translate}}</h5>
+                                    <label for="Setting_AllowUsingGravatarProfilePicture" class="checkbox">
+                                       <input id="Setting_AllowUsingGravatarProfilePicture" class="md-check" type="checkbox" name="AllowUsingGravatarProfilePicture"
+                                           [(ngModel)]="settings.userManagement.allowUsingGravatarProfilePicture">
+                                       {{"AllowUsingGravatarProfilePicture" | translate}}
+                                       <span></span>
+                                   </label>
+                                </div>
+                            </tab>
+                            <tab class="p-5" *ngIf="true" heading="{{'Security' | translate}}">
+                                <!-- *ngIf="true" is a workaround for https://github.com/valor-software/ng2-bootstrap/issues/823 -->
+                                <div>
+                                    <h5>{{"PasswordComplexity" | translate}}</h5>
+                                    <label for="Setting_PasswordComplexity_UseDefaultSettings" class="checkbox">
+                                        <input id="Setting_PasswordComplexity_UseDefaultSettings" type="checkbox"
+                                            name="Setting_PasswordComplexity_UseDefaultSettings"
+                                            [(ngModel)]="settings.security.useDefaultPasswordComplexitySettings">
+                                        {{"UseDefaultSettings" | translate}}
+                                        <span></span>
+                                    </label>
+                                    <div class="p-2">
+                                        <div class="checkbox-list">
+                                            <label for="Setting_PasswordComplexity_RequireDigit" class="checkbox">
+                                                <input id="Setting_PasswordComplexity_RequireDigit" type="checkbox"
+                                                    name="Setting_PasswordComplexity_RequireDigit"
+                                                    [(ngModel)]="settings.security.passwordComplexity.requireDigit"
+                                                    *ngIf="!settings.security.useDefaultPasswordComplexitySettings">
+                                                <input id="Setting_PasswordComplexity_RequireDigit" type="checkbox"
+                                                    name="Setting_PasswordComplexity_RequireDigit"
+                                                    [(ngModel)]="settings.security.defaultPasswordComplexity.requireDigit"
+                                                    *ngIf="settings.security.useDefaultPasswordComplexitySettings" disabled>
+                                                {{"PasswordComplexity_RequireDigit" | translate}}
+                                                <span></span>
+                                            </label>
+                                            <br>
+                                            <label for="Setting_PasswordComplexity_RequireLowercase" class="checkbox">
+                                                <input id="Setting_PasswordComplexity_RequireLowercase" type="checkbox"
+                                                    name="Setting_PasswordComplexity_RequireLowercase"
+                                                    [(ngModel)]="settings.security.passwordComplexity.requireLowercase"
+                                                    *ngIf="!settings.security.useDefaultPasswordComplexitySettings">
+                                                <input id="Setting_PasswordComplexity_RequireLowercase" type="checkbox"
+                                                    name="Setting_PasswordComplexity_RequireLowercase"
+                                                    [(ngModel)]="settings.security.defaultPasswordComplexity.requireLowercase"
+                                                    *ngIf="settings.security.useDefaultPasswordComplexitySettings" disabled>
+                                                {{"PasswordComplexity_RequireLowercase" | translate}}
+                                                <span></span>
+                                            </label>
+                                            <br>
+                                            <label for="Setting_PasswordComplexity_RequireNonAlphanumeric" class="checkbox">
+                                                <input id="Setting_PasswordComplexity_RequireNonAlphanumeric" type="checkbox"
+                                                    name="Setting_PasswordComplexity_RequireNonAlphanumeric"
+                                                    [(ngModel)]="settings.security.passwordComplexity.requireNonAlphanumeric"
+                                                    *ngIf="!settings.security.useDefaultPasswordComplexitySettings">
+                                                <input id="Setting_PasswordComplexity_RequireNonAlphanumeric" type="checkbox"
+                                                    name="Setting_PasswordComplexity_RequireNonAlphanumeric"
+                                                    [(ngModel)]="settings.security.defaultPasswordComplexity.requireNonAlphanumeric"
+                                                    *ngIf="settings.security.useDefaultPasswordComplexitySettings" disabled>
+                                                {{"PasswordComplexity_RequireNonAlphanumeric" | translate}}
+                                                <span></span>
+                                            </label>
+                                            <br>
+                                            <label for="Setting_PasswordComplexity_RequireUppercase" class="checkbox">
+                                                <input id="Setting_PasswordComplexity_RequireUppercase" type="checkbox"
+                                                    name="Setting_PasswordComplexity_RequireUppercase"
+                                                    [(ngModel)]="settings.security.passwordComplexity.requireUppercase"
+                                                    *ngIf="!settings.security.useDefaultPasswordComplexitySettings">
+                                                <input id="Setting_PasswordComplexity_RequireUppercase" type="checkbox"
+                                                    name="Setting_PasswordComplexity_RequireUppercase"
+                                                    [(ngModel)]="settings.security.defaultPasswordComplexity.requireUppercase"
+                                                    *ngIf="settings.security.useDefaultPasswordComplexitySettings" disabled>
+                                                {{"PasswordComplexity_RequireUppercase" | translate}}
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{"PasswordComplexity_RequiredLength" | translate}}</label>
+                                            <input type="number" name="RequiredLength" class="form-control"
+                                                [ngClass]="{'edited':settings.security.passwordComplexity.requiredLength}"
+                                                [(ngModel)]="settings.security.passwordComplexity.requiredLength"
+                                                *ngIf="!settings.security.useDefaultPasswordComplexitySettings">
+                                            <input type="number" name="RequiredLength" class="form-control"
+                                                [ngClass]="{'edited':settings.security.defaultPasswordComplexity.requiredLength}"
+                                                [(ngModel)]="settings.security.defaultPasswordComplexity.requiredLength"
+                                                *ngIf="settings.security.useDefaultPasswordComplexitySettings" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <h5>{{"UserLockOut" | translate}}</h5>
+                                    <div class="md-checkbox-list">
+                                        <div>
+                                            <label for="Setting_UserLockOut_IsEnabled" class="checkbox">
+                                                <input id="Setting_UserLockOut_IsEnabled" type="checkbox"
+                                                    name="Setting_UserLockOut_IsEnabled"
+                                                    [(ngModel)]="settings.security.userLockOut.isEnabled">
+                                                {{"EnableUserAccountLockingOnFailedLoginAttemts" | translate}}
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" *ngIf="settings.security.userLockOut.isEnabled">
+                                        <label
+                                            for="MaxFailedAccessAttemptsBeforeLockout">{{"MaxFailedAccessAttemptsBeforeLockout" | translate}}</label>
+                                        <input id="MaxFailedAccessAttemptsBeforeLockout" type="number"
+                                            name="MaxFailedAccessAttemptsBeforeLockout" class="form-control"
+                                            [ngClass]="{'edited':settings.security.userLockOut.maxFailedAccessAttemptsBeforeLockout}"
+                                            [(ngModel)]="settings.security.userLockOut.maxFailedAccessAttemptsBeforeLockout">
+                                    </div>
+                                    <div class="form-group" *ngIf="settings.security.userLockOut.isEnabled">
+                                        <label
+                                            for="DefaultAccountLockoutSeconds">{{"DefaultAccountLockoutDurationAsSeconds" | translate}}</label>
+                                        <input id="DefaultAccountLockoutSeconds" type="number"
+                                            name="DefaultAccountLockoutSeconds" class="form-control"
+                                            [ngClass]="{'edited':settings.security.userLockOut.defaultAccountLockoutSeconds}"
+                                            [(ngModel)]="settings.security.userLockOut.defaultAccountLockoutSeconds">
+                                    </div>
+                                </div>
+                                <div
+                                    *ngIf="!isMultiTenancyEnabled || settings.security.twoFactorLogin.isEnabledForApplication" class="mt-3">
+                                    <h5>{{"TwoFactorLogin" | translate}}</h5>
+                                    <div class="checkbox-list">
+                                        <label for="Setting_TwoFactorLogin_IsEnabled" class="checkbox">
+                                            <input id="Setting_TwoFactorLogin_IsEnabled" type="checkbox"
+                                                name="Setting_TwoFactorLogin_IsEnabled"
+                                                [(ngModel)]="settings.security.twoFactorLogin.isEnabled">
+                                            {{"EnableTwoFactorLogin" | translate}}
+                                            <span></span>
+                                        </label>
+                                        <br>
+                                        <label for="Setting_TwoFactorLogin_IsEmailProviderEnabled" class="checkbox"
+                                            *ngIf="settings.security.twoFactorLogin.isEnabled && !isMultiTenancyEnabled">
+                                            <input id="Setting_TwoFactorLogin_IsEmailProviderEnabled" type="checkbox"
+                                                name="Setting_TwoFactorLogin_IsEmailProviderEnabled"
+                                                [(ngModel)]="settings.security.twoFactorLogin.isEmailProviderEnabled">
+                                            {{"IsEmailVerificationEnabled" | translate}}
+                                            <span></span>
+                                        </label>
+                                        <br>
+                                        <label for="Setting_TwoFactorLogin_IsSmsProviderEnabled" class="checkbox"
+                                            *ngIf="settings.security.twoFactorLogin.isEnabled && !isMultiTenancyEnabled">
+                                            <input id="Setting_TwoFactorLogin_IsSmsProviderEnabled" type="checkbox"
+                                                name="Setting_TwoFactorLogin_IsSmsProviderEnabled"
+                                                [(ngModel)]="settings.security.twoFactorLogin.isSmsProviderEnabled">
+                                            {{"IsSmsVerificationEnabled" | translate}}
+                                            <span></span>
+                                        </label>
+                                        <br>
+                                        <label for="Setting_TwoFactorLogin_IsGoogleAuthenticatorEnabled" class="checkbox"
+                                            *ngIf="settings.security.twoFactorLogin.isEnabled && !isMultiTenancyEnabled">
+                                            <input id="Setting_TwoFactorLogin_IsGoogleAuthenticatorEnabled" type="checkbox"
+                                                name="Setting_TwoFactorLogin_IsGoogleAuthenticatorEnabled"
+                                                [(ngModel)]="settings.security.twoFactorLogin.isGoogleAuthenticatorEnabled">
+                                            {{"IsGoogleAuthenticatorEnabled" | translate}}
+                                            <span></span>
+                                        </label>
+                                        <br>
+                                        <label for="Setting_TwoFactorLogin_IsRememberBrowserEnabled" class="checkbox"
+                                            *ngIf="settings.security.twoFactorLogin.isEnabled">
+                                            <input id="Setting_TwoFactorLogin_IsRememberBrowserEnabled" type="checkbox"
+                                                name="Setting_TwoFactorLogin_IsRememberBrowserEnabled"
+                                                [(ngModel)]="settings.security.twoFactorLogin.isRememberBrowserEnabled">
+                                            {{"AllowToRememberBrowserForTwoFactorLogin" | translate}}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div *ngIf="!isMultiTenancyEnabled">
+                                    <h5>{{"OneConcurrentLoginPerUser" | translate}}</h5>
+                                    <div class="checkbox-list">
+                                        <label for="Setting_IsOneConcurrentLoginPerUserActive" class="checkbox">
+                                            <input id="Setting_IsOneConcurrentLoginPerUserActive" type="checkbox"
+                                                name="Setting_IsOneConcurrentLoginPerUserActive"
+                                                [(ngModel)]="settings.security.allowOneConcurrentLoginPerUser">
+                                            {{"OneConcurrentLoginPerUserActive" | translate}}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab class="p-5" *ngIf="true" heading="{{'Invoice' | translate}}">
+                                <!-- *ngIf="true" is a workaround for https://github.com/valor-software/ng2-bootstrap/issues/823 -->
+                                <h5>{{"InvoiceInformation" | translate}}</h5>
+                                <div class="form-group">
+                                    <label for="LegalName">{{"LegalName" | translate}}</label>
+                                    <input id="LegalName" type="text" name="legalName" class="form-control"
+                                        [ngClass]="{'edited':settings.billing.legalName}"
+                                        [(ngModel)]="settings.billing.legalName" maxlength="64">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Address">{{"Address" | translate}}</label>
+                                    <textarea id="Address" rows="5" name="address" class="form-control"
+                                        [ngClass]="{'edited':settings.billing.address}"
+                                        [(ngModel)]="settings.billing.address" maxlength="256"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="taxVatNo">{{"Tax/VatNo" | translate}}</label>
+                                    <input id="taxVatNo" type="text" name="taxVatNo" class="form-control"
+                                        [ngClass]="{'edited':settings.billing.taxVatNo}"
+                                        [(ngModel)]="settings.billing.taxVatNo" maxlength="32">
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

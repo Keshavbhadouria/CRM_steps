@@ -1,0 +1,292 @@
+<div class="container-fluid">
+    <app-page-title title="Tenant" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" [(ngModel)]="filters.filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateNewTenant' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+
+                        <!-- <div class="col-xl-12 mt-3">
+                            <div class="input-group">
+                                <input id="TenantNameOrTenancyCode" [(ngModel)]="filters.filterText" name="filters.filterText" class="form-control"  type="text">
+                                <span class="input-group-btn">
+                                    <button (click)="getRecords()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                </span>
+                            </div>
+                        </div> -->
+
+                        <!-- <div class="col-xl-12 mt-3">
+                            <label for="EditionDropdown">{{'Edition' | translate}}</label>
+                            <edition-combo [(selectedEdition)]="filters.selectedEditionId"></edition-combo>
+                        </div> -->
+
+                        <!-- <div class="col-md-6 mt-3">
+
+                            <label class="switch">
+
+                                <input type="checkbox" [(ngModel)]="filters.subscriptionEndDateRangeActive"
+                                    id="TenantsTable_SubscriptionEndDateRangeActive"
+                                    name="SubscriptionEndDateRangeActive" value="true">
+                                <span class="slider round"></span>
+                            </label>
+                            <label style="margin-left: 5px;">{{'SubscriptionEndDate' |
+                                translate}}</label>
+
+                            <input class="form-control m-input " id="SubscriptionEndDateRange"
+                                name="SubscriptionEndDateRange" type="date"
+                                [attr.disabled]="!filters.subscriptionEndDateRangeActive ? 'disabled' : null"
+                                [(ngModel)]="subscriptionDateRange">
+                        </div> -->
+
+                        <!-- <div class="col-md-6 mt-3">
+
+
+
+                            <label class="switch">
+
+                                <input type="checkbox" [(ngModel)]="filters.creationDateRangeActive"
+                                    id="TenantsTable_CreationDateRangeActive" name="CreationDateRangeActive"
+                                    value="true">
+                                <span class="slider round"></span>
+                            </label>
+                            <label style="margin-left: 5px;"> {{'CreationTime' | translate}}</label>
+
+
+
+
+                            <input class="form-control m-input " id="CreationDateRange"
+                                name="filters.creationDateRangeActive" type="date"
+                                [attr.disabled]="!filters.creationDateRangeActive ? 'disabled' : null"
+                                [(ngModel)]="creationDateRange">
+                        </div> -->
+
+                    </div>
+                    <!-- Shoe Hide Filters -->
+                    <!-- <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center" [busyIf]="primengTableHelper.isLoading">
+        <!--<Primeng-TurboTable-Start>-->
+        <div class="col primeng-datatable-container">
+            <p-table #dataTable sortMode="multiple" (onLazyLoad)="getRecords($event)"
+                [value]="primengTableHelper.records" rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                [paginator]="false" [lazy]="true" [responsive]="primengTableHelper.isResponsive">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:150px">{{'Actions' | translate}}</th>
+                        <th style="width:150px" pSortableColumn="tenancyName">
+                            {{'Code' | translate}}
+                            <p-sortIcon field="tenancyName"></p-sortIcon>
+                            <p-columnFilter type="text" field="tenancyName" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width:150px" pSortableColumn="name">
+                            {{'Name' | translate}}
+                            <p-sortIcon field="name"></p-sortIcon>
+                            <p-columnFilter type="text" field="name" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width:200px">{{'Edition' | translate}}
+                            <p-columnFilter type="text" field="pmStoryPriorityPriority" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"
+                                [showApplyButton]="false" [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown [(ngModel)]="filters.selectedEditionId" [options]="editionLists"
+                                        optionLabel="displayText" optionValue="value" placeholder="Any"
+                                        (onChange)="customFilterCallback(filter, $event.value)" [showClear]="true">
+                                        <ng-template let-option pTemplate="item">
+                                            <span
+                                                [class]="'customer-badge status-' + option.displayName">{{option.displayText}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th style="width:300px" pSortableColumn="subscriptionEndDateUtc">
+                            {{'SubscriptionEndDate' | translate}}
+                            <p-sortIcon field="subscriptionEndDateUtc"></p-sortIcon>
+                            <p-columnFilter field="subscriptionEndDateUtc" display="menu" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" [showApplyButton]="false"
+                                [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <input class="form-control m-input " id="subscriptionEndDateStart"
+                                        name="subscriptionEndDateStart" type="date"
+                                        [(ngModel)]="subscriptionEndDateStart">
+                                    <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                                    <input class="form-control m-input " id="subscriptionEndDateEnd"
+                                        name="subscriptionEndDateEnd" type="date" [(ngModel)]="subscriptionEndDateEnd">
+
+                                   
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <button type="button"
+                                            class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                                            style="margin-right: 5px;"><span class="p-button-label"
+                                                (click)="clearDate($event)">Clear</span></button>
+                                        <button type="button"
+                                            class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                                            ng-reflect-label="Apply"><span class="p-button-label"
+                                                (click)="applyDate($event)">Apply</span></button>
+                                    </div>
+                                </ng-template>
+                            </p-columnFilter>
+
+                        </th>
+                        <th  style="width:150px" pSortableColumn="isActive">
+                            {{'Active' | translate}}
+                            <p-sortIcon field="isActive"></p-sortIcon>
+                        </th>
+                        <th style="width:280px" pSortableColumn="creationTime">
+                            {{'CreationTime' | translate}}
+                            <p-sortIcon field="creationTime"></p-sortIcon>
+                            <p-columnFilter field="creationTime" display="menu" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" [showApplyButton]="false"
+                                [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <input class="form-control m-input " id="creationDateStart" name="creationDateStart"
+                                        type="date" [(ngModel)]="creationDateStart">
+                                    <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                                    <input class="form-control m-input " id="creationDateEnd" name="creationDateEnd"
+                                        type="date" [(ngModel)]="creationDateEnd">
+
+
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <button type="button"
+                                            class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                                            style="margin-right: 5px;"><span class="p-button-label"
+                                                (click)="clearCreationDate($event)">Clear</span></button>
+                                        <button type="button"
+                                            class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                                            ng-reflect-label="Apply"><span class="p-button-label"
+                                                (click)="applyDate($event)">Apply</span></button>
+                                    </div>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-record="$implicit">
+                    <tr>
+                        <td class="tableAction" style="width: 150px">
+                            <div class="btn-group dropdown" dropdown container="body">
+                                <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
+                                    <i class="fa fa-plus-circle"></i> 
+                                    {{"Actions" | translate}}
+                                </button>
+                                <ul class="dropdown-menu custom-dropdown" *dropdownMenu>
+                                    <li>
+                                        <img
+                                        src="../../../../../assets/icons/editIcon.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="edit(record)">{{'Edit' | translate}}</a>
+                                    </li>
+                                    <li>
+                                        <img
+                                        src="../../../../../assets/icons/deleteIcon.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="onDelete(record.id)">{{'Delete' | translate}}</a>
+                                    </li>
+                                   
+                                </ul>
+                            </div>
+                        </td>
+                        <td  style="width:150px">
+                            <span class="ui-column-title">{{'TenancyCodeName' | translate}}</span>
+                            <i *ngIf="record.connectionString" class="fa fa-database"
+                                title="{{'HasOwnDatabase' | translate}}"></i>
+                            {{record.tenancyName}}
+                        </td>
+                        <td  style="width:150px">
+                            <span class="ui-column-title">{{'Name' | translate}}</span>
+                            {{record.name}}
+                        </td>
+                        <td  style="width:200px">
+                            <span class="ui-column-title">{{'Edition' | translate}}</span>
+                            {{record.editionDisplayName}}
+                        </td>
+                        <td  style="width:300px">
+                            <span class="ui-column-title">{{'SubscriptionEndDateUtc' | translate}}</span>
+                            {{ record.subscriptionEndDateUtc ? (record.subscriptionEndDateUtc | momentFormat:'L') :
+                            '-'}}
+                        </td>
+                        <td  style="width:150px">
+                            <span class="ui-column-title">{{'Active' | translate}}</span>
+                            <span class="label label-success label-inline" *ngIf="record.isActive">{{'Yes' |
+                                translate}}</span>
+                            <span class="label label-dark label-inline" *ngIf="!record.isActive">{{'No' |
+                                translate}}</span>
+                        </td>
+                        <td  style="width:280px">
+                            <span class="ui-column-title">{{'CreationTime' | translate}}</span>
+                            {{record.creationTime | momentFormat:'L'}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                {{'NoData' | translate}}
+            </div>
+            <div class="primeng-paging-container">
+                <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                    (onPageChange)="getRecords($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                </p-paginator>
+                <!-- <span class="total-records-count">
+                    {{'TotalRecordsCount' | translate:primengTableHelper.totalRecordsCount}}
+                </span> -->
+            </div>
+        </div>
+        <!--<Primeng-TurboTable-End>-->
+    </div>
+    <!-- <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table> -->
+
+</div>
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-tenants-create-edit [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editTenant">
+    </app-tenants-create-edit>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #updateModal role="document" let-modal>
+    <app-tenants-update [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editTenant">
+    </app-tenants-update>
+</ng-template>

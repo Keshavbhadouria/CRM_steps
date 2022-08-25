@@ -1,0 +1,208 @@
+<form #courseForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditCourse' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewCourse' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="LMSCourse_CourseCode">{{ 'CourseCode' | translate }} *</label>
+                    <input type="text" #LMSCourse_CourseCode="ngModel" id="LMSCourse_CourseCode" class="form-control"
+                        [(ngModel)]="lmsCourse.courseCode" name="courseCode" required maxlength="10" />
+                    <validation-messages [formCtrl]="LMSCourse_CourseCode"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="LMSCourse_CourseName">{{ 'CourseName' | translate }} *</label>
+                    <input type="text" #LMSCourse_CourseName="ngModel" id="LMSCourse_CourseName" class="form-control"
+                        [(ngModel)]="lmsCourse.courseName" name="courseName" required />
+                    <validation-messages [formCtrl]="LMSCourse_CourseName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="LMSCourse_PracticalHours">{{ 'LengthOfPraticalHours' | translate }} *</label>
+                    <input type="number" #LMSCourse_PracticalHours="ngModel" id="LMSCourse_PracticalHours"
+                        class="form-control" [(ngModel)]="lmsCourse.practicalHours" name="practicalHours" min="0"
+                        required (change)="calTotalHours()" />
+                    <validation-messages [formCtrl]="LMSCourse_PracticalHours"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="LMSCourse_TheoricalHours">{{ 'LengthOfTheoricalHours' | translate }} *</label>
+                    <input type="number" #LMSCourse_TheoricalHours="ngModel" id="LMSCourse_TheoricalHours"
+                        class="form-control" [(ngModel)]="lmsCourse.theoricalHours" name="theoricalHours" min="0"
+                        required (change)="calTotalHours()" />
+                    <validation-messages [formCtrl]="LMSCourse_TheoricalHours"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="LMSCourse_TotalHours">{{ 'LengthOfTotalHours' | translate }} *</label>
+                    <input type="number" #LMSCourse_TotalHours="ngModel" id="LMSCourse_TotalHours" class="form-control"
+                        [(ngModel)]="lmsCourse.totalHours" name="totalHours" min="0" disabled />
+                    <validation-messages [formCtrl]="LMSCourse_TotalHours"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="LMSCourse_Price">{{ 'Price' | translate }} *</label>
+                    <input type="number" #LMSCourse_Price="ngModel" id="LMSCourse_Price" class="form-control"
+                        [(ngModel)]="lmsCourse.price" name="price" min="0" required />
+                    <validation-messages [formCtrl]="LMSCourse_Price"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="LMSCourse_TestsIncluded">{{ 'TestsIncluded' | translate }} *</label>
+                    <input type="number" #LMSCourse_TestsIncluded="ngModel" id="LMSCourse_TestsIncluded"
+                        class="form-control" [(ngModel)]="lmsCourse.testsIncluded" name="testsIncluded" min="0" />
+                    <validation-messages [formCtrl]="LMSCourse_TestsIncluded"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="LMSCourse_HoursPerDay">{{ 'HoursPerDay' | translate }} *</label>
+                    <input type="number" #LMSCourse_HoursPerDay="ngModel" id="LMSCourse_HoursPerDay"
+                        class="form-control" [(ngModel)]="lmsCourse.hoursPerDay" name="hoursPerDay" min="0" required />
+                    <validation-messages [formCtrl]="LMSCourse_HoursPerDay"></validation-messages>
+                </div>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="LMSCourse_IsActive" class="kt-checkbox">
+                    <input id="LMSCourse_IsActive" #LMSCourse_IsActive="ngModel" type="checkbox" name="isActive"
+                        [(ngModel)]="lmsCourse.isActive">
+                    {{ "Active" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="LMSCourse_IsActive"></validation-messages>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="LMSCourse_Description">{{ 'Comment' | translate }} *</label>
+                    <ckeditor #LMSCourse_Description="ngModel" id="LMSCourse_Description" [editor]="editor"
+                        [(ngModel)]="lmsCourse.description" name="description"></ckeditor>
+                    <validation-messages [formCtrl]="LMSCourse_Description"></validation-messages>
+                </div>
+            </div>
+            <br>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-light pull-right"
+                    (click)="openChapTopicModal(createChapterTopicModal)">{{'Add' |
+                    translate}}</button>
+            </div>
+        </div>
+        <br>
+        <br>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>{{ 'DayNo.' | translate}}</td>
+                    <td>{{'Chapters' | translate}}</td>
+                    <td>{{'Tasks' | translate}}</td>
+                    <td>{{'Topics' | translate}}</td>
+                    <td>{{'Actions' | translate}}</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let a of chapterAndTopics; let i = index">
+                    <td>
+                        {{a.dayNo}}
+                        <span style="cursor: pointer;" *ngIf="courseId.length > 0 && i > 0"><i
+                                class="fa fa-arrow-circle-up" style="font-size:18px;"
+                                (click)="changeDayNo(a.dayNo, 'up')"></i></span>
+                        <span style="cursor: pointer;"
+                            *ngIf="courseId.length > 0 && i !== chapterAndTopics.length - 1"><i
+                                class="fa fa-arrow-circle-down" style="font-size:18px;"
+                                (click)="changeDayNo(a.dayNo,'down')"></i></span>
+                    </td>
+                    <td>{{a.chaptDes}}</td>
+                    <td [innerHtml]="a.tasks"></td>
+                    <td>{{a.topicDes}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="removeItem(i)">{{'Remove' |
+                            translate}}</button>
+                        <button type="button" class="btn btn-primary" style="margin-left: 10px;"
+                            (click)="editRecord(i, createChapterTopicModal)" *ngIf="courseId.length > 0">{{'Edit' |
+                            translate}}</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!courseForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>
+
+<ng-template #createChapterTopicModal role="document">
+    <!-- <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditCourse' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewCourse' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div> -->
+    <div class="modal-body" [busyIf]="loading">
+        <form #courseChapForm="ngForm" novalidate autocomplete="off">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="CourseChapterDetails_DayNo">{{ 'DayNo.' | translate }} *</label>
+                        <input type="number" #CourseChapterDetails_DayNo="ngModel" id="CourseChapterDetails_DayNo"
+                            class="form-control" [(ngModel)]="courseChapterDetails.dayNo" name="dayNo" min="0"
+                            required />
+                        <validation-messages [formCtrl]="CourseChapterDetails_DayNo"></validation-messages>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group m-form__group">
+                        <label for="CourseChapterDetails_Chapters">{{ 'Chapters' | translate }}</label>
+                        <ng-select multiple="true" [items]="chapters" #CourseChapterDetails_Chapters="ngModel"
+                            bindValue="id" bindLabel="displayName" id="CourseChapterDetails_Chapters" name="chapters"
+                            [(ngModel)]="courseChapterDetails.chapters" required>
+                        </ng-select>
+                        <validation-messages [formCtrl]="CourseChapterDetails_Chapters"></validation-messages>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group m-form__group">
+                        <label for="CourseChapterDetails_Topics">{{ 'Topics' | translate }}</label>
+                        <ng-select multiple="true" [items]="topics" #CourseChapterDetails_Topics="ngModel"
+                            bindValue="id" bindLabel="displayName" id="CourseChapterDetails_Topics" name="topics"
+                            [(ngModel)]="courseChapterDetails.topics" required>
+                        </ng-select>
+                        <validation-messages [formCtrl]="CourseChapterDetails_Topics"></validation-messages>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="CourseChapterDetails_Tasks">{{ 'Tasks' | translate }} *</label>
+                        <ckeditor #CourseChapterDetails_Tasks="ngModel" id="CourseChapterDetails_Tasks"
+                            [editor]="taskEditor" [(ngModel)]="courseChapterDetails.tasks" name="tasks" required>
+                        </ckeditor>
+                        <validation-messages [formCtrl]="CourseChapterDetails_Tasks"></validation-messages>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="closeModal()">{{'Close' |
+            translate}}</button>
+        <button type="button" class="btn btn-primary pull-right" [disabled]="!courseChapForm.form.valid"
+            (click)="saveChapTopicDetails()">{{'Save' |
+            translate}}</button>
+    </div>
+</ng-template>

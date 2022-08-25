@@ -1,0 +1,41 @@
+<div class="card card-custom h-100">
+    <div class="card-header align-items-center border-0">
+        <h3 class="card-title align-items-start flex-column">
+                <span class="font-weight-bolder text-dark">
+                    {{'Last50Members' | translate}}
+                </span>
+        </h3>
+    </div>
+    <div class="card-body overflow-auto" [perfectScrollbar]>
+        <div class="table-scrollable table-scrollable-borderless">
+            <table class="table table-hover table-light">
+                <thead>
+                <tr class="uppercase">
+                    <th>
+                        {{'Tenant' | translate}}
+                    </th>
+                    <th>
+                        {{'Name' | translate}}
+                    </th>
+                    <th>
+                        {{'Date' | translate}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let m of data; let index = index">
+                        <td>
+                            {{m.tenantName}}
+                        </td>
+                        <td>
+                            {{m.name}}
+                        </td>
+                        <td>
+                            {{m.creationTime | date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<form #courseCertificateForm="ngForm" novalidate autocomplete="off" [busyIf]="loading">
+  <app-page-title title="CourseCertificate" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+              <label for="Name">{{ 'Name' | translate }} *</label>
+              <input type="text" #Name="ngModel" id="Name" class="form-control"
+                  [(ngModel)]="courseCertificate.Name" name="Name" required maxlength="100" />
+              <validation-messages [formCtrl]="Name"></validation-messages>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="Thumbnail">{{ 'Thumbnail' | translate }} *</label>
+            <input class="form-control" #myInputFile type="file" id="formFile" accept="file"
+              (change)="handleUpload($event)">
+          </div>
+        </div>
+
+        <div class="col-md-2 mt-4">
+          <div class="form-group">
+            <label for="collaborator_roleId"></label>
+            <button type="button" class="btn btn-primary mt-3" [disabled]="!courseCertificateForm.form.valid" (click)="save()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <app-dynamic-table [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+      [pagination]="paginationSettings">
+    </app-dynamic-table>
+  </div>
+</form>

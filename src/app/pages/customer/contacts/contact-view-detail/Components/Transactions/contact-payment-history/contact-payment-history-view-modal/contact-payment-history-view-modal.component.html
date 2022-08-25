@@ -1,0 +1,73 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewContactPaymentHistory' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading" >
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>{{'PaymentAmount' | translate }} :</h6>
+          {{ item.contactPaymentHistory.paymentAmount }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'PaymentDate' | translate }} :</h6>
+          {{ item.contactPaymentHistory.paymentDate |  date:'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Comment' | translate }} :</h6>
+          {{ item.contactPaymentHistory.comment }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'GatewayName' | translate }} :</h6>
+          {{ item.contactPaymentHistory.gatewayName }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'GatewayResponse' | translate }} :</h6>
+          {{ item.contactPaymentHistory.gatewayResponse }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Refunded' | translate }} :</h6>
+          <div *ngIf="item.contactPaymentHistory.refunded" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.contactPaymentHistory.refunded" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-6 mb-3">
+          <h6>{{'RefundDate' | translate }} :</h6>
+          {{ item.contactPaymentHistory.refundDate |  date:'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Void' | translate }} :</h6>
+          <div *ngIf="item.contactPaymentHistory.void" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.contactPaymentHistory.void" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-6 mb-3">
+          <h6>{{'VoidedDate' | translate }} :</h6>
+          {{ item.contactPaymentHistory.voidedDate |  date:'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+
+      <div class="col-6 mb-3">
+          <h6>{{'Contact' | translate }} {{'Firstname' | translate }} :</h6>
+          {{item.contactFirstname}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'User' | translate }} {{'Name' | translate }} :</h6>
+          {{item.userName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'User' | translate }} {{'Name' | translate }} :</h6>
+          {{item.userName2}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'ContactPaymentHistory' | translate }} {{'GatewayName' | translate }} :</h6>
+          {{item.contactPaymentHistoryGatewayName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'CRMPaymentMethod' | translate }} {{'Name' | translate }} :</h6>
+          {{item.crmPaymentMethodName}}
+      </div>
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

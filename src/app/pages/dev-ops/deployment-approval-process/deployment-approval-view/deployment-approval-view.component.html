@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewDeploymentApprovalProcess' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{"ApprovalOrder" | translate }} </label>
+            <p>
+                {{ dm.deploymentApprovalProcess.approvalOrder }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"ApprovalDate" | translate }} </label>
+            <p>
+                {{ dm.deploymentApprovalProcess.approvalDate | date: 'dd/MM/yyyy'  }}
+            </p>
+            
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"ApprovalSignature" | translate }} </label>
+            <p>
+                {{ dm.deploymentApprovalProcess.approvalSignature }}
+
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"SignatureCompleted" | translate }} </label>
+            <div *ngIf="dm.deploymentApprovalProcess.signatureCompleted" class="text-left"><i class="fa fa-check-circle text-success"
+                    title="True"></i></div>
+            <div *ngIf="!dm.deploymentApprovalProcess.signatureCompleted" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"DeploymentManagement" | translate }}) {{"Name" | translate }} </label>
+           <p>
+          {{dm.deploymentManagementName}}
+            </p>
+
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"Role" | translate }}) {{"Name" | translate }} </label>
+            <p>
+                {{dm.roleName}}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"User" | translate }}) {{"Name" | translate }} </label>
+            <p>
+                {{dm.userName}}
+            </p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

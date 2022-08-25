@@ -1,0 +1,39 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ServiceActivityView' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>{{'ActivityName' | translate }} :</h6>
+          {{ item.serviceActivity.activityName }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'SortIndex' | translate }} :</h6>
+          {{ item.serviceActivity.sortIndex }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Active' | translate }} :</h6>
+          <div *ngIf="item.serviceActivity.active" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.serviceActivity.active" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-6 mb-3">
+          <h6>{{'Description' | translate }} :</h6>
+          {{ item.serviceActivity.description }}
+      </div>
+
+      <div class="col-6 mb-3">
+          <h6>({{'LawfirmService' | translate }}) {{'ServicesName' | translate }} :</h6>
+          {{item.lawfirmServiceServicesName}}
+      </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

@@ -1,0 +1,44 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewContactDocument' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-6 mb-3">
+        <h6>{{'DocumentUrl' | translate }} :</h6>
+        <a href="javascript: void(0)" (click)="openLinkInNewTab(item.contactDocument.documentUrl)">Link</a>
+      </div>
+      <div class="col-6 mb-3">
+        <h6>{{'DocumentName' | translate }} :</h6>
+        {{ item.contactDocument.documentName }}
+      </div>
+      <div class="col-6 mb-3">
+        <h6>{{'Location_Aisle' | translate }} :</h6>
+        {{ item.contactDocument.location_Aisle }}
+      </div>
+      <div class="col-6 mb-3">
+        <h6>{{'Location_Box' | translate }} :</h6>
+        {{ item.contactDocument.location_Box }}
+      </div>
+      <div class="col-6 mb-3">
+        <h6>{{'Location_Folder' | translate }} :</h6>
+        {{ item.contactDocument.location_Folder }}
+      </div>
+
+      <div class="col-6 mb-3">
+        <h6>({{'Contact' | translate }}) {{'Company' | translate }} :</h6>
+        {{item.contactCompany}}
+      </div>
+      <div class="col-6 mb-3">
+        <h6>({{'StepDocuments' | translate }}) {{'Document' | translate }} :</h6>
+        {{item.stepDocumentsDocument}}
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

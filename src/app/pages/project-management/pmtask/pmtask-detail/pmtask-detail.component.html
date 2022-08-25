@@ -1,0 +1,245 @@
+<div class="modal-header" *ngIf="pmTask.pMtask.title!=''">
+    <h5 class="modal-title mt-0 text-uppercase"> {{ pmTask.pMtask.id }}-{{ pmTask.pMtask.title }}</h5>
+    <a target="_blank" *ngIf="isModal != 'no'" [routerLink]="['/task', pmTask.pMtask.publicId]" style="margin-left: 15px;"><img
+        src="../../../../../assets/icons/Visual.png"></a>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="closeModal();" *ngIf="isModal != 'no'"></button>
+</div>
+<div class="modal-body" [busyIf]="loading" *ngIf="pmTask.pMtask.title!=''">
+
+    <div class="row">
+
+        <div class="col-12 mb-3">
+            <label>{{ 'Summary' | translate}}</label>
+            <p [innerHTML]="pmTask.pMtask.summary">
+            </p>
+        </div>
+        <div class="col-12 mb-3">
+            <label>{{ 'AcceptanceCriteria' | translate}}</label>
+            <p [innerHTML]="pmTask.pMtask.acceptanceCriteria">
+            </p>
+        </div>
+
+        <div class="col-4 mb-3 clear-disabled">
+            <label>{{ 'Stage' | translate}}</label>
+            <ng-select [items]="taskStages" bindValue="id" bindLabel="displayName" id="pmTask_pmTaskStageId"
+                name="pmTask.pmTaskStageId" placeholder="-Select-" [(ngModel)]="pmTask.pMtask.pmTaskStageId"
+                (change)="statusChanged()"></ng-select>
+        </div>
+        <div class="col-4 mb-3">
+            <label>{{ 'Assigned To' | translate}}</label>
+            <ng-select [items]="projectMembers" bindValue="id" bindLabel="displayName" id="pmTask_responsible"
+                name="pmTask.responsible" placeholder="-Select-" [(ngModel)]="pmTask.pMtask.responsible"
+                (change)="responsibleChanged()"></ng-select>
+        </div>
+        <div class="col-4 mb-3">
+            <label for="PMTask_DueDate">{{ 'DueDate' | translate }}</label>
+            <input class="form-control m-input" type="date" [ngModel]="pmTask.dueDate | date:'yyyy-MM-dd'"
+                (ngModelChange)="updateDueDate($event,pmTask.pMtask.id)" id="PMTask_DueDate" name="dueDate" />
+        </div>
+
+        <hr>
+
+        <div class="col-6 mb-3">
+            <label>{{ 'Sprint' | translate}}</label>
+            <p> {{pmTask.pmSprintSprint}}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'TaskType' | translate}}</label>
+            <p>{{pmTask.pmTaskTypeType}}</p>
+
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'Dependency' | translate}}</label>
+            <p> {{pmTask.dependentTask}}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'Parent' | translate}}</label>
+            <p> {{pmTask.parentTask}}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'CreatedOn' | translate}}</label>
+            <p>{{pmTask.createdOn}}</p>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <button *ngIf="isManualTrackingAllowed" class="btn btn-primary pull-right" style="width: 100% !important;"
+                (click)="openManualTimeTrackingModal(addManualTimeModal)">{{'AddManualTime' | translate}}</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-primary pull-right" (click)="getSpendTime(data.pMtask.id)"
+                style="width: 100% !important;">{{'CheckTime'| translate}}
+            </button>
+            <div class="trackedTracked" *ngIf="checkedTime">
+                <div class="tracked-item">Tracked: <span>{{trackTime.timeDoctorTrackedTime}}</span></div>
+                <div class="tracked-item">Manual: <span>{{trackTime.manualTrackedTime}}</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="detail-tabs">
+        <a (click)="displayMode = 'comment'" [ngClass]="{'active': displayMode == 'comment'}">Comments</a>
+        <a (click)="loadHistory()" [ngClass]="{'active': displayMode == 'history'}">History</a>
+    </div>
+    <div *ngIf="displayMode == 'history'">
+        <div class="history-item row" *ngFor="let item of historyData">
+            <div class="col-md-1">
+                <img [src]="item.profilePic != null ? item.profilePic : defaultProfilePic" class="profile-pic-small" alt="" width="40" height="40">
+            </div>
+            <div class="col-md-11">
+                <div>
+                    <span style="font-weight: bold;">{{item.createdBy}}</span> <span
+                        style="float:right">{{item.creationTime
+                        | date: 'dd/MM/yyyy hh:mm a'}}</span>
+                </div>
+                <div>
+                    {{item.comment}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="displayMode == 'comment'">
+        <div class="col-md-12">
+            <div *ngFor="let item of taskComments" [ngClass]="item.id == editModel.id?'in-edit-mode':''"
+                class="comment-box row" style="position: relative;">
+                <div class="col-md-1">
+                    <img [src]="item.profilePic != null ? item.profilePic : defaultProfilePic" class="profile-pic-small" alt="" width="40" height="40">
+                </div>
+                <div class="col-md-11">
+                    <div class="comment-user">
+                        {{item.commentedByName}}
+                        <div class="comment-time">{{item.commenttedOnDate | date: 'dd/MM/yyyy hh:mm a'}}</div>
+                    </div>
+                    <div style="position: absolute; right: 0; top: -2px;" *ngIf="currentUserId == item.commenttedBy">
+                        <a class="action-btn" href="javascript:;" (click)="onEditComment(item)"><i
+                                class="material-icons orange-text">edit</i></a>
+
+                        <a class="action-btn" href="javascript:;" (click)="onDeleteComment(item)"><i
+                                class="material-icons red-text">delete</i></a>
+                    </div>
+                    <div class="comment-text" [innerHTML]="item.comment"></div>
+                    <div class="image-section" *ngFor="let img of item.attachments;">
+                        <a class="cross-image" (click)="removeCommentImage(img.id, item.id)"
+                            *ngIf="currentUserId == item.commenttedBy"><i class="fa fa-times"></i></a>
+                        <img (click)="openImg(baseUrl + img.path)" src="{{baseUrl +img.path}}" alt="">
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label for="taskComment">{{'Comments' | translate}}</label>
+                <ckeditor [editor]="Editor" [(ngModel)]="taskComment" name="task-comment"></ckeditor>
+            </div>
+        </div>
+        <div class="col-md-12 mt-2">
+            <div class="form-group m-form__group">
+                <div class="image-section" *ngFor="let img of commentAttachments; let i = index">
+                    <a class="cross-image" (click)="removeImage(i)"><i class="fa fa-times"></i></a>
+                    <img (click)="openImg('data:image/jpg;base64,' + img)" src="data:image/jpg;base64,{{img}}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 mt-2">
+            <div class="form-group m-form__group">
+                <input class="form-control" #myInputFile type="file" id="formFile" accept="image/*,application/pdf,application/vnd.ms-excel"
+                    (change)="handleUpload($event)">
+            </div>
+        </div>
+        <div class="col-md-2 mt-2">
+            <button type="button" class="btn btn-primary"
+                [disabled]="this.taskComment=='' && this.commentAttachments.length==0" (click)="addComment()"
+                title="Send" style="font-size: 13px;
+                width: 100%;">
+                <i class="fas fa-paper-plane"></i> Send
+            </button>
+        </div>
+        <div class="col-md-2 mt-2">
+            <button [disabled]="this.taskComment=='' && this.commentAttachments.length==0" type="button"
+                class="btn btn-secondery" (click)="clearComment()" title="Send" style="font-size: 13px;
+            width: 100%;">
+                <i class="fas fa-remove"></i> Clear
+            </button>
+        </div>
+    </div>
+</div>
+<!-- <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="closeModal();">{{'Close' | translate}}</button>
+    </div> -->
+<ng-template #viewImageModal role="document" let-modal>
+    <div class="modal-body text-center">
+        <div class="custom-close-btn">
+            <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <img src="{{currentImgSrc}}" alt="" style="max-width: 100%;">
+    </div>
+</ng-template>
+
+<ng-template #addManualTimeModal role="document" let-modal>
+    <form #manualTimeForm="ngForm" novalidate (ngSubmit)="saveManualTime()" autocomplete="off">
+        <div class="modal-header">
+            <h5 class="modal-title mt-0 text-uppercase">
+                <span>{{pmTask.pMtask.title}} - {{'AddManualTime' | translate}}
+                </span>
+            </h5>
+            <button type="button" class="btn-close" aria-hidden="true" (click)="closeManualTimeModal()"></button>
+        </div>
+        <div class=" modal-body" [busyIf]="loading">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="TaskManualTracking_Description">{{ 'Description' | translate }} *</label>
+                        <textarea #TaskManualTracking_Description="ngModel" id="TaskManualTracking_Description"
+                            class="form-control" [(ngModel)]="taskManualTracking.description" name="description"
+                            required>
+                        </textarea>
+                        <validation-messages [formCtrl]="TaskManualTracking_Description"></validation-messages>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="TaskManualTracking_Hours">{{ 'Hours' | translate }} *</label>
+                        <input type="number" #TaskManualTracking_Hours="ngModel" id="TaskManualTracking_Hours"
+                            class="form-control" [(ngModel)]="taskManualTracking.hours" name="hours" min="0"
+                            (keypress)="numberOnly($event)" (ngModelChange)="checkHoursValue($event, 50,manualTimeForm)"
+                            required />
+                        <div class="has-danger"
+                            *ngIf="TaskManualTracking_Hours.invalid && (TaskManualTracking_Hours.dirty || TaskManualTracking_Hours.touched)">
+                            <div>
+                                <div class="form-control-feedback text-danger">
+                                    {{hourValiMsg}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="TaskManualTracking_Minutes">{{ 'Minutes' | translate }} *</label>
+                        <input type="number" #TaskManualTracking_Minutes="ngModel" id="TaskManualTracking_Minutes"
+                            class="form-control" [(ngModel)]="taskManualTracking.minutes" name="minutes" min="0"
+                            (keypress)="numberOnly($event)" required
+                            (ngModelChange)="checkMinutesValue($event, 60,manualTimeForm)" />
+                        <div class="has-danger"
+                            *ngIf="TaskManualTracking_Minutes.invalid && (TaskManualTracking_Minutes.dirty || TaskManualTracking_Minutes.touched)">
+                            <div>
+                                <div class="form-control-feedback text-danger">
+                                    {{minutesValiMsg}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" (click)="closeManualTimeModal()">{{'Close' |
+                translate}}</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!manualTimeForm.form.valid"> <i
+                    class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+                'Common.Label.Save' | translate}}</button>
+        </div>
+    </form>
+</ng-template>

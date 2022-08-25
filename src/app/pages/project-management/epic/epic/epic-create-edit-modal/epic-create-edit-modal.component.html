@@ -1,0 +1,128 @@
+<form #epicForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditEpic' | translate}}
+      </span> <span *ngIf="data == null"> {{'CreateEpic' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="epic_ProjectName">Name*</label>
+          <input type="text" #epic_ProjectName="ngModel" id="epic_ProjectName" class="form-control"
+            [(ngModel)]="epic.name" name="ProjectName" required />
+          <validation-messages [formCtrl]="epic_ProjectName"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="pmProjectId">Project *</label>
+          <ng-select name="epic.pmProjectId" #pmProjectId="ngModel" [disabled]="true" [(ngModel)]="epic.pmProjectId" [items]="allEpicProjects"
+            bindValue="id" bindLabel="displayName" required></ng-select>
+            <validation-messages [formCtrl]="pmProjectId"></validation-messages>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="PMContact">Contact *</label>
+          <ng-select [items]="allContact" #PMContact="ngModel" bindValue="id" bindLabel="displayName" name="epic.owner"
+            [(ngModel)]="epic.owner" required></ng-select>
+          <validation-messages [formCtrl]="PMContact"></validation-messages>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="UserName">Status</label>
+          <ng-select name="epic.pmEpicStatusId" [(ngModel)]="epic.pmEpicStatusId" [items]="allEpicStatus" bindValue="id"
+            bindLabel="displayName"></ng-select>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="description">{{'Description' | translate}} *</label>
+          <ckeditor [editor]="Editor" required #description="ngModel" [(ngModel)]="epic.description" name="description">
+          </ckeditor>
+          <validation-messages [formCtrl]="description"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="businessOutcomeHypotesis">{{'BusinessOutcomeHypotesis' | translate}}</label>
+          <ckeditor [editor]="Editor" #businessOutcomeHypotesis="ngModel" [(ngModel)]="epic.businessOutcomeHypotesis"
+            name="businessOutcomeHypotesis"></ckeditor>
+          <validation-messages [formCtrl]="businessOutcomeHypotesis"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="inScope">{{'inScope' | translate}}</label>
+          <ckeditor [editor]="Editor" #inScope="ngModel" [(ngModel)]="epic.inScope" name="inScope"></ckeditor>
+          <validation-messages [formCtrl]="inScope"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="outScope">{{'outScope' | translate}}</label>
+          <ckeditor [editor]="Editor" #outScope="ngModel" [(ngModel)]="epic.outScope" name="outScope"></ckeditor>
+          <validation-messages [formCtrl]="outScope"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="noFunctionalRequirements">{{'noFunctionalRequirements' | translate}}</label>
+          <ckeditor [editor]="Editor" #noFunctionalRequirements="ngModel" [(ngModel)]="epic.noFunctionalRequirements"
+            name="noFunctionalRequirements"></ckeditor>
+          <validation-messages [formCtrl]="noFunctionalRequirements"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="mvP_Features">{{'mvP_Features' | translate}}</label>
+          <ckeditor [editor]="Editor" #mvP_Features="ngModel" [(ngModel)]="epic.mvP_Features" name="mvP_Features">
+          </ckeditor>
+          <validation-messages [formCtrl]="mvP_Features"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="additionalPotentialFeatures">{{'additionalPotentialFeatures' | translate}}</label>
+          <ckeditor [editor]="Editor" #additionalPotentialFeatures="ngModel"
+            [(ngModel)]="epic.additionalPotentialFeatures" name="additionalPotentialFeatures"></ckeditor>
+          <validation-messages [formCtrl]="additionalPotentialFeatures"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="mvP_Features">{{'analysisSummary' | translate}}</label>
+          <ckeditor [editor]="Editor" #analysisSummary="ngModel" [(ngModel)]="epic.analysisSummary"
+            name="analysisSummary"></ckeditor>
+          <validation-messages [formCtrl]="analysisSummary"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Epic_UserAffected">{{"UserAffected" | translate}}</label>
+      <input type="text" #Epic_UserAffected="ngModel" id="Epic_UserAffected" class="form-control"
+        [(ngModel)]="epic.userAffected" name="UserAffected" />
+      <validation-messages [formCtrl]="Epic_UserAffected"></validation-messages>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="mvP_Features">{{'businessImpact' | translate}}</label>
+        <ckeditor [editor]="Editor" #businessImpact="ngModel" [(ngModel)]="epic.businessImpact" name="businessImpact">
+        </ckeditor>
+        <validation-messages [formCtrl]="businessImpact"></validation-messages>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!epicForm.form.valid"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

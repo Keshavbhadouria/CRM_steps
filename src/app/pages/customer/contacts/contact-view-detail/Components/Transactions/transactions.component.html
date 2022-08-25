@@ -1,0 +1,40 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div id="retainers" *ngIf="activeIndex == 0">
+                <contact-retainers></contact-retainers>
+            </div>
+            <div id="quotation" *ngIf="activeIndex == 1">
+                <contact-quotation></contact-quotation>
+            </div>
+            <div id="invoices" *ngIf="activeIndex == 2">
+                <contact-invoice></contact-invoice>
+            </div>
+            <div id="paymentplan" *ngIf="activeIndex == 3">
+                <contact-payment-plan></contact-payment-plan>
+            </div>
+            <div id="paymenthistory" *ngIf="activeIndex == 4">
+                <contact-payment-history></contact-payment-history>
+            </div>
+        </div>
+        </div>
+
+        <div class="card-footer">
+          <div class="row text-center">
+              <div *ngFor="let item of tabMenu" class="col" (click)="onSelectTabMenu(item)"
+                  [ngClass]="item.isActive == true ? 'tab-menu-active' : 'tab-menu'">
+                  <img [src]="item.icon" width="20" height="20" alt="">
+                  {{item.title}}
+              </div>
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

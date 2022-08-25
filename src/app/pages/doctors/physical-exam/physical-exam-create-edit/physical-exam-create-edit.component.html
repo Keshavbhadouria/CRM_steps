@@ -1,0 +1,143 @@
+<form #deployMgtForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditPhysicalExan' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreatePhysicalExam' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ContactCompany">{{"Contact" | translate }}</label>
+                    <ng-select [items]="allContacts" bindValue="id" bindLabel="displayName"
+                        name="historiaClinicaExamenFisico.contactId"
+                        [(ngModel)]="historiaClinicaExamenFisico.contactId">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_FC">{{"FC" | translate }}</label>
+                    <input type="text" #HistoriaClinicaExamenFisico_FC="ngModel" id="HistoriaClinicaExamenFisico_FC"
+                        class="form-control" [(ngModel)]="historiaClinicaExamenFisico.fc" name="FC" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_FC"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_Pulso">{{"Pulso" | translate }}</label>
+                    <input type="number" #HistoriaClinicaExamenFisico_Pulso="ngModel"
+                        id="HistoriaClinicaExamenFisico_Pulso" class="form-control"
+                        [(ngModel)]="historiaClinicaExamenFisico.pulso" name="Pulso" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_Pulso"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_TA">{{"TA" | translate }}</label>
+                    <input type="text" #HistoriaClinicaExamenFisico_TA="ngModel" id="HistoriaClinicaExamenFisico_TA"
+                        class="form-control" [(ngModel)]="historiaClinicaExamenFisico.ta" name="TA" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_TA"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_Temperatura">{{"Temperatura" | translate }}</label>
+                    <input type="number" #HistoriaClinicaExamenFisico_Temperatura="ngModel"
+                        id="HistoriaClinicaExamenFisico_Temperatura" class="form-control"
+                        [(ngModel)]="historiaClinicaExamenFisico.temperatura" name="Temperatura" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_Temperatura"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_Talla_Pies">{{"Talla_Pies" | translate }}</label>
+                    <input type="number" #HistoriaClinicaExamenFisico_Talla_Pies="ngModel"
+                        id="HistoriaClinicaExamenFisico_Talla_Pies" class="form-control"
+                        [(ngModel)]="historiaClinicaExamenFisico.talla_Pies" name="Talla_Pies" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_Talla_Pies"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_Talla_pulgadas">{{"Talla_pulgadas" | translate }}</label>
+                    <input type="number" #HistoriaClinicaExamenFisico_Talla_pulgadas="ngModel"
+                        id="HistoriaClinicaExamenFisico_Talla_pulgadas" class="form-control"
+                        [(ngModel)]="historiaClinicaExamenFisico.talla_pulgadas" name="Talla_pulgadas" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_Talla_pulgadas"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_Peso">{{"Peso" | translate }}</label>
+                    <input type="number" #HistoriaClinicaExamenFisico_Peso="ngModel"
+                        id="HistoriaClinicaExamenFisico_Peso" class="form-control"
+                        [(ngModel)]="historiaClinicaExamenFisico.peso" name="Peso" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_Peso"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_SCm2">{{"SCm2" | translate }}</label>
+                    <input type="number" #HistoriaClinicaExamenFisico_SCm2="ngModel"
+                        id="HistoriaClinicaExamenFisico_SCm2" class="form-control"
+                        [(ngModel)]="historiaClinicaExamenFisico.sCm2" name="SCm2" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_SCm2"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_Palidez">{{"Palidez" | translate }}</label>
+                    <input type="text" #HistoriaClinicaExamenFisico_Palidez="ngModel"
+                        id="HistoriaClinicaExamenFisico_Palidez" class="form-control"
+                        [(ngModel)]="historiaClinicaExamenFisico.palidez" name="Palidez" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_Palidez"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_Ictericia">{{"Ictericia" | translate }}</label>
+                    <input type="number" #HistoriaClinicaExamenFisico_Ictericia="ngModel"
+                        id="HistoriaClinicaExamenFisico_Ictericia" class="form-control"
+                        [(ngModel)]="historiaClinicaExamenFisico.ictericia" name="Ictericia" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_Ictericia"></validation-messages>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_Pelo">{{"Pelo" | translate }}</label>
+                    <input type="text" #HistoriaClinicaExamenFisico_Pelo="ngModel" id="HistoriaClinicaExamenFisico_Pelo"
+                        class="form-control" [(ngModel)]="historiaClinicaExamenFisico.pelo" name="Pelo" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_Pelo"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_Unas">{{"Unas" | translate }}</label>
+                    <input type="text" #HistoriaClinicaExamenFisico_Unas="ngModel" id="HistoriaClinicaExamenFisico_Unas"
+                        class="form-control" [(ngModel)]="historiaClinicaExamenFisico.unas" name="Unas" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_Unas"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="HistoriaClinicaExamenFisico_Comentarios">{{"Comentarios" | translate }}</label>
+                    <input type="text" #HistoriaClinicaExamenFisico_Comentarios="ngModel"
+                        id="HistoriaClinicaExamenFisico_Comentarios" class="form-control"
+                        [(ngModel)]="historiaClinicaExamenFisico.comentarios" name="Comentarios" />
+                    <validation-messages [formCtrl]="HistoriaClinicaExamenFisico_Comentarios"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!deployMgtForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

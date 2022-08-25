@@ -1,0 +1,113 @@
+<form #serversForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditServer' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateServer' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CloudProviderName">{{"CloudProvider" | translate }}</label>
+                    <ng-select [items]="allClouds" bindValue="id" bindLabel="displayName"
+                        name="serverInventory.cloudProviderId" [(ngModel)]="serverInventory.cloudProviderId">
+                    </ng-select>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ServerInventory_ServerName">{{"ServerName" | translate }} *</label>
+                    <input type="text" #ServerInventory_ServerName="ngModel" id="ServerInventory_ServerName"
+                        class="form-control" [(ngModel)]="serverInventory.serverName" name="ServerName" required />
+                    <validation-messages [formCtrl]="ServerInventory_ServerName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ServerInventory_ServerDomains">{{"ServerDomains" | translate }} *</label>
+                    <input type="text" #ServerInventory_ServerDomains="ngModel" id="ServerInventory_ServerDomains"
+                        class="form-control" [(ngModel)]="serverInventory.serverDomains" name="ServerDomains"
+                        required />
+                    <validation-messages [formCtrl]="ServerInventory_ServerDomains"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ServerInventory_IPs">{{"IPs" | translate }} *</label>
+                    <input type="text" #ServerInventory_IPs="ngModel" id="ServerInventory_IPs" class="form-control"
+                        [(ngModel)]="serverInventory.iPs" name="IPs" required />
+                    <validation-messages [formCtrl]="ServerInventory_IPs"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ServerInventory_ActivePorts">{{"ActivePorts" | translate }}</label>
+                    <input type="text" #ServerInventory_ActivePorts="ngModel" id="ServerInventory_ActivePorts"
+                        class="form-control" [(ngModel)]="serverInventory.activePorts" name="ActivePorts" />
+                    <validation-messages [formCtrl]="ServerInventory_ActivePorts"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ServerInventory_CPU">{{"CPU" | translate }} *</label>
+                    <input type="text" #ServerInventory_CPU="ngModel" id="ServerInventory_CPU" class="form-control"
+                        [(ngModel)]="serverInventory.cpu" name="CPU" required />
+                    <validation-messages [formCtrl]="ServerInventory_CPU"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ServerInventory_RAMGB">{{"RAMGB" | translate }}</label>
+                    <input type="text" #ServerInventory_RAMGB="ngModel" id="ServerInventory_RAMGB" class="form-control"
+                        [(ngModel)]="serverInventory.ramgb" name="RAMGB" />
+                    <validation-messages [formCtrl]="ServerInventory_RAMGB"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ServerInventory_DiscGB">{{"DiscGB" | translate }}</label>
+                    <input type="text" #ServerInventory_DiscGB="ngModel" id="ServerInventory_DiscGB"
+                        class="form-control" [(ngModel)]="serverInventory.discGB" name="DiscGB" />
+                    <validation-messages [formCtrl]="ServerInventory_DiscGB"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ServerInventory_Administrator">{{"Administrator" | translate }} *</label>
+                    <input type="text" #ServerInventory_Administrator="ngModel" id="ServerInventory_Administrator"
+                        class="form-control" [(ngModel)]="serverInventory.administrator" name="Administrator"
+                        required />
+                    <validation-messages [formCtrl]="ServerInventory_Administrator"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ServerInventory_AdminPassword">{{"AdminPassword" | translate }}</label>
+                    <input type="text" #ServerInventory_AdminPassword="ngModel" id="ServerInventory_AdminPassword"
+                        class="form-control" [(ngModel)]="serverInventory.adminPassword" name="AdminPassword" />
+                    <validation-messages [formCtrl]="ServerInventory_AdminPassword"></validation-messages>
+                </div>
+            </div>
+            <br />
+            <div class="m-checkbox-list mt-2">
+                <label for="ServerInventory_Active" class="kt-checkbox">
+                    <input id="ServerInventory_Active" #ServerInventory_Active="ngModel" type="checkbox" name="Active"
+                        [(ngModel)]="serverInventory.active">
+                    {{"Active" | translate }}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ServerInventory_Active"></validation-messages>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!serversForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

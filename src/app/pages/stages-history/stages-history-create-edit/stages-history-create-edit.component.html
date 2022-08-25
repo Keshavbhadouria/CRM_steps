@@ -1,0 +1,47 @@
+<form #stageHistoryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditStageHistory' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateStageHistory' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="ContactFirstname">{{"ContactName" | translate}}</label>
+                    <ng-select [items]="allContacts" bindValue="id" bindLabel="displayName" id="LeadStageHistory_contactId"
+                        name="leadStageHistory.contactId" #LeadStageHistory_contactId="ngModel" [(ngModel)]="leadStageHistory.contactId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="LeadStageHistory_contactId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="LeadStageStageName">{{"PreviousLeadStage" | translate}}</label>
+                    <ng-select [items]="allStages" bindValue="id" bindLabel="displayName"
+                        id="LeadStageStageName" name="leadStageHistory.previousLeadStageId" #LeadStageStageName="ngModel"
+                        [(ngModel)]="leadStageHistory.previousLeadStageId" required></ng-select>
+                    <validation-messages [formCtrl]="LeadStageStageName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="LeadStageStageName2">{{"NewLeadStage" | translate}}</label>
+
+                    <ng-select [items]="allStages2" bindValue="id" bindLabel="displayName" id="LeadStageStageName2"
+                        name="leadStageHistory.newLeadStageId" #LeadStageStageName2="ngModel" [(ngModel)]="leadStageHistory.newLeadStageId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="LeadStageStageName2"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!stageHistoryForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

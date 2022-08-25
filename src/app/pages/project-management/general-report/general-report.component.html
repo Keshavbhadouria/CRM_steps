@@ -1,0 +1,170 @@
+<style>
+    div.ProjectOrder_1 {
+        padding-left: 20px;
+    }
+
+    div.row.date-row {
+        background: #ccc;
+        padding: 10px 0px;
+    }
+
+    div.ProjectOrder_0,
+    div.row.user-row {
+        margin-top: 4px;
+        font-weight: bold;
+    }
+    .p-5{
+        padding: 5px 0px !important;
+    }
+
+    select.form-control[multiple],
+    select.form-control[size] {
+        height: calc(1.5em + 0.75rem + 2px) !important;
+    }
+</style>
+<div class="container-fluid" [busyIf]="loading">
+    <app-page-title title="GeneralReport" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <!-- <div *ngIf="sprintId!=0">
+        <app-project-tabs tabName="generalReport" [projectId]="sprintsDetail.project" [sprintId]="sprintId">
+        </app-project-tabs>
+    </div> -->
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card" style="border-top:solid 1px #ddd">
+                        <div class="card-body">
+                            <!-- Filter -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="GroupByType">{{'SelectTrackingType'| translate}}</label>
+                                    <select class="form-control" name="TimeTrakingType" id="TimeTrakingType"
+                                        (change)="changeTrackingType()" [(ngModel)]="timeTrakingType">
+                                        <option value="0">{{ 'TimeDoctor' | translate }}</option>
+                                        <option value="1">{{ 'Manual' | translate }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="GroupByType">{{'SelectGrouping'| translate}}</label>
+                                    <select class="form-control" name="GroupByType" id="GroupByType"
+                                        [(ngModel)]="groupByType">
+                                        <option value="0">{{ 'GroupByTask' | translate }}</option>
+                                        <option value="1">{{ 'GroupByUser' | translate }}</option>
+                                        <option value="2">{{ 'GroupByTaskandUser' | translate }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <label for="FromDateFilter">{{'From' | translate}}</label>
+                                    <input required class="form-control m-input" #dueDate type="date"
+                                        [ngModel]="fromDateFilter | date:'yyyy-MM-dd'"
+                                        (ngModelChange)="fromDateFilter = $event" id="FromDateFilter"
+                                        name="fromDateFilter">
+
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="ToDateFilter">{{'To' | translate}}</label>
+                                    <input required class="form-control m-input" #dueDate type="date"
+                                        [ngModel]="toDateFilter | date:'yyyy-MM-dd'"
+                                        (ngModelChange)="toDateFilter = $event" id="ToDateFilter" name="toDateFilter">
+
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Select User</label>
+                                    <ng-multiselect-dropdown #Company_Tenants="ngModel" [placeholder]="'Select Users'"
+                                        [settings]="dropdownSettings" [data]="dropdownList" [(ngModel)]="selectedItems"
+                                        (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
+                                        name="selectedItems">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                                <div class="col-md-4" style="margin-top:30px; text-align:right;">
+                                    <button type="button" class="btn btn-primary" id="searchBtn"
+                                        (click)="getData()">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <!-- <div class="col-md-3">
+            <span><b>Project Name</b></span>
+        </div> -->
+                <div class="col-md-5">
+                    <div style="padding-left:20px;" class="p-5"><b>Task Name</b></div>
+                </div>
+                <div class="col-md-2" *ngIf="showUserName" id="userNameShowHide">
+                    <div style="padding-left:20px;" class="p-5"><b>User Name</b></div>
+                </div>
+                <div class="col-md-2 text-right">
+                    <div class="p-5"><b>Total Hour</b></div>
+                </div>
+            </div>
+            <div id="data-section" *ngFor="let item of workLogByDates">
+                <!-- <div class="row date-row">
+            <div class="col-md-12">
+                {{item.dateRange}}
+            </div>
+        </div> -->
+                <div *ngFor="let user of item.workLogs">
+                    <div *ngIf="user.groupByType === 0">
+                        <div class="ProjectOrder_{{prot.order}} row" *ngFor="let prot of user.userData">
+
+                            <div class="col-md-5">
+                                <div class="p-5">{{prot.taskName}}</div>
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <div class="p-5">{{prot.totalHour}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="user.groupByType === 1">
+                        <div class="row user-row">
+                            <div class="col-md-3">
+                                <div class="p-5">User : {{user.userName}}</div>
+                            </div>
+                            <div class="col-md-5">
+                                <div></div>
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <div class="p-5">{{user.totalUserTime}}</div>
+                            </div>
+                        </div>
+
+                        <div class="ProjectOrder_{{prot.order}} row" *ngFor="let prot of user.userData">
+
+                            <div class="col-md-5">
+                                <div class="p-5">{{prot.taskName}}</div>
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <div class="p-5">{{prot.totalHour}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="user.groupByType === 2">
+                        <div class="ProjectOrder_{{prot.order}} row" *ngFor="let prot of user.userData">
+
+                            <div class="col-md-5">
+                                <div class="p-5">{{prot.taskName}}</div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="p-5">{{prot.userName}}</div>
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <div class="p-5">{{prot.totalHour}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

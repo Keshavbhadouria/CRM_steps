@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'viewDisplayType' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="col-6 mb-3">
+        <label>{{"Name" | translate}}</label>
+        <p>{{ item.lmsDisplayType.name }}</p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

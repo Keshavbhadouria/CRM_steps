@@ -1,0 +1,98 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewContactPaymentPlan' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading" >
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>{{'Balance' | translate }} :</h6>
+          {{ item.paymentPlanHeader.balance }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Downpayment' | translate }} :</h6>
+          {{ item.paymentPlanHeader.downpayment }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Payments' | translate }} :</h6>
+          {{ item.paymentPlanHeader.payments }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'PaymentsAmount' | translate }} :</h6>
+          {{ item.paymentPlanHeader.paymentsAmount }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'FirstQuotaDate' | translate }} :</h6>
+          {{ item.paymentPlanHeader.firstQuotaDate |  date:'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'PaymentPlanNumber' | translate }} :</h6>
+          {{ item.paymentPlanHeader.paymentPlanNumber }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'PaymentPlanQRCode' | translate }} :</h6>
+          {{ item.paymentPlanHeader.paymentPlanQRCode }}
+      </div>
+
+      <div class="col-6 mb-3">
+          <h6>{{'ContactInvoiceHeader' | translate }} {{'Gateway' | translate }} :</h6>
+          {{item.contactInvoiceHeaderGateway}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Contact' | translate }} {{'Company' | translate }} :</h6>
+          {{item.contactCompany}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'User' | translate }} {{'Name' | translate }} :</h6>
+          {{item.userName}}
+      </div>
+
+  </div>
+
+  <div class="card">
+      <div class="card shadow-none border mb-0">
+        <div class="card-body">
+          <h4 class="card-title mb-4">{{'paymentPlanDetail'}}</h4>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width: 70px;">Sr#</th>
+                  <th class="text-end">Payment#</th>
+                  <th class="text-end">Payment Amount</th>
+                  <th class="text-end">Pending Balance</th>
+                  <th class="text-end">Scheduled Date</th>
+                  <th class="text-end">Paid Status</th>
+                  <th class="text-end">Paid Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let detail of paymentPlanDetail;let i = index"  >
+                  <td style="width: 70px;">{{i + 1}}</td>
+                  <td class="text-end">{{detail.paymentPlanDetail.paymentNumber}}</td>
+                  <td class="text-end">${{detail.paymentPlanDetail.amount}}</td>
+                  <td class="text-end">${{detail.paymentPlanDetail.pendingBalance}}</td>
+                  <td class="text-end">{{detail.paymentPlanDetail.scheduledDate | date : 'dd-MM-yyyy'}}</td>
+                  <td class="text-end">
+                    <div *ngIf="detail.paymentPlanDetail.paid" class="text-left"><i
+                      class="fa fa-check-circle text-success" title="True"></i></div>
+                  <div *ngIf="!detail.paymentPlanDetail.paid" class="text-left"><i
+                      class="fa fa-times-circle" title="False"></i></div>
+                    </td>
+                  <td class="text-end">{{detail.paymentPlanDetail.paymentDate | date : 'dd-MM-yyyy' }}</td>
+                </tr>
+                <tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

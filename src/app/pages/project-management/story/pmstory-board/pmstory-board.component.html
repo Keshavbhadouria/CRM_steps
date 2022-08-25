@@ -1,0 +1,145 @@
+<div class="container-fluid">
+  <!-- <div class="page-title-box">
+    <h4 class="mb-0 font-size-18">Storyboard</h4>
+  </div> -->
+  <app-page-title title="Storyboard" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+
+  <!-- <div *ngIf="sprintId!=0">
+    <app-project-tabs tabName="storyboard" [projectId]="sprintsDetail.project" [sprintId]="sprintId">
+    </app-project-tabs>
+  </div> -->
+  <div class="row" [busyIf]="loading">
+    <div class="col-lg-12">
+      <div class="card" style="border-top:solid 1px #ddd">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="Search by Story # or Title" aria-label="Username" aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i class=" bx
+                                bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2" *ngIf="isGlobal==false">
+              <!--  -->
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                  'CreateNewStory' | translate}}</button>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group m-form__group">
+                <label for="Story_ownerId">{{ 'Responsible' | translate }}</label>
+                <ng-select [items]="owners" bindValue="id" bindLabel="displayName" id="Story_ownerId"
+                  name="story.ownerId" placeholder="-Select-" [(ngModel)]="ownerId"
+                  (change)="owner_loadStoryStatusesData()"></ng-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group m-form__group" *ngIf="isGlobal==true">
+                <label for="Story_pmProjectId">{{ 'Project' | translate }}</label>
+                <ng-select [items]="projects" bindValue="id" bindLabel="displayName" id="Story_pmProjectId"
+                  name="story.pmProjectId" placeholder="-Select-" [(ngModel)]="pmProjectId"
+                  (change)="project_loadStoryStatusesData()"></ng-select>
+              </div>
+            </div>
+            <div class="col-md-12" style="margin-top:15px">
+              <div *ngFor="let status of allAvailableStatuses" class="col-md-3" style="display: inline-block;">
+                <span>
+                  <label class="switch">
+                    <input type="checkbox" [(ngModel)]="status.isChecked" id="chk{{status.statusId}}"
+                    (change)="loadStoryStatusesData()">
+                    <span class="slider round"></span>
+                  </label>
+                  <label style="margin-left: 5px;" for="chk{{status.statusId}}">{{status.statusName}}</label>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body" style="overflow-x: auto;">
+          <div class="board-main-container" [style.width.px]='statusCount'>
+            <!-- <div cdkDropListGroup> -->
+            <div class="status-container" *ngFor="let status of pmTaskStatusData">
+              <h2 [style.background]="status.bgColor">{{status.statusName}}</h2>
+              <div cdkDropList id="status{{status.statusId}}" [cdkDropListData]="status.storiesData"
+                [cdkDropListConnectedTo]="status.connectedTo" class="status-list" (cdkDropListDropped)="drop($event)">
+                <div class="empty-list-placehoder" *ngIf="status.storiesData.length==0">
+                  No Story Found
+                </div>
+                <div class="status-box" *ngFor="let storyItem of status.storiesData; " cdkDrag>
+                  <div class="d-flex justify-content-between">
+                    <img [src]="storyItem.profilePic != null ? storyItem.profilePic : defaultProfilePic" class="profile-pic-small" width="30" height="30"
+                      *ngIf="storyItem.responsibleId > 0" />
+                    <div  *ngIf="storyItem.responsibleId == 0"></div>
+                    <div class="responsible" *ngIf="isGlobal==true">{{storyItem.responsibleName}}</div>
+                    <div class="responsible" *ngIf="isGlobal==false">
+                      <ng-select [items]="projectMembers" bindValue="id" bindLabel="displayName"
+                        id="storyItem_responsibleId" name="storyItem.responsibleId" placeholder="-Select-"
+                        [appendTo]="'body'" [(ngModel)]="storyItem.responsibleId"
+                        (change)="responsibleChanged(storyItem)"></ng-select>
+                    </div>
+                    <a href="javascript:;" class="delete-box" (click)="onDelete(storyItem.storyId)"><i
+                        class="material-icons red-text">delete</i></a>
+                  </div>
+                  <div class="project" *ngIf="isGlobal==true">{{storyItem.projectName}}</div>
+                  <div class="d-flex justify-content-between">
+                    <a href="javascript:void(0)" class="item-task-heading mr-2"
+                      (click)="showStoryDetail(storyItem)">{{storyItem.storyId}} - {{storyItem.storyName}}</a>
+                  </div>
+                  <div>
+                    <!-- <label for="Story_EndDate">{{ 'DueDate' | translate }}</label> -->
+                    <input class="form-control m-input" type="date" [ngModel]="storyItem.endDate | date:'yyyy-MM-dd'"
+                      (ngModelChange)="updateDueDate($event,storyItem.storyId)" id="Story_EndDate"
+                      name="story.endDate" />
+                  </div>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <input type="button" name="loadStories" id="btnLoadStories" value="Load Stories" (click)="loadStories"> -->
+<!-- <ul>
+<li *ngFor="let status of pmTaskStatusData" id="{{status.id}}">
+    <div>{{status.displayName}}</div>
+    <ul>
+        <li *ngFor="let story of getDataByStory(status.id)" id="{{story.id}}">
+            <div>
+                {{story.storyName}}
+            </div>
+        </li>
+    </ul>
+</li>
+</ul> -->
+
+<!-- </div> -->
+
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-create-or-edit-story-modal [modal]="modal" ($modalClose)='saveStoryEmitEvent()' [data]="editStoryData"
+    [sprintId]="sprintIntId">
+  </app-create-or-edit-story-modal>
+</ng-template>
+
+<ng-template #storyDetailModal role="document" let-modal>
+  <app-story-detail [modal]="modal" ($storyUpdated)='onStoryUpdated()' [data]="viewStory">
+  </app-story-detail>
+</ng-template>

@@ -1,0 +1,58 @@
+<form #storyEstimationVoteForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditStoryEstimationVote' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewStoryEstimationVote' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="StoryEstimationVote_StoryId">{{ 'StoryTitle' | translate }} *</label>
+                    <ng-select [items]="storyTitles" bindValue="id" bindLabel="displayName"
+                        id="StoryEstimationVote_StoryId" name="storyId"
+                        #StoryEstimationVote_StoryId="ngModel"
+                        [(ngModel)]="storyEstimationVote.storyId" required></ng-select>
+                        <validation-messages [formCtrl]="StoryEstimationVote_StoryId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="StoryEstimationVote_UserId">{{ 'User' | translate }} *</label>
+                    <ng-select [items]="users" bindValue="id" bindLabel="displayName"
+                        id="StoryEstimationVote_UserId" name="userId"
+                        #StoryEstimationVote_UserId="ngModel"
+                        [(ngModel)]="storyEstimationVote.userId" required></ng-select>
+                        <validation-messages [formCtrl]="StoryEstimationVote_UserId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="StoryEstimationVote_StoryEstimationId">{{ 'StoryEstimation' | translate }} *</label>
+                    <ng-select [items]="storyEstimations" bindValue="id" bindLabel="displayName"
+                        id="StoryEstimationVote_StoryEstimationId" name="storyEstimationId"
+                        #StoryEstimationVote_StoryEstimationId="ngModel"
+                        [(ngModel)]="storyEstimationVote.storyEstimationId" required></ng-select>
+                        <validation-messages [formCtrl]="StoryEstimationVote_StoryEstimationId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="StoryEstimationVote_SprintId">{{ 'Sprint' | translate }} *</label>
+                    <ng-select [items]="sprints" bindValue="id" bindLabel="displayName"
+                        id="StoryEstimationVote_SprintId" name="sprintId"
+                        #StoryEstimationVote_SprintId="ngModel"
+                        [(ngModel)]="storyEstimationVote.sprintId" required></ng-select>
+                        <validation-messages [formCtrl]="StoryEstimationVote_SprintId"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!storyEstimationVoteForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

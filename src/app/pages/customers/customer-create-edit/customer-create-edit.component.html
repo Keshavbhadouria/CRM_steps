@@ -1,0 +1,126 @@
+<form #customerForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditCustomer' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateCustomer' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="CRMCountryCountryName">{{"CRMCountry"| translate }}</label>
+                    <ng-select [items]="allCountries" bindValue="id" bindLabel="displayName"
+                        name="crmCustomer.crmCountryId" [(ngModel)]="crmCustomer.crmCountryId"
+                        (change)="changeCountry(crmCustomer.crmCountryId)">
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="CRMStateStateName">{{"CRMState"| translate }}</label>
+                    <ng-select [items]="allStates" bindValue="id" bindLabel="displayName" name="crmCustomer.crmStateId"
+                        [(ngModel)]="crmCustomer.crmStateId" (change)="changeState(crmCustomer.crmStateId)">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="CRMCityCityName">{{"CRMCity"| translate }}</label>
+                    <ng-select [items]="allCities" bindValue="id" bindLabel="displayName" name="crmCustomer.crmCityId"
+                        [(ngModel)]="crmCustomer.crmCityId">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMCustomer_FirstName">{{"FirstName"| translate }} *</label>
+                    <input type="text" #CRMCustomer_FirstName="ngModel" id="CRMCustomer_FirstName" class="form-control"
+                        [(ngModel)]="crmCustomer.firstName" name="FirstName" required />
+                    <validation-messages [formCtrl]="CRMCustomer_FirstName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMCustomer_Email">{{"Email"| translate }}</label>
+                    <input type="text" #CRMCustomer_Email="ngModel" id="CRMCustomer_Email" class="form-control"
+                        [(ngModel)]="crmCustomer.email" name="Email" />
+                    <validation-messages [formCtrl]="CRMCustomer_Email"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMCustomer_PhoneNumber">{{"PhoneNumber"| translate }}</label>
+                    <input type="text" #CRMCustomer_PhoneNumber="ngModel" id="CRMCustomer_PhoneNumber"
+                        class="form-control" [(ngModel)]="crmCustomer.phoneNumber" name="PhoneNumber" />
+                    <validation-messages [formCtrl]="CRMCustomer_PhoneNumber"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMCustomer_CompanyName">{{"CompanyName"| translate }}</label>
+                    <input type="text" #CRMCustomer_CompanyName="ngModel" id="CRMCustomer_CompanyName"
+                        class="form-control" [(ngModel)]="crmCustomer.companyName" name="CompanyName" />
+                    <validation-messages [formCtrl]="CRMCustomer_CompanyName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMCustomer_Website">{{"Website"| translate }}</label>
+                    <input type="text" #CRMCustomer_Website="ngModel" id="CRMCustomer_Website" class="form-control"
+                        [(ngModel)]="crmCustomer.website" name="Website" />
+                    <validation-messages [formCtrl]="CRMCustomer_Website"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMCustomer_Address">{{"Address"| translate }}</label>
+                    <input type="text" #CRMCustomer_Address="ngModel" id="CRMCustomer_Address" class="form-control"
+                        [(ngModel)]="crmCustomer.address" name="Address" />
+                    <validation-messages [formCtrl]="CRMCustomer_Address"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMCustomer_AddressSecondery">{{"AddressSecondery"| translate }}</label>
+                    <input type="text" #CRMCustomer_AddressSecondery="ngModel" id="CRMCustomer_AddressSecondery"
+                        class="form-control" [(ngModel)]="crmCustomer.addressSecondery" name="AddressSecondery" />
+                    <validation-messages [formCtrl]="CRMCustomer_AddressSecondery"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMCustomer_ZipCode">{{"ZipCode"| translate }}</label>
+                    <input type="text" #CRMCustomer_ZipCode="ngModel" id="CRMCustomer_ZipCode" class="form-control"
+                        [(ngModel)]="crmCustomer.zipCode" name="ZipCode" />
+                    <validation-messages [formCtrl]="CRMCustomer_ZipCode"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6 mt-4">
+                <label class="switch">
+                    <input id="CRMCustomer_IsActive" #CRMCustomer_IsActive="ngModel" type="checkbox" name="IsActive"
+                        [(ngModel)]="crmCustomer.isActive">
+                    <span class="slider round"></span>
+                </label>
+                <label style="margin-left: 5px;">{{"IsActive"| translate }}</label>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMCustomer_QuickbooksCutomerId">{{"QuickbooksCutomerId"| translate }}</label>
+                    <input type="text" #CRMCustomer_QuickbooksCutomerId="ngModel" id="CRMCustomer_QuickbooksCutomerId"
+                        class="form-control" [(ngModel)]="crmCustomer.quickbooksCutomerId" name="QuickbooksCutomerId" />
+                    <validation-messages [formCtrl]="CRMCustomer_QuickbooksCutomerId"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!customerForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

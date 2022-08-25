@@ -1,0 +1,26 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewResourceMaterial' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12 mb-3">
+          <h6>{{'FileName' | translate }} :</h6>
+          {{ item.resourceMaterial.fileName }}
+      </div>
+      <div class="col-md-12 mb-3">
+          <h6>{{'URL' | translate }} :</h6>
+          {{ item.resourceMaterial.url }}
+      </div>
+      <div class="col-md-12 mb-3">
+          <h6>({{'CourseChapterNew' | translate }}) {{'Title' | translate }} :</h6>
+          {{item.courseChapterNewTitle}}
+      </div>
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

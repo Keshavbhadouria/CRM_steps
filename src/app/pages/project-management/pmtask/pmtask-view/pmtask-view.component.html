@@ -1,0 +1,90 @@
+<form autocomplete="off">
+    <div class="modal-header">
+      <h5 class="modal-title mt-0 text-uppercase"> {{'Pages.Project.ViewTask' | translate}}
+      </h5>
+      <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{ 'Title' | translate}}</label>
+            <p>{{ pmTask.pMtask.title }}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'Summary' | translate}}</label>
+            <p [innerHTML] = "pmTask.pMtask.summary">
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'AcceptanceCriteria' | translate}}</label>
+                <p [innerHTML] = "pmTask.pMtask.acceptanceCriteria">
+                </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'DueDate' | translate}}</label>
+            <p>{{ pmTask.pMtask.dueDate  }}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'ParentID' | translate}}</label>
+            {{ pmTask.pMtask.parentID }}
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'Dependency' | translate}}</label>
+            <p>{{ pmTask.pMtask.dependency }}</p>
+            
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'DayOnMonth' | translate}}</label>
+            <p> {{ pmTask.pMtask.dayOnMonth }}</p>
+           
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'DueTime' | translate}}</label>
+            <p>{{ pmTask.pMtask.dueTime }}</p>
+            
+        </div>
+
+        <div class="col-6 mb-3">
+            <label>{{ 'ProjectName' | translate}}</label>
+            <p>{{pmTask.pmProjectProjectName}}</p>
+            
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'Sprint' | translate}}</label>
+            <p> {{pmTask.pmSprintSprint}}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'Title' | translate}}</label>
+            <p>{{pmTask.pmStoryTitle}}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'UserName' | translate}}</label>
+            <p>{{pmTask.userName}}</p>
+            
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'TaskPriority' | translate}}</label>
+            <p>{{pmTask.pmTaskPriorityPriority}}</p>
+            
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'TaskVelocity' | translate}}</label>
+            <p>{{pmTask.taskVelocityVelocity}}</p>
+            
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'TaskType' | translate}}</label>
+            <p>{{pmTask.pmTaskTypeType}}</p>
+            
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'TaskFrequency' | translate}}</label>
+            <p> {{pmTask.pmTaskFrequencyFrequency}}</p>
+        </div>
+
+    </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    </div>
+  </form>

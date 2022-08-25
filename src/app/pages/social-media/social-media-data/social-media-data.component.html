@@ -1,0 +1,119 @@
+<div class="container-fluid">
+  <app-page-title title="Social Media Stats" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="container" [busyIf]="isLoading">
+            <div class="row mb-3">
+              <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                <label class="form-label">Social Media</label>
+                <select ngModel="SocialMediaId" class="form-select" (change)="socialMedia($event)">
+                  <!-- <option selected value="null">Select Social Media</option> -->
+                  <option [value]="s.value" *ngFor="let s of socialmedias">{{s.text}}</option>
+                </select>
+              </div>
+              <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3" style="margin-top: 32px;">
+                <button (click)="GetData()" type="submit" class="btn btn-primary">Get</button>
+              </div>
+            </div>
+
+            <table *ngIf="SelectedSocialMediaId == 1" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Channel Name</th>
+                  <th>Comment Count</th>
+                  <th>Subscriber Count</th>
+                  <th>Video Count</th>
+                  <th>View Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>{{YoutubeData.title}}</th>
+                  <th style="text-align: center;">{{YoutubeData.commentCount}}</th>
+                  <th style="text-align: center;">{{YoutubeData.subscriberCount}}</th>
+                  <th style="text-align: center;">{{YoutubeData.videoCount}}</th>
+                  <th style="text-align: center;">{{YoutubeData.viewCount}}</th>
+                </tr>
+              </tbody>
+            </table>
+
+            <table *ngIf="SelectedSocialMediaId == 1" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Video Name</th>
+                  <th>Comment Count</th>
+                  <th>Dislike Count</th>
+                  <th>Favorite Count</th>
+                  <th>Like Count</th>
+                  <th>View Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of YoutubeData.youTubeDataCount; index as i">
+                  <th>{{item.title}}</th>
+                  <th style="text-align: center;">{{item.commentCount}}</th>
+                  <th style="text-align: center;">{{item.dislikeCount}}</th>
+                  <th style="text-align: center;">{{item.favoriteCount}}</th>
+                  <th style="text-align: center;">{{item.likeCount}}</th>
+                  <th style="text-align: center;">{{item.viewCount}}</th>
+                </tr>
+                <tr *ngIf="YoutubeData.length == 0">
+                  <th>Record not found</th>
+                </tr>
+              </tbody>
+            </table>
+
+            <table *ngIf="SelectedSocialMediaId == 2" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Page</th>
+                  <th>Post</th>
+                  <th>Likes</th>
+                  <th>Comments</th>
+                  <th>Shared</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of FacebookData; index as i">
+                  <th style="text-align: center;">{{item.name}}</th>
+                  <th style="text-align: center;">{{item.post}}</th>
+                  <th style="text-align: center;">{{item.likes}}</th>
+                  <th style="text-align: center;">{{item.comments}}</th>
+                  <th style="text-align: center;">{{item.shared}}</th>
+                </tr>
+                <tr *ngIf="FacebookData.length == 0">
+                  <th>Record not found</th>
+                </tr>
+              </tbody>
+            </table>
+
+            <table *ngIf="SelectedSocialMediaId == 3" class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Media Type</th>
+                  <th>Likes</th>
+                  <th>Comments</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of InstagramData; index as i">
+                  <th>{{item.media_type}}</th>
+                  <th>{{item.like_count}}</th>
+                  <th>{{item.comments_count}}</th>
+                </tr>
+                <tr *ngIf="InstagramData.length == 0">
+                  <th>Record not found</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

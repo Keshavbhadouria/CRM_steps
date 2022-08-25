@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewCommissionRule' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'TierName' | translate}}</label>
+                <p> {{commissionRule.affiliateTierTierName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'SalesAmount' | translate}}</label>
+                <p> {{commissionRule.commissionRule.salesAmount}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Percentage' | translate}}</label>
+                <p> {{commissionRule.commissionRule.percentage}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'AffiliateCommission' | translate}}</label>
+                <p> {{commissionRule.commissionRule.affiliateCommission}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'PayAfterDays' | translate}}</label>
+                <p> {{commissionRule.commissionRule.payAfterDays}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Active' | translate}}</label>
+                <p *ngIf="!commissionRule.commissionRule.active"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="commissionRule.commissionRule.active"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

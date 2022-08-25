@@ -1,0 +1,386 @@
+<div class="content d-flex flex-column flex-column-fluid" style="padding: 0px;margin-left: 0px; margin-top: 0px;">
+    <!-- <sub-header [title]="('SupportTickets' | translate)">
+        </sub-header> -->
+    <div class="containerClass" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-md-9 mb-2 justify-content-between d-flex button-edit" style="align-items: center;">
+                <div class="fat-arrow-rappa">
+                    <div class="fat-arrow">
+                        <div class="inner">{{ 'ticket' | translate}}</div>
+                    </div>
+                    <!-- <div class="fat-arrow">
+                        <div class="inner">{{supportTicket.id}}</div>
+                    </div> -->
+                </div>
+                <div class="member-display-div">
+                    <h5>{{'MemberId' | translate}}: <span style="color: #000;">{{supportTicket.userId}}</span></h5>
+                </div>
+                <div class="member-display-div">
+                    <h5>{{'MemberName' | translate}}: <span style="color: #000;">{{supportTicket.contactName}}</span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid" *ngIf="this.isShowCommentAndBtns" style="background-color: transparent;">
+            <!-- (submit)="savecomment()" -->
+            <form #supportTicketCommentfrm="ngForm" role="form" novalidate class="form-validation">
+
+                <div class="row">
+                    <!-- <div [class.col-9]="this.isSupportAdmin" [class.col-12]="!this.isSupportAdmin"> -->
+                    <div [class.col-md-9]="this.isSupportAdmin" [class.col-md-12]="!this.isSupportAdmin" style="background: #fff;
+                             border-radius: 20px;
+                             padding: 20px;">
+                        <div>
+                            <div class="row" style="padding: 10px 10px;
+                                    background: rgba(120, 106, 222, 15%);
+                                    color: #656278;
+                                    border-radius: 5px; margin-bottom:10px;">
+                                <div class="form-group col-md-12">
+                                    <h4>{{'Subject' | translate}}</h4>
+                                    <div>
+                                        {{supportTicket.subject}}
+                                    </div>
+                                    <br />
+                                    <h4>{{'SupportTicketDescription' | translate}}</h4>
+                                    <div [innerHtml]="supportTicket.bodyMessage">
+                                    </div>
+                                    <br />
+                                    <h4>{{'Attachments' | translate}}:</h4>
+                                    <div *ngIf="image.length > 0">
+                                        <div *ngIf="getExtension(image) == 'doc' || getExtension(image) == 'docx' ">
+                                            <img style="height: 40px; max-width: 100%;" class="card-img-left"
+                                                src="../../../../assets/common/images/microsoft-doc.png" alt="image"
+                                                (click)="downloadAttachment(image)" />
+                                        </div>
+                                        <div *ngIf="getExtension(image) == 'xlsx' || getExtension(image) == 'xls' ">
+                                            <img style="height: 40px; max-width: 100%;" class="card-img-left"
+                                                src="../../../../assets/common/images/microsoft-excel.png" alt="image"
+                                                (click)="downloadAttachment(image)" />
+                                        </div>
+                                        <div *ngIf="getExtension(image) == 'pdf' ">
+                                            <img style="height: 40px; max-width: 100%;" class="card-img-left"
+                                                src="../../../../assets/common/images/icons8-pdf.png" alt="image"
+                                                (click)="downloadAttachment(image)" />
+                                        </div>
+                                        <div
+                                            *ngIf="getExtension(image) == 'png' || getExtension(image) == 'jpg' || getExtension(image) == 'jpeg' ">
+                                            <img style="height: 40px; max-width: 100%;" class="card-img-left"
+                                                [src]="image" alt="image" (click)="downloadAttachment(image)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h4 class="text-danger">{{'Comments' | translate}}</h4>
+                            <div class="comment-section">
+                                <div *ngFor="let comment of supportTicket.comments">
+                                    <div class="row different-user-section" *ngIf="currentUserId !== comment.userId">
+                                        <div class="form-group col-md-12">
+                                            <div class="row flex-row flex-nowrap"
+                                                style="text-align: left;padding: 0px 10px;">
+                                                <div class="col-md-12 col-12 comment-section">
+                                                    <div class="comment-user-image-section">
+                                                        <img *ngIf="comment.userImageBlob.length == 0"
+                                                            src="../../../../assets/images/default_user.jpg"
+                                                            style="width:40px; height:40px;border-radius:20;" />
+                                                        <img *ngIf="comment.userImageBlob.length > 0"
+                                                            src="data:image/jpeg;base64,{{comment.userImageBlob}}"
+                                                            style="width:40px; height:40px;border-radius:20;" />
+                                                    </div>
+                                                    <div class="comment-text-section">
+                                                        <div>
+                                                            <p>{{comment.userName}}, {{comment.createdDate}} </p>
+
+                                                        </div>
+                                                        <div [innerHtml]="comment.comment">
+                                                        </div>
+                                                        <span *ngIf="comment.attatchmentUrl.length > 0">
+                                                            <!-- <img style="height: 40px; max-width: 100%;margin:5px;"
+                                                        class="card-img-left" [src]="image" alt="image"
+                                                        (click)="downloadAttachment(image)"> -->
+                                                            <div
+                                                                *ngIf="getExtension(comment.attatchmentUrl) == 'doc' || getExtension(comment.attatchmentUrl) == 'docx' ">
+                                                                <img style="height: 40px; max-width: 100%;"
+                                                                    class="card-img-left"
+                                                                    src="../../../../assets/images/microsoft-doc.png"
+                                                                    alt="image"
+                                                                    (click)="downloadAttachment(comment.attatchmentUrl)" />
+                                                            </div>
+                                                            <div
+                                                                *ngIf="getExtension(comment.attatchmentUrl) == 'xlsx' || getExtension(comment.attatchmentUrl) == 'xls' ">
+                                                                <img style="height: 40px; max-width: 100%;"
+                                                                    class="card-img-left"
+                                                                    src="../../../../assets/images/microsoft-excel.png"
+                                                                    alt="image"
+                                                                    (click)="downloadAttachment(comment.attatchmentUrl)" />
+                                                            </div>
+                                                            <div *ngIf="getExtension(comment.attatchmentUrl) == 'pdf' ">
+                                                                <img style="height: 40px; max-width: 100%;"
+                                                                    class="card-img-left"
+                                                                    src="../../../../assets/images/icons8-pdf.png"
+                                                                    alt="image"
+                                                                    (click)="downloadAttachment(comment.attatchmentUrl)" />
+                                                            </div>
+                                                            <div
+                                                                *ngIf="getExtension(comment.attatchmentUrl) == 'png' || getExtension(comment.attatchmentUrl) == 'jpg' || getExtension(comment.attatchmentUrl) == 'jpeg' ">
+                                                                <img style="height: 40px; max-width: 100%;"
+                                                                    class="card-img-left" [src]="comment.attatchmentUrl"
+                                                                    alt="image"
+                                                                    (click)="downloadAttachment(comment.attatchmentUrl)" />
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row current-user-section" *ngIf="currentUserId == comment.userId">
+                                        <div class="form-group col-md-12">
+                                            <div class="row flex-row flex-nowrap"
+                                                style="text-align: right;padding:0px 10px;">
+                                                <div class="col-md-12 col-12 comment-section">
+                                                    <div class="comment-user-image-section">
+                                                        <img *ngIf="comment.userImageBlob.length == 0"
+                                                            src="../../../../assets/images/default_user.jpg"
+                                                            style="width:40px; height:40px;border-radius:20;" />
+                                                        <img *ngIf="comment.userImageBlob.length > 0"
+                                                            src="data:image/jpeg;base64,{{comment.userImageBlob}}"
+                                                            style="width:40px; height:40px;border-radius:20;" />
+                                                    </div>
+                                                    <div class="comment-text-section">
+                                                        <div>
+                                                            <p>{{comment.userName}}, {{comment.createdDate}} </p>
+                                                        </div>
+                                                        <div [innerHtml]="comment.comment">
+                                                        </div>
+                                                        <span *ngIf="comment.attatchmentUrl.length > 0">
+
+                                                            <div
+                                                                *ngIf="getExtension(comment.attatchmentUrl) == 'doc' || getExtension(comment.attatchmentUrl) == 'docx' ">
+                                                                <img style="height: 40px; max-width: 100%;"
+                                                                    class="card-img-left"
+                                                                    src="../../../../assets/common/images/microsoft-doc.png"
+                                                                    alt="image"
+                                                                    (click)="downloadAttachment(comment.attatchmentUrl)" />
+                                                            </div>
+                                                            <div
+                                                                *ngIf="getExtension(comment.attatchmentUrl) == 'xlsx' || getExtension(comment.attatchmentUrl) == 'xls' ">
+                                                                <img style="height: 40px; max-width: 100%;"
+                                                                    class="card-img-left"
+                                                                    src="../../../../assets/common/images/microsoft-excel.png"
+                                                                    alt="image"
+                                                                    (click)="downloadAttachment(comment.attatchmentUrl)" />
+                                                            </div>
+                                                            <div *ngIf="getExtension(comment.attatchmentUrl) == 'pdf' ">
+                                                                <img style="height: 40px; max-width: 100%;"
+                                                                    class="card-img-left"
+                                                                    src="../../../../assets/common/images/icons8-pdf.png"
+                                                                    alt="image"
+                                                                    (click)="downloadAttachment(comment.attatchmentUrl)" />
+                                                            </div>
+                                                            <div
+                                                                *ngIf="getExtension(comment.attatchmentUrl) == 'png' || getExtension(comment.attatchmentUrl) == 'jpg' || getExtension(comment.attatchmentUrl) == 'jpeg' ">
+                                                                <img style="height: 40px; max-width: 100%;"
+                                                                    class="card-img-left" [src]="comment.attatchmentUrl"
+                                                                    alt="image"
+                                                                    (click)="downloadAttachment(comment.attatchmentUrl)" />
+                                                            </div>
+                                                            <div
+                                                                *ngIf="getBase64File(comment.attatchmentUrl)">
+                                                                <img style="height: 40px; max-width: 100%;"
+                                                                    class="card-img-left" [src]="comment.attatchmentUrl"
+                                                                    alt="image"
+                                                                    (click)="downloadAttachment(comment.attatchmentUrl)" />
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix rich-text-area-support-ticket">
+                            <div class="form-group" style="width: 100%;">
+                                <!-- <div class="row" style="margin-bottom: 10px;">
+                                            <div class="col-md-2">
+
+                                                <select class="form-control" (change)="selectAction($event)"
+                                                    name="selectInput" [(ngModel)]="selectInput"
+                                                    [disabled]="!hasAnyText"
+                                                    style="background-color: #12679B !important; color:#fff !important;">
+                                                    <option value="">--{{'Select' | translate}}--</option>
+                                                    <option value="reply">{{'Reply' | translate}}</option>
+                                                    <option value="forward">
+                                                        {{'Forward' | translate}}
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" name="emailInput"
+                                                    [(ngModel)]="emailInput"
+                                                    [placeholder]="'SupportTicketNotifyPlaceholder' | translate" />
+                                            </div>
+                                        </div> -->
+                                <label for="SupportComment_Comment">{{ 'BodyContent' | translate}} *</label>
+                                <ckeditor #SupportComment_Comment="ngModel" id="SupportComment_Comment"
+                                    [editor]="editor" [(ngModel)]="ticketComment" name="bodyContent"
+                                    (keyup)="enableDisableInput()" required></ckeditor>
+                                <validation-messages [formCtrl]="SupportComment_Comment"></validation-messages>
+                            </div>
+                            <div class="form-group" style="width: 100%;">
+                                <input class="form-control" #fileInputUpd type="file" (change)="onSelectedFile($event)"
+                                    accept="image/*" name="Attachements" id="Attachements"
+                                    [(ngModel)]="commentFileInput" />
+                                <div class="container-fluid">
+                                    <div class="row flex-row flex-nowrap" style="width: 500px;">
+                                        <br />
+                                        <div class="col-3" *ngFor="let image of images; let i = index;">
+                                            <button (click)="removeImage(i,fileInputUpd)" style="text-align: right;"
+                                                data-dismiss="alert" data-target="#closeablecard" type="button"
+                                                class="close" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+
+                                            <div
+                                                *ngIf="getFileImgExt(image) == 'doc' || getFileImgExt(image) == 'docx' ">
+                                                <img style="height: 40px; max-width: 100%;" class="card-img-left"
+                                                    src="../../../../assets/images/microsoft-doc.png" alt="image" />
+                                            </div>
+                                            <div
+                                                *ngIf="getFileImgExt(image) == 'xlsx' || getFileImgExt(image) == 'xls' ">
+                                                <img style="height: 40px; max-width: 100%;" class="card-img-left"
+                                                    src="../../../../assets/images/microsoft-excel.png" alt="image" />
+                                            </div>
+                                            <div *ngIf="getFileImgExt(image) == 'pdf' ">
+                                                <img style="height: 40px; max-width: 100%;" class="card-img-left"
+                                                    src="../../../../assets/images/icons8-pdf.png" alt="image" />
+                                            </div>
+                                            <div
+                                                *ngIf="getFileImgExt(image) == 'png' || getFileImgExt(image) == 'jpg' || getFileImgExt(image) == 'jpeg' ">
+                                                <img style="height: 40px; max-width: 100%;" class="card-img-left"
+                                                    [src]="image.url" alt="image" />
+                                            </div>
+
+                                            <!-- <img *ngIf="!isNotImage" style="height: 40px; max-width: 100%;"
+                                                        class="card-img-left" [src]="image.url" alt="image"> -->
+
+                                            <h5 style="font-size:0.8rem" class="card-title">{{image.name}}
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="btn-group email-btn-bar">
+                                <button type="button" class="btn btn-primary" (click)="reply()"
+                                    style="margin: 0px 10px 0px 10px !important; max-width: 150px;"
+                                    [disabled]="!hasAnyText">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.28 24.75">
+                                        <defs>
+                                            <style>
+                                                .cls-1 {
+                                                    fill: #fff;
+                                                }
+                                            </style>
+                                        </defs>
+                                        <g id="Layer_2" data-name="Layer 2">
+                                            <g id="Layer_1-2" data-name="Layer 1">
+                                                <path class="cls-1"
+                                                    d="M12.72,6.76H4.3L9.47,1.59,7.88,0,0,7.88l7.88,7.89,1.59-1.59L4.3,9h8.42A8.32,8.32,0,0,1,21,17.32a8.58,8.58,0,0,1-2,5.15l-.7.88,1.76,1.4.7-.88a10.75,10.75,0,0,0,2.49-6.55A10.58,10.58,0,0,0,12.72,6.76Z" />
+                                            </g>
+                                        </g>
+                                    </svg> {{'Reply' | translate}}</button>
+
+                                <!-- <button type="button" class="btn btn-primary" (click)="reply(false,true)"
+                                            [disabled]="!hasAnyText">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.28 24.75">
+                                                <defs>
+                                                    <style>
+                                                        .cls-1 {
+                                                            fill: #fff;
+                                                        }
+                                                    </style>
+                                                </defs>
+                                                <g id="Layer_2" data-name="Layer 2">
+                                                    <g id="Layer_1-2" data-name="Layer 1">
+                                                        <path class="cls-1"
+                                                            d="M0,17.32a10.75,10.75,0,0,0,2.49,6.55l.7.88L5,23.35l-.7-.88a8.58,8.58,0,0,1-2-5.15A8.32,8.32,0,0,1,10.56,9H19l-5.17,5.17,1.59,1.59,7.88-7.89L15.4,0,13.81,1.59,19,6.76H10.56A10.58,10.58,0,0,0,0,17.32Z" />
+                                                    </g>
+                                                </g>
+                                            </svg> {{'Forward' | translate}}</button> -->
+
+                                <button type="button" class="btn btn-primary" (click)="back()"
+                                    style="margin: 0px 10px 0px 10px !important;  max-width: 150px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5.68 25.58">
+                                        <defs>
+                                            <style>
+                                                .cls-1 {
+                                                    fill: #fff;
+                                                }
+                                            </style>
+                                        </defs>
+                                        <g id="Layer_2" data-name="Layer 2">
+                                            <g id="Layer_1-2" data-name="Layer 1">
+                                                <circle class="cls-1" cx="2.84" cy="2.84" r="2.84" />
+                                                <circle class="cls-1" cx="2.84" cy="12.79" r="2.84" />
+                                                <circle class="cls-1" cx="2.84" cy="22.74" r="2.84" />
+                                            </g>
+                                        </g>
+                                    </svg> {{'Cancel' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 properties-section">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card h-auto mb-4">
+                                    <div class="card-header pb-0">
+                                        <h4 class="card-title text-danger">{{supportTicketStatusStatusName}}
+                                        </h4>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <p class="mb-0" style="padding-left:1.4em"
+                                            *ngIf="lastStatusModificationTime != '' "> {{ 'on ' +
+                                            lastStatusModificationTime}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header pb-0">
+                                <h4 class="card-title">{{'Properties' | translate}}</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="basic-form">
+                                    <div class="form-group m-form__group">
+                                        <label for="HelpDeskStatusId">{{ 'Status' | translate
+                                            }}</label>
+                                        <select name="helpDeskStatusId" id="HelpDeskStatusId"
+                                            [(ngModel)]="supportTicket.helpDeskStatusId" class="form-control">
+                                            <option *ngFor="let item of allSupportTicketStatuss" value="{{item.id}}">
+                                                {{item.displayName}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group d-flex justify-content-between">
+                                        <button type="button" (click)="back()" class="btn btn-danger w-100 mr-1">{{
+                                            'Back' | translate}}</button>
+                                        <button type="button" (click)="updateTicket()"
+                                            class="btn btn-primary w-100 ml-1">{{ 'Update' |
+                                            translate}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

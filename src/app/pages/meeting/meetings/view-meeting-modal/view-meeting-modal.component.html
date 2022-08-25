@@ -1,0 +1,80 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewZoomCallMeeting' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ZoomMeetingUrl' | translate }}</label>
+                <p>{{meeting.contactZoomCallMeeting.zoomMeetingUrl}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ScheduleDate' | translate }}</label>
+                <p> {{meeting.contactZoomCallMeeting.scheduleDate | date:'yyyy-MM-dd'}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Comments' | translate }}</label>
+                <p [innerHtml]="meeting.contactZoomCallMeeting.comments"></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Active' | translate}}</label>
+                <p *ngIf="!meeting.contactZoomCallMeeting.isActive"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="meeting.contactZoomCallMeeting.isActive"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Company' | translate }}</label>
+                <p [innerHtml]="meeting.contactCompany"></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'UserName' | translate }}</label>
+                <p [innerHtml]="meeting.userName"></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'MeetingTimeSlot' | translate }}</label>
+                <p [innerHtml]="meeting.meetingTimeSlotsStartTime"></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'MeetingDay' | translate }}</label>
+                <p>{{meeting.meetingDaysLookupDayShortName}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'AppointmentReason' | translate }}</label>
+                <p>{{meeting.contactZoomMeetingAppointmentReasonReason}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ExpectedOutput' | translate }}</label>
+                <p>{{meeting.contactZoomMeetingOutputOutput}}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ActualOutput' | translate }}</label>
+                <p>{{meeting.contactZoomMeetingOutputOutput2}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

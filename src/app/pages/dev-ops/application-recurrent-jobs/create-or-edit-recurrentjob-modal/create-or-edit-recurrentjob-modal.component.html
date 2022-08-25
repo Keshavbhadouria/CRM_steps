@@ -1,0 +1,140 @@
+<form #applicationReccurentJobForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditApplicationRecurrentJob' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewApplicationRecurrentJob' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="RecurrentJob_ApplicationId">{{ 'ClientApplicationName' | translate }} *</label>
+                    <ng-select [items]="clientApplications" #RecurrentJob_ApplicationId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="RecurrentJob_ApplicationId" name="applicationId"
+                        [(ngModel)]="recurrentJob.applicationId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="RecurrentJob_ApplicationId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="RecurrentJob_ServerInventoryId">{{ 'ServerInventoryName' | translate }} *</label>
+                    <ng-select [items]="serverInventories" #RecurrentJob_ServerInventoryId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="RecurrentJob_ServerInventoryId" name="serverInventoryId"
+                        [(ngModel)]="recurrentJob.serverInventoryId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="RecurrentJob_ServerInventoryId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="RecurrentJob_ResponsibleId">{{ 'Responsible' | translate }} *</label>
+                    <ng-select [items]="responsibles" #RecurrentJob_ResponsibleId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="RecurrentJob_ResponsibleId" name="responsibleId"
+                        [(ngModel)]="recurrentJob.responsibleId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="RecurrentJob_ResponsibleId"></validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="RecurrentJob_JobName">{{ 'JobName' | translate }} *</label>
+                    <input type="text" #RecurrentJob_JobName="ngModel" id="RecurrentJob_JobName" class="form-control"
+                        [(ngModel)]="recurrentJob.jobName" name="jobName" required />
+                    <validation-messages [formCtrl]="RecurrentJob_JobName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="RecurrentJob_RunningAtTime">{{ 'RunningAtTime' | translate }} *</label>
+                    <input class="form-control m-input" #RecurrentJob_RunningAtTime="ngModel" type="date"
+                        [ngModel]="recurrentJob.runningAtTime | date:'yyyy-MM-dd'"
+                        (ngModelChange)="recurrentJob.runningAtTime = $event" id="RecurrentJob_RunningAtTime"
+                        name="runningAtTime" />
+                    <validation-messages [formCtrl]="RecurrentJob_RunningAtTime"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="RecurrentJob_DayOfTheMonth">{{ 'DayOfTheMonth' | translate }}</label>
+                    <input type="number" #RecurrentJob_DayOfTheMonth="ngModel"
+                        id="RecurrentJob_DayOfTheMonth" class="form-control"
+                        [(ngModel)]="recurrentJob.dayOfTheMonth" name="dayOfTheMonth" min="0" />
+                    <validation-messages [formCtrl]="RecurrentJob_DayOfTheMonth"></validation-messages>
+                </div>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="RecurrentJob_Monday" class="kt-checkbox">
+                    <input id="RecurrentJob_Monday" #RecurrentJob_Monday="ngModel" type="checkbox" name="monday"
+                        [(ngModel)]="recurrentJob.monday">
+                    {{ "Monday" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="RecurrentJob_Monday"></validation-messages>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="RecurrentJob_Tuesday" class="kt-checkbox">
+                    <input id="RecurrentJob_Tuesday" #RecurrentJob_Tuesday="ngModel" type="checkbox" name="tuesday"
+                        [(ngModel)]="recurrentJob.tuesday">
+                    {{ "Tuesday" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="RecurrentJob_Tuesday"></validation-messages>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="RecurrentJob_Wednesday" class="kt-checkbox">
+                    <input id="RecurrentJob_Wednesday" #RecurrentJob_Wednesday="ngModel" type="checkbox" name="wednesday"
+                        [(ngModel)]="recurrentJob.wednesday">
+                    {{ "Wednesday" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="RecurrentJob_Wednesday"></validation-messages>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="RecurrentJob_Thursday" class="kt-checkbox">
+                    <input id="RecurrentJob_Thursday" #RecurrentJob_Thursday="ngModel" type="checkbox" name="thursday"
+                        [(ngModel)]="recurrentJob.thursday">
+                    {{ "Thursday" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="RecurrentJob_Thursday"></validation-messages>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="RecurrentJob_Friday" class="kt-checkbox">
+                    <input id="RecurrentJob_Friday" #RecurrentJob_Friday="ngModel" type="checkbox" name="friday"
+                        [(ngModel)]="recurrentJob.friday">
+                    {{ "Friday" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="RecurrentJob_Friday"></validation-messages>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="RecurrentJob_Saturday" class="kt-checkbox">
+                    <input id="RecurrentJob_Saturday" #RecurrentJob_Saturday="ngModel" type="checkbox" name="saturday"
+                        [(ngModel)]="recurrentJob.saturday">
+                    {{ "Saturday" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="RecurrentJob_Saturday"></validation-messages>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="RecurrentJob_Sunday" class="kt-checkbox">
+                    <input id="RecurrentJob_Sunday" #RecurrentJob_Sunday="ngModel" type="checkbox" name="sunday"
+                        [(ngModel)]="recurrentJob.sunday">
+                    {{ "Sunday" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="RecurrentJob_Sunday"></validation-messages>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!applicationReccurentJobForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

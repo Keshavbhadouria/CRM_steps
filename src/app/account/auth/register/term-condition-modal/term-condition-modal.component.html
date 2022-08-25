@@ -1,0 +1,23 @@
+<div bsModal #termOrConditionModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="termOrConditionModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span >{{policyType}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <div [innerHTML] ="policyContentByType">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary blue" (click)="close()">{{'Close' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

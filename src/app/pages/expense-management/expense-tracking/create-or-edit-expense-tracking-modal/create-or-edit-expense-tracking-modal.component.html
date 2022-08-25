@@ -1,0 +1,105 @@
+<form #expenseTrackingForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditExpenseTracking' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewExpenseTracking' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ExpenseTracking_ContactId">{{ 'ContactName' | translate }}</label>
+                    <ng-select [items]="contacts" bindValue="id" bindLabel="displayName" id="ExpenseTracking_ContactId"
+                        name="contactId" [(ngModel)]="expenseTracking.contactId"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ExpenseTracking_CRMVendorId">{{ 'VendorName' | translate }}</label>
+                    <ng-select [items]="vendors" bindValue="id" bindLabel="displayName" id="ExpenseTracking_CRMVendorId"
+                        name="crmVendorId" [(ngModel)]="expenseTracking.crmVendorId"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ExpenseTracking_ServiceExpenseTypeId">{{ 'ExpenseType' | translate }}</label>
+                    <ng-select [items]="expenseTypes" bindValue="id" bindLabel="displayName"
+                        id="ExpenseTracking_ServiceExpenseTypeId" name="serviceExpenseTypeId"
+                        [(ngModel)]="expenseTracking.serviceExpenseTypeId"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ExpenseTracking_Amount">{{ 'Amount' | translate }} *</label>
+                    <input type="number" #ExpenseTracking_Amount="ngModel" id="ExpenseTracking_Amount"
+                        class="form-control" [(ngModel)]="expenseTracking.amount" name="amount" min="0" required/>
+                    <validation-messages [formCtrl]="ExpenseTracking_Amount"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ExpenseTracking_Tax">{{ 'Tax' | translate }} *</label>
+                    <input type="number" #ExpenseTracking_Tax="ngModel" id="ExpenseTracking_Tax" class="form-control"
+                        [(ngModel)]="expenseTracking.tax" name="tax" min="0" required/>
+                    <validation-messages [formCtrl]="ExpenseTracking_Tax"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ExpenseTracking_TotalAmount">{{ 'TotalAmount' | translate }} *</label>
+                    <input type="number" #ExpenseTracking_TotalAmount="ngModel" id="ExpenseTracking_TotalAmount"
+                        class="form-control" [(ngModel)]="expenseTracking.totalAmount" name="totalAmount" min="0" required/>
+                    <validation-messages [formCtrl]="ExpenseTracking_TotalAmount"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ExpenseTracking_StartDate">{{ 'StartDate' | translate }}</label>
+                    <input class="form-control m-input" #ExpenseTracking_StartDate="ngModel" type="date"
+                        [ngModel]="expenseTracking.startDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="expenseTracking.startDate = $event" id="ExpenseTracking_StartDate"
+                        name="startDate" />
+                    <validation-messages [formCtrl]="ExpenseTracking_StartDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ExpenseTracking_EndDate">{{ 'EndDate' | translate }}</label>
+                    <input class="form-control m-input" #ExpenseTracking_EndDate="ngModel" type="date"
+                        [ngModel]="expenseTracking.endDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="expenseTracking.endDate = $event" id="ExpenseTracking_EndDate"
+                        name="endDate" />
+                    <validation-messages [formCtrl]="ExpenseTracking_EndDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ExpenseTracking_Description">{{ 'Description' | translate }} *</label>
+                    <ckeditor #ExpenseTracking_Description="ngModel" id="ExpenseTracking_Description" [editor]="editor"
+                        [(ngModel)]="expenseTracking.description" name="description" required></ckeditor>
+                    <validation-messages [formCtrl]="ExpenseTracking_Description"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ExpenseTracking_Attachment">{{'Attachment' | translate}}</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile"
+                        accept="image/*" (change)="handleUpload($event)">
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+                        <img [src]="imageUrl" style="height: 50px;width:auto;" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!expenseTrackingForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

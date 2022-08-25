@@ -1,0 +1,354 @@
+<div class="container-fluid">
+  <app-page-title title="{{'ContactPaymentPlan' | translate }}" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-8">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i class="bx
+                                      bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-secondery" (click)="clearForm()" style="margin-right: 5px;">{{
+                'ClearFilters' | translate}}</button>
+              <button type="button" *ngIf="contactId === 0" class="btn btn-secondery"
+                (click)="openCreateModal(createModal)">{{
+                'CreateNewPaymentPlanHeader' | translate}}</button>
+            </div>
+          </div>
+
+          <!-- Advanced Filter  -->
+          <div class="row" [hidden]="!advancedFiltersAreShown">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinBalanceFilter">{{'MinMax' | translate }} {{'Balance' | translate }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinBalanceFilter" [(ngModel)]="minBalanceFilter"
+                    placeholder="{{'MinValue' | translate }}" name="minBalanceFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxBalanceFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxBalanceFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinDownpaymentFilter">{{'MinMax' | translate }} {{'Downpayment' | translate }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinDownpaymentFilter" [(ngModel)]="minDownpaymentFilter"
+                    placeholder="{{'MinValue' | translate }}" name="minDownpaymentFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxDownpaymentFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxDownpaymentFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinPaymentsFilter">{{'MinMax' | translate }} {{'Payments' | translate }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinPaymentsFilter" [(ngModel)]="minPaymentsFilter"
+                    placeholder="{{'MinValue' | translate }}" name="minPaymentsFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxPaymentsFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxPaymentsFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinPaymentsAmountFilter">{{'MinMax' | translate }} {{'PaymentsAmount' | translate }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinPaymentsAmountFilter"
+                    [(ngModel)]="minPaymentsAmountFilter" placeholder="{{'MinValue' | translate }}"
+                    name="minPaymentsAmountFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxPaymentsAmountFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxPaymentsAmountFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinFirstQuotaDateFilter">{{'FirstQuotaDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinFirstQuotaDateFilter" name="MinFirstQuotaDateFilter"
+                    type="datetime" bsDatepicker placeholder="{{'MinValue' | translate }}"
+                    [(ngModel)]="minFirstQuotaDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxFirstQuotaDateFilter" name="MaxFirstQuotaDateFilter"
+                    type="datetime" bsDatepicker placeholder="{{'MaxValue' | translate }}"
+                    [(ngModel)]="maxFirstQuotaDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="PaymentPlanNumberFilter">{{'PaymentPlanNumber' | translate }}</label>
+                <input type="text" class="form-control" id="PaymentPlanNumberFilter" name="paymentPlanNumberFilter"
+                  [(ngModel)]="paymentPlanNumberFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="PaymentPlanQRCodeFilter">{{'PaymentPlanQRCode' | translate }}</label>
+                <input type="text" class="form-control" id="PaymentPlanQRCodeFilter" name="paymentPlanQRCodeFilter"
+                  [(ngModel)]="paymentPlanQRCodeFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactInvoiceHeaderGatewayFilter">({{'ContactInvoiceHeader' | translate }}) {{'Gateway' |
+                  translate }}</label>
+                <input type="text" class="form-control" id="ContactInvoiceHeaderGatewayFilter"
+                  name="contactInvoiceHeaderGatewayFilter" [(ngModel)]="contactInvoiceHeaderGatewayFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactCompanyFilter">({{'Contact' | translate }}) {{'Company' | translate }}</label>
+                <input type="text" class="form-control" id="ContactCompanyFilter" name="contactCompanyFilter"
+                  [(ngModel)]="contactCompanyFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="UserNameFilter">({{'User' | translate }}) {{'Name' | translate }}</label>
+                <input type="text" class="form-control" id="UserNameFilter" name="userNameFilter"
+                  [(ngModel)]="userNameFilter">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Show Hide Filters -->
+          <div class="row mb-2 mt-2">
+            <div class="col-sm-12">
+              <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i>
+                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+              <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i>
+                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row align-items-center" [busyIf]="primengTableHelper.isLoading">
+    <!--<Primeng-Datatable-Start>-->
+    <div class="primeng-datatable-container col-12">
+      <p-table #dataTable (onLazyLoad)="getRecords($event)" [value]="primengTableHelper.records"
+        rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false" [lazy]="true" [scrollable]="true"
+        ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+        [resizableColumns]="primengTableHelper.resizableColumns">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 150px">
+              {{'Actions'| translate }}</th>
+            <th style="width: 150px" pSortableColumn="userFk.name">
+              {{'ContactName'| translate }}
+              <p-sortIcon field="contact"></p-sortIcon>
+              <p-columnFilter type="text" field="contact" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" display="menu"></p-columnFilter>
+            </th>
+            <th style="width: 150px" pSortableColumn="balance">
+              {{'Balance'| translate }}
+              <p-sortIcon field="paymentPlanHeader.balance"></p-sortIcon>
+              <p-columnFilter field="balance" display="menu" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <input type="number" class="form-control" id="MinBalanceFilter" [(ngModel)]="minBalanceFilter"
+                    placeholder="{{'MinValue' | translate }}" name="minBalanceFilter" />
+                  <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                  <input type="number" class="form-control" [(ngModel)]="maxBalanceFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxBalanceFilter" />
+
+                  <div class="d-flex justify-content-between mt-2">
+                    <button type="button"
+                      class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                      style="margin-right: 5px;"><span class="p-button-label"
+                        (click)="clearBalance($event)">Clear</span></button>
+                    <button type="button" class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                      ng-reflect-label="Apply"><span class="p-button-label"
+                        (click)="applyDate($event)">Apply</span></button>
+                  </div>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th style="width: 150px" pSortableColumn="downpayment">
+              {{'Downpayment'| translate }}
+              <p-sortIcon field="paymentPlanHeader.downpayment"></p-sortIcon>
+              <p-columnFilter field="balance" display="menu" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <input type="number" class="form-control" id="minDownpaymentFilter" [(ngModel)]="minDownpaymentFilter"
+                    placeholder="{{'MinValue' | translate }}" name="minDownpaymentFilter" />
+                  <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                  <input type="number" class="form-control" [(ngModel)]="maxDownpaymentFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxDownpaymentFilter" />
+
+                  <div class="d-flex justify-content-between mt-2">
+                    <button type="button"
+                      class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                      style="margin-right: 5px;"><span class="p-button-label"
+                        (click)="clearDownPayment($event)">Clear</span></button>
+                    <button type="button" class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                      ng-reflect-label="Apply"><span class="p-button-label"
+                        (click)="applyDate($event)">Apply</span></button>
+                  </div>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th style="width: 150px" pSortableColumn="paymentsAmount">
+              {{'Pending'| translate }}
+              <p-sortIcon field="paymentPlanHeader.paymentsAmount"></p-sortIcon>
+              <p-columnFilter field="balance" display="menu" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <input type="number" class="form-control" id="minPaymentsAmountFilter"
+                    [(ngModel)]="minPaymentsAmountFilter" placeholder="{{'MinValue' | translate }}"
+                    name="minPaymentsAmountFilter" />
+                  <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                  <input type="number" class="form-control" [(ngModel)]="maxPaymentsAmountFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxPaymentsAmountFilter" />
+
+                  <div class="d-flex justify-content-between mt-2">
+                    <button type="button"
+                      class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                      style="margin-right: 5px;"><span class="p-button-label"
+                        (click)="clearPending($event)">Clear</span></button>
+                    <button type="button" class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                      ng-reflect-label="Apply"><span class="p-button-label"
+                        (click)="applyDate($event)">Apply</span></button>
+                  </div>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <!-- <th style="width: 150px" pSortableColumn="payments">
+              {{'No Of Installments'| translate }}
+              <p-sortIcon field="paymentPlanHeader.payments"></p-sortIcon>
+            </th> -->
+            <th style="width: 150px" pSortableColumn="firstQuotaDate">
+              {{'FirstQuotaDate'| translate }}
+              <p-sortIcon field="paymentPlanHeader.firstQuotaDate"></p-sortIcon>
+              <p-columnFilter field="firstQuotaDate" display="menu" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <input class="form-control m-input " id="minFirstQuotaDateFilter" name="minFirstQuotaDateFilter"
+                    type="date" [(ngModel)]="minFirstQuotaDateFilter">
+                  <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                  <input class="form-control m-input " id="maxFirstQuotaDateFilter" name="maxFirstQuotaDateFilter"
+                    type="date" [(ngModel)]="maxFirstQuotaDateFilter">
+                  <div class="d-flex justify-content-between mt-2">
+                    <button type="button"
+                      class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                      style="margin-right: 5px;"><span class="p-button-label"
+                        (click)="clearQuotaDate($event)">Clear</span></button>
+                    <button type="button" class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                      ng-reflect-label="Apply"><span class="p-button-label"
+                        (click)="applyDate($event)">Apply</span></button>
+                  </div>
+                </ng-template>
+              </p-columnFilter>
+
+            </th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+          <tr>
+            <td style="width: 150px">
+              <div class="btn-group dropdown" dropdown container="body">
+                <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
+                  <i class="fa fa-plus-circle"></i>
+                  {{"Actions" | translate}}
+                </button>
+                <ul class="dropdown-menu custom-dropdown" *dropdownMenu>
+                  <li>
+                    <img src="../../../../../assets/icons/editIcon.png">
+                    <a href="javascript:;" class="dropdown-item" (click)="onEditPayment(record)">{{'Edit' |
+                      translate}}</a>
+                  </li>
+                  <li>
+                    <img src="../../../../../assets/icons/deleteIcon.png">
+                    <a href="javascript:;" class="dropdown-item"
+                      (click)="onDelete(record.paymentPlanHeader.id)">{{'Delete' | translate}}</a>
+                  </li>
+
+                </ul>
+              </div>
+
+            </td>
+            <td style="width:150px">
+              <span class="ui-column-title"> {{'Contact FullName'| translate }}</span>
+              {{record.contactCompany}}
+            </td>
+            <td style="width:150px">
+              <span class="ui-column-title"> {{'Balance'| translate }}</span>
+              {{record.paymentPlanHeader.balance | currency}}
+            </td>
+            <td style="width:150px">
+              <span class="ui-column-title"> {{'Downpayment'| translate }}</span>
+              {{record.paymentPlanHeader.downpayment | currency}}
+            </td>
+            <td style="width:150px">
+              <span class="ui-column-title"> {{'PaymentsAmount'| translate }}</span>
+              {{record.paymentPlanHeader.paymentsAmount | currency}}
+            </td>
+            <!-- <td style="width:150px">
+              <span class="ui-column-title"> {{'Payments'| translate }}</span>
+              <a [routerLink]="['/app/main/customer/paymentPlanDetails']"
+                [queryParams]="{ paymentPlanHeaderId: record.paymentPlanHeader.id}">
+                {{record.paymentPlanHeader.payments}} </a>
+            </td> -->
+            <td style="width:150px">
+              <span class="ui-column-title"> {{'FirstQuotaDate'| translate }}</span>
+              <span *ngIf="record.paymentPlanHeader.firstQuotaDate">
+                {{record.paymentPlanHeader.firstQuotaDate | momentFormat:'L' }}
+              </span>
+              <span *ngIf="!record.paymentPlanHeader.firstQuotaDate">-</span>
+            </td>
+          </tr>
+
+        </ng-template>
+      </p-table>
+      <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+        {{'NoData'| translate }}
+      </div>
+      <div class="primeng-paging-container">
+        <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+          (onPageChange)="getRecords($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+          [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage" [showCurrentPageReport]="true"
+          [currentPageReportTemplate]="'TotalRecordsCount' | translate:primengTableHelper.totalRecordsCount">
+        </p-paginator>
+      </div>
+    </div>
+    <!--<Primeng-Datatable-End>-->
+  </div>
+  <!-- <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table> -->
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-create-or-edit-contact-payment-plan-modal [modal]="modal" ($modalClose)='modalEmitEvent()'
+    [data]="editPaymentPlan">
+  </app-create-or-edit-contact-payment-plan-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-contact-payment-plan-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewPhoneCall">
+  </app-contact-payment-plan-view-modal>
+</ng-template>

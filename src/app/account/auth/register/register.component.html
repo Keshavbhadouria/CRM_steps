@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body [busyIf]="isLoading">
+  <div class="registeration">
+    <div class="registeration__wrapper">
+      <div class="left">
+        <div class="left__wrapper stepOne">
+
+        </div>
+      </div>
+      <div class="right">
+        <div class="right__wrapper">
+          <div class="steps">
+            <div class="steps__wrapper">
+              <ul>
+                <li [ngClass]="{'completed': this.stepIndex > 0}">
+                  <div class="step">
+                    <div class="step__wrapper">
+                      <a>1</a>
+                    </div>
+                  </div>
+                </li>
+                <li [ngClass]="{'completed': this.stepIndex > 1}">
+                  <div class="step">
+                    <div class="step__wrapper">
+                      <a>2</a>
+                    </div>
+                  </div>
+                </li>
+                <li [ngClass]="{'completed': this.stepIndex > 2}">
+                  <div class="step">
+                    <div class="step__wrapper">
+                      <a>3</a>
+                    </div>
+                  </div>
+                </li>
+                <li [ngClass]="{'completed': this.stepIndex > 3}">
+                  <div class="step">
+                    <div class="step__wrapper">
+                      <a>4</a>
+                    </div>
+                  </div>
+                </li>
+                <li [ngClass]="{'completed': this.stepIndex > 4}">
+                  <div class="step">
+                    <div class="step__wrapper">
+                      <a>5</a>
+                    </div>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <div class="register-form">
+            <div class="register-form__wrapper">
+              <!-- Step One  -->
+              <form #registerForm="ngForm">
+                <div class="step-one" *ngIf="this.stepIndex == 0">
+                  <div class="step-one__wrapper">
+                    <div class="header">
+                      <h2>User Information</h2>
+                      <p>Setup Your Account Details</p>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <div class="custom-input" style="width:97%;">
+                            <img src="./assets/icons/nameIcon.svg" alt="">
+                            <input #tenancyNameInput="ngModel" type="text" class="form-control" id="TenancyName" (focusout)="isTenantExists()" (keyup)="resetTenantExists()"
+                              [(ngModel)]="model.tenancyName" aria-describedby="" name="TenancyName"
+                              placeholder="Tenant Name" required maxlength="64">
+                          </div>
+                          <validation-messages [formCtrl]="tenancyNameInput">
+                          </validation-messages>
+                          <span style="color: #6db500;" *ngIf="isTenantNameExists == false" >Available</span>
+                          <span style="color: red;" *ngIf="isTenantNameExists">Tenant name already taken</span>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/nameIcon.svg" alt="">
+                            <input #nameInput="ngModel" type="text" class="form-control" id="FirstName"
+                              [(ngModel)]="model.firstName" aria-describedby="" placeholder="First Name"
+                              name="FirstName" required maxlength="64">
+                          </div>
+                          <validation-messages [formCtrl]="nameInput"></validation-messages>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/nameIcon.svg" alt="">
+                            <input #lastNameInput="ngModel" type="text" class="form-control" id="LastName"
+                              [(ngModel)]="model.lastName" aria-describedby="" name="LastName" placeholder="Last Name"
+                              required maxlength="64">
+                          </div>
+                          <validation-messages [formCtrl]="lastNameInput">
+                          </validation-messages>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/mailIcon.svg" alt="">
+                            <input #emailAddressInput="ngModel" type="email" class="form-control" placeholder="Email"
+                              [(ngModel)]="model.email" name="Email" required maxlength="256" appEmailValidator>
+                          </div>
+                          <validation-messages [formCtrl]="emailAddressInput">
+                          </validation-messages>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/mailIcon.svg" alt="">
+                            <input #verifyEmailAddressInput="ngModel" type="email" class="form-control" id="VerifyEmailAddress"
+                              aria-describedby="" (keyup)="onVerifyEmail($event)" placeholder="Verify Email"
+                              [(ngModel)]="emailAddressToVerify" name="VerifyEmailAddress" required maxlength="256">
+                          </div>
+                          <validation-messages [formCtrl]="verifyEmailAddressInput">
+                          </validation-messages>
+                          <span class="form-control-feedback text-danger" *ngIf="!isEmailAddressMatching">Email address
+                            does
+                            not
+                            match</span>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/phoneIcon.svg" alt="">
+                            <input #phoneNumberInput="ngModel" type="number" class="form-control" id="phoneNumber"
+                              aria-describedby="" placeholder="{{'PhoneNumber' | translate}}" name="PhoneNumber"
+                              [(ngModel)]="model.phoneNumber" required>
+                          </div>
+                          <validation-messages [formCtrl]="phoneNumberInput">
+                          </validation-messages>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/phoneIcon.svg" alt="">
+                            <input #cellNumberInput="ngModel" type="number" class="form-control" id="cellPhoneNumber"
+                              aria-describedby="" placeholder="{{'Cell Phone Number' | translate}}"
+                              [(ngModel)]="model.cellPhoneNumber" name="CellPhoneNumber">
+                          </div>
+                          <validation-messages [formCtrl]="cellNumberInput">
+                          </validation-messages>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/websiteIcon.svg" alt="">
+                            <input #websiteInput="ngModel" type="text" class="form-control" id="website" aria-describedby=""
+                              placeholder="{{'Website' | translate}}" [(ngModel)]="model.website" name="Website"
+                              maxlength="64" placeholder="Website">
+                          </div>
+                          <validation-messages [formCtrl]="websiteInput">
+                          </validation-messages>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/companyIcon.svg" alt="">
+                            <input #companyNameInput="ngModel" type="text" class="form-control" id="companyName"
+                              aria-describedby="" placeholder="{{'Company Name' | translate}}" name="CompanyName"
+                              [(ngModel)]="model.companyName" maxlength="256">
+                          </div>
+                          <!-- <validation-messages [formCtrl]="companyNameInput">
+                                                                                                                                                                  </validation-messages> -->
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+
+                          <div class="custom-input">
+                            <img src="./assets/icons/passIcon.svg" alt="">
+                            <input type="password" name="Password" class="form-control" id="Password"
+                              aria-describedby="Verify Email" [(ngModel)]="model.password" #Password="ngModel"
+                              placeholder="{{'Password' | translate}}" validateEqual="PasswordRepeat" reverse="true">
+                          </div>
+                          <div [hidden]="registerForm.form.valid || registerForm.form.pristine"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                              <ul class="form-text text-danger" *ngIf="Password.errors">
+                                <li [hidden]="!Password.errors.requireDigit">
+                                  {{"PasswordComplexity_RequireDigit_Hint" |
+                                  translate}}
+                                </li>
+                                <li [hidden]="!Password.errors.requireLowercase">
+                                  {{"PasswordComplexity_RequireLowercase_Hint" |
+                                  translate}}
+                                </li>
+                                <li [hidden]="!Password.errors.requireUppercase">
+                                  {{"PasswordComplexity_RequireUppercase_Hint" |
+                                  translate}}
+                                </li>
+                                <li [hidden]="!Password.errors.requireNonAlphanumeric">
+                                  {{"PasswordComplexity_RequireNonAlphanumeric_Hint" |
+                                  translate}}
+                                </li>
+                                <li [hidden]="!Password.errors.requiredLength">
+                                  {{"PasswordComplexity_RequiredLength_Hint" |
+                                  translate:passwordComplexitySetting.requiredLength}}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/passIcon.svg" alt="">
+                            <input type="password" name="PasswordRepeat" (keyup)="onVerifyPassword($event)"
+                              class="form-control" id="PasswordRepeat" aria-describedby="" [(ngModel)]="model.passwordRepeat"
+                              #PasswordRepeat="ngModel" placeholder="{{'PasswordRepeat' | translate}}" reverse="false"
+                              required>
+                          </div>
+                          <span class="form-control-feedback text-danger" *ngIf="!isPasswordMatching">Password does
+                            not
+                            match</span>
+                          <div [hidden]="registerForm.form.valid || registerForm.form.pristine"
+                            class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                              <ul class="form-text text-danger" *ngIf="PasswordRepeat.errors">
+                                <li [hidden]="!PasswordRepeat.errors.requireDigit">
+                                  {{"PasswordComplexity_RequireDigit_Hint" |
+                                  translate}}
+                                </li>
+                                <li [hidden]="!PasswordRepeat.errors.requireLowercase">
+                                  {{"PasswordComplexity_RequireLowercase_Hint" |
+                                  translate}}
+                                </li>
+                                <li [hidden]="!PasswordRepeat.errors.requireUppercase">
+                                  {{"PasswordComplexity_RequireUppercase_Hint" |
+                                  translate}}
+                                </li>
+                                <li [hidden]="!PasswordRepeat.errors.requireNonAlphanumeric">
+                                  {{"PasswordComplexity_RequireNonAlphanumeric_Hint" |
+                                  translate}}
+                                </li>
+                                <li [hidden]="!PasswordRepeat.errors.requiredLength">
+                                  {{"PasswordComplexity_RequiredLength_Hint" |
+                                  translate:passwordComplexitySetting.requiredLength}}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12" style="margin-top:-20px">
+                        <div class="button__wrapper mb-5">
+                          <button class="button-1" id="stepOneButton"
+                            (click)="gotoNextStep(registerForm)">Continue</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Step Two -->
+                <div class="step-two" *ngIf="this.stepIndex == 1">
+                  <div class="step-one__wrapper">
+                    <div class="header">
+                      <h2>Contact Information</h2>
+                      <p>Setup Your Account Details step 2</p>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <div class="custom-input" style="width:97%;">
+                            <img src="./assets/icons/addressIcon.svg" alt="">
+                            <input type="text" class="form-control" id="Address1" #addressInput="ngModel" type="text"
+                              placeholder="{{'Address1' | translate}}" [(ngModel)]="model.address1" name="Address1"
+                              maxlength="64">
+                          </div>
+                          <validation-messages [formCtrl]="addressInput">
+                          </validation-messages>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <div class="custom-input" style="width:97%;">
+                            <img src="./assets/icons/addressIcon.svg" alt="">
+                            <input type="text" class="form-control" id="Address2" #address2Input="ngModel" type="text"
+                              placeholder="{{'Address2' | translate}}" [(ngModel)]="model.address2" name="Address2"
+                              maxlength="64">
+                          </div>
+                          <validation-messages [formCtrl]="address2Input">
+                          </validation-messages>
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-select-reg">
+                            <span class="custom-select_arrow"></span>
+                            <img src="./assets/icons/countryIcon.svg" alt="">
+                            <select class="form-select custom-select__wrapper" #countryIdInput="ngModel"
+                              [(ngModel)]="model.countryId" required name="CountryId"
+                              (change)="getStates(model.countryId)" aria-label="">
+                              <option [ngValue]="'0'" selected [disabled]="true">Select
+                                Country</option>
+                              <option *ngFor="let country of countries" [ngValue]="country.id">{{country.name}}
+                              </option>
+                            </select>
+                          </div>
+                          <validation-messages [formCtrl]="countryIdInput">
+                          </validation-messages>
+                        </div>
+                      </div>
+
+                      <div class="col-6" [busyIf]="isLoadingStates">
+                        <div class="mb-3">
+                          <div class="custom-select-reg">
+                            <span class="custom-select_arrow"></span>
+                            <img src="./assets/icons/countryIcon.svg" alt="">
+                            <select class="form-select custom-select__wrapper" #stateIdInput="ngModel"
+                              [(ngModel)]="model.stateId" required name="StateId" aria-label="">
+                              <option selected disabled>-- Select State --</option>
+                              <option *ngFor="let state of states" [ngValue]="state.id">
+                                {{state.name}}
+                              </option>
+                            </select>
+                          </div>
+                          <validation-messages [formCtrl]="stateIdInput">
+                          </validation-messages>
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/cityIcon.svg" alt="">
+                            <input load type="text" class="form-control" id="City" #cityInput="ngModel" type="text"
+                              placeholder="{{'City' | translate}}" [(ngModel)]="model.city" name="City" required
+                              maxlength="64">
+                          </div>
+                          <validation-messages [formCtrl]="cityInput"></validation-messages>
+                        </div>
+                      </div>
+
+
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/postalIcon.svg" alt="">
+                            <input type="text" class="form-control" id="PostalCode" (keypress)="numberOnly($event)"
+                              #postalCodeInput="ngModel" type="text" maxlength="6"
+                              placeholder="{{'PostalCode' | translate}}" [(ngModel)]="model.postalCode"
+                              name="PostalCode" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="button__wrapper multi">
+                          <button class="button-1" id="backStepOne" (click)="gotoBackStep()">Back</button>
+                          <button class="button-1" id="stepTwoButton"
+                            (click)="gotoNextStep(registerForm)">Continue</button>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                  </div>
+                </div>
+                <!-- Step Three -->
+                <div class="step-three" *ngIf="this.stepIndex == 2">
+                  <div class="step-one__wrapper">
+                    <div class="header">
+                      <h2>Make Payment</h2>
+                      <p>Setup Your Account Details step 3</p>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <div class="custom-radio">
+                            <label class="custom-radio__wrapper">
+                              <input type="radio" name="radio" checked>
+                              <span class="checkmark"></span>
+                              Credit Card
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <div class="custom-input" style="width: 97%;">
+                            <img src="./assets/icons/nameIcon.svg" alt="">
+                            <input type="name" class="form-control" id="nameOnCard" #ccname="ngModel" aria-describedby=""
+                              name="ccname" [(ngModel)]="model.nameOnCard" placeholder="Name on the card" required>
+                          </div>
+                          <validation-messages [formCtrl]="ccname">
+                          </validation-messages>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input" style="width: 97%;">
+                            <img src="./assets/icons/cardIcon.svg" alt="">
+                            <input #ccnumber="ngModel" type="number" class="form-control" id="creditCardNo" name="ccnumber" required
+                              [(ngModel)]="model.creditCardNo" placeholder="Card Number" (change)="validateCreditCard()"
+                              aria-describedby="" required>
+                          </div>
+                          <validation-messages [formCtrl]="ccnumber">
+                          </validation-messages>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-select-reg">
+                            <span class="custom-select_arrow"></span>
+                            <img src="./assets/icons/cardIcon.svg" alt="">
+                            <select class="form-select custom-select__wrapper" name="cardType"
+                              [(ngModel)]="model.cardType" aria-label="">
+                              <option selected disabled>Card Type</option>
+                              <option *ngFor="let card of cardIcons" [ngValue]="card.card">{{card.card}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="row">
+                          <div class="mb-3 col-md-6">
+                            <div class="custom-input">
+                              <img src="./assets/icons/expireDateIcon.svg" alt="">
+                              <input type="text" class="form-control" #expiryMonth="ngModel" id="ccmonth"
+                                (keypress)="numberOnly($event)" maxlength="2" customMin="1" customMax="12"
+                                name="ccmonth" [(ngModel)]="model.expiryMonth" aria-describedby="" placeholder="MM"
+                                required>
+                              <div *ngIf="expiryMonth.errors?.maxlength">
+                                only 2 characters allowed.
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <div class="custom-input">
+                              <img src="./assets/icons/expireDateIcon.svg" alt="">
+                              <input type="text" class="form-control" id="expiryYear" #expiryYear="ngModel"
+                                (keypress)="numberOnly($event)" maxlength="2" class="form-control" name="ccyear"
+                                [(ngModel)]="model.expiryYear" placeholder="YY" required aria-describedby=""
+                                placeholder="YY">
+                            </div>
+                            <div *ngIf="expiryYear.errors?.maxlength">
+                              only 2 characters allowed.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-3">
+                          <div class="custom-input">
+                            <img src="./assets/icons/cvvIcon.svg" alt="">
+                            <input type="number" class="form-control" id="CVV" #cvv="ngModel"
+                              (keypress)="numberOnly($event)" maxlength="4" name="cccvv" required
+                              [(ngModel)]="model.cvv" value="123" placeholder="CVV">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="button__wrapper multi">
+                          <button class="button-1" id="backStepTwo" (click)="gotoBackStep()">Back</button>
+                          <button class="button-1" id="lastStepButton"
+                            (click)="gotoNextStep(registerForm)">Continue</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Step Four -->
+                <div class="step-four" *ngIf="this.stepIndex == 3">
+                  <div class="step-four__wrapper">
+                    <div class="header">
+                      <h2>Subscription Plan</h2>
+                      <p>Select your plan.</p>
+                    </div>
+                    <div class="row">
+                      <app-subscription-plan (selectedEdition)="setEditionAndPayment($event)"></app-subscription-plan>
+                      <div class="col-12">
+                        <div class="button__wrapper multi">
+                          <button class="button-1" id="backStepThree" (click)="gotoBackStep()">Back</button>
+                          <button class="button-1" id="lastStepButton"
+                            (click)="gotoNextStep(registerForm)">Continue</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <!-- Step Five -->
+                <div class="step-four" *ngIf="this.stepIndex == 4">
+                  <div class="step-four__wrapper">
+                    <div class="header">
+                      <h2>Completed</h2>
+                      <p>Review And Submit</p>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="reviewContent">
+                          <div class="reviewContent__wrapper">
+                            <div class="left">
+                              <p class="title">
+                                Account Details
+                              </p>
+                              <span>
+                                {{model.firstName}} {{model.lastName}}
+                              </span>
+                              <div class="contentGp">
+                                <p class="">
+                                  Email:
+                                </p>
+                                <span>
+                                  {{model.email}}
+                                </span>
+                              </div>
+                            </div>
+                            <div class="right">
+                              <p class="title">
+                                Location Address
+                              </p>
+                              <div class="contentGp">
+                                <ul>
+                                  <li>
+                                    <span>
+                                      {{model.address1}}
+                                    </span>
+
+                                  </li>
+                                  <li>
+                                    <span>
+                                      {{model.address2}}
+                                    </span>
+
+                                  </li>
+                                  <li>
+                                    <span>
+                                      {{model.city}} {{stateName}} {{countryName}}
+                                      {{model.postalCode}}
+                                    </span>
+
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="reviewContent">
+                          <div class="reviewContent__wrapper">
+                            <div class="left">
+                              <p class="title">
+                                Payment Details
+                              </p>
+
+                              <div class="contentGp">
+                                <p class="">
+                                  Card Number:
+                                </p>
+                                <span>
+                                  {{getEncriptedCC(model.creditCardNo)}}
+                                </span>
+                              </div>
+                              <div class="contentGp">
+                                <p class="">
+                                  Card Name:
+                                </p>
+                                <span>
+                                  {{model.nameOnCard}}
+                                </span>
+                              </div>
+                            </div>
+                            <div class="right">
+                              <div class="contentGp">
+                                <p class="">
+                                  Card Expiry:
+                                </p>
+                                <span>
+                                  {{model.expiryMonth}}/{{model.expiryYear}}
+                                </span>
+                              </div>
+                              <div class="contentGp">
+                                <p class="">
+                                  CVV:
+                                </p>
+                                <span>
+                                  {{model.cvv}}
+                                </span>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="reviewContent">
+                          <div class="reviewContent__wrapper custom__wrapper">
+                            <div class="title">
+                              Acceptance
+                            </div>
+                            <div class="left">
+                              <ul>
+                                <!-- <li>
+                                   <label class="switch">
+                                    <input type="checkbox" (click)="checkSpam()">
+                                    <span class="slider round"></span>
+                                  </label>
+                                  <span style="padding-left: 35px;">
+                                    <a href="javascript:;" style="margin-top: -4px;cursor: pointer;"
+                                      (click)="termOrConditionModal.showPolicy('I Agree Spam Policy.',getPolicyByName('spam'))">
+                                      I Agree Spam Policy. </a>
+                                  </span>
+                                </li> -->
+                                <li>
+                                  <div class="custom-checkbox">
+                                    <label class="custom-checkbox__wrapper">
+                                      <input type="checkbox" (click)="checkSpam()">
+                                      <span class="checkmark"></span>
+
+                                    </label>
+                                    <span style="padding-left: 35px;">
+                                      <a href="javascript:;" style="margin-top: -4px;cursor: pointer;"
+                                      (click)="termOrConditionModal.showPolicy('I Agree Spam Policy.',getPolicyByName('spam'))">
+                                      I Agree Spam Policy. </a>
+                                    </span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="custom-checkbox">
+                                    <label class="custom-checkbox__wrapper">
+                                      <input type="checkbox" (click)="checkterms()">
+                                      <span class="checkmark"></span>
+
+                                    </label>
+                                    <span style="padding-left: 35px;">
+                                      <a href="javascript:;" style="margin-top: -4px;cursor: pointer;"
+                                        (click)="termOrConditionModal.showPolicy('I Agree Terms And Condition',getPolicyByName('term'))">
+                                        I Agree Terms And Condition </a>
+                                    </span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="custom-checkbox">
+
+                                    <label class="custom-checkbox__wrapper">
+                                      <input type="checkbox" (click)="checkCancelNotice()">
+                                      <span class="checkmark"></span>
+
+                                    </label>
+                                    <span style="padding-left: 35px;">
+                                      <a href="javascript:;" style="margin-top: -4px;cursor: pointer;"
+                                        (click)="termOrConditionModal.showPolicy('Agree Cancellation Notice',getPolicyByName('cancel'))">
+                                        Agree Cancellation Notice </a>
+                                    </span>
+
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="right customRight">
+                              <ul>
+                                <li>
+                                  <div class="custom-checkbox">
+
+                                    <label class="custom-checkbox__wrapper">
+                                      <input type="checkbox" (click)="checkPrivatePolicy()">
+                                      <span class="checkmark"></span>
+
+                                    </label>
+                                    <span style="padding-left: 35px;">
+                                      <a href="javascript:;" style="margin-top: -4px;cursor: pointer;"
+                                        (click)="termOrConditionModal.showPolicy('I Agree Privacy Policy.',getPolicyByName('privacy'))">
+                                        I Agree Privacy
+                                        Policy.</a>
+                                    </span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="custom-checkbox">
+
+                                    <label class="custom-checkbox__wrapper">
+                                      <input type="checkbox" (click)="checkProcedure()">
+                                      <span class="checkmark"></span>
+
+                                    </label>
+                                    <span style="padding-left: 35px;">
+                                      <a href="javascript:;" style="margin-top: -4px;cursor: pointer;"
+                                        (click)="termOrConditionModal.showPolicy('Agree Policy And procedure',getPolicyByName('procedure'))">I
+                                        Agree Policy And
+                                        Procedure</a>
+                                    </span>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12" *ngIf="isAllPoliciesAccepted">
+                        <div class="line-height-xl">
+                          <div class="col-md-6" style="border: 1px solid; margin-top: 20px;width:100%">
+                            <button id="clear" class="text-right" (click)="clearSignaturePad()">Clear</button>
+                            <label class="custom-radio__wrapper">
+                              Signature :
+                            </label>
+                            <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
+                              (onEndEvent)="drawComplete()"></signature-pad>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="button__wrapper multi">
+                          <button class="button-1" id="backStepThree" (click)="gotoBackStep()">Back</button>
+                          <button class="button-1" (click)="onSubmit()" id="submitBtn"
+                            [disabled]="isSubmitButtonDisabled">Submit
+                            <i class="fa fa-spinner fa-spin" *ngIf="saving"></i>
+                          </button>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- jQuery -->
+
+
+</body>
+
+</html>
+
+
+<!-- Create Model -->
+
+<termOrConditionModal #termOrConditionModal></termOrConditionModal>
+
+<button id="stripe-checkout" class="btn btn-primary btn-block" hidden>{{'Purchase' | translate}}</button>

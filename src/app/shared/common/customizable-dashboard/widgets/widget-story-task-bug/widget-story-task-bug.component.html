@@ -1,0 +1,20 @@
+<div class="card card-custom h-100">
+    <div class="card-header align-items-center border-0" style="background-color: #2E7CBA;">
+        <div class="card-title">
+            <h3 class="card-label text-dark">
+                <small style="color: #fff;">{{'StoriesTasksBugs' | translate}}</small>
+            </h3>
+        </div>
+    </div>
+    <div class="card-body">
+        <div>
+            <div class="row">
+                <div class="col-lg-4 col-md-12" style="max-height:300px" *ngFor="let c of chartOptions">
+                    <apx-chart [series]="c.series" [chart]="c.chart"
+                        [plotOptions]="c.plotOptions" [labels]="c.labels"
+                        [fill]="c.fill"></apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

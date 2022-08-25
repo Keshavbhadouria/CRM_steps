@@ -1,0 +1,42 @@
+<form #stateForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditState' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateState' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMCountryCountryName">{{"Country"| translate }}</label>
+                    <ng-select [items]="allCountries" #CRMState_CrmCountryId="ngModel" bindValue="id" bindLabel="displayName" name="crmState.crmCountryId"
+                    [(ngModel)]="crmState.crmCountryId" required></ng-select>
+                    <validation-messages [formCtrl]="CRMState_CrmCountryId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="CRMState_StateName">{{"StateName"| translate }} *</label>
+                    <input type="text" #CRMState_StateName="ngModel" id="CRMState_StateName" class="form-control" [(ngModel)]="crmState.stateName" name="StateName"     required/>
+                    <validation-messages [formCtrl]="CRMState_StateName"></validation-messages>
+                </div>
+            </div>
+            <br/><div class="m-checkbox-list mt-3">
+                <label for="CRMState_IsActive" class="kt-checkbox">
+                    <input id="CRMState_IsActive" #CRMState_IsActive="ngModel" type="checkbox" name="IsActive" [(ngModel)]="crmState.isActive"> 
+                    {{"IsActive"| translate }}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="CRMState_IsActive"></validation-messages>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!stateForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

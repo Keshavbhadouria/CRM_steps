@@ -1,0 +1,109 @@
+<div class="container-fluid">
+  <app-page-title title="Epic List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <!-- <div *ngIf="projectId!=0">
+    <app-project-tabs class="tab-holder" tabName="epics" [projectId]="projectId" [sprintId]="-1"></app-project-tabs>
+  </div> -->
+  <!-- Filters -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i
+                      class="bx bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'CreateEpic' | translate}}</button>
+            </div>
+          </div>
+
+          <!-- Advanced Filter  -->
+          <div class="row" [hidden]="!advancedFiltersAreShown">
+            <div class="col-md-12">
+              <div class="separator separator-dashed"></div>
+            </div>
+
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="pmProjectProjectNameFilter">{{'ProjectName' | translate}}</label>
+                <input type="text" class="form-control" id="pmProjectProjectNameFilter" name="pmProjectProjectNameFilter"
+                  [(ngModel)]="pmProjectProjectNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="contactCompanyFilter">{{'ContactCompanyFilter' | translate}}</label>
+                <input type="text" class="form-control" id="contactCompanyFilter" name="contactCompanyFilter" [(ngModel)]="contactCompanyFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="nameFilter">{{'EpicName' | translate}}</label>
+                <input type="text" class="form-control" id="nameFilter" name="nameFilter"
+                  [(ngModel)]="nameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="descriptionFilter">{{'Description' | translate}}</label>
+                <input type="text" class="form-control" id="descriptionFilter" name="descriptionFilter" [(ngModel)]="descriptionFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="pmEpicStatusStatusFilter">{{'EpicStatus' | translate}}</label>
+                <input type="text" class="form-control" id="pmEpicStatusStatusFilter"
+                  name="pmEpicStatusStatusFilter" [(ngModel)]="pmEpicStatusStatusFilter">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Shoe Hide Filters -->
+          <div class="row mb-2 mt-2">
+            <div class="col-sm-12">
+              <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i>
+                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+              <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i>
+                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table List -->
+
+  <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table>
+
+  <!-- end row -->
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-epic-create-edit-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editProject" [projectId]="projId">
+  </app-epic-create-edit-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-epic-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewProject">
+  </app-epic-view-modal>
+</ng-template>

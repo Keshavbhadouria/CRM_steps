@@ -1,0 +1,62 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+# dependencies
+/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+*.pack
+.angular/cache/babel-webpack/3a7efdc976e6024fde71e20643c83f64.json
+*.json
+.angular/cache/angular-webpack/aa1d8d8560747a8ca7f4ef2e790e98a9fad600f1/index.pack.old
+.angular/cache/angular-webpack/aa1d8d8560747a8ca7f4ef2e790e98a9fad600f1/index.pack.old
+.angular/cache/angular-webpack/aa1d8d8560747a8ca7f4ef2e790e98a9fad600f1/index.pack.old
+.angular/cache/angular-webpack/aa1d8d8560747a8ca7f4ef2e790e98a9fad600f1/index.pack.old
+*.old
+.angular/cache/angular-webpack/ce114d692ae802713ad890e3368423a99e90b511/index.pack.old
+*.old
+.angular/cache/angular-webpack/aa1d8d8560747a8ca7f4ef2e790e98a9fad600f1/index.pack.old
+*.old
+.angular/cache/angular-webpack/cafcdf7bacc0d9ee9fb109b65bb7552342baf152/0.pack_
+.angular/cache/angular-webpack/cafcdf7bacc0d9ee9fb109b65bb7552342baf152/2.pack_
+.angular/cache/angular-webpack/cafcdf7bacc0d9ee9fb109b65bb7552342baf152/3.pack_
+.angular/cache/angular-webpack/cafcdf7bacc0d9ee9fb109b65bb7552342baf152/4.pack_

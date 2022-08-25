@@ -1,0 +1,54 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewContact' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>{{'Transparency' | translate }} :</h6>
+          {{ item.contactReview.transparency }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Communication' | translate }} :</h6>
+          {{ item.contactReview.communication }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Professionalism' | translate }} :</h6>
+          {{ item.contactReview.professionalism }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Recommended' | translate }} :</h6>
+          {{ item.contactReview.recommended }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'AverageRating' | translate }} :</h6>
+          {{ item.contactReview.averageRating }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Comments' | translate }} :</h6>
+          {{ item.contactReview.comments }}
+      </div>
+
+      <div class="col-6 mb-3">
+          <h6>({{'ContactInvoiceHeader' | translate }}) {{'InvoiceCode' | translate }} :</h6>
+          {{item.contactInvoiceHeaderInvoiceCode}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'PaymentPlanDetail' | translate }}) {{'TransactionID' | translate }} :</h6>
+          {{item.paymentPlanDetailTransactionID}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'Contact' | translate }}) {{'Firstname' | translate }} :</h6>
+          {{item.contactFirstname}}
+      </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

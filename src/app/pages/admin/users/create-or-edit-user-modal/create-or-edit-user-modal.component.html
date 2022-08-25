@@ -1,0 +1,202 @@
+<form #userForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="userId > 0"> {{'EditUser' |
+                translate}}
+            </span> <span *ngIf="userId === 0"> {{'CreateNewUser' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="close()"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <tabset>
+            <tab class="pt-3" heading="{{'UserInformations' | translate}}">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <img src="{{profilePicture}}" width="128" height="128" class="img-thumbnail img-rounded" />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="Name">{{"FirstName" | translate}} *</label>
+                            <input id="Name" #nameInput="ngModel" class="form-control" type="text" name="Name"
+                                [(ngModel)]="user.name" required maxlength="64">
+                            <validation-messages [formCtrl]="nameInput"></validation-messages>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="Surname">{{"Surname" | translate}} *</label>
+                            <input id="Surname" #surnameInput="ngModel" type="text" name="Surname" class="form-control"
+                                [(ngModel)]="user.surname" required maxlength="64">
+                            <validation-messages [formCtrl]="surnameInput"></validation-messages>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="EmailAddress">{{"EmailAddress" | translate}} *</label>
+                    <input id="EmailAddress" #emailAddressInput="ngModel" type="email" name="EmailAddress"
+                        class="form-control" [(ngModel)]="user.emailAddress" required maxlength="256" email />
+                    <validation-messages [formCtrl]="emailAddressInput"></validation-messages>
+                </div>
+
+                <div class="form-group">
+                    <label for="PhoneNumber">{{"PhoneNumber" | translate}}</label>
+                    <input id="PhoneNumber" type="text" name="PhoneNumber" class="form-control"
+                        [(ngModel)]="user.phoneNumber" maxlength="32">
+                </div>
+
+                <div class="form-group">
+                    <label for="UserName">{{"UserName" | translate}} *</label>
+                    <input id="UserName" #userNameInput="ngModel" type="text" [disabled]="!canChangeUserName"
+                        name="UserName" class="form-control" [(ngModel)]="user.userName" required maxlength="256">
+                    <span class="help-block" *ngIf="!canChangeUserName">{{"CanNotChangeAdminUserName" |
+                        translate}}</span>
+                    <validation-messages [formCtrl]="userNameInput"></validation-messages>
+                </div>
+                <div class="mt-3">
+                    <div class="checkbox_container_small d-flex">
+                        <label class="switch">
+                            <input id="EditUser_SetRandomPassword" type="checkbox" name="SetRandomPassword"
+                                [(ngModel)]="setRandomPassword">
+                            <span class="slider round"></span>
+                        </label>
+                        <label style="margin-left: 5px;">{{"SetRandomPassword" |
+                            translate}}</label>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="!setRandomPassword">
+                    <div class="right">
+                        <label for="Password">{{"Password" | translate}}</label>
+                        <input id="Password" type="password" name="Password" #Password="ngModel" id="Password"
+                            class="form-control" [(ngModel)]="user.password" [required]="!user.id && !setRandomPassword"
+                            maxlength="32" [requireDigit]="passwordComplexitySetting.requireDigit"
+                            [requireLowercase]="passwordComplexitySetting.requireLowercase"
+                            [requireUppercase]="passwordComplexitySetting.requireUppercase"
+                            [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
+                            [requiredLength]="passwordComplexitySetting.requiredLength" validateEqual="PasswordRepeat"
+                            reverse="true" autocomplete="new-password">
+                    </div>
+                </div>
+                <div [hidden]="setRandomPassword || userForm.form.valid || userForm.form.pristine">
+                    <ul class="help-block text-danger"
+                        *ngIf="userForm.controls['Password'] && userForm.controls['Password'].errors">
+                        <li [hidden]="!userForm.controls['Password'].errors.requireDigit">
+                            {{"PasswordComplexity_RequireDigit_Hint" | translate}}</li>
+                        <li [hidden]="!userForm.controls['Password'].errors.requireLowercase">
+                            {{"PasswordComplexity_RequireLowercase_Hint" | translate}}</li>
+                        <li [hidden]="!userForm.controls['Password'].errors.requireUppercase">
+                            {{"PasswordComplexity_RequireUppercase_Hint" | translate}}</li>
+                        <li [hidden]="!userForm.controls['Password'].errors.requireNonAlphanumeric">
+                            {{"PasswordComplexity_RequireNonAlphanumeric_Hint" | translate}}</li>
+                        <li [hidden]="!userForm.controls['Password'].errors.requiredLength">
+                            {{"PasswordComplexity_RequiredLength_Hint" |
+                            translate:passwordComplexitySetting.requiredLength}}</li>
+                    </ul>
+                </div>
+                <div class="form-group" *ngIf="!setRandomPassword">
+                    <div class="right">
+                        <label for="PasswordRepeat">{{"PasswordRepeat" | translate}}</label>
+                        <input id="PasswordRepeat" type="password" name="PasswordRepeat" #PasswordRepeat="ngModel"
+                            class="form-control" [(ngModel)]="userPasswordRepeat"
+                            [required]="!user.id && !setRandomPassword" maxlength="32"
+                            [requireDigit]="passwordComplexitySetting.requireDigit"
+                            [requireLowercase]="passwordComplexitySetting.requireLowercase"
+                            [requireUppercase]="passwordComplexitySetting.requireUppercase"
+                            [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
+                            [requiredLength]="passwordComplexitySetting.requiredLength" validateEqual="Password"
+                            reverse="false" autocomplete="new-password">
+                    </div>
+                </div>
+                <div [hidden]="setRandomPassword || userForm.form.valid || userForm.form.pristine">
+                    <ul class="help-block text-danger"
+                        *ngIf="userForm.controls['PasswordRepeat'] && userForm.controls['PasswordRepeat'].errors">
+                        <li [hidden]="!userForm.controls['PasswordRepeat'].errors.requireDigit">
+                            {{"PasswordComplexity_RequireDigit_Hint" | translate}}</li>
+                        <li [hidden]="!userForm.controls['PasswordRepeat'].errors.requireLowercase">
+                            {{"PasswordComplexity_RequireLowercase_Hint" | translate}}</li>
+                        <li [hidden]="!userForm.controls['PasswordRepeat'].errors.requireUppercase">
+                            {{"PasswordComplexity_RequireUppercase_Hint" | translate}}</li>
+                        <li [hidden]="!userForm.controls['PasswordRepeat'].errors.requireNonAlphanumeric">
+                            {{"PasswordComplexity_RequireNonAlphanumeric_Hint" | translate}}</li>
+                        <li [hidden]="!userForm.controls['PasswordRepeat'].errors.requiredLength">
+                            {{"PasswordComplexity_RequiredLength_Hint" |
+                            translate:passwordComplexitySetting.requiredLength}}</li>
+                        <li [hidden]="userForm.controls['PasswordRepeat'].valid">{{"PasswordsDontMatch" | translate}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="checkbox-inline d-flex justify-content-between mt-3">
+
+                    <div class="checkbox_container_small d-flex">
+                        <label class="switch">
+                            <input id="EditUser_ShouldChangePasswordOnNextLogin" type="checkbox"
+                                name="ShouldChangePasswordOnNextLogin"
+                                [(ngModel)]="user.shouldChangePasswordOnNextLogin">
+                            <span class="slider round"></span>
+                        </label>
+                        <label style="margin-left: 5px;">{{"ShouldChangePasswordOnNextLogin" | translate}}</label>
+
+                    </div>
+                    <div class="checkbox_container_small d-flex">
+                        <label class="switch">
+                            <input id="EditUser_SendActivationEmail" type="checkbox" name="SendActivationEmail"
+                                [(ngModel)]="sendActivationEmail">
+                            <span class="slider round"></span>
+                        </label>
+                        <label style="margin-left: 5px;">{{"SendActivationEmail" | translate}}</label>
+
+                    </div>
+
+                    <div class="checkbox_container_small d-flex">
+                        <label class="switch">
+                            <input id="EditUser_IsActive" type="checkbox" name="IsActive" [(ngModel)]="user.isActive">
+                            <span class="slider round"></span>
+                        </label>
+                        <label style="margin-left: 5px;">{{"Active" | translate}}</label>
+                    </div>
+                    <div class="checkbox_container_small d-flex" *ngIf="isTwoFactorEnabled">
+                        <label class="switch">
+                            <input id="EditUser_IsTwoFactorEnabled" type="checkbox" name="IsTwoFactorEnabled"
+                                [(ngModel)]="user.isTwoFactorEnabled">
+                            <span class="slider round"></span>
+                        </label>
+                        <label style="margin-left: 5px;">{{"IsTwoFactorEnabled" | translate}}</label>
+                    </div>
+                    <div class="checkbox_container_small d-flex" *ngIf="isLockoutEnabled">
+                        <label class="switch">
+                            <input id="EditUser_IsLockoutEnabled" type="checkbox" name="IsLockoutEnabled"
+                                [(ngModel)]="user.isLockoutEnabled">
+                            <span class="slider round"></span>
+                        </label>
+                        <label style="margin-left: 5px;">{{"IsLockoutEnabled" | translate}}</label>
+                    </div>
+                </div>
+            </tab>
+            <tab class="pt-5" heading="{{'Roles' | translate}}">
+                <ng-template tabHeading>
+                    <span
+                        class="label label-success label-inline assigned-role-count">({{getAssignedRoleCount()}})</span>
+                </ng-template>
+                <div class="user-switch-section row">
+                    <div class="col-md-6" *ngFor="let role of roles">
+                        <label attr.for="EditUser_{{role.roleName}}">{{role.roleDisplayName}} <small
+                                *ngIf="role.inheritedFromOrganizationUnit">({{'RoleIsInheritedFromOrganizationUnit' |
+                                translate}})</small></label>
+
+                        <label class="switch">
+                            <input type="checkbox" id="EditUser_{{role.roleName}}" name="{{role.roleName}}"
+                                [(ngModel)]="role.isAssigned" [disabled]="role.inheritedFromOrganizationUnit">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </tab>
+
+        </tabset>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="close()">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!userForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

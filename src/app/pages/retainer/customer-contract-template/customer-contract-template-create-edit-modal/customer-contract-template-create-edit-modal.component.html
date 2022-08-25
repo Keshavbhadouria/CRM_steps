@@ -1,0 +1,85 @@
+<form #form="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditCustomerContractTemplate' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateCustomerContractTemplate' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="KnowledgeBase_ProjectId">{{ 'Contact' | translate }} *</label>
+          <ng-select [items]="allContactList" #KnowledgeBase_ProjectId="ngModel" bindValue="id" bindLabel="displayName"
+            id="contactCompany" name="contactCompany" [(ngModel)]="customerContratTemplate.contactId" required></ng-select>
+          <validation-messages [formCtrl]="contactCompany"></validation-messages>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="ContracTemplateName_ContractName">{{'ContractName' | translate }} *</label>
+          <input type="text" disabled #contracTemplateName_ref="ngModel" id="contracTemplateName_ref"
+            class="form-control" [(ngModel)]="contracTemplateName" name="contracTemplateName_ref" required />
+          <validation-messages [formCtrl]="contracTemplateName_ref"></validation-messages>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="ContractStatusStatusName">{{'ContractStatus ' | translate }}</label>
+          <select name="customerContratTemplate.contractStatusId" [(ngModel)]="customerContratTemplate.contractStatusId"
+            class="form-control">
+            <option value="">{{'SelectAContractStatus ' | translate }}</option>
+            <option *ngFor="let item of allContractStatuss" value="{{item.id}}">{{item.displayName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="KnowledgeBase_ProjectId">{{ 'User' | translate }} *</label>
+          <ng-select [items]="allUserList" #userId="ngModel" bindValue="id" bindLabel="displayName" id="userId"
+            name="userId" [(ngModel)]="customerContratTemplate.userId" required></ng-select>
+          <validation-messages [formCtrl]="userId"></validation-messages>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="CustomerContratTemplate_ContractName">{{'ContractName ' | translate }} *</label>
+          <input type="text" #CustomerContratTemplate_ContractName="ngModel" id="CustomerContratTemplate_ContractName"
+            class="form-control" [(ngModel)]="customerContratTemplate.contractName" name="ContractName" required />
+          <validation-messages [formCtrl]="CustomerContratTemplate_ContractName"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="CustomerContratTemplate_PhysicalFileUrl">{{'PhysicalFileUrl ' | translate }}</label>
+          <input type="text" #CustomerContratTemplate_PhysicalFileUrl="ngModel"
+            id="CustomerContratTemplate_PhysicalFileUrl" class="form-control"
+            [(ngModel)]="customerContratTemplate.physicalFileUrl" name="PhysicalFileUrl" />
+          <validation-messages [formCtrl]="CustomerContratTemplate_PhysicalFileUrl"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="CustomerContratTemplate_CreatedOn">{{'CreatedOn ' | translate }}</label>
+          <input required class="form-control m-input" #CustomerContratTemplate_CreatedOn type="date"
+            datePickerMomentModifier [(ngModel)]="customerContratTemplate.createdOn"
+            id="CustomerContratTemplate_CreatedOn" name="CustomerContratTemplate_CreatedOn">
+          <validation-messages [formCtrl]="CustomerContratTemplate_CreatedOn"></validation-messages>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

@@ -1,0 +1,124 @@
+<div class="container-fluid">
+  <app-page-title title="{{'Subscription' | translate }}" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <tabset>
+    <tab heading="{{'SubscriptionInformation' | translate}}">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body" [busyIf]="loading" >
+
+              <form class="form">
+                <input type="hidden" Name="PaymentPeriodType" value="@tenant.PaymentPeriodType" />
+                <input type="hidden" Name="Gateway" value="@SubscriptionPaymentGatewayType.Paypal" />
+
+                <div class="row mt-2">
+                    <label
+                        class="col-sm-4 control-label font-weight-bold text-end">{{"Edition" | translate}}</label>
+                    <div class="col-sm-8">
+                        <label *ngIf="tenant.edition">
+                            {{tenant.edition.displayName}}
+                            <span *ngIf="tenant.edition.isFree"
+                                class="label label-success label-inline text-start">{{"Free" | translate}}</span>
+                            <span *ngIf="tenant.isInTrialPeriod"
+                                class="label label-warning label-inline">{{"Trial" | translate}}</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <label
+                        class="col-sm-4 control-label font-weight-bold text-end">{{"SubscriptionStartDate" | translate}}</label>
+                    <div class="col-sm-8">
+                        <p>{{ tenant.creationTimeString }}</p>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <label
+                        class="col-sm-4 control-label font-weight-bold text-end">{{"SubscriptionEndDate" | translate}}</label>
+                    <div class="col-sm-8">
+                        <p *ngIf="tenant.edition">
+                            <span>{{tenant.subscriptionDateString}}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-4 control-label"></label>
+                    <div class="col-sm-8">
+                        <a *ngIf="!hasRecurringSubscription() && tenant.edition && !tenant.edition.isFree && !tenant.isInTrialPeriod"
+                            [routerLink]="['/account/extend']"
+                            [queryParams]="{ editionPaymentType: editionPaymentType.Extend}"
+                            class="btn btn-info">
+                            {{"Extend" | translate}}
+                        </a>
+                        <a *ngIf="tenant.isInTrialPeriod" [routerLink]="['/account/buy']"
+                            [queryParams]="{editionPaymentType: editionPaymentType.BuyNow, editionId: tenant.edition.id, tenantId: tenant.id }"
+                            class="btn btn-info">
+                            {{"BuyNow" | translate}}
+                        </a>
+                        <a *ngIf="tenant.edition && !tenant.edition.isHighestEdition && !tenant.isInTrialPeriod"
+                            [routerLink]="['/admin/select-edition']" class="btn btn-warning">
+                            {{"Upgrade" | translate}}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="form-group row"
+                    [hidden]="tenant.subscriptionPaymentType != subscriptionPaymentType.RecurringAutomatic">
+                    <label class="col-md-4 control-label"></label>
+                    <div class="col-md-8">
+                        <button class="btn btn-secondary" (click)="disableRecurringPayments()">
+                            {{"DisableRecurringPayments" | translate}}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group row"
+                    [hidden]="tenant.subscriptionPaymentType != subscriptionPaymentType.RecurringManual">
+                    <label class="col-md-4 control-label"></label>
+                    <div class="col-md-8">
+                        <button class="btn btn-info" (click)="enableRecurringPayments()">
+                            {{"EnableRecurringPayments" | translate}}
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </tab>
+    <tab heading="{{'PaymentHistory' | translate}}">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body"  [busyIf]="loading">
+              <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings"
+                [buttons]="buttonSettings" [pagination]="paginationSettings">
+              </app-dynamic-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tab>
+  </tabset>
+</div>
+
+<!-- Create Model -->
+<!-- <ng-template #createModal role="document" let-modal>
+  <app-create-or-edit-affiliate-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editAffiliate">
+  </app-create-or-edit-affiliate-modal>
+</ng-template> -->
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-audit-log-view [modal]="modal" [data]="viewOperationLog">
+  </app-audit-log-view>
+</ng-template>

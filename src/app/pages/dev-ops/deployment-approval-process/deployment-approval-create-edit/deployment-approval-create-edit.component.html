@@ -1,0 +1,89 @@
+<form #deployApprovalMgtForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditDeploymentApprovalProcess' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateDeploymentApprovalProcess' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="DeploymentManagementName">{{"DeploymentManagement" | translate}}</label>
+                    <ng-select [items]="allDeploys" bindValue="id" bindLabel="displayName"
+                        name="deploymentApprovalProcess.deployment" [(ngModel)]="deploymentApprovalProcess.deployment">
+                    </ng-select>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="RoleName">{{"Role" | translate}}</label>
+
+                    <ng-select [items]="allRoles" bindValue="id" bindLabel="displayName"
+                        name="deploymentApprovalProcess.role" [(ngModel)]="deploymentApprovalProcess.role">
+                    </ng-select>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="UserName">{{"ApprovedBy" | translate}}</label>
+                    <ng-select [items]="allUsers" bindValue="id" bindLabel="displayName"
+                        name="deploymentApprovalProcess.approvedBy" [(ngModel)]="deploymentApprovalProcess.approvedBy">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="DeploymentApprovalProcess_ApprovalOrder">{{"ApprovalOrder" | translate }}</label>
+                    <input type="number" #DeploymentApprovalProcess_ApprovalOrder="ngModel"
+                        id="DeploymentApprovalProcess_ApprovalOrder" class="form-control"
+                        [(ngModel)]="deploymentApprovalProcess.approvalOrder" name="ApprovalOrder" />
+                    <validation-messages [formCtrl]="DeploymentApprovalProcess_ApprovalOrder"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="DeploymentApprovalProcess_ApprovalDate">{{"ApprovalDate" | translate }}</label>
+
+                    <input required class="form-control m-input" #DeploymentApprovalProcess_ApprovalDate type="date"
+                        [ngModel]="deploymentApprovalProcess.approvalDate  | date:'yyyy-MM-dd'"
+                        (ngModelChange)="deploymentApprovalProcess.approvalDate = $event"
+                        id="deploymentApprovalProcess.approvalDate" name="deploymentApprovalProcess.approvalDate">
+                </div>
+                <!-- <input required class="form-control m-input" #DeploymentManagement_ReleaseDate type="datetime" bsDatepicker  datePickerMomentModifier  [(date)]="deploymentManagement.releaseDate" id="DeploymentManagement_ReleaseDate" name="DeploymentManagement_ReleaseDate"> -->
+                <!-- <validation-messages [formCtrl]="DeploymentManagement_ReleaseDate"></validation-messages> -->
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="DeploymentApprovalProcess_ApprovalSignature">{{"ApprovalSignature" | translate
+                        }}</label>
+                    <input type="text" #DeploymentApprovalProcess_ApprovalSignature="ngModel"
+                        id="DeploymentApprovalProcess_ApprovalSignature" class="form-control"
+                        [(ngModel)]="deploymentApprovalProcess.approvalSignature" name="ApprovalSignature" />
+                    <validation-messages [formCtrl]="DeploymentApprovalProcess_ApprovalSignature"></validation-messages>
+                </div>
+            </div>
+            <br />
+            <div class="m-checkbox-list mt-2">
+                <label for="DeploymentApprovalProcess_SignatureCompleted" class="kt-checkbox">
+                    <input id="DeploymentApprovalProcess_SignatureCompleted"
+                        #DeploymentApprovalProcess_SignatureCompleted="ngModel" type="checkbox"
+                        name="SignatureCompleted" [(ngModel)]="deploymentApprovalProcess.signatureCompleted">
+                    {{"SignatureCompleted" | translate }}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="DeploymentApprovalProcess_SignatureCompleted"></validation-messages>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!deployApprovalMgtForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewServer' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{"ServerName"| translate }}</label>
+            {{ item.serverInventory.serverName }}
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"ServerDomains"| translate }}</label>
+            {{ item.serverInventory.serverDomains }}
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"IPs"| translate }}</label>
+            {{ item.serverInventory.iPs }}
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"ActivePorts"| translate }}</label>
+            {{ item.serverInventory.activePorts }}
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Active"| translate }}</label>
+            <div *ngIf="item.serverInventory.active" class="text-left"><i class="fa fa-check-circle text-success"
+                    title="True"></i></div>
+            <div *ngIf="!item.serverInventory.active" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+        </div>                    
+        <div class="col-6 mb-3">
+            <label>{{"Administrator"| translate }}</label>
+            {{ item.serverInventory.administrator }}
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"AdminPassword"| translate }}</label>
+            {{ item.serverInventory.adminPassword }}
+        </div>
+
+        <div class="col-6 mb-3">
+            <label>({{"CloudProvider" | translate}}) {{ "Name"| translate }}</label>
+            {{item.cloudProviderName}}
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

@@ -1,0 +1,167 @@
+<div class="container-fluid">
+    <app-page-title title="SprintPlanning" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <!-- Filters -->
+    <div class="row" [busyIf]="loading">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- <div class="form-group d-flex align-items-center justify-content-between"> -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="sprint" style="margin-top: 0px; margin-right: 5px;">Project</label>
+                            <ng-select name="projectId" class="w-100" [(ngModel)]="projectId" [items]="allProjects"
+                                bindValue="id" bindLabel="displayName" (change)="changeProject()"></ng-select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sprint" style="margin-top: 0px; margin-right: 5px;">Sprint</label>
+                            <ng-select name="sprintId" class="w-100" [(ngModel)]="sprintId" [items]="allSprints"
+                                bindValue="id" bindLabel="displayName" (change)="changeSprit($event)"></ng-select>
+                        </div>
+                    </div>
+                    <!--  -->
+
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between" *ngIf="allStories != null">
+        <div class="story-block" style="background: #fff;">
+            <div class="form-group">
+                <div class="sprint-header">
+                    <h4><img src="../../../assets/CRMSteps/MenuIcons/Expense Manager.png"> Backlog stories</h4>
+                </div>
+                <div class="story-section" *ngFor="let story of allStories">
+
+                    <label class="switch">
+                        <input type="checkbox" (change)="changeStory($event, story)">
+                        <span class="slider round"></span>
+                    </label>
+                    <label style="margin-left: 5px;">{{story.displayName}}</label>
+                  
+                    <!-- <div><input type="checkbox" (change)="changeStory($event, story)" /></div> -->
+                </div>
+            </div>
+        </div>
+        <div class="story-block-detail" *ngIf="allSelectedStories.length > 0" style="background: #fff;">
+            <div class="form-group" style="display: flex;
+            align-items: center;
+            justify-content: space-between;">
+                <div class="selected-story-section" #storyContent>
+                    <div class="selected-story-item" [class]="story.isSelected?'active':''"
+                        *ngFor="let story of allSelectedStories" (click)="getUserEstimateAndStoryDetails(story.id)">
+                        {{story.displayName}}
+                    </div>
+                </div>
+                <div class="d-flex" style="margin-top: -10px; cursor: pointer;">
+                    <img src="../../../assets/icons/left-arrow-box.png" style="margin-right: 5px;"
+                        (click)="scrollLeft()" alt="">
+                    <img src="../../../assets/icons/right-arrow-box.png" (click)="scrollRight()" alt="">
+                </div>
+            </div>
+            <div class="team-members-section">
+                <div class="story-info container-fluid mb-3" *ngIf="storyInfo != undefined && storyInfo != null">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'Sprint' | translate }}</label>
+                                <p> {{storyInfo.pmSprintSprint}} </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'Project' | translate }}</label>
+                                <p> {{storyInfo.pmProjectProjectName}} </p>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'Priority' | translate }}</label>
+                                <p> {{storyInfo.pmStoryPriorityPriority}} </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'Owner' | translate }}</label>
+                                <p> {{storyInfo.userName}} </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'Status' | translate }}</label>
+                                <p> {{storyInfo.pmStoryStatusStatus}} </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'InitialResponsible' | translate }}</label>
+                                <p> {{storyInfo.userName2}} </p>
+                            </div>
+                        </div> -->
+                        <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'Title' | translate }}</label>
+                                <p> {{storyInfo.pmStory.title}} </p>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'Dependency' | translate }}</label>
+                                <p> {{storyInfo.pmStory.dependency}} </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'Description' | translate }}</label>
+                                <p [innerHTML]="storyInfo.pmStory.description"> </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'AcceptanceCriteria' | translate }}</label>
+                                <p [innerHTML]="storyInfo.pmStory.acceptanceCriteria"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'StartDate' | translate }}</label>
+                                <p> {{storyInfo.pmStory.startDate | date:'yyyy-MM-dd'}} </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group m-form__group">
+                                <label>{{ 'EndDate' | translate }}</label>
+                                <p> {{storyInfo.pmStory.endDate | date:'yyyy-MM-dd'}} </p>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="estimate-avg-section" *ngIf="isReveal">
+                    {{revealAvg}} AVG Votes
+                </div>
+                <div class="d-flex w-100 justify-content-center" style="flex-wrap: wrap;">
+                    <div class="flip-card front" *ngFor="let esti of allUserEstmate">
+                        <div class="flip-card-inner" [class]="transform">
+                            <div class="flip-card-front">
+                                <img src="./../../../assets/CRMSteps/Crm_Front.jpg" alt="Avatar">
+                            </div>
+                            <div class="flip-card-back">
+                                <div class="estimate-section">{{esti.estimation}}</div>
+                                <img src="./../../../assets/CRMSteps/Crm_back.jpg" alt="Avatar">
+                            </div>
+                        </div>
+                        <div class="name-section">{{esti.userName}}</div>
+                    </div>
+                </div>
+                <div class="button-section" *ngIf="isButtonSection">
+                    <button class="btn btn-primary" *ngIf="storyInfo.pmStory.isOpen==null"
+                        (click)="updateVote(currentStoryId, 'open')">Open Vote</button>
+                    <button class="btn btn-danger" (click)="updateVote(currentStoryId, 'close')"
+                        *ngIf="storyInfo.pmStory.isOpen!=null && storyInfo.pmStory.isOpen">Close Vote</button>
+                    <button class="btn btn-success" (click)="flipcard()"
+                        *ngIf="storyInfo.pmStory.isOpen!=null && !storyInfo.pmStory.isOpen">Reveal</button>
+                </div>
+            </div>
+        </div>
+    </div>

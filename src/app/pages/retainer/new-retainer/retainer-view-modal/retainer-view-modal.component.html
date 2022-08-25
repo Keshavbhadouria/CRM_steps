@@ -1,0 +1,63 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewRetainer' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>{{'ExpirationDate' | translate }} :</h6>
+          {{ item.reteiner.expirationDate |  date:'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'TotalAmount' | translate }} :</h6>
+          {{ item.reteiner.totalAmount }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'PaymentPlan' | translate }} :</h6>
+          <div *ngIf="item.reteiner.paymentPlan" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.reteiner.paymentPlan" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-6 mb-3">
+          <h6>{{'Downpayment' | translate }} :</h6>
+          {{ item.reteiner.downpayment }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Payments' | translate }} :</h6>
+          {{ item.reteiner.payments }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'PaymentAmount' | translate }} :</h6>
+          {{ item.reteiner.paymentAmount }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'InitialPaymentDate' | translate }} :</h6>
+          {{ item.reteiner.initialPaymentDate |  date:'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'SignatureRequired' | translate }} :</h6>
+          <div *ngIf="item.reteiner.signatureRequired" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.reteiner.signatureRequired" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'Contact' | translate }}) {{'Firstname' | translate }} :</h6>
+          {{item.contactFirstname}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'User' | translate }}) {{'Name' | translate }} :</h6>
+          {{item.userName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'ContracTemplateName' | translate }}) {{'ContractName' | translate }} :</h6>
+          {{item.contracTemplateNameContractName}}
+      </div>
+
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

@@ -1,0 +1,126 @@
+<form #pmProjectForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'Pages.Project.EditProject' | translate}}
+      </span> <span *ngIf="data == null"> {{'Pages.Project.CreateProject' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="PMProject_ProjectName">ProjectName* </label>
+        <input type="text" #PMProject_ProjectName="ngModel" id="PMProject_ProjectName" class="form-control"
+          [(ngModel)]="pmProject.projectName" name="ProjectName" required />
+        <validation-messages [formCtrl]="PMProject_ProjectName"></validation-messages>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="PMIndustryIndustry">Contact</label>
+          <ng-select [items]="allContact" bindValue="id" bindLabel="displayName" name="pmProject.customer"
+            [(ngModel)]="pmProject.customer"></ng-select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="PMIndustryIndustry">PMIndustry*</label>
+          <ng-select name="pmProject.industry" #PMIndustryIndustry="ngModel" [(ngModel)]="pmProject.industry"
+            [items]="allPMIndustrys" bindValue="id" bindLabel="displayName" required></ng-select>
+          <validation-messages [formCtrl]="PMIndustryIndustry"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="UserName">User</label>
+          <ng-select name="pmProject.teamLeader" [(ngModel)]="pmProject.teamLeader" [items]="allUsers" bindValue="id"
+            bindLabel="displayName"></ng-select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="PMTaskPriorityPriority">PMTaskPriority*</label>
+          <ng-select name="pmProject.priority" #PMTaskPriorityPriority="ngModel" [(ngModel)]="pmProject.priority" [items]="allPMTaskPrioritys"
+            bindValue="id" bindLabel="displayName"></ng-select>
+          <validation-messages [formCtrl]="PMTaskPriorityPriority"></validation-messages>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="PMProjectStatusStatus">PMProjectStatus</label>
+          <ng-select name="pmProject.status" [(ngModel)]="pmProject.status" [items]="allPMProjectStatuss" bindValue="id"
+            bindLabel="displayName"></ng-select>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="PMProject_Goal">Goal*</label>
+          <ckeditor [editor]="Editor" #PMProject_Goal="ngModel" [(ngModel)]="pmProject.goal" name="pmProject.goal"
+            required></ckeditor>
+          <validation-messages [formCtrl]="PMProject_Goal"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_StartDate">StartDate*</label>
+          <input required class="form-control m-input" #startDate="ngModel" type="date"
+            [ngModel]="pmProject.startDate | date:'yyyy-MM-dd'" (ngModelChange)="pmProject.startDate = $event"
+            id="PMProject_StartDate" name="PMProject_StartDate">
+          <validation-messages [formCtrl]="startDate"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_TargetDate">TargetDate</label>
+          <input class="form-control m-input" #PMProject_TargetDate="ngModel" type="date"
+            [ngModel]="pmProject.targetDate | date:'yyyy-MM-dd'" (ngModelChange)="pmProject.targetDate = $event"
+            id="PMProject_TargetDate" name="PMProject_TargetDate">
+          <validation-messages [formCtrl]="PMProject_TargetDate"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_BaselineVelocity">BaselineVelocity</label>
+          <input type="number" #PMProject_BaselineVelocity="ngModel" id="PMProject_BaselineVelocity"
+            class="form-control" [(ngModel)]="pmProject.baselineVelocity" name="BaselineVelocity" />
+          <!-- <validation-messages [formCtrl]="PMProject_BaselineVelocity"></validation-messages> -->
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_ActualVelocity">ActualVelocity</label>
+          <input type="number" #PMProject_ActualVelocity="ngModel" id="PMProject_ActualVelocity" class="form-control"
+            [(ngModel)]="pmProject.actualVelocity" name="ActualVelocity" />
+          <!-- <validation-messages [formCtrl]="PMProject_ActualVelocity"></validation-messages> -->
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_TeamChannel">TeamChannel</label>
+          <input type="text" #PMProject_TeamChannel="ngModel" id="PMProject_TeamChannel" class="form-control"
+            [(ngModel)]="pmProject.teamChannel" name="TeamChannel" />
+          <!-- <validation-messages [formCtrl]="PMProject_TeamChannel"></validation-messages> -->
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_Logo">Logo</label>
+          <!-- <input type="text" #PMProject_Logo="ngModel" id="PMProject_Logo" class="form-control"
+                                                                                                                [(ngModel)]="pmProject.logo" name="Logo" /> -->
+          <input class="form-control" #myInputFile type="file" id="formFile" accept="image/*"
+            (change)="handleUpload($event)">
+          <!-- <validation-messages [formCtrl]="PMProject_Logo"></validation-messages> -->
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!pmProjectForm.form.valid"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

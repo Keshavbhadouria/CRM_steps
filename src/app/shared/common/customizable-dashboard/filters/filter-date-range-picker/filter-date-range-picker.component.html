@@ -1,0 +1,25 @@
+<!-- <div class="input-group">
+    <input type="text" class="form-control  date-range-filter"
+        value="{{selectedDateRange[0] | momentFormat: 'LL'}} - {{selectedDateRange[1] | momentFormat: 'LL'}}"
+        disabled="disabled" #dateRangePicker="bsDaterangepicker" bsDaterangepicker dateRangePickerMomentModifier
+        placement="bottom" [(date)]="selectedDateRange" (dateChange)="onChange()">
+    <div class="input-group-append">
+        <button class="btn btn-primary" type="button" (click)="dateRangePicker.toggle()">
+                <i class="fa fa-calendar-day p-0" style="color:white;" aria-hidden="true"></i></button>
+    </div>
+</div> -->
+
+
+<div class="input-group">
+    <input class="form-control m-input" id="MinStartDateFilter" name="MinStartDateFilter" type="date"
+        placeholder="{{'MinValue' | translate }}" [ngModel]="minStartDateFilter | date:'yyyy-MM-dd'" (ngModelChange)="startChange($event)">
+    <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+    <input class="form-control m-input" id="MaxStartDateFilter" name="MaxStartDateFilter" type="date" bsDatSprintker
+        placeholder="{{'MaxValue' | translate }}" [ngModel]="maxStartDateFilter | date:'yyyy-MM-dd'" (ngModelChange)="endChange($event)">
+</div>
+<!-- <br>
+<div class="pull-right">
+    <div class="col-md-12">
+        <button class="btn btn-primary" (click)="onChange()">Apply</button>
+    </div>
+</div> -->

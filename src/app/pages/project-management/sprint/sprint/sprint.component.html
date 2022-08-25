@@ -1,0 +1,222 @@
+<div class="container-fluid">
+  <app-page-title title="Sprint List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  
+  <!-- <div *ngIf="projectId!=0">
+    <app-project-tabs class="tab-holder" tabName="sprints" [projectId]="projectId" [sprintId]="-1"></app-project-tabs>
+  </div> -->
+
+  <!-- Filters -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i
+                      class="bx bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2" *ngIf="displayRoleName != 'client'">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'CreateSprint' | translate}}</button>
+            </div>
+          </div>
+
+          <!-- Advanced Filter  -->
+          <div class="row" [hidden]="!advancedFiltersAreShown">
+            <div class="col-md-12">
+              <div class="separator separator-dashed"></div>
+            </div>
+
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="SprintFilter">{{'Sprint' | translate }}</label>
+                <input type="text" class="form-control" id="SprintFilter" name="sprintFilter"
+                  [(ngModel)]="sprintFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="DescriptionFilter">{{'Description' | translate }}</label>
+                <input type="text" class="form-control" id="DescriptionFilter" name="descriptionFilter"
+                  [(ngModel)]="descriptionFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinStartDateFilter">{{'StartDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinStartDateFilter" name="MinStartDateFilter" type="date"
+                    bsDatSprintker placeholder="{{'MinValue' | translate }}" [(ngModel)]="minStartDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxStartDateFilter" name="MaxStartDateFilter" type="date"
+                    bsDatSprintker placeholder="{{'MaxValue' | translate }}" [(ngModel)]="maxStartDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinEndDateFilter">{{'EndDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinEndDateFilter" name="MinEndDateFilter" type="date"
+                    bsDatSprintker placeholder="{{'MinValue' | translate }}" [(ngModel)]="minEndDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxEndDateFilter" name="MaxEndDateFilter" type="date"
+                    bsDatSprintker placeholder="{{'MaxValue' | translate }}" [(ngModel)]="maxEndDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinReleaseDateFilter">{{'ReleaseDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinReleaseDateFilter" name="MinReleaseDateFilter"
+                    type="date" bsDatSprintker placeholder="{{'MinValue' | translate }}"
+                    [(ngModel)]="minReleaseDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxReleaseDateFilter" name="MaxReleaseDateFilter"
+                    type="date" bsDatSprintker placeholder="{{'MaxValue' | translate }}"
+                    [(ngModel)]="maxReleaseDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinStoryPointsFilter">{{'MinMax' | translate }} {{'StoryPoints' | translate }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinStoryPointsFilter" [(ngModel)]="minStoryPointsFilter"
+                    placeholder="{{'MinValue' | translate }}" name="minStoryPointsFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxStoryPointsFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxStoryPointsFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="PMProjectProjectNameFilter">({{'PMProject' | translate }}) {{'ProjectName' | translate
+                  }}</label>
+                <input type="text" class="form-control" id="PMProjectProjectNameFilter"
+                  name="pmProjectProjectNameFilter" [(ngModel)]="pmProjectProjectNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="PMSprintStatusStatusFilter">({{'PMSprintStatus' | translate }}) {{'Status' | translate
+                  }}</label>
+                <input type="text" class="form-control" id="PMSprintStatusStatusFilter"
+                  name="pmSprintStatusStatusFilter" [(ngModel)]="pmSprintStatusStatusFilter">
+              </div>
+            </div>
+
+
+          </div>
+
+          <!-- Shoe Hide Filters -->
+          <div class="row mb-2 mt-2">
+            <div class="col-sm-12">
+              <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i>
+                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+              <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i>
+                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table List -->
+
+  <div class="row" [busyIf]="loading">
+    <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row projects">
+          <div class="col-xl-4 col-md-6" *ngFor="let data of myData" data-id="{{data.pmSprint.id}}">
+            <div class="card gradient-45deg-light-gray-lightgray gradient-shadow" style="border-radius:5px!important;">
+              <div class="card-header pb-0 border-bottom-0 ">
+                  <span class="badge badge-pill badge-success mr-1 mb-1 mt-1">{{data.pmSprintStatusStatus}}</span>
+                  <h2 class="card-title ml-1">
+                      <a href="Javascript:void(0)" [routerLink]="['/projectDetail',projectId, data.pmSprint.publicId, 'stories']">{{data.pmSprint.sprint}}</a> 
+                      <!-- -<a href="Javascript:void(0)" [routerLink]="['../../pmtasks', data.pmSprint.id]">Tasks</a>  -->
+                  </h2>
+
+                  <div class="card-options actions" *ngIf="displayRoleName != 'client'">
+                      <a class="btnEdit" data-id="{{data.pmSprint.publicId}}" (click)="editSprintFun(data,createModal)" alt="edit"><i class="fas fa-edit"></i></a>
+                      <a class="btnDel text-danger" data-id="{{data.pmSprint.publicId}}" (click) = onDelete(data)><i class="fas fa-trash"></i></a>
+                  </div>
+              </div>
+              <div class="card-body pt-0">
+                  <div class="row info-section">
+                      <div class="col-sm-6">
+                        <p class="mb-0">Total Man Hr: 0</p>
+                        <p class="mb-0">Team Velocity: 0</p>
+                        <p class="mb-0">Completed Story Points: 0</p>
+                      </div>
+                      <div class="col-sm-3" style="padding-right: 0;">
+                        <p class="mb-0">Start Date: </p>
+                        <p class="mb-0">End Date: </p>
+                        <p class="mb-0">Release Date:</p>
+                    </div>
+                    <div class="col-sm-3" >
+                        <p class="mb-0 text-info">{{data.pmSprint.startDate |  date: 'dd/MM/yyyy'}}</p>
+                        <p class="mb-0 text-info">{{data.pmSprint.endDate |  date: 'dd/MM/yyyy'}}</p>
+                        <p class="mb-0 text-info">{{data.pmSprint.releaseDate |  date: 'dd/MM/yyyy'}}</p>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row sprint-counters" style="margin-top:10px">
+                    <div class="col-sm-4">
+                      <div class="counter-head">Stories</div> 
+                      <a class="counter-num" href="Javascript:void(0)" [routerLink]="['/projectDetail',projectId, data.pmSprint.publicId, 'stories']"><span style="font-weight: bold;">{{data.storyCount}}</span></a> 
+                    </div>
+                    <div class="col-sm-4" *ngIf="displayRoleName != 'client'">
+                      <div class="counter-head">Tasks</div> 
+                      <a href="Javascript:void(0)" [routerLink]="['/projectDetail',projectId, data.pmSprint.publicId, 'tasks']">
+                        <span class="counter-num" style="font-weight: bold;">{{data.taskCount}}</span>
+                      </a>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="counter-head">Bugs</div> 
+                        <a href="Javascript:void(0)" [routerLink]="['/projectDetail',projectId, data.pmSprint.publicId, 'bugs']">
+                          <span class="counter-num" style="font-weight: bold;">{{data.bugCount}}</span>
+                        </a>
+                        </div>
+                  </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table> -->
+
+  <!-- end row -->
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-sprint-create-edit-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editSprint" [projectId]="projectIntId">
+  </app-sprint-create-edit-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-sprint-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewSprint">
+  </app-sprint-view-modal>
+</ng-template>

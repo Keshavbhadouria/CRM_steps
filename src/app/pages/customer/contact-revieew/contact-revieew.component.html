@@ -1,0 +1,256 @@
+<div class="container-fluid">
+  <app-page-title title="{{'ContactReview' | translate}}" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <!-- Filters -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-8">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Filter"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i
+                      class="bx bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-secondery" (click)="clearForm()">{{
+                'ClearFilters' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row align-items-center" [busyIf]="primengTableHelper.isLoading">
+    <!--<Primeng-Datatable-Start>-->
+    <div class="primeng-datatable-container col-12">
+      <p-table #dataTable (onLazyLoad)="getRecords($event)" [value]="primengTableHelper.records"
+        rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false" [lazy]="true" [scrollable]="true"
+        ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+        [resizableColumns]="primengTableHelper.resizableColumns">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 200px" pSortableColumn="contactInvoiceHeaderFk.invoiceCode">
+              {{'InvoiceCode'| translate }}
+              <p-sortIcon field="contactInvoiceHeaderInvoiceCode"></p-sortIcon>
+              <p-columnFilter type="text" field="contactInvoiceHeaderInvoiceCode" [showMatchModes]="false"
+                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+            </th>
+            <th style="width: 200px" pSortableColumn="paymentPlanDetailFk.transactionID">
+              {{'TransactionID'| translate }}
+              <p-sortIcon field="paymentPlanDetailTransactionID"></p-sortIcon>
+              <p-columnFilter type="text" field="paymentPlanDetailTransactionID" [showMatchModes]="false"
+                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+            </th>
+            <th style="width: 200px" pSortableColumn="contactFk.firstname">
+              {{'Firstname'| translate }}
+              <p-sortIcon field="contactFirstname"></p-sortIcon>
+              <p-columnFilter type="text" field="contactFirstname" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" display="menu"></p-columnFilter>
+            </th>
+            <th style="width: 200px" pSortableColumn="transparency">
+              {{'Transparency'| translate }}
+              <p-sortIcon field="contactReview.transparency"></p-sortIcon>
+              <p-columnFilter field="transparency" display="menu" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <input type="number" class="form-control" id="MinTransparencyFilter"
+                    [(ngModel)]="minTransparencyFilter" placeholder="{{'MinValue' | translate }}"
+                    name="minTransparencyFilter" />
+                  <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                  <input type="number" class="form-control" [(ngModel)]="maxTransparencyFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxTransparencyFilter" />
+                  <div class="d-flex justify-content-between mt-2">
+                    <button type="button"
+                      class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                      style="margin-right: 5px;"><span class="p-button-label"
+                        (click)="clearTransparency($event)">Clear</span></button>
+                    <button type="button" class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                      ng-reflect-label="Apply"><span class="p-button-label"
+                        (click)="applyDate($event)">Apply</span></button>
+                  </div>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th style="width: 200px" pSortableColumn="communication">
+              {{'Communication'| translate }}
+              <p-sortIcon field="contactReview.communication"></p-sortIcon>
+              <p-columnFilter field="communication" display="menu" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <input type="number" class="form-control" id="minCommunicationFilter"
+                    [(ngModel)]="minCommunicationFilter" placeholder="{{'MinValue' | translate }}"
+                    name="minCommunicationFilter" />
+                  <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                  <input type="number" class="form-control" [(ngModel)]="maxCommunicationFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxCommunicationFilter" />
+                  <div class="d-flex justify-content-between mt-2">
+                    <button type="button"
+                      class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                      style="margin-right: 5px;"><span class="p-button-label"
+                        (click)="clearCommunication($event)">Clear</span></button>
+                    <button type="button" class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                      ng-reflect-label="Apply"><span class="p-button-label"
+                        (click)="applyDate($event)">Apply</span></button>
+                  </div>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th style="width: 200px" pSortableColumn="professionalism">
+              {{'Professionalism'| translate }}
+              <p-sortIcon field="contactReview.professionalism"></p-sortIcon>
+              <p-columnFilter field="professionalism" display="menu" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <input type="number" class="form-control" id="minProfessionalismFilter"
+                    [(ngModel)]="minProfessionalismFilter" placeholder="{{'MinValue' | translate }}"
+                    name="minProfessionalismFilter" />
+                  <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                  <input type="number" class="form-control" [(ngModel)]="maxProfessionalismFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxProfessionalismFilter" />
+                  <div class="d-flex justify-content-between mt-2">
+                    <button type="button"
+                      class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                      style="margin-right: 5px;"><span class="p-button-label"
+                        (click)="clearProfessionalism($event)">Clear</span></button>
+                    <button type="button" class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                      ng-reflect-label="Apply"><span class="p-button-label"
+                        (click)="applyDate($event)">Apply</span></button>
+                  </div>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th style="width: 200px" pSortableColumn="recommended">
+              {{'Recommended'| translate }}
+              <p-sortIcon field="contactReview.recommended"></p-sortIcon>
+              <p-columnFilter field="recommended" display="menu" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <input type="number" class="form-control" id="minRecommendedFilter"
+                    [(ngModel)]="minRecommendedFilter" placeholder="{{'MinValue' | translate }}"
+                    name="minRecommendedFilter" />
+                  <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                  <input type="number" class="form-control" [(ngModel)]="maxRecommendedFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxRecommendedFilter" />
+                  <div class="d-flex justify-content-between mt-2">
+                    <button type="button"
+                      class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                      style="margin-right: 5px;"><span class="p-button-label"
+                        (click)="clearRecommended($event)">Clear</span></button>
+                    <button type="button" class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                      ng-reflect-label="Apply"><span class="p-button-label"
+                        (click)="applyDate($event)">Apply</span></button>
+                  </div>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th style="width: 200px" pSortableColumn="averageRating">
+              {{'AverageRating'| translate }}
+              <p-sortIcon field="contactReview.averageRating"></p-sortIcon>
+              <p-columnFilter field="averageRating" display="menu" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" [showApplyButton]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <input type="number" class="form-control" id="minAverageRatingFilter"
+                    [(ngModel)]="minAverageRatingFilter" placeholder="{{'MinValue' | translate }}"
+                    name="minAverageRatingFilter" />
+                  <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                  <input type="number" class="form-control" [(ngModel)]="maxAverageRatingFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxAverageRatingFilter" />
+                  <div class="d-flex justify-content-between mt-2">
+                    <button type="button"
+                      class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                      style="margin-right: 5px;"><span class="p-button-label"
+                        (click)="clearRating($event)">Clear</span></button>
+                    <button type="button" class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                      ng-reflect-label="Apply"><span class="p-button-label"
+                        (click)="applyDate($event)">Apply</span></button>
+                  </div>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th style="width: 200px" pSortableColumn="comments">
+              {{'Comments'| translate }}
+              <p-sortIcon field="contactReview.comments"></p-sortIcon>
+              <p-columnFilter type="text" field="comments" [showMatchModes]="false" [showOperator]="false"
+                [showAddButton]="false" display="menu"></p-columnFilter>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+          <tr>
+
+            <td style="width:200px">
+              <span class="ui-column-title"> {{'InvoiceCode'| translate }}</span>
+              {{record.contactInvoiceHeaderInvoiceCode}}
+            </td>
+            <td style="width:200px">
+              <span class="ui-column-title"> {{'TransactionID'| translate }}</span>
+              {{record.paymentPlanDetailTransactionID}}
+            </td>
+            <td style="width:200px">
+              <span class="ui-column-title"> {{'Firstname'| translate }}</span>
+              {{record.contactFirstname}}
+            </td>
+            <td style="width:200px">
+              <span class="ui-column-title"> {{'Transparency'| translate }}</span>
+              {{record.contactReview.transparency}}
+            </td>
+            <td style="width:200px">
+              <span class="ui-column-title"> {{'Communication'| translate }}</span>
+              {{record.contactReview.communication}}
+            </td>
+            <td style="width:200px">
+              <span class="ui-column-title"> {{'Professionalism'| translate }}</span>
+              {{record.contactReview.professionalism}}
+            </td>
+            <td style="width:200px">
+              <span class="ui-column-title"> {{'Recommended'| translate }}</span>
+              {{record.contactReview.recommended}}
+            </td>
+            <td style="width:200px">
+              <span class="ui-column-title"> {{'AverageRating'| translate }}</span>
+              {{record.contactReview.averageRating}}
+            </td>
+            <td style="width:200px">
+              <span class="ui-column-title"> {{'Comments'| translate }}</span>
+              {{record.contactReview.comments}}
+            </td>
+
+          </tr>
+
+        </ng-template>
+      </p-table>
+      <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+        {{'NoData'| translate }}
+      </div>
+      <div class="primeng-paging-container">
+        <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+          (onPageChange)="getRecords($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+          [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage" [showCurrentPageReport]="true"
+          [currentPageReportTemplate]="'TotalRecordsCount' | translate:primengTableHelper.totalRecordsCount">
+        </p-paginator>
+      </div>
+    </div>
+    <!--<Primeng-Datatable-End>-->
+  </div>
+
+  <!-- <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table> -->
+
+  <!-- end row -->
+</div>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-contact-review-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewProject">
+  </app-contact-review-view-modal>
+</ng-template>

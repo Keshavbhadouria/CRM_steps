@@ -1,0 +1,177 @@
+<form #contactForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditContact' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateContact' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+
+
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="TargetTitleTitle">{{'TargetTitle' | translate }}</label>
+          <ng-select [items]="allTargetTitles" bindValue="id" bindLabel="displayName"
+          name="contact.targetTitleId" [(ngModel)]="contact.targetTitleId"></ng-select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="LeadTemperatureTemperature">{{'LeadTemperature' | translate }} *</label>
+          <ng-select [items]="allLeadTemperatures" bindValue="id" bindLabel="displayName"
+            name="contact.leadTemperatureId" #leadTemperatureId="ngModel" [(ngModel)]="contact.leadTemperatureId" required></ng-select>
+          <validation-messages [formCtrl]="leadTemperatureId"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="LeadSourceSourceName">{{'LeadSource' | translate }}</label>
+          <ng-select [items]="allLeadSources" bindValue="id" bindLabel="displayName"
+            name="contact.leadSourceId" #leadSourceId="ngModel" [(ngModel)]="contact.leadSourceId"></ng-select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="LeadStageStageName">{{'LeadStage' | translate }} *</label>
+          <ng-select [items]="allLeadStages" bindValue="id" bindLabel="displayName"
+            name="contact.leadStageId" #leadStageId="ngModel" [(ngModel)]="contact.leadStageId" required></ng-select>
+            <validation-messages [formCtrl]="leadStageId"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="LeadStatusStatusName">{{'LeadStatus' | translate }} *</label>
+          <ng-select [items]="allLeadStatuss" bindValue="id" bindLabel="displayName"
+            name="contact.leadStatusId" [(ngModel)]="contact.leadStatusId" required></ng-select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_Company">{{'Company' | translate }} *</label>
+          <input type="text" #Contact_Company="ngModel" id="Contact_Company" class="form-control" [(ngModel)]="contact.company" name="Company"   minlength="2"  maxlength="25"  required/>
+            <validation-messages [formCtrl]="Contact_Company"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+
+        <div class="form-group">
+          <label for="Contact_Firstname">{{'Firstname' | translate }} *</label>
+          <input type="text" #Contact_Firstname="ngModel" id="Contact_Firstname" class="form-control" [(ngModel)]="contact.firstname" name="Firstname"   minlength="2"  maxlength="25"  required/>
+            <validation-messages [formCtrl]="Contact_Firstname"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_Lastname">{{'Lastname' | translate }} *</label>
+          <input type="text" #Contact_Lastname="ngModel" id="Contact_Lastname" class="form-control" [(ngModel)]="contact.lastname" name="Lastname"   minlength="2"  maxlength="25"  required/>
+            <validation-messages [formCtrl]="Contact_Lastname"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_Email">{{'Email' | translate }} *</label>
+          <input type="text" #Contact_Email="ngModel" id="Contact_Email" class="form-control" [(ngModel)]="contact.email" name="Email"   required />
+            <validation-messages [formCtrl]="Contact_Email"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_Phone">{{'Phone' | translate }} *</label>
+          <input type="text" #Contact_Phone="ngModel" id="Contact_Phone" class="form-control" [(ngModel)]="contact.phone" name="Phone"   minlength="10"  maxlength="15" required/>
+            <validation-messages [formCtrl]="Contact_Phone"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_Extension">{{'Extension' | translate }}</label>
+          <input type="text" #Contact_Extension="ngModel" id="Contact_Extension" class="form-control" [(ngModel)]="contact.extension" name="Extension"  maxlength="5" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_PreferredTime1">{{'PreferredTime1' | translate }}</label>
+           <input class="form-control m-input" #Contact_PreferredTime1 type="datetime" bsDatepicker  datePickerMomentModifier  [(ngModel)]="contact.preferredTime1" id="Contact_PreferredTime1" name="Contact_PreferredTime1">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_PreferredTime2">{{'PreferredTime2' | translate }}</label>
+           <input class="form-control m-input" #Contact_PreferredTime2 type="datetime" bsDatepicker  datePickerMomentModifier  [(ngModel)]="contact.preferredTime2" id="Contact_PreferredTime2" name="Contact_PreferredTime2">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_Address1">{{'Address1' | translate }}</label>
+          <input type="text" #Contact_Address1="ngModel" id="Contact_Address1" class="form-control" [(ngModel)]="contact.address1" name="Address1"  />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_Address2">{{'Address2' | translate }}</label>
+          <input type="text" id="Contact_Address2" class="form-control" [(ngModel)]="contact.address2" name="Address2"    />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_City">{{'City' | translate }}</label>
+          <input type="text" id="Contact_City" class="form-control" [(ngModel)]="contact.city" name="City"/>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_State">{{'State' | translate }}</label>
+          <input type="text" id="Contact_State" class="form-control" [(ngModel)]="contact.state" name="State" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_Country">{{'Country' | translate }}</label>
+          <input type="text" id="Contact_Country" class="form-control" [(ngModel)]="contact.country" name="Country"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_Zipcode">{{'Zipcode' | translate }}</label>
+          <input type="text" #Contact_Zipcode="ngModel" id="Contact_Zipcode" class="form-control" [(ngModel)]="contact.zipcode" name="Zipcode"  maxlength="10" />
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_Score">{{'Score' | translate }} *</label>
+          <input type="number" #Contact_Score="ngModel" id="Contact_Score" class="form-control" [(ngModel)]="contact.score" name="Score"   />
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Contact_WebURL">{{'WebURL' | translate }}</label>
+          <input type="text" #Contact_WebURL="ngModel" id="Contact_WebURL" class="form-control" [(ngModel)]="contact.webURL" name="WebURL" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!contactForm.form.valid" > <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+        *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

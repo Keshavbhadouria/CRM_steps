@@ -1,0 +1,149 @@
+<div class="container-fluid">
+  <app-page-title title="Taskboard" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <!-- <div class="page-title-box">
+    <h4 class="mb-0 font-size-18">Taskboard</h4>
+  </div> -->
+  <!-- <div *ngIf="sprintId!=0">
+    <app-project-tabs tabName="taskboard" [projectId]="sprintsDetail.project" [sprintId]="sprintId">
+    </app-project-tabs>
+  </div> -->
+  <div class="row" [busyIf]="loading">
+    <div class="col-lg-12">
+      <div class="card" style="border-top:solid 1px #ddd">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText" placeholder="Search by Task # or Title"
+                  aria-label="Username" aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i class=" bx
+                                bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2" *ngIf="isGlobal==false">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'Pages.Project.CreateNewTask' | translate}}</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group m-form__group">
+                <label for="Stage_ownerId">{{ 'Owner' | translate }}</label>
+                <ng-select [items]="owners" bindValue="id" bindLabel="displayName" id="Stage_ownerId"
+                  name="stage.ownerId" placeholder="-Select-" [(ngModel)]="ownerId"
+                  (change)="owner_loadTaskStageData()"></ng-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group m-form__group" *ngIf="isGlobal==true">
+                <label for="Stage_pmProjectId">{{ 'Project' | translate }}</label>
+                <ng-select [items]="projects" bindValue="id" bindLabel="displayName" id="Stage_pmProjectId"
+                  name="stage.pmProjectId" placeholder="-Select-" [(ngModel)]="pmProjectId"
+                  (change)="project_loadTaskStageData()"></ng-select>
+              </div>
+            </div>
+            <div class="col-md-12" style="margin-top:15px">
+              <div *ngFor="let stage of allAvailableStages" class="col-md-3" style="display: inline-block;">
+                <span>
+                  <label class="switch">
+                   
+                    <input type="checkbox" [(ngModel)]="stage.isChecked" id="chk{{stage.stageId}}"
+                    (change)="loadTaskStagesData()">
+                    <span class="slider round"></span>
+                </label>
+                <label style="margin-left: 5px;" for="chk{{stage.stageId}}">{{stage.stageName}}</label>
+
+
+                  <!-- <input type="checkbox" [(ngModel)]="stage.isChecked" id="chk{{stage.stageId}}"
+                    (change)="loadTaskStagesData()">
+                  <label style="margin-left: 5px;" for="chk{{stage.stageId}}">{{stage.stageName}}</label> -->
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body" style="overflow-x: auto;">
+          <div class="board-main-container" [style.width.px]='statusCount'>
+            <!-- <div cdkDropListGroup> -->
+            <div class="status-container" *ngFor="let stage of pmTaskStagesData">
+              <h2 [style.background]="stage.bgColor">{{stage.stageName}}</h2>
+              <div cdkDropList id="stage{{stage.stageId}}" [cdkDropListData]="stage.tasksData"
+                [cdkDropListConnectedTo]="stage.connectedTo" class="status-list" (cdkDropListDropped)="drop($event)">
+                <div class="empty-list-placehoder" *ngIf="stage.tasksData.length==0">
+                  No Task Found
+                </div>
+                <div class="status-box" *ngFor="let taskItem of stage.tasksData; " cdkDrag>
+                  <div class="project" *ngIf="isGlobal==true">{{taskItem.projectName}}</div>
+                  <div class="d-flex justify-content-between">
+                    <img [src]="taskItem.profilePic != null? taskItem.profilePic : defaultProfilePic" class="profile-pic-small" width="30" height="30"
+                      *ngIf="taskItem.responsibleId > 0" />
+                    <div  *ngIf="taskItem.responsibleId == 0"></div>
+                    <div class="responsible" *ngIf="isGlobal==true">{{taskItem.responsibleName}}</div>
+                    <div class="responsible" *ngIf="isGlobal==false">
+                      <ng-select [items]="projectMembers" bindValue="id" bindLabel="displayName"
+                        id="taskItem_responsibleId" name="taskItem.responsibleId" placeholder="-Select-"
+                        [appendTo]="'body'" [(ngModel)]="taskItem.responsibleId" (change)="responsibleChanged(taskItem)">
+                      </ng-select>
+                    </div>
+                    <a href="javascript:;" class="delete-box" (click)="onDelete(taskItem.taskId)"><i
+                      class="material-icons red-text">delete</i></a>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <a href="javascript:void(0)" class="item-task-heading"
+                      (click)="showTaskDetail(taskItem)">{{taskItem.taskId}} - {{taskItem.taskName}}</a>
+                  </div>
+                  <div>
+                    <input class="form-control m-input" type="date" [ngModel]="taskItem.dueDate | date:'yyyy-MM-dd'"
+                      (ngModelChange)="updateDueDate($event,taskItem.taskId)" id="PMTask_DueDate" name="endDate" />
+                  </div>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- <input type="button" name="loadStories" id="btnLoadStories" value="Load Stories" (click)="loadStories"> -->
+<!-- <ul>
+<li *ngFor="let status of pmTaskStatusData" id="{{status.id}}">
+    <div>{{status.displayName}}</div>
+    <ul>
+        <li *ngFor="let story of getDataByStory(status.id)" id="{{story.id}}">
+            <div>
+                {{story.storyName}}
+            </div>
+        </li>
+    </ul>
+</li>
+</ul> -->
+
+
+<!-- </div> -->
+
+<!-- Create Model -->
+
+<ng-template #createModal role="document" let-modal>
+  <app-pmtask-create-edit [modal]="modal" ($modalClose)='saveTaskEmitEvent()' [data]="editTaskData"
+    [sprintId]="sprintIntId">
+  </app-pmtask-create-edit>
+</ng-template>
+
+<ng-template #viewDetailModal role="document" let-modal>
+  <app-pmtask-detail class="modal-right" [modal]="modal" ($taskUpdated)='onTaskUpdated()' [data]="viewDetail">
+  </app-pmtask-detail>
+</ng-template>

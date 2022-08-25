@@ -1,0 +1,158 @@
+<div class="container-fluid">
+  <app-page-title title="Step Document" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-md-6 heading text-primary">
+            <a [routerLink]="['/lawfirm/services']" class="breadcrumbs__item"><img src="../../../../assets/CRMSteps/MenuIcons/services_white.png" width="20" height="20">  {{ 'Service' | translate }}</a>
+            <a [routerLink]="['/lawfirm/serviceactivities', _stepDocumentService.serviceId ,_stepDocumentService.serviceName]" class="breadcrumbs__item"><img src="../../../../assets/CRMSteps/MenuIcons/service-activity-white.png" width="20" height="20"> {{ 'ServiceActivities' | translate }}</a>
+            <a [routerLink]="['/lawfirm/activitysteps',_stepDocumentService.serviceId ,_stepDocumentService.serviceName, _stepDocumentService.activityId , _stepDocumentService.activityName]" class="breadcrumbs__item"><img src="../../../../assets/CRMSteps/MenuIcons/service-activity-step-white.png" width="20" height="20"> {{ 'ActivitiesSteps' | translate }}</a>
+            <a class="breadcrumbs__item"><img src="../../../../assets/CRMSteps/MenuIcons/step-documents-white.png" width="20" height="20"> {{ 'ServicesActivitySteps' | translate }}</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Filter"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i
+                      class="bx bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'CreateStepDocument' | translate}}</button>
+            </div>
+            </div>
+
+             <!-- Advanced Filter  -->
+             <div class="row" [hidden]="!advancedFiltersAreShown">
+              <div class="col-md-12">
+                    <div class="separator separator-dashed"></div>
+                </div>
+
+
+             <div class="col-md-3">
+               <div class="form-group">
+                 <label for="DocumentFilter">{{'Document' | translate }}</label>
+                 <input type="text" class="form-control" id="DocumentFilter" name="documentFilter" [(ngModel)]="documentFilter">
+               </div>
+                           </div>
+             <div class="col-md-3">
+               <label for="UploadByClientOrDeliverByLawyerFilterSelect">{{'UploadByClientOrDeliverByLawyer' | translate }}</label>
+               <select class="form-control" name="UploadByClientOrDeliverByLawyerFilter" id="UploadByClientOrDeliverByLawyerFilterSelect" [(ngModel)]="uploadByClientOrDeliverByLawyerFilter">
+               <option value="-1">{{'All' | translate }}</option>
+               <option value="0">{{'False' | translate }}</option>
+               <option value="1">{{'True' | translate }}</option>
+               </select>
+                           </div>
+             <div class="col-md-3">
+               <label for="NotifyAdminFilterSelect">{{'NotifyAdmin' | translate }}</label>
+               <select class="form-control" name="NotifyAdminFilter" id="NotifyAdminFilterSelect" [(ngModel)]="notifyAdminFilter">
+               <option value="-1">{{'All' | translate }}</option>
+               <option value="0">{{'False' | translate }}</option>
+               <option value="1">{{'True' | translate }}</option>
+               </select>
+                           </div>
+             <div class="col-md-3">
+               <label for="NotifyCustomerFilterSelect">{{'NotifyCustomer' | translate }}</label>
+               <select class="form-control" name="NotifyCustomerFilter" id="NotifyCustomerFilterSelect" [(ngModel)]="notifyCustomerFilter">
+               <option value="-1">{{'All' | translate }}</option>
+               <option value="0">{{'False' | translate }}</option>
+               <option value="1">{{'True' | translate }}</option>
+               </select>
+                           </div>
+             <div class="col-md-3">
+               <label for="NotifyLaywerFilterSelect">{{'NotifyLaywer' | translate }}</label>
+               <select class="form-control" name="NotifyLaywerFilter" id="NotifyLaywerFilterSelect" [(ngModel)]="notifyLaywerFilter">
+               <option value="-1">{{'All' | translate }}</option>
+               <option value="0">{{'False' | translate }}</option>
+               <option value="1">{{'True' | translate }}</option>
+               </select>
+                           </div>
+                           <div class="col-md-3">
+                               <div class="form-group">
+                 <label for="MinFeeFilter">{{'MinMax' | translate }} {{'Fee' | translate }}</label>
+                 <div class="input-group">
+                                       <input type="number" class="form-control" id="MinFeeFilter" [(ngModel)]="minFeeFilter" placeholder="{{'MinValue' | translate }}" name="minFeeFilter" />
+                                       <input type="number" class="form-control" [(ngModel)]="maxFeeFilter" placeholder="{{'MaxValue' | translate }}" name="maxFeeFilter" />
+                 </div>
+                               </div>
+                           </div>
+             <div class="col-md-3">
+               <div class="form-group">
+                 <label for="ServicesActivityStepStepFilter">({{'ServicesActivityStep' | translate }}) {{'Step' | translate }}</label>
+                 <input type="text" class="form-control" id="ServicesActivityStepStepFilter" name="servicesActivityStepStepFilter" [(ngModel)]="servicesActivityStepStepFilter">
+                               </div>
+                           </div>
+             <div class="col-md-3">
+               <div class="form-group">
+                 <label for="LawfirmFeeTypeTypeNameFilter">({{'LawfirmFeeType' | translate }}) {{'TypeName' | translate }}</label>
+                 <input type="text" class="form-control" id="LawfirmFeeTypeTypeNameFilter" name="lawfirmFeeTypeTypeNameFilter" [(ngModel)]="lawfirmFeeTypeTypeNameFilter">
+                               </div>
+                           </div>
+             <div class="col-md-3">
+               <div class="form-group">
+                 <label for="LawfirmServiceServicesNameFilter">({{'LawfirmService' | translate }}) {{'ServicesName' | translate }}</label>
+                 <input type="text" class="form-control" id="LawfirmServiceServicesNameFilter" name="lawfirmServiceServicesNameFilter" [(ngModel)]="lawfirmServiceServicesNameFilter">
+                               </div>
+                           </div>
+             <div class="col-md-3">
+               <div class="form-group">
+                 <label for="ServiceActivityActivityNameFilter">({{'ServiceActivity' | translate }}) {{'ActivityName' | translate }}</label>
+                 <input type="text" class="form-control" id="ServiceActivityActivityNameFilter" name="serviceActivityActivityNameFilter" [(ngModel)]="serviceActivityActivityNameFilter">
+                               </div>
+                           </div>
+
+                       </div>
+
+
+           <!-- Shoe Hide Filters -->
+           <div class="row mb-2 mt-2">
+            <div class="col-sm-12">
+              <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i>
+                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+              <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i>
+                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings" [pagination]="paginationSettings" >
+  </app-dynamic-table>
+
+  <!-- end row -->
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-step-document-create-edit-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editProject">
+  </app-step-document-create-edit-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-step-document-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewProject">
+  </app-step-document-view-modal>
+</ng-template>
+

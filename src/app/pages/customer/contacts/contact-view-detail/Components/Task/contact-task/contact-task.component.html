@@ -1,0 +1,77 @@
+<div class="modal-header" style="background-color: transparent !important;">
+
+</div>
+<div class="modal-body">
+  <!-- Objections  -->
+  <div class="mt-5">
+    <div class="row mt-5">
+      <div class="col-sm-12 col-md-3"></div>
+      <div class="col-sm-12 col-md-6 text-center">
+        <div class="card cus-card-border">
+          <div class="card-header title-header text-center">
+            <h5 class="card-title"> <span *ngIf="contactTaskList.length <= 0 && loading;else taskTitle"> Loading...
+              </span>
+            </h5>
+            <ng-template #taskTitle>
+              <span style="color:white;">{{activeStageName}}</span>
+            </ng-template>
+          </div>
+
+          <div class="card-body scrollbar card-height" [ngClass]="{'overflow-y': activeStageList.length > 1}"  [busyIf]="loading">
+            <!-- <p class="card-text" [innerHtml]="activeStage.objectionHandler"></p> -->
+
+            <div *ngIf="activeStageList.length <= 0 && !loading; else taskList">
+              <img height="200" src="../../../../../../../../assets/CRMSteps/NoRecordFound.webp" />
+              <h3>No Record Found</h3>
+            </div>
+
+            <ng-template #taskList>
+              <div class="row text-start">
+                <div class="card" *ngFor="let item of activeStageList">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-3 c-text">Title</div>
+                      <div class="col-md-9">{{item.contactTask?.title}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3 c-text">Client</div>
+                      <div class="col-md-9">{{item?.contactCompany}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3 c-text">Due Date</div>
+                      <div class="col-md-9">{{item.contactTask?.dueDate | date:'dd-MM-yyyy'}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3  c-text">Priority</div>
+                      <div class="col-md-9">{{item?.activityPriorityPriorityName}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3 c-text">Description</div>
+                      <div class="col-md-9"> <span [innerHtml]="item?.contactTask?.description"></span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+
+          </div>
+          <div class="modal-footer text-center">
+            <div class="row">
+              <div class="mt-5">
+                <span (click)="previousIndex()">
+                  <i class="fa fa-chevron-left fa-34 pointer"></i>
+                </span>
+                <span class="pointer" [ngClass]="i == activeTaskStageIndex ? 'dot-active' : 'dot'"
+                  *ngFor="let item of taskStage;let i = index" (click)="goToIndex(i)"></span>
+                <span (click)="nextIndex()">
+                  <i class="fa fa-chevron-right fa-34 pointer"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-3"></div>
+    </div>
+  </div>
+</div>

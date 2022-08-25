@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewSupport' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ContactName' | translate }}</label>
+                <p> {{viewSupport.support.contactName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Email' | translate }}</label>
+                <p> {{viewSupport.support.email}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Subject' | translate }}</label>
+                <p> {{viewSupport.support.subject}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'UserName' | translate }}</label>
+                <p> {{viewSupport.userName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Status' | translate }}</label>
+                <p> {{viewSupport.helpDeskStatusStatusName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Attachment' | translate }}</label>
+                <p *ngIf="viewSupport.support.attatchmentUrl.length > 0">
+                    <img [src]="remoteUrl + '/' +  viewSupport.support.attatchmentUrl" height="100" width="100"/>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>{{ 'Message' | translate }}</label>
+                <p [innerHtml]="viewSupport.support.bodyMessage"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

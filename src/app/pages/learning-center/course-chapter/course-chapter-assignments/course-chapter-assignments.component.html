@@ -1,0 +1,72 @@
+<form #assignmentForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditAssignments' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateAssignments' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Title">{{'Title' | translate }} *</label>
+          <input type="text" #Title="ngModel" id="Title" class="form-control" [(ngModel)]="assignment.title" name="Title"     required/>
+            <validation-messages [formCtrl]="Title"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="courseChapterNewId">{{'Course Chapter' | translate }}</label>
+          <ng-select #courseChapterNewId="ngModel" [items]="allCourseChapterNews" bindValue="id" bindLabel="displayName"
+            name="courseChapterNewId" [(ngModel)]="assignment.courseChapterNewId" required></ng-select>
+            <validation-messages [formCtrl]="courseChapterNewId"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="assignmentTypeId">{{'Assignment Type' | translate }}</label>
+          <ng-select #assignmentTypeId="ngModel" [items]="allCourseChapterNews" bindValue="id" bindLabel="displayName"
+            name="assignmentTypeId" [(ngModel)]="assignment.assignmentTypeId" required></ng-select>
+            <validation-messages [formCtrl]="assignmentTypeId"></validation-messages>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="Instructions">{{ 'Instructions' | translate }} *</label>
+          <ckeditor [editor]="editor"  debounce="500" #Instructions="ngModel" id="Instructions"
+            [(ngModel)]="assignment.instructions" name="Instructions"></ckeditor>
+          <validation-messages [formCtrl]="Instructions"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Points">{{'Points' | translate }} *</label>
+          <input type="number" #Points="ngModel" id="Points" class="form-control" [(ngModel)]="assignment.points" name="Points"     required/>
+            <validation-messages [formCtrl]="Points"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="Attempts">{{'Attempts' | translate }} *</label>
+          <input type="number" #Attempts="ngModel" id="Points" class="form-control" [(ngModel)]="assignment.attempts" name="Attempts"     required/>
+            <validation-messages [formCtrl]="Attempts"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="DayNo">{{'DayNo' | translate }}</label>
+          <input type="number" #DayNo="ngModel" id="DayNo" class="form-control" [(ngModel)]="assignment.dayNo" name="DayNo"    />
+            <validation-messages [formCtrl]="DayNo"></validation-messages>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!assignmentForm.form.valid" > <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+        *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

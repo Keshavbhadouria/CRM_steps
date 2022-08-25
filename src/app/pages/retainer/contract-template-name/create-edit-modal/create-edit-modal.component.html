@@ -1,0 +1,32 @@
+<form #form="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditContractTemplateName' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateContractTemplateName' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+
+    <div class="form-group">
+      <label for="ContracTemplateName_ContractName">{{'ContractName' | translate }} *</label>
+      <input type="text" #ContracTemplateName_ContractName="ngModel" id="ContracTemplateName_ContractName" class="form-control" [(ngModel)]="contracTemplateName.contractName" name="ContractName"     required/>
+        <validation-messages [formCtrl]="ContracTemplateName_ContractName"></validation-messages>
+    </div>
+
+    <br/><div class="m-checkbox-list">
+      <label for="ContracTemplateName_Active" class="kt-checkbox">
+        <input id="ContracTemplateName_Active" #ContracTemplateName_Active="ngModel" type="checkbox" name="Active" [(ngModel)]="contracTemplateName.active">
+        {{'Active' | translate }}
+        <span></span>
+      </label>
+      <validation-messages [formCtrl]="ContracTemplateName_Active"></validation-messages>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

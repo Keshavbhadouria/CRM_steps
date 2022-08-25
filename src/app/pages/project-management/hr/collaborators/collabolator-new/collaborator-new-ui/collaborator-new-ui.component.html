@@ -1,0 +1,229 @@
+<form #userForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span> {{'Collaborator' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="close()"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <tabset>
+      <tab class="pt-3" heading="{{'CurrentInformation' | translate}}" [busyIf]="createLoader">
+        <div class="row">
+          <!-- <div class="col-sm-12 text-center">
+                      <img src="{{profilePicture}}" width="128" height="128" class="img-thumbnail img-rounded" />
+                  </div> -->
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="Name">{{"FirstName" | translate}} *</label>
+              <input id="Name" #nameInput="ngModel" class="form-control" type="text" name="Name" [(ngModel)]="collaborator.user.name"
+                required maxlength="64">
+              <validation-messages [formCtrl]="nameInput"></validation-messages>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="LastName">{{"LastName" | translate}} *</label>
+              <input id="LastName" #LastName="ngModel" type="text" name="LastName" class="form-control"
+                [(ngModel)]="collaborator.user.surname" required maxlength="64">
+              <validation-messages [formCtrl]="LastName"></validation-messages>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="EmailAddress">{{"EmailAddress" | translate}} *</label>
+              <input id="EmailAddress" #emailAddressInput="ngModel" type="email" name="EmailAddress"
+                class="form-control" [(ngModel)]="collaborator.user.emailAddress" required maxlength="256" email />
+              <validation-messages [formCtrl]="emailAddressInput"></validation-messages>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="collaborator_roleId">Job</label>
+              <ng-select [items]="allJobDescriptions" bindValue="id" bindLabel="displayName"
+                name="collaborator_jobDescriptionId" [(ngModel)]="collaborator.jobDescriptionId"></ng-select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="PhoneNumber">{{"PhoneNumber" | translate}}</label>
+              <input id="PhoneNumber" type="text" name="PhoneNumber" class="form-control" [(ngModel)]="collaborator.user.phoneNumber"
+                maxlength="32">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="UserName">{{"UserName" | translate}} *</label>
+              <input id="UserName" #userNameInput="ngModel" type="text" [disabled]="!canChangeUserName" name="UserName"
+                class="form-control" [(ngModel)]="collaborator.user.userName" required maxlength="256">
+              <span class="help-block" *ngIf="!canChangeUserName">{{"CanNotChangeAdminUserName" |
+                translate}}</span>
+              <validation-messages [formCtrl]="userNameInput"></validation-messages>
+            </div>
+
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="Password">{{"Password" | translate}}</label>
+              <input id="Password" type="password" name="Password" #Password="ngModel" id="Password"
+                class="form-control" [(ngModel)]="collaborator.user.password" maxlength="32" required
+                [requireDigit]="passwordComplexitySetting.requireDigit"
+                [requireLowercase]="passwordComplexitySetting.requireLowercase"
+                [requireUppercase]="passwordComplexitySetting.requireUppercase"
+                [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
+                [requiredLength]="passwordComplexitySetting.requiredLength" validateEqual="PasswordRepeat"
+                reverse="true" autocomplete="new-password">
+            </div>
+            <validation-messages [formCtrl]="Password"></validation-messages>
+            <div [hidden]="setRandomPassword || userForm.form.valid || userForm.form.pristine">
+              <ul class="help-block text-danger"
+                *ngIf="userForm.controls['Password'] && userForm.controls['Password'].errors">
+                <li [hidden]="!userForm.controls['Password'].errors.requireDigit">
+                  {{"PasswordComplexity_RequireDigit_Hint" | translate}}</li>
+                <li [hidden]="!userForm.controls['Password'].errors.requireLowercase">
+                  {{"PasswordComplexity_RequireLowercase_Hint" | translate}}</li>
+                <li [hidden]="!userForm.controls['Password'].errors.requireUppercase">
+                  {{"PasswordComplexity_RequireUppercase_Hint" | translate}}</li>
+                <li [hidden]="!userForm.controls['Password'].errors.requireNonAlphanumeric">
+                  {{"PasswordComplexity_RequireNonAlphanumeric_Hint" | translate}}</li>
+                <li [hidden]="!userForm.controls['Password'].errors.requiredLength">
+                  {{"PasswordComplexity_RequiredLength_Hint" |
+                  translate:passwordComplexitySetting.requiredLength}}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <!-- <label for="Collaborator_Country">{{'Country' | translate }} *</label>
+            <input type="text" #Collaborator_Country="ngModel" id="Collaborator_Country" class="form-control"
+              [(ngModel)]="collaborator.user.countryId" name="Country" required /> -->
+                <div class="form-group">
+                <label for="collaborator_roleId">Country</label>
+                <ng-select [items]="countries" bindValue="id" bindLabel="name" #countryIdInput="ngModel"
+                  name="country" [(ngModel)]="collaborator.user.country"></ng-select>
+                <!-- <div class="custom-select-reg">
+                  <span class="custom-select_arrow"></span>
+                  <select class="form-select custom-select__wrapper" #countryIdInput="ngModel"
+                    [(ngModel)]="collaborator.user.country" required name="CountryId"
+                     aria-label="">
+                    <option [ngValue]="'0'" selected [disabled]="true">Select
+                      Country</option>
+                    <option *ngFor="let country of countries" [ngValue]="country.id">{{country.name}}
+                    </option>
+                  </select>
+                </div> -->
+                <validation-messages [formCtrl]="countryIdInput">
+                </validation-messages>
+              </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="Collaborator_Timezone">{{'Timezone' | translate }} *</label>
+            <input type="text" #Collaborator_Timezone="ngModel" id="Collaborator_Timezone" class="form-control"
+              [(ngModel)]="collaborator.timezone" name="Timezone" required />
+            <validation-messages [formCtrl]="Collaborator_Timezone"></validation-messages>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="Collaborator_WeeklyHoursAvailabilty">{{'WeeklyHoursAvailabilty' | translate }}</label>
+            <input type="number" #Collaborator_WeeklyHoursAvailabilty="ngModel" id="Collaborator_WeeklyHoursAvailabilty"
+              class="form-control" [(ngModel)]="collaborator.weeklyHoursAvailabilty" name="WeeklyHoursAvailabilty" />
+            <validation-messages [formCtrl]="Collaborator_WeeklyHoursAvailabilty"></validation-messages>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="Collaborator_WorkingTimeFromToEstTime">{{'WorkingTimeFromToEstTime' | translate }} *</label>
+            <input type="text" #Collaborator_WorkingTimeFromToEstTime="ngModel" id="Collaborator_WorkingTimeFromToEstTime"
+              class="form-control" [(ngModel)]="collaborator.workingTimeFromToEstTime" name="WorkingTimeFromToEstTime"
+              required />
+            <validation-messages [formCtrl]="Collaborator_WorkingTimeFromToEstTime"></validation-messages>
+          </div>
+
+
+
+          <div class="form-group col-md-4">
+            <label for="Collaborator_Velocity">{{'Velocity' | translate }}</label>
+            <input type="number" #Collaborator_Velocity="ngModel" id="Collaborator_Velocity" class="form-control"
+              [(ngModel)]="collaborator.velocity" name="Velocity" />
+            <validation-messages [formCtrl]="Collaborator_Velocity"></validation-messages>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="Collaborator_Performance">{{'Performance' | translate }}</label>
+            <input type="number" #Collaborator_Performance="ngModel" id="Collaborator_Performance" class="form-control"
+              [(ngModel)]="collaborator.performance" name="Performance" />
+            <validation-messages [formCtrl]="Collaborator_Performance"></validation-messages>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+            <div class="checkbox-inline d-flex justify-content-between">
+              <!-- <div class="checkbox_container_small">
+                <label for="EditUser_IsActive" class="checkbox">
+                  <input id="EditUser_IsActive" type="checkbox" name="IsActive" [(ngModel)]="user.isActive">
+                  <div>{{"Active" | translate}}</div>
+                  <span class="checkmark"></span>
+                </label>
+              </div> -->
+
+              <div class="form-group">
+                <label for="IsActive">{{"IsActive" | translate}}</label>
+                <br>
+                <label class="switch">
+                  <input type="checkbox" name="isActive" [(ngModel)]="collaborator.user.isActive">
+                  <span class="slider round"></span>
+                </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Inner Tabs Of Current Info -->
+        <tabset>
+          <tab class="pt-5" heading="{{'Roles' | translate}}">
+            <ng-template tabHeading>
+              <span class="label label-success label-inline assigned-role-count">({{getAssignedRoleCount()}})</span>
+            </ng-template>
+            <div class="user-switch-section row roles-m-p">
+              <div class="col-md-6" *ngFor="let role of roles">
+                <label attr.for="EditUser_{{role.roleName}}">{{role.roleDisplayName}} <small
+                    *ngIf="role.inheritedFromOrganizationUnit">({{'RoleIsInheritedFromOrganizationUnit' |
+                    translate}})</small></label>
+
+                <label class="switch">
+                  <input type="checkbox" id="EditUser_{{role.roleName}}" name="{{role.roleName}}"
+                    [(ngModel)]="role.isAssigned" [disabled]="role.inheritedFromOrganizationUnit">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </tab>
+
+        </tabset>
+
+      </tab>
+      <tab class="pt-5" heading="{{'Skills' | translate}}" [disabled]="!collaborator.id">
+            <app-collaborator-skills [collaboratorId]="collaboratorNewId" ></app-collaborator-skills>
+      </tab>
+      <tab class="pt-5" heading="{{'Absense' | translate}}" [disabled]="!collaborator.id">
+          <app-collaborator-absense [collaboratorId]="collaboratorNewId"></app-collaborator-absense>
+      </tab>
+      <tab class="pt-5" heading="{{'WritingNotice' | translate}}" [disabled]="!collaborator.id">
+        <app-collaborator-notice [collaboratorId]="collaboratorNewId"></app-collaborator-notice>
+      </tab>
+      <tab class="pt-5" heading="{{'TrainingHistory' | translate}}" [disabled]="!collaborator.id">
+        <ng-template tabHeading>
+
+        </ng-template>
+      </tab>
+    </tabset>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="close()">Close</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!userForm.form.valid">
+      <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+      {{ 'Common.Label.Save' | translate}}
+    </button>
+  </div>
+</form>

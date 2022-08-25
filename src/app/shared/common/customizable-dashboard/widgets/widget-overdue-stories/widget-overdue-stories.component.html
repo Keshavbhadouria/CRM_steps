@@ -1,0 +1,45 @@
+<div class="card card-custom h-100">
+    <div class="card-header align-items-center border-0" style="background-color: #FB0101;">
+        <h3 class="card-title align-items-start flex-column">
+            <span class="font-weight-bolder" style="color: #fff;">
+                {{'OverdueStories' | translate}}
+            </span>
+        </h3>
+        <!-- <div class="card-toolbar">
+            <button (click)="memberActivityTable.reload()" class="btn btn-primary"><i
+                class="fa fa-sync"></i> Refresh</button>
+        </div> -->
+    </div>
+    <div class="card-body overflow-auto">
+        <div class="table-scrollable table-scrollable-borderless">
+            <table class="table table-hover table-light">
+                <thead>
+                    <tr class="uppercase">
+                        <th colspan="2">
+                            {{'Title' | translate}}
+                        </th>
+                        <th>
+                            {{'DueDate' | translate}}
+                        </th>
+                        <th>
+                            {{'Delayed' | translate}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let m of data; let index = index">
+                        <td  colspan="2">
+                            {{m.title}}
+                        </td>
+                        <td>
+                            {{m.dueDate | date:'yyyy-MM-dd'}}
+                        </td>
+                        <td>
+                            {{m.delayed}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

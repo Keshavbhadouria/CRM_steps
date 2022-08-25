@@ -1,0 +1,62 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ServiceActivityStepView' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>{{'Document' | translate }} :</h6>
+          {{ item.stepDocuments.document }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'UploadByClientOrDeliverByLawyer' | translate }} :</h6>
+          <div *ngIf="item.stepDocuments.uploadByClientOrDeliverByLawyer" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.stepDocuments.uploadByClientOrDeliverByLawyer" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-6 mb-3">
+          <h6>{{'NotifyAdmin' | translate }} :</h6>
+          <div *ngIf="item.stepDocuments.notifyAdmin" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.stepDocuments.notifyAdmin" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-6 mb-3">
+          <h6>{{'NotifyCustomer' | translate }} :</h6>
+          <div *ngIf="item.stepDocuments.notifyCustomer" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.stepDocuments.notifyCustomer" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-6 mb-3">
+          <h6>{{'NotifyLaywer' | translate }} :</h6>
+          <div *ngIf="item.stepDocuments.notifyLaywer" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.stepDocuments.notifyLaywer" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-6 mb-3">
+          <h6>{{'Fee' | translate }} :</h6>
+          {{ item.stepDocuments.fee }}
+      </div>
+
+      <div class="col-6 mb-3">
+          <h6>({{'ServicesActivityStep' | translate }}) {{'Step' | translate }} :</h6>
+          {{item.servicesActivityStepStep}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'LawfirmFeeType' | translate }}) {{'TypeName' | translate }} :</h6>
+          {{item.lawfirmFeeTypeTypeName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'LawfirmService' | translate }}) {{'ServicesName' | translate }} :</h6>
+          {{item.lawfirmServiceServicesName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'ServiceActivity' | translate }}) {{'ActivityName' | translate }} :</h6>
+          {{item.serviceActivityActivityName}}
+      </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

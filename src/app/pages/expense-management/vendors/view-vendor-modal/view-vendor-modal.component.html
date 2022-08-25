@@ -1,0 +1,108 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewVendor' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'CountryName' | translate }}</label>
+                <p> {{vendor.crmCountryCountryName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'StateName' | translate }}</label>
+                <p> {{vendor.crmStateStateName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'CityName' | translate }}</label>
+                <p> {{vendor.crmCityCityName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'TermName' | translate }}</label>
+                <p> {{vendor.crmInvoiceTermTermName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'PaymentMethod' | translate }}</label>
+                <p> {{vendor.crmPaymentMethodName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'FirstName' | translate }}</label>
+                <p> {{vendor.crmVendor.firstName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'LastName' | translate }}</label>
+                <p> {{vendor.crmVendor.lastName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Company' | translate }}</label>
+                <p> {{vendor.crmVendor.company}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Email' | translate }}</label>
+                <p> {{vendor.crmVendor.email}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'PhoneNo' | translate }}</label>
+                <p> {{vendor.crmVendor.phoneNo}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Service' | translate }}</label>
+                <p> {{vendor.crmVendor.service}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'PayTo' | translate }}</label>
+                <p> {{vendor.crmVendor.payTo}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'PrimaryAddress' | translate }}</label>
+                <p> {{vendor.crmVendor.primaryAddress}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'SecondaryAddress' | translate }}</label>
+                <p> {{vendor.crmVendor.secondaryAddress}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ZipCode' | translate }}</label>
+                <p> {{vendor.crmVendor.zipCode}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'QuickBookVendorId' | translate }}</label>
+                <p> {{vendor.crmVendor.quickBooksVendorId}} </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

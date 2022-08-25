@@ -1,0 +1,37 @@
+<form #glosaryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditGlosaryTerm' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateGlosaryTerm' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="GlosaryTerm_Term">{{"Term" | translate}} *</label>
+                    <input type="text" #GlosaryTerm_Term="ngModel" id="GlosaryTerm_Term" class="form-control" [(ngModel)]="glosaryTerm.term" name="Term"     required/>
+                    <validation-messages [formCtrl]="GlosaryTerm_Term"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="GlosaryTerm_Description">{{"Description" | translate}} *</label>
+                    <ckeditor [editor]="Editor" #GlosaryTerm_Description="ngModel" [(ngModel)]="glosaryTerm.description" name="glosaryTerm.description" required></ckeditor>
+
+                    <!-- <input type="text" #GlosaryTerm_Description="ngModel" id="GlosaryTerm_Description" class="form-control" [(ngModel)]="glosaryTerm.description" name="Description"     required/> -->
+                    <validation-messages [formCtrl]="GlosaryTerm_Description"></validation-messages>
+                </div>
+            </div>
+            
+           
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!glosaryForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

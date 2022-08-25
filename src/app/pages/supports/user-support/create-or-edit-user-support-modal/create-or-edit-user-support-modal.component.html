@@ -1,0 +1,77 @@
+<form #supportForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditSupport' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewSupport' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="UserSupport_UserId">{{ 'UserName' | translate }}</label>
+                    <ng-select [items]="users" bindValue="id" bindLabel="displayName" id="UserSupport_UserId"
+                        name="userId" [(ngModel)]="userSupport.userId"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="UserSupport_HelpDeskStatusId">{{ 'Status' | translate }}</label>
+                    <ng-select [items]="statuses" bindValue="id" bindLabel="displayName"
+                        id="UserSupport_HelpDeskStatusId" name="helpDeskStatusId"
+                        [(ngModel)]="userSupport.helpDeskStatusId"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="UserSupport_ContactName">{{ 'ContactName' | translate }} *</label>
+                    <input type="text" #UserSupport_ContactName="ngModel" id="UserSupport_ContactName" class="form-control"
+                        [(ngModel)]="userSupport.contactName" name="contactName" required />
+                    <validation-messages [formCtrl]="UserSupport_ContactName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="UserSupport_Email">{{ 'Email' | translate }} *</label>
+                    <input type="email" #UserSupport_Email="ngModel" id="UserSupport_Email" class="form-control"
+                        [(ngModel)]="userSupport.email" name="email" required email/>
+                    <validation-messages [formCtrl]="UserSupport_Email"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="UserSupport_Subject">{{ 'Subject' | translate }} *</label>
+                    <input type="email" #UserSupport_Subject="ngModel" id="UserSupport_Subject" class="form-control"
+                        [(ngModel)]="userSupport.subject" name="subject" required />
+                    <validation-messages [formCtrl]="UserSupport_Subject"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="UserSupport_BodyMessage">{{ 'BodyMessage' | translate }} *</label>
+                    <ckeditor #UserSupport_BodyMessage="ngModel" id="UserSupport_BodyMessage" [editor]="editor"
+                        [(ngModel)]="userSupport.bodyMessage" name="bodyMessage" required></ckeditor>
+                    <validation-messages [formCtrl]="UserSupport_BodyMessage"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="UserSupport_AttachmentUrl">{{'Attachment' | translate}}</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile"
+                        accept="image/*" (change)="handleUpload($event)">
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+                        <img [src]="imageUrl" style="height: 50px;width:auto;" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!supportForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

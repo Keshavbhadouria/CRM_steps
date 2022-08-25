@@ -1,0 +1,140 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewDetail' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <h3>
+        {{"UserInformations" | translate}}
+    </h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    {{"UserName" | translate}}:
+                </label>
+                <div class="col-lg-9">
+                    <span>{{auditLog.userName}}</span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    {{"IpAddress" | translate}}:
+                </label>
+                <div class="col-lg-9">
+                    <span>{{auditLog.clientIpAddress}}</span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    {{"Client" | translate}}:
+                </label>
+                <div class="col-lg-9">
+                    <span>{{auditLog.clientName}}</span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    {{"Browser" | translate}}:
+                </label>
+                <div class="col-lg-9">
+                    <span>{{auditLog.browserInfo}}</span>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="auditLog.impersonatorUserId">
+                <label class="col-lg-3 col-form-label">
+                </label>
+                <div class="col-lg-9 text-warning">
+                    <span>{{"AuditLogImpersonatedOperationInfo" | translate}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>{{"ActionInformations" | translate}}</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    {{"Service" | translate}}:
+                </label>
+                <div class="col-lg-9">
+                    <span>{{auditLog.serviceName}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    {{"Action" | translate}}:
+                </label>
+                <div class="col-lg-9">
+                    <span>{{auditLog.methodName}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    {{"Time" | translate}}:
+                </label>
+                <div class="col-lg-9">
+                    <span>{{getExecutionTime()}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    {{"Duration" | translate}}:
+                </label>
+                <div class="col-lg-9">
+                    <span>{{getDurationAsMs()}}</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    {{"Parameters" | translate}}:
+                </label>
+                <div class="col-lg-9 alert alert-light">
+                    <pre lang="js">{{getFormattedParameters()}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>{{"CustomData" | translate}}</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label class="col-lg-3 col-form-label">
+                    {{"None" | translate}}:
+                </label>
+                <div *ngIf="auditLog.customData" class="col-lg-9 alert alert-light">
+                    <pre>{{auditLog.customData}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>{{"ErrorState" | translate}}</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label *ngIf="!auditLog.exception" class="col-lg-12 col-form-label">
+                    <i class="fa fa-check-circle text-success"></i> {{"Success" | translate}}
+                </label>
+                <div *ngIf="auditLog.exception" class="col-lg-12 alert alert-light">
+                    <pre>{{auditLog.exception}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

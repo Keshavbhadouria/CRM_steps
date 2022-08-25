@@ -1,0 +1,47 @@
+<form #pmtaskStage="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'Pages.Project.EditTaskStage' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'Pages.Project.CreateTaskStage' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="PMTaskStage_Stage">{{'Pages.Project.Stage' |
+                        translate}} *</label>
+                        <input type="text" #PMTaskStage_Stage="ngModel" id="PMTaskStage_Stage" class="form-control" [(ngModel)]="pmTaskStage.stage" name="Stage"     required/>
+                        <validation-messages [formCtrl]="PMTaskStage_Stage"></validation-messages>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="PMTaskStage_Hexacolor">{{'Pages.Project.Hexacolor' |
+                        translate}} *</label>
+                    <input type="color" #PMTaskStage_Hexacolor="ngModel" id="PMTaskStage_Hexacolor" class="form-control" [(ngModel)]="pmTaskStage.hexacolor" name="Hexacolor"   minlength="4"  maxlength="7"  required/>
+                    <validation-messages [formCtrl]="PMTaskStage_Hexacolor"></validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="PMTaskStage_OrderNum">{{'OrderNum' |
+                        translate}} *</label>
+                    <input type="number" #PMTaskStage_OrderNum="ngModel" id="PMTaskStage_OrderNum" class="form-control" [(ngModel)]="pmTaskStage.orderNum" name="OrderNum"  required/>
+                    <validation-messages [formCtrl]="PMTaskStage_OrderNum"></validation-messages>
+                </div>
+            </div>
+           
+        </div>
+        <script></script>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!pmtaskStage.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

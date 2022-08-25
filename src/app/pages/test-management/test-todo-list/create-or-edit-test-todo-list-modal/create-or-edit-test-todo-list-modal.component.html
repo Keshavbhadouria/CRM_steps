@@ -1,0 +1,93 @@
+<form #testTypeTodoListForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditTestTypeTodoList' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewTestTypeTodoList' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="TestTypeTodoList_TaskId">{{ 'TaskTitle' | translate }} *</label>
+                    <ng-select [items]="pmTaskTypes" bindValue="id" bindLabel="displayName" id="TestTypeTodoList_TaskId"
+                        name="taskId" #TestTypeTodoList_TaskId="ngModel" [(ngModel)]="testTypeTodoList.taskId">
+                    </ng-select>
+                    <validation-messages [formCtrl]="TestTypeTodoList_TaskId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="TestTypeTodoList_TestTypeId">{{ 'TestType' | translate }} *</label>
+                    <ng-select [items]="testTypes" bindValue="id" bindLabel="displayName"
+                        id="TestTypeTodoList_TestTypeId" name="testTypeId" #TestTypeTodoList_TestTypeId="ngModel"
+                        [(ngModel)]="testTypeTodoList.testTypeId" required></ng-select>
+                    <validation-messages [formCtrl]="TestTypeTodoList_TestTypeId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="TestTypeTodoList_UserId">{{ 'User' | translate }} *</label>
+                    <ng-select [items]="users" bindValue="id" bindLabel="displayName" id="TestTypeTodoList_UserId"
+                        name="userId" #TestTypeTodoList_UserId="ngModel" [(ngModel)]="testTypeTodoList.userId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="TestTypeTodoList_UserId"></validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="TestTypeTodoList_Title">{{ 'Title' | translate }} *</label>
+                    <input type="text" #TestTypeTodoList_Title="ngModel" id="TestTypeTodoList_Title"
+                        class="form-control" [(ngModel)]="testTypeTodoList.title" name="title" required />
+                    <validation-messages [formCtrl]="TestTypeTodoList_Title"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="TestTypeTodoList_Description">{{ 'Description' | translate }}</label>
+                    <ckeditor #TestTypeTodoList_Description="ngModel" id="TestTypeTodoList_Description" [editor]="description_editor"
+                        [(ngModel)]="testTypeTodoList.description" name="description"></ckeditor>
+                    <validation-messages [formCtrl]="TestTypeTodoList_Description"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="TestTypeTodoList_Comments">{{ 'Comments' | translate }}</label>
+                    <ckeditor #TestTypeTodoList_Comments="ngModel" id="TestTypeTodoList_Comments" [editor]="description_editor"
+                        [(ngModel)]="testTypeTodoList.comments" name="comments"></ckeditor>
+                    <validation-messages [formCtrl]="TestTypeTodoList_Comments"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="pmTask_Attachment">{{'Attachment' | translate}}</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile"
+                        accept="image/*" (change)="handleUpload($event)">
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+                        <img [src]="imageUrl" style="height: 50px;width:auto;" alt="">
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="TestTypeTodoList_Success" class="kt-checkbox">
+                    <input id="TestTypeTodoList_Success" #TestTypeTodoList_Success="ngModel" type="checkbox"
+                        name="success" [(ngModel)]="testTypeTodoList.success">
+                    {{ "Success" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="TestTypeTodoList_Success"></validation-messages>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!testTypeTodoListForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

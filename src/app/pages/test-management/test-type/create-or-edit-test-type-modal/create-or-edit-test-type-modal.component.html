@@ -1,0 +1,37 @@
+<form #testTypeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditTestType' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewTestType' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="TestType_TypeName">{{ 'TypeName' | translate }} *</label>
+                    <input type="text" #TestType_TypeName="ngModel" id="TestType_TypeName" class="form-control"
+                        [(ngModel)]="testType.typeName" name="typeName" required />
+                    <validation-messages [formCtrl]="TestType_TypeName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="TestType_Description">{{ 'Description' | translate }} *</label>
+                    <ckeditor #TestType_Description="ngModel" id="TestType_Description" [editor]="description_editor"
+                        [(ngModel)]="testType.description" name="description" required></ckeditor>
+                    <validation-messages [formCtrl]="TestType_Description"></validation-messages>
+                </div>
+            </div>
+        </div>
+        <script></script>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!testTypeForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

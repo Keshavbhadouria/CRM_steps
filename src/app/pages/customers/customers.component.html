@@ -1,0 +1,410 @@
+<div class="container-fluid">
+    <app-page-title title="Customers" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <!-- Filters -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()"
+                                    [(ngModel)]="filterText" placeholder="{{'Common.Label.Filter' | translate }}"
+                                    aria-label="Username" aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- (click)="openCreateModal(createOrEditContent)" -->
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateCustomer' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+
+                    <!-- <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="FirstNameFilter">{{"FirstName"| translate }}</label>
+                                <input type="text" class="form-control" id="FirstNameFilter" name="firstNameFilter"
+                                    [(ngModel)]="firstNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="EmailFilter">{{"Email"| translate }}</label>
+                                <input type="text" class="form-control" id="EmailFilter" name="emailFilter"
+                                    [(ngModel)]="emailFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PhoneNumberFilter">{{"PhoneNumber"| translate }}</label>
+                                <input type="text" class="form-control" id="PhoneNumberFilter" name="phoneNumberFilter"
+                                    [(ngModel)]="phoneNumberFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CompanyNameFilter">{{"CompanyName"| translate }}</label>
+                                <input type="text" class="form-control" id="CompanyNameFilter" name="companyNameFilter"
+                                    [(ngModel)]="companyNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="WebsiteFilter">{{"Website"| translate }}</label>
+                                <input type="text" class="form-control" id="WebsiteFilter" name="websiteFilter"
+                                    [(ngModel)]="websiteFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="AddressFilter">{{"Address"| translate }}</label>
+                                <input type="text" class="form-control" id="AddressFilter" name="addressFilter"
+                                    [(ngModel)]="addressFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="AddressSeconderyFilter">{{"AddressSecondery"| translate }}</label>
+                                <input type="text" class="form-control" id="AddressSeconderyFilter"
+                                    name="addressSeconderyFilter" [(ngModel)]="addressSeconderyFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ZipCodeFilter">{{"ZipCode"| translate }}</label>
+                                <input type="text" class="form-control" id="ZipCodeFilter" name="zipCodeFilter"
+                                    [(ngModel)]="zipCodeFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="IsActiveFilterSelect">{{"IsActive"| translate }}</label>
+                            <select class="form-control" name="IsActiveFilter" id="IsActiveFilterSelect"
+                                [(ngModel)]="isActiveFilter">
+                                <option value="-1">{{"All"| translate }}</option>
+                                <option value="0">{{"False"| translate }}</option>
+                                <option value="1">{{"True"| translate }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="QuickbooksCutomerIdFilter">{{"QuickbooksCutomerId"| translate }}</label>
+                                <input type="text" class="form-control" id="QuickbooksCutomerIdFilter"
+                                    name="quickbooksCutomerIdFilter" [(ngModel)]="quickbooksCutomerIdFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CRMCountryCountryNameFilter">({{"CRMCountry"| translate }}) {{"CountryName"|
+                                    translate }}</label>
+                                <input type="text" class="form-control" id="CRMCountryCountryNameFilter"
+                                    name="crmCountryCountryNameFilter" [(ngModel)]="crmCountryCountryNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CRMStateStateNameFilter">({{"CRMState"| translate }}) {{"StateName"|
+                                    translate }}</label>
+                                <input type="text" class="form-control" id="CRMStateStateNameFilter"
+                                    name="crmStateStateNameFilter" [(ngModel)]="crmStateStateNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CRMCityCityNameFilter">({{"CRMCity"| translate }}) {{"CityName"| translate
+                                    }}</label>
+                                <input type="text" class="form-control" id="CRMCityCityNameFilter"
+                                    name="crmCityCityNameFilter" [(ngModel)]="crmCityCityNameFilter">
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Shoe Hide Filters -->
+                    <!-- <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table List -->
+    <div class="row align-items-center" [busyIf]="primengTableHelper.isLoading">
+        <!--<Primeng-Datatable-Start>-->
+        <div class="primeng-datatable-container col-12">
+            <p-table #dataTable (onLazyLoad)="getRecords($event)" [value]="primengTableHelper.records"
+                rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false" [lazy]="true"
+                [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                [resizableColumns]="primengTableHelper.resizableColumns">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 150px">{{'Actions'| translate }}</th>
+
+                        <th style="width: 200px" pSortableColumn="crmCountryFk.countryName">
+                            {{'CountryName'| translate }}
+                            <p-sortIcon field="crmCountryCountryName"></p-sortIcon>
+                            <p-columnFilter type="text" field="crmCountryCountryName" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"
+                                [showApplyButton]="false" [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown [(ngModel)]="crmCountryCountryNameFilter" [options]="allCountries"
+                                        optionLabel="displayName" optionValue="id" placeholder="Any"
+                                        (onChange)="customFilterCallback(filter, $event.value)" [showClear]="true">
+                                        <ng-template let-option pTemplate="item">
+                                            <span
+                                                [class]="'customer-badge status-' + option.displayName">{{option.displayName}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th style="width: 200px" pSortableColumn="crmStateFk.stateName">
+                            {{'StateName'| translate }}
+                            <p-sortIcon field="crmStateStateName"></p-sortIcon>
+                            <p-columnFilter type="text" field="crmStateStateName" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"
+                                [showApplyButton]="false" [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown [(ngModel)]="crmStateStateNameFilter" [options]="allStates"
+                                        optionLabel="displayName" optionValue="id" placeholder="Any"
+                                        (onChange)="customFilterCallback(filter, $event.value)" [showClear]="true">
+                                        <ng-template let-option pTemplate="item">
+                                            <span
+                                                [class]="'customer-badge status-' + option.displayName">{{option.displayName}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th style="width: 200px" pSortableColumn="crmCityFk.cityName">
+                            {{'CityName'| translate }}
+                            <p-sortIcon field="crmCityCityName"></p-sortIcon>
+                            <p-columnFilter type="text" field="crmCityCityName" display="menu" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" [showApplyButton]="false"
+                                [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown [(ngModel)]="crmCityCityNameFilter" [options]="allCities"
+                                        optionLabel="displayName" optionValue="id" placeholder="Any"
+                                        (onChange)="customFilterCallback(filter, $event.value)" [showClear]="true">
+                                        <ng-template let-option pTemplate="item">
+                                            <span
+                                                [class]="'customer-badge status-' + option.displayName">{{option.displayName}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th style="width: 200px" pSortableColumn="firstName">
+                            {{'FirstName'| translate }}
+                            <p-sortIcon field="crmCustomer.firstName"></p-sortIcon>
+                            <p-columnFilter type="text" field="firstName" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+
+                        </th>
+                        <th style="width: 150px" pSortableColumn="email">
+                            {{'Email'| translate }}
+                            <p-sortIcon field="crmCustomer.email"></p-sortIcon>
+                            <p-columnFilter type="text" field="email" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+
+                        </th>
+                        <th style="width: 250px" pSortableColumn="phoneNumber">
+                            {{'PhoneNumber'| translate }}
+                            <p-sortIcon field="crmCustomer.phoneNumber"></p-sortIcon>
+                            <p-columnFilter type="text" field="phoneNumber" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 250px" pSortableColumn="companyName">
+                            {{'CompanyName'| translate }}
+                            <p-sortIcon field="crmCustomer.companyName"></p-sortIcon>
+                            <p-columnFilter type="text" field="CompanyName" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 150px" pSortableColumn="website">
+                            {{'Website'| translate }}
+                            <p-sortIcon field="crmCustomer.website"></p-sortIcon>
+                            <p-columnFilter type="text" field="website" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 150px" pSortableColumn="address">
+                            {{'Address'| translate }}
+                            <p-sortIcon field="crmCustomer.address"></p-sortIcon>
+                            <p-columnFilter type="text" field="address" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 250px" pSortableColumn="addressSecondery">
+                            {{'AddressSecondery'| translate }}
+                            <p-sortIcon field="crmCustomer.addressSecondery"></p-sortIcon>
+                            <p-columnFilter type="text" field="addressSecondery" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 200px" pSortableColumn="zipCode">
+                            {{'ZipCode'| translate }}
+                            <p-sortIcon field="crmCustomer.zipCode"></p-sortIcon>
+                            <p-columnFilter type="text" field="zipCode" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 200px" pSortableColumn="isActive">
+                            {{'IsActive'| translate }}
+                            <p-sortIcon field="crmCustomer.isActive"></p-sortIcon>
+                            <p-columnFilter type="text" field="pmStoryPriorityPriority" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"
+                                [showApplyButton]="false" [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown [(ngModel)]="isActiveFilter" [options]="yesNoLst"
+                                        optionLabel="displayName" optionValue="id" placeholder="Any"
+                                        (onChange)="customFilterCallback(filter, $event.value)" [showClear]="true">
+                                        <ng-template let-option pTemplate="item">
+                                            <span
+                                                [class]="'customer-badge status-' + option.displayName">{{option.displayName}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th style="width: 250px" pSortableColumn="quickbooksCutomerId">
+                            {{'QuickbooksCutomerId'| translate }}
+                            <p-sortIcon field="crmCustomer.quickbooksCutomerId"></p-sortIcon>
+                            <p-columnFilter type="text" field="quickbooksCutomerId" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                    <tr>
+                        <td style="width: 150px">
+                            <div class="btn-group dropdown" dropdown container="body">
+                                <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
+                                    <i class="fa fa-plus-circle"></i> 
+                                    {{"Actions" | translate}}
+                                </button>
+                                <ul class="dropdown-menu custom-dropdown" *dropdownMenu>
+                                    <li>
+                                        <img
+                                        src="../../../../../assets/icons/Visual.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="viewCustomers(record)">{{'View' | translate}}</a>
+                                    </li>
+                                    <li>
+                                        <img
+                                        src="../../../../../assets/icons/editIcon.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="editCustomers(record)">{{'Edit' | translate}}</a>
+                                    </li>
+                                    <li>
+                                        <img
+                                        src="../../../../../assets/icons/deleteIcon.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="onDelete(record.crmCustomer.id)">{{'Delete' | translate}}</a>
+                                    </li>
+                                   
+                                </ul>
+                            </div>
+                        </td>
+                        <td style="width:200px">
+                            <span class="ui-column-title"> {{'CountryName'| translate }}</span>
+                            {{record.crmCountryCountryName}}
+                        </td>
+                        <td style="width:200px">
+                            <span class="ui-column-title"> {{'StateName'| translate }}</span>
+                            {{record.crmStateStateName}}
+                        </td>
+                        <td style="width:200px">
+                            <span class="ui-column-title"> {{'CityName'| translate }}</span>
+                            {{record.crmCityCityName}}
+                        </td>
+                        <td style="width:200px">
+                            <span class="ui-column-title"> {{'FirstName'| translate }}</span>
+                            {{record.crmCustomer.firstName}}
+                        </td>
+                        <td style="width:150px">
+                            <span class="ui-column-title"> {{'Email'| translate }}</span>
+                            {{record.crmCustomer.email}}
+                        </td>
+                        <td style="width:250px">
+                            <span class="ui-column-title"> {{'PhoneNumber'| translate }}</span>
+                            {{record.crmCustomer.phoneNumber}}
+                        </td>
+                        <td style="width:250px">
+                            <span class="ui-column-title"> {{'CompanyName'| translate }}</span>
+                            {{record.crmCustomer.companyName}}
+                        </td>
+                        <td style="width:150px">
+                            <span class="ui-column-title"> {{'Website'| translate }}</span>
+                            {{record.crmCustomer.website}}
+                        </td>
+                        <td style="width:150px">
+                            <span class="ui-column-title"> {{'Address'| translate }}</span>
+                            {{record.crmCustomer.address}}
+                        </td>
+                        <td style="width:250px">
+                            <span class="ui-column-title"> {{'AddressSecondery'| translate }}</span>
+                            {{record.crmCustomer.addressSecondery}}
+                        </td>
+                        <td style="width:200px">
+                            <span class="ui-column-title"> {{'ZipCode'| translate }}</span>
+                            {{record.crmCustomer.zipCode}}
+                        </td>
+                        <td style="width:200px">
+                            <span class="ui-column-title"> {{'IsActive'| translate }}</span>
+                            <div *ngIf="record.crmCustomer.isActive" class="text-center"><i
+                                    class="fa fa-check-circle text-success" title="True"></i></div>
+                            <div *ngIf="!record.crmCustomer.isActive" class="text-center"><i class="fa fa-times-circle"
+                                    title="False"></i></div>
+                        </td>
+                        <td style="width:250px">
+                            <span class="ui-column-title"> {{'QuickbooksCutomerId'| translate }}</span>
+                            {{record.crmCustomer.quickbooksCutomerId}}
+                        </td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                {{'NoData'| translate }}
+            </div>
+            <div class="primeng-paging-container">
+                <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                    (onPageChange)="getRecords($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                    [showCurrentPageReport]="true"
+                    [currentPageReportTemplate]="'TotalRecordsCount' | translate:primengTableHelper.totalRecordsCount">
+                </p-paginator>
+            </div>
+        </div>
+        <!--<Primeng-Datatable-End>-->
+    </div>
+
+    <!-- <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table> -->
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-customer-create-edit [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editCustomer">
+    </app-customer-create-edit>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-customer-view [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewCustomer">
+    </app-customer-view>
+</ng-template>

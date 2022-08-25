@@ -1,0 +1,176 @@
+<form novalidate autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'Pages.Project.ViewProject' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <!-- <div class="row">
+      <div class="col-md-6">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="epicObj_ProjectName">Name*</label>
+            <p> {{epicObj.epic.name}} </p>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="businessOutcomeHypotesis">Business Outcome Hypotesis</label>
+            <p [innerHtml]="epicObj.epic.businessOutcomeHypotesis"></p>
+          </div>
+        </div>
+
+
+
+      </div>
+      <div class="col-md-6">
+
+
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="PMIndustryIndustry">Contact</label>
+          <p>
+            {{epicObj.contactCompany}}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="pmEpicStatusStatus">Status</label>
+          <p> {{epicObj.pmEpicStatusStatus}} </p>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="pmProjectProjectName">Project Name</label>
+          <p> {{epicObj.pmProjectProjectName}} </p>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="additionalPotentialFeatures">Additional Potential Features</label>
+          <p [innerHtml]="epicObj.epic.additionalPotentialFeatures"></p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="analysisSummary">Analysis Summary</label>
+          <p [innerHtml]="epicObj.epic.analysisSummary"></p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="businessImpact">Business Impact</label>
+          <p [innerHtml]="epicObj.epic.businessImpact"></p>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <p [innerHtml]="epicObj.epic.description"></p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="inScope">InScope</label>
+          <p [innerHtml]="epicObj.epic.inScope"></p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="mvP_Features">MVP Features</label>
+          <p [innerHtml]="epicObj.epic.mvP_Features"></p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="noFunctionalRequirements">Non Functional Requirements</label>
+          <p [innerHtml]="epicObj.epic.noFunctionalRequirements"></p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="outScope">Out Scope</label>
+          <p [innerHtml]="epicObj.epic.outScope"></p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="userAffected">User Affected</label>
+          <p [innerHtml]="epicObj.epic.userAffected"></p>
+        </div>
+      </div>
+
+    </div> -->
+
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>Name :</h6>
+          {{ item.epic.name }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>Description :</h6>
+          <p [innerHtml]="item.epic.description"></p>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>BusinessOutcomeHypotesis :</h6>
+          <p [innerHtml]="item.epic.businessOutcomeHypotesis"></p>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>InScope :</h6>
+          <p [innerHtml]="item.epic.inScope"></p>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>OutScope :</h6>
+          <p [innerHtml]="item.epic.outScope"></p>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>NoFunctionalRequirements :</h6>
+          <p [innerHtml]="item.epic.noFunctionalRequirements"></p>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>MVP_Features :</h6>
+          <p [innerHtml]="item.epic.mvP_Features"></p>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>AdditionalPotentialFeatures :</h6>
+          <p [innerHtml]="item.epic.additionalPotentialFeatures"></p>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>AnalysisSummary :</h6>
+          <p [innerHtml]="item.epic.analysisSummary"></p>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>UserAffected :</h6>
+          <p [innerHtml]="item.epic.userAffected"></p>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>BusinessImpact :</h6>
+          <p [innerHtml]="item.epic.businessImpact"></p>
+      </div>
+
+      <div class="col-6 mb-3">
+          <h6>(PMProject) ProjectName :</h6>
+          {{item.pmProjectProjectName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>(Contact) Company :</h6>
+          {{item.contactCompany}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>(PMEpicStatus) Status :</h6>
+          {{item.pmEpicStatusStatus}}
+      </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

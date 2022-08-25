@@ -1,0 +1,132 @@
+<blockquote>{{ title }}</blockquote>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- table List -->
+        <div class="table-responsive" style="min-height: 40vh;">
+          <table class="table align-middle  table-nowrap table-hover">
+            <thead class="table-light">
+              <tr>
+                <th scope="col" class="th-action" *ngIf="buttons.length">{{ buttonHeader }}</th>
+                <th scope="col" class="" *ngFor="let map of columnMaps ; let i = index">{{ translate.instant(map.header)
+                  }}</th>
+
+                <!-- <td class="th-end" style="width: 20px;"></td> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="k-alt tr-border-left" *ngFor="let record of records ; let i = index">
+                <td *ngIf="buttons.length">
+                  <div class="btn-group dropdown" dropdown container="body">
+                    <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
+                      <i class="fa fa-plus-circle"></i>
+                      {{translate.instant('Actions')}}
+                    </button>
+                    <ul class="dropdown-menu custom-dropdown" *dropdownMenu>
+                      <li *ngFor="let but of buttons">
+                        <img src="{{but.icon}}" alt="visual">
+                        <a href="javascript:;" class="dropdown-item"
+                          (click)="bC(record, but.func, record)">{{but.title}}</a>
+                      </li>
+
+                    </ul>
+                  </div>
+                  <!-- <a class="button-anchor pointer" href="javascript: void(0);" *ngFor="let but of buttons"
+                        (click)="bC(record, but.func, record)" title="{{but.title}}"><img src="{{but.icon}}" alt="visual"
+                          class="mr-2"></a> -->
+                  <!-- <span class="ms-2 fw-bold">{{but.title}}</span> </a> -->
+                  <!-- <div class="dropdown justify-content-end" style="text-align:right;" ngbDropdown
+                    placement="bottom-right">
+                    <a href="javascript: void(0);" class="dropdown-toggle card-drop" ngbDropdownToggle>
+                      <i class="mdi mdi-dots-horizontal font-size-18"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                      <a class="dropdown-item pointer" href="javascript: void(0);" *ngFor="let but of buttons"
+                        (click)="bC(record, but.func, record)"><img src="{{but.icon}}" alt="visual" height="24px"
+                          class="mr-2">
+                        <span class="ms-2 fw-bold">{{but.title}}</span> </a>
+                    </div>
+                  </div> -->
+                </td>
+                <td *ngFor="let map of columnMaps" [id]="map.header" [appStyleCell]="record[map.primaryKey]"
+                  [key]="map.primaryKey">
+                  <div class="avatar-xs" *ngIf="map.primaryKey == 'sr#';else data"><span class=""> {{startIndex + i}}
+                    </span></div>
+                  <ng-template #data>
+                    <div *ngIf="!checkIsChildObject(map.primaryKey);else child">
+                      <span *ngIf="record[getObj(map.primaryKey)] != null"
+                        [innerHtml]="record[getObj(map.primaryKey)] | formatCell: map.format | safe : 'html'"></span>
+                    </div>
+                  </ng-template>
+                  <ng-template #child>
+                    <div *ngIf="isBoolean(record[getObj(map.primaryKey)][getField(map.primaryKey)]); else content">
+                      <div *ngIf="record[getObj(map.primaryKey)][getField(map.primaryKey)]" class="text-left"><i
+                          class="fa fa-check-circle text-success" title="True"></i></div>
+                      <div *ngIf="!record[getObj(map.primaryKey)][getField(map.primaryKey)]" class="text-left"><i
+                          class="fa fa-times-circle" title="False"></i></div>
+                    </div>
+                    <ng-template #content>
+                      <div>
+                        <span *ngIf="map.type?.toLowerCase() == 'link'; else desc">
+                          <a *ngIf="record[getObj(map.primaryKey)][getField(map.primaryKey)] != null && record[getObj(map.primaryKey)][getField(map.primaryKey)] != '' && record[getObj(map.primaryKey)][getField(map.primaryKey)] != undefined "
+                            href="javascript: void(0)"
+                            (click)="openLinkInNewTab(record[getObj(map.primaryKey)][getField(map.primaryKey)])">Link</a>
+                        </span>
+                        <ng-template #desc>
+                          <span [innerHtml]="record[getObj(map.primaryKey)][getField(map.primaryKey)] | formatCell:
+                          map.format | safe : 'html'">
+                          </span>
+                        </ng-template>
+                      </div>
+                    </ng-template>
+                  </ng-template>
+                </td>
+
+                <!-- <td style="width: 20px;"></td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination  -->
+
+        <!-- Commented Due to Larger Page Break UI  -->
+        <!-- <div class="row">
+          <div class="col-lg-12">
+            <ul class="pagination pagination-rounded justify-content-center mt-4">
+              <li class="page-item">
+                <a href="javascript: void(0);" class="page-link" (click)="pagination.gotoPreviousPage()"><i
+                    class="mdi mdi-chevron-left"></i></a>
+              </li>
+              <li class="page-item" [ngClass]="i == pagination.pageIndex ? 'active' : ''"
+                *ngFor="let item of [].constructor(pagination.noOfPages); let i = index">
+                <a href="javascript: void(0);" class="page-link" (click)="pagination.setPageIndex(i)">{{i + 1}}</a>
+              </li>
+              <li class="page-item">
+                <a href="javascript: void(0);" class="page-link" (click)="pagination.gotoNextPage()"><i
+                    class="mdi mdi-chevron-right"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div> -->
+
+        <div class="row justify-content-md-between align-items-md-center">
+          <div class="col-7">
+            Showing {{startIndex}} - {{pagination.pageIndex * pagination.pageSize }} of {{pagination.totalCount}}
+          </div>
+          <div class="col-5">
+            <div class="text-md-right float-md-end mt-2">
+              <ngb-pagination class="pagination-rounded" [collectionSize]="pagination.totalCount"
+                (pageChange)="onPageChange($event)" [(page)]="pagination.pageIndex" [pageSize]="pagination.pageSize"
+                [maxSize]="10">
+              </ngb-pagination>
+              <!--Pagination-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

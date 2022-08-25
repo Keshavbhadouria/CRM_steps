@@ -1,0 +1,190 @@
+<div class="container-fluid">
+    <app-page-title title="Vendors" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateNewVendor' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-12">
+                            <div class="separator separator-dashed"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="FirstNameFilter">{{"FirstName" | translate}}</label>
+                                <input type="text" class="form-control" id="FirstNameFilter"
+                                    name="firstNameFilter"
+                                    [(ngModel)]="firstNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="LastNameFilter">{{"LastName" | translate}}</label>
+                                <input type="text" class="form-control" id="LastNameFilter"
+                                    name="lastNameFilter"
+                                    [(ngModel)]="lastNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CompanyFilter">{{"Company" | translate}}</label>
+                                <input type="text" class="form-control" id="CompanyFilter"
+                                    name="companyFilter"
+                                    [(ngModel)]="companyFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="EmailFilter">{{"Email" | translate}}</label>
+                                <input type="text" class="form-control" id="EmailFilter"
+                                    name="emailFilter"
+                                    [(ngModel)]="emailFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PhoneNoFilter">{{"PhoneNo" | translate}}</label>
+                                <input type="text" class="form-control" id="PhoneNoFilter"
+                                    name="phoneNoFilter"
+                                    [(ngModel)]="phoneNoFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ServiceFilter">{{"Service" | translate}}</label>
+                                <input type="text" class="form-control" id="ServiceFilter"
+                                    name="serviceFilter"
+                                    [(ngModel)]="serviceFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PayToFilter">{{"PayTo" | translate}}</label>
+                                <input type="text" class="form-control" id="PayToFilter"
+                                    name="payToFilter"
+                                    [(ngModel)]="payToFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PrimaryAddressFilter">{{"PrimaryAddress" | translate}}</label>
+                                <input type="text" class="form-control" id="PrimaryAddressFilter"
+                                    name="primaryAddressFilter"
+                                    [(ngModel)]="primaryAddressFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="SecondaryAddressFilter">{{"SecondaryAddress" | translate}}</label>
+                                <input type="text" class="form-control" id="SecondaryAddressFilter"
+                                    name="secondaryAddressFilter"
+                                    [(ngModel)]="secondaryAddressFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ZipCodeFilter">{{"ZipCode" | translate}}</label>
+                                <input type="text" class="form-control" id="ZipCodeFilter"
+                                    name="zipCodeFilter"
+                                    [(ngModel)]="zipCodeFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CRMCountryCountryNameFilter">{{"CountryName" | translate}}</label>
+                                <input type="text" class="form-control" id="CRMCountryCountryNameFilter"
+                                    name="crmCountryCountryNameFilter"
+                                    [(ngModel)]="crmCountryCountryNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CRMStateStateNameFilter">{{"StateName" | translate}}</label>
+                                <input type="text" class="form-control" id="CRMStateStateNameFilter"
+                                    name="crmStateStateNameFilter"
+                                    [(ngModel)]="crmStateStateNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CRMCityCityNameFilter">{{"CityName" | translate}}</label>
+                                <input type="text" class="form-control" id="CRMCityCityNameFilter"
+                                    name="crmCityCityNameFilter"
+                                    [(ngModel)]="crmCityCityNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CRMInvoiceTermTermNameFilter">{{"TermName" | translate}}</label>
+                                <input type="text" class="form-control" id="CRMInvoiceTermTermNameFilter"
+                                    name="crmInvoiceTermTermNameFilter"
+                                    [(ngModel)]="crmInvoiceTermTermNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CRMPaymentMethodNameFilter">{{"PaymentMethod" | translate}}</label>
+                                <input type="text" class="form-control" id="CRMPaymentMethodNameFilter"
+                                    name="crmPaymentMethodNameFilter"
+                                    [(ngModel)]="crmPaymentMethodNameFilter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shoe Hide Filters -->
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table>
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-create-or-edit-vendor-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editVendor">
+    </app-create-or-edit-vendor-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-view-vendor-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewVendor">
+    </app-view-vendor-modal>
+</ng-template>

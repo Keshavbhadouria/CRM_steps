@@ -1,0 +1,77 @@
+<div class="card" style="padding: 0rem 1.25rem;">
+    <div class="card-body container-fluid">
+        <div class="row" [busyIf]="loading">
+            <!-- <label class="box-label">{{'Appointments' | translate}}</label> -->
+            <div class="col-md-4">
+                <div class="box-dashboard red">
+                    <div class="img-section"><img src="../../../assets/images/new_clients.png" alt=""></div>
+                    <div class="text">{{'NewClients' | translate}}</div>
+                    <div class="records">{{newClientsData.recordCount}}</div>
+                    <div class="amt">
+                        <span *ngIf="newClientsData.arrowType === 'down'"><img src="../../../assets/images/down_arrow.png" /></span>
+                        <span *ngIf="newClientsData.arrowType === 'up'"><img src="../../../assets/images/upper_arrow.png" /></span>
+                        <span>{{newClientsData.prevRecordCount}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box-dashboard red">
+                    <div class="img-section"><img src="../../../assets/images/smses.png" alt=""></div>
+                    <div class="text">{{'SMS' | translate}}</div>
+                    <div class="records">{{smsData.recordCount}}</div>
+                    <div class="amt">
+                        <span *ngIf="smsData.arrowType === 'down'"><img src="../../../assets/images/down_arrow.png" /></span>
+                        <span *ngIf="smsData.arrowType === 'up'"><img src="../../../assets/images/upper_arrow.png" /></span>
+                        <span>{{smsData.prevRecordCount}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box-dashboard red">
+                    <div class="img-section"><img src="../../../assets/images/emails.png" alt=""></div>
+                    <div class="text">{{'Email' | translate}}</div>
+                    <div class="records">{{emailData.recordCount}}</div>
+                    <div class="amt">
+                        <span *ngIf="emailData.arrowType === 'down'"><img src="../../../assets/images/down_arrow.png" /></span>
+                        <span *ngIf="emailData.arrowType === 'up'"><img src="../../../assets/images/upper_arrow.png" /></span>
+                        <span>{{emailData.prevRecordCount}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="row row-no-padding row-col-separator-xl" [perfectScrollbar]>
+    <div class="col pr-0">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics">
+            <div class="card-header">
+                <h3 class="card-title">{{'NewClients' | translate}}</h3>
+            </div>
+            <div class="card-body">
+                <div class="data-widget-section" *ngIf="data">
+                    <div style="display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto;"><span class="" style="font-size: 70px;
+                        margin: 0;
+                        display: block;
+                        padding: 0;
+                        line-height: 1;">#{{data.recordCount}}
+                            <span style="font-size: 20px;">
+                                <i style="font-size: 15px;" *ngIf="data.arrowType === 'equal'" class="fas fa-equals"
+                                    style="color:blue"></i>
+                                <i style="font-size: 15px;" *ngIf="data.arrowType === 'up'" class="fa fa-arrow-up"
+                                    style="color:green"></i>
+                                <i style="font-size: 15px;" *ngIf="data.arrowType === 'down'" class="fa fa-arrow-down"
+                                    style="color:red"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

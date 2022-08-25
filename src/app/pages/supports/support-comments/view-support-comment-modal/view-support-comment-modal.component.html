@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewSupportComment' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'UserName' | translate }}</label>
+                <p> {{supportComment.userName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'SupportSubject' | translate }}</label>
+                <p> {{supportComment.supportSubject}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Attachment' | translate }}</label>
+                <p *ngIf="attachmentUrl.length > 0">
+                    <img [src]="remoteUrl + '/' +  attachmentUrl" height="100" width="100" />
+                </p>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>{{ 'Comment' | translate }}</label>
+                <p [innerHtml]="supportComment.supportTicketComment.comment"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

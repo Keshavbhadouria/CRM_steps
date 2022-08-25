@@ -1,0 +1,58 @@
+<form #meetingCommentForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditContactZoomCallComment' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewContactZoomCallComment' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="MeetingComment_ContactZoomCallMeetingId">{{ 'ContactZoomCallMeeting' | translate
+                        }}</label>
+                    <ng-select [items]="contactZoomCallMeetings" #MeetingComment_ContactZoomCallMeetingId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="MeetingComment_ContactZoomCallMeetingId"
+                        name="contactZoomCallMeetingId" [(ngModel)]="meetingComment.contactZoomCallMeetingId">
+                    </ng-select>
+                    <validation-messages [formCtrl]="MeetingComment_ContactZoomCallMeetingId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="MeetingComment_UserId">{{ 'UserName' | translate }}</label>
+                    <ng-select [items]="users" #MeetingComment_UserId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="MeetingComment_UserId" name="userId"
+                        [(ngModel)]="meetingComment.userId"></ng-select>
+                    <validation-messages [formCtrl]="MeetingComment_UserId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="MeetingComment_Comments">{{ 'Comments' | translate }} *</label>
+                    <ckeditor #MeetingComment_Comments="ngModel" id="MeetingComment_Comments" [editor]="editor"
+                        [(ngModel)]="meetingComment.comments" name="comments" required></ckeditor>
+                    <validation-messages [formCtrl]="MeetingComment_Comments"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="MeetingComment_Attachment">{{'Attachment' | translate}}</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile"
+                        accept="image/*" (change)="handleUpload($event)">
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+                        <img [src]="imageUrl" style="height: 50px;width:auto;" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!meetingCommentForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

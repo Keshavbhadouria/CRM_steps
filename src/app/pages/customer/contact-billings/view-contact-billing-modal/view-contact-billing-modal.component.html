@@ -1,0 +1,106 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewContactBilling' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'CardName' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.cardName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'CardNumber' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.cardNumber}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ExpirationMonth' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.expirationMonth}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ExpirationYear' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.expirationYear}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'PrimaryCC' | translate}}</label>
+                <p *ngIf="!viewContactBilling.contactBilling.primaryCC"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="viewContactBilling.contactBilling.primaryCC"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Address1' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.address1}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Address2' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.address2}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'City' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.city}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'State' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.state}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Country' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.country}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ZipCode' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.zipcode}} </p>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Gateway' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.gateway}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'GatewayCustomerCode' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.gatewayCustomerCode}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'GatewayToken' | translate }}</label>
+                <p> {{viewContactBilling.contactBilling.gatewayToken}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Contact' | translate }} {{ 'Company' | translate }}</label>
+                <p> {{viewContactBilling.contactCompany}} </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

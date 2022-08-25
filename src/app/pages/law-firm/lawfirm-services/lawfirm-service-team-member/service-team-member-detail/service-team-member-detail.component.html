@@ -1,0 +1,16 @@
+<div class="row d-flex" style="margin-bottom: 10px; align-items: center;" [busyIf]="loading">
+    <div class="col-md-4">
+        {{data.userName}}
+    </div>
+    <!-- <div class="col-md-2">
+        <input type="number" min="0" max="40" id="txtHrs" [(ngModel)]="data.hoursLimit" class="form-control" >
+    </div> -->
+    <div class="col-md-5">
+        <ng-select name="data.roleId" [(ngModel)]="roleId" [items]="roles" bindValue="id"
+        bindLabel="displayName" (change)="setRole()"></ng-select>
+    </div>
+    <div class="col-md-1">
+        <a (click)="removeItem()" class="fas fa-trash" style="font-size: 18px;
+        color: red;"></a>
+    </div>
+</div>

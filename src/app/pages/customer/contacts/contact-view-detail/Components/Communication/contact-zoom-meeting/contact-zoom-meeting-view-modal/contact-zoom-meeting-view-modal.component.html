@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h5 class="modal-title mt-0 text-uppercase"> {{'ViewContactZoomMeeting' | translate}}
+  </h5>
+  <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-6 mb-3">
+        <h6>{{'ZoomMeetingUrl' | translate }} :</h6>
+        {{ item.contactZoomCallMeeting.zoomMeetingUrl }}
+    </div>
+    <div class="col-6 mb-3">
+        <h6>{{'ScheduleDate' | translate }} :</h6>
+        {{ item.contactZoomCallMeeting.scheduleDate |  date:'yyyy-MM-dd'  }}
+    </div>
+    <div class="col-6 mb-3">
+        <h6>{{'Comments' | translate }} :</h6>
+        {{ item.contactZoomCallMeeting.comments }}
+    </div>
+    <div class="col-6 mb-3">
+        <h6>{{'MeetingStatusId' | translate }} :</h6>
+        {{ item.contactZoomCallMeeting.meetingStatusId }}
+    </div>
+    <div class="col-6 mb-3">
+        <h6>{{'IsActive' | translate }} :</h6>
+        <div *ngIf="item.contactZoomCallMeeting.isActive" class="text-left"><i class="fa fa-check-circle text-success"
+                title="True"></i></div>
+        <div *ngIf="!item.contactZoomCallMeeting.isActive" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+    </div>
+    <div class="col-6 mb-3">
+        <h6>({{'Contact' | translate }}) {{'Company' | translate }} :</h6>
+        {{item.contactCompany}}
+    </div>
+    <div class="col-6 mb-3">
+        <h6>({{'User' | translate }}) {{'Name' | translate }} :</h6>
+        {{item.userName}}
+    </div>
+    <div class="col-6 mb-3">
+        <h6>({{'MeetingTimeSlots' | translate }}) {{'StartTime' | translate }} :</h6>
+        {{item.meetingTimeSlotsStartTime}}
+    </div>
+    <div class="col-6 mb-3">
+        <h6>({{'MeetingDaysLookup' | translate }}) {{'DayShortName' | translate }} :</h6>
+        {{item.meetingDaysLookupDayShortName}}
+    </div>
+    <div class="col-6 mb-3">
+        <h6>({{'ContactZoomMeetingAppointmentReason' | translate }}) {{'Reason' | translate }} :</h6>
+        {{item.contactZoomMeetingAppointmentReasonReason}}
+    </div>
+    <div class="col-6 mb-3">
+        <h6>({{'ContactZoomMeetingOutput' | translate }}) {{'Output' | translate }} :</h6>
+        {{item.contactZoomMeetingOutputOutput}}
+    </div>
+    <div class="col-6 mb-3">
+        <h6>({{'ContactZoomMeetingOutput' | translate }}) {{'Output' | translate }} :</h6>
+        {{item.contactZoomMeetingOutputOutput2}}
+    </div>
+
+</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

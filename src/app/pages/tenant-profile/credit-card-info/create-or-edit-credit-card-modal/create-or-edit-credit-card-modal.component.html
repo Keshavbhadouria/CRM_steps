@@ -1,0 +1,82 @@
+<form #ccForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'Edit Credit Card' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'Add New Credit Card' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="nameOnCard">{{ 'NameOnCard' | translate }} *</label>
+          <input type="text" #nameOnCard="ngModel" id="nameOnCard" class="form-control"
+            [(ngModel)]="creditCard.nameOnCard" name="nameOnCard" required />
+          <validation-messages [formCtrl]="nameOnCard"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="creditCardNo">{{ 'CreditCardNo' | translate }} *</label>
+          <input type="text" #creditCardNo="ngModel" placeholder="xxxx-xxxx-xxxx-xxxx" mask="0000-0000-0000-0000"
+            id="creditCardNo" class="form-control" [(ngModel)]="creditCard.creditCardNo" name="creditCardNo" required />
+          <validation-messages [formCtrl]="creditCardNo"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="cardType">{{"CardType" | translate}} *</label>
+          <ng-select [items]="cardIcons" bindValue="id" bindLabel="id" id="cardType" name="cardType" #cardType="ngModel"
+            [(ngModel)]="creditCard.cardType" required>
+          </ng-select>
+          <validation-messages [formCtrl]="cardType"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="cvv">{{ 'CVV' | translate }} *</label>
+          <input type="text" #cvv="ngModel" mask="000" id="cvv" class="form-control" [(ngModel)]="creditCard.cvv"
+            name="cvv" required />
+          <validation-messages [formCtrl]="cvv"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="expiryMonth">{{ 'Month' | translate }} *</label>
+          <input type="text" #expiryMonth="ngModel" mask="00" id="expiryMonth" class="form-control"
+            [(ngModel)]="creditCard.expiryMonth" name="expiryMonth" required />
+          <validation-messages [formCtrl]="expiryMonth"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="cvv">{{ 'Year' | translate }} *</label>
+          <input type="text" #expiryYear="ngModel" mask="00" id="expiryYear" class="form-control"
+            [(ngModel)]="creditCard.expiryYear" name="expiryYear" required />
+          <validation-messages [formCtrl]="expiryYear"></validation-messages>
+        </div>
+      </div>
+
+
+      <div class=" mb-2 mt-3">
+        <label class="switch">
+
+          <input type="checkbox" [(ngModel)]="creditCard.isDefault" id="isDefault" name="IsDefault">
+          <span class="slider round"></span>
+        </label>
+        <label style="margin-left: 5px;">{{'IsDefault' |
+          translate}}</label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+      translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!ccForm.form.valid" *ngIf="!creditCard.id"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!ccForm.form.valid" *ngIf="creditCard.id"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Update' | translate}}</button>
+  </div>
+</form>

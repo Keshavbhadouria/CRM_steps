@@ -1,0 +1,101 @@
+<div class="container-fluid">
+  <app-page-title title="CreaditCard" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <!-- Filters -->
+
+  <div class="card">
+    <div class="card-body">
+      <!-- Filter -->
+      <div class="row">
+        <div class="col-md-11">
+          <div class="alert alert-warning" role="alert">
+            <!-- {{"ClickOntheCard " | translate}} -->
+            Click on the card for update information.
+        </div>
+        </div>
+        <div class="col-md-1 text-right">
+          <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+            'Add New Card' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body" [busyIf]="isLoading">
+          <div *ngIf="ccList.length <= 0; else creditCard" class="text-center">
+            <img height="400" src="../../../../../../../../assets/CRMSteps/NoRecordFound.webp" />
+            <h3>No Record Found</h3>
+          </div>
+
+
+          <ng-template #creditCard>
+            <div class="row">
+              <div class="ms-2 mt-2 col-lg-12 col-xl-5 pointer" *ngFor="let item of ccList"  (click)="openEditModal(createModal,item)"  >
+                  <div class="c-card">
+                    <div class="row" name="cardNumber">
+                      <div class="col-md-10">
+                        <span class="emboss number">{{getLastFourChar(item.userCreditCard.creditCardNo)}}</span>
+                      </div>
+                      <div class="col-md-2 text-right">
+                        <button type="button" class="close" (click)="onDelete(item.userCreditCard.id , $event)" style=" border-top-right-radius: 10px;" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row" name="Expiry">
+                      <div class="col-md-8">
+                        <span class="small-type">Expiry Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br><br>
+                        <span class="emboss exp">{{item.userCreditCard.expiryMonth}}/{{item.userCreditCard.expiryYear}}</span><br><br>
+                      </div>
+                      <div class="col-md-4">
+                        <span class="holo"></span>
+                      </div>
+                    </div>
+                    <div class="row" name="personName">
+                      <div class="col-md-8">
+                        <span class="emboss name">{{item.userCreditCard.nameOnCard}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <i class="fab fa-cc-visa card-logo-size" *ngIf="item.userCreditCard.cardType == 'Visa'"  ></i>
+                        <i class="fab fa-cc-mastercard card-logo-size" *ngIf="item.userCreditCard.cardType == 'Mastercard'"></i>
+                        <i class="fa-brands fa-cc-discover" *ngIf="item.userCreditCard.cardType == 'Discover'"></i>
+                        <i class="fa-brands fa-cc-jcb" *ngIf="item.userCreditCard.cardType == 'JCB'"></i>
+                        <i class="fa-brands fa-cc-diners-club" *ngIf="item.userCreditCard.cardType == 'Diners Club'"></i>
+                        <i class="fa-brands fa-cc-amex" *ngIf="item.userCreditCard.cardType == 'Amrican Express'"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </ng-template>
+
+
+        </div>
+      </div>
+
+      <!-- Shoe Hide Filters -->
+      <!-- <div class="row mb-2 mt-2">
+                      <div class="col-sm-12">
+                          <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                              (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                  class="fa fa-angle-down"></i>
+                              {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                          <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                              (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                  class="fa fa-angle-up"></i>
+                              {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                      </div>
+                  </div> -->
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-create-or-edit-credit-card-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editCCData">
+  </app-create-or-edit-credit-card-modal>
+</ng-template>

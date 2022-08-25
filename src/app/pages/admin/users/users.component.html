@@ -1,0 +1,320 @@
+<div class="container-fluid">
+    <app-page-title title="Users" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()"
+                                    [(ngModel)]="filterText" placeholder="{{'Common.Label.Filter' | translate }}"
+                                    aria-label="Username" aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateNewUser' | translate}}</button>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-12">
+                            <div class="separator separator-dashed"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <button style="width: 100%;" class="btn btn-primary btn-block"
+                                (click)="openPermissionTreeModal()" *ngIf="!dontAddOpenerButton">{{'SelectPermissions' |
+                                translate}}
+                                ({{NumberOfFilteredPermission}})</button>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <select class="form-control" name="role" id="RoleFilter" [(ngModel)]="role">
+                                    <option value="">{{'FilterByRole' | translate}}</option>
+                                    <option *ngFor="let role of roles" [value]="role.value">{{role.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="checkbox-inline">
+                                <label for="OnlyLockedUsers" class="checkbox">
+                                    <input id="OnlyLockedUsers" type="checkbox" name="OnlyLockedUsers"
+                                        [(ngModel)]="onlyLockedUsers">
+                                    {{"OnlyLockedUsers" | translate}}
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-center" [busyIf]="primengTableHelper.isLoading">
+        <!--<Primeng-TurboTable-Start>-->
+        <div class="primeng-datatable-container">
+            <p-table #dataTable sortMode="multiple" (onLazyLoad)="getUsers($event)" [value]="primengTableHelper.records"
+                rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false" [lazy]="true"
+                [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                [resizableColumns]="primengTableHelper.resizableColumns">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 130px;">
+                            {{'Actions' | translate}}</th>
+                        <th style="width: 200px" pSortableColumn="username">
+                            {{'UserName' | translate}}
+                            <p-sortIcon field="username"></p-sortIcon>
+                            <p-columnFilter type="text" field="username" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 150px" pSortableColumn="name">
+                            {{'Name' | translate}}
+                            <p-sortIcon field="name"></p-sortIcon>
+                            <p-columnFilter type="text" field="name" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 150px" pSortableColumn="surname">
+                            {{'Surname' | translate}}
+                            <p-sortIcon field="surname"></p-sortIcon>
+                            <p-columnFilter type="text" field="surname" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 200px">
+                            {{'Roles' | translate}}
+                            <p-columnFilter type="text" field="role" display="menu" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" [showApplyButton]="false"
+                                [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown [(ngModel)]="role" [options]="roles" optionLabel="name"
+                                        optionValue="value" placeholder="Any"
+                                        (onChange)="customFilterCallback(filter, $event.value)" [showClear]="true">
+                                        <ng-template let-option pTemplate="item">
+                                            <span
+                                                [class]="'customer-badge status-' + option.name">{{option.name}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th style="width: 250px" pSortableColumn="emailAddress">
+                            {{'EmailAddress' | translate}}
+                            <p-sortIcon field="emailAddress"></p-sortIcon>
+                            <p-columnFilter type="text" field="emailAddress" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 200px" pSortableColumn="isEmailConfirmed">
+                            {{'EmailConfirm' | translate}}
+                            <p-sortIcon field="isEmailConfirmed"></p-sortIcon>
+                            <p-columnFilter type="text" field="isEmailConfirmed" display="menu" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" [showApplyButton]="false"
+                                [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown [(ngModel)]="isEmailConfirmFilter" [options]="yesNolist"
+                                        optionLabel="displayName" optionValue="id" placeholder="Any"
+                                        (onChange)="customFilterCallback(filter, $event.value)" [showClear]="true">
+                                        <ng-template let-option pTemplate="item">
+                                            <span
+                                                [class]="'customer-badge status-' + option.displayName">{{option.displayName}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th style="width: 100px" pSortableColumn="isActive">
+                            {{'Active' | translate}}
+                            <p-sortIcon field="isActive"></p-sortIcon>
+                            <p-columnFilter type="text" field="isActive" display="menu" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" [showApplyButton]="false"
+                                [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown [(ngModel)]="isActiveFilter" [options]="yesNolist"
+                                        optionLabel="displayName" optionValue="id" placeholder="Any"
+                                        (onChange)="customFilterCallback(filter, $event.value)" [showClear]="true">
+                                        <ng-template let-option pTemplate="item">
+                                            <span
+                                                [class]="'customer-badge status-' + option.displayName">{{option.displayName}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th style="width: 200px" pSortableColumn="creationTime">
+                            {{'CreationTime' | translate}}
+                            <p-sortIcon field="creationTime"></p-sortIcon>
+                            <p-columnFilter field="creationTime" display="menu" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" [showApplyButton]="false"
+                                [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <input class="form-control m-input " id="startDateFilter" name="startDateFilter"
+                                        type="date" [(ngModel)]="startDateFilter">
+                                    <span style="line-height: 20px;padding: 0 15px 0 15px;"> &nbsp; </span>
+                                    <input class="form-control m-input " id="endDateFilter" name="endDateFilter"
+                                        type="date" [(ngModel)]="endDateFilter">
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <button type="button"
+                                            class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                                            style="margin-right: 5px;"><span class="p-button-label"
+                                                (click)="clearDate($event)">Clear</span></button>
+                                        <button type="button"
+                                            class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                                            ng-reflect-label="Apply"><span class="p-button-label"
+                                                (click)="applyDate($event)">Apply</span></button>
+                                    </div>
+                                </ng-template>
+                            </p-columnFilter>
+
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-record="$implicit">
+                    <tr>
+                        <td style="width: 130px">
+                            <div class="btn-group dropdown" dropdown container="body">
+                                <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
+                                    <i class="fa fa-plus-circle"></i>
+                                    {{"Actions" | translate}}
+                                </button>
+                                <ul class="dropdown-menu custom-dropdown" *dropdownMenu>
+                                    <li>
+                                        <img
+                                        src="../../../../../assets/CRMSteps/MenuIcons/-_Login as this user-01.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="impersonate(record.id)">{{'LoginAsThisUser' | translate}}</a>
+                                    </li>
+                                    <li>
+                                      <img
+                                      src="../../../../../assets/icons/editIcon.png">
+                                      <a href="javascript:;" class="dropdown-item"
+                                          (click)="updateCollaboratorProfile(record.id)">{{'UpdateCollaborator' | translate}}</a>
+                                  </li>
+                                    <li>
+                                        <img
+                                        src="../../../../../assets/icons/editIcon.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="edit(record.id)">{{'Edit' | translate}}</a>
+                                    </li>
+                                    <li>
+                                        <img
+                                        src="../../../../../assets/icons/deleteIcon.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="onDelete(record.id)">{{'Delete' | translate}}</a>
+                                    </li>
+                                    <li>
+                                        <img
+                                        src="../../../../../assets/CRMSteps/MenuIcons/-_Unlock-05.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="unlockUser(record.id)">{{'Unlock' | translate}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td style="width: 200px">
+                            <span class="ui-column-title"> {{'UserName' | translate}}</span>
+                            <span>
+                                <a [href]="record.profilePictureUrl" target="_blank" class="float-left">
+                                    <img class="profile-pic-small" style="width: 40px; height: 40px !important;"
+                                        [src]="record.profilePictureUrl">
+                                </a>
+                                {{record.userName}}
+                            </span>
+                        </td>
+                        <td style="width: 150px">
+                            <span class="ui-column-title"> {{'FirstName' | translate}}</span>
+                            {{record.name}}
+                        </td>
+                        <td style="width: 150px">
+                            <span class="ui-column-title"> {{'Surname' | translate}}</span>
+                            {{record.surname}}
+                        </td>
+                        <td style="width: 200px">
+                            <span class="ui-column-title"> {{'Roles' | translate}}</span>
+                            {{getRolesAsString(record.roles)}}
+                        </td>
+                        <td style="width: 250px">
+                            <span class="ui-column-title"> {{'EmailAddress' | translate}}</span>
+                            {{record.emailAddress}}
+                        </td>
+                        <td style="width: 200px">
+                            <span class="ui-column-title"> {{'EmailConfirm' | translate}}</span>
+                            <span class="label label-success label-inline" *ngIf="record.isEmailConfirmed">{{'Yes' |
+                                translate}}</span>
+                            <span class="label label-dark label-inline" *ngIf="!record.isEmailConfirmed">{{'No' |
+                                translate}}</span>
+                        </td>
+                        <td style="width: 100px">
+                            <span class="ui-column-title"> {{'Active' | translate}}</span>
+                            <span class="label label-success label-inline" *ngIf="record.isActive">{{'Yes' |
+                                translate}}</span>
+                            <span class="label label-dark label-inline" *ngIf="!record.isActive">{{'No' |
+                                translate}}</span>
+                        </td>
+                        <td style="width: 200px">
+                            <span class="ui-column-title"> {{'CreationTime' | translate}}</span>
+                            {{record.creationTime | momentFormat:'L'}}
+                        </td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                {{'NoData' | translate}}
+            </div>
+            <div class="primeng-paging-container">
+                <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                    (onPageChange)="getUsers($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+
+                </p-paginator>
+                <!-- <span class="total-records-count">
+                    {{'TotalRecordsCount' | translate:primengTableHelper.totalRecordsCount}}
+                </span> -->
+            </div>
+        </div>
+        <!--<Primeng-TurboTable-End>-->
+    </div>
+    <!-- <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table> -->
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-create-or-edit-user-modal [userId]="userId" ($modalClose)='modalCloseEvent()'>
+    </app-create-or-edit-user-modal>
+</ng-template>
+
+
+<ng-template #permissionModal role="document" let-modal>
+    <app-permission-tree-modal (onModalclose)='modalEmitEvent($event)' [extPermissions]="selectedFilterPermissions">
+    </app-permission-tree-modal>
+</ng-template>
+
+<!-- Create Model -->
+<ng-template #updateCollaboratorProfileModal role="document" let-modal>
+  <app-collaborator-new-ui [modal]="modal" ($modalClose)='modalCloseEvent()' [userId]="userId" [existingUser]="true">
+  </app-collaborator-new-ui>
+</ng-template>

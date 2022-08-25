@@ -1,0 +1,82 @@
+<form #timelineForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditTimeline' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateTimeline' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="BusinessActionScriptTitle">{{ 'BusinessActionScript' | translate }} *</label>
+                    <ng-select [items]="allBusinessActions" bindValue="id" bindLabel="displayName"
+                        id="BusinessActionScriptTitle" name="contactActionsHistory.businessActionScriptId"
+                        #BusinessActionScriptTitle="ngModel" [(ngModel)]="contactActionsHistory.businessActionScriptId">
+                    </ng-select>
+                    <validation-messages [formCtrl]="BusinessActionScriptTitle"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="ContactCompany">{{"Contact" | translate}}</label>
+                    <ng-select [items]="allContacts" bindValue="id" bindLabel="displayName" id="ContactCompany"
+                        name="contactActionsHistory.contactId" #ContactCompany="ngModel"
+                        [(ngModel)]="contactActionsHistory.contactId" required></ng-select>
+                    <validation-messages [formCtrl]="ContactCompany"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="ActivityTaskStageStageName">{{"ActivityTaskStage" | translate}}</label>
+                    <ng-select [items]="allActivityStages" bindValue="id" bindLabel="displayName"
+                        id="ActivityTaskStageStageName" name="contactActionsHistory.activityTaskStageId"
+                        #ActivityTaskStageStageName="ngModel" [(ngModel)]="contactActionsHistory.activityTaskStageId"
+                        required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="ActivityTaskStageStageName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="UserName">{{"User" | translate}}</label>
+                    <ng-select [items]="allUsers" bindValue="id" bindLabel="displayName" id="UserName"
+                        name="contactActionsHistory.completedByUserId" #UserName="ngModel"
+                        [(ngModel)]="contactActionsHistory.completedByUserId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="UserName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <div class="m-checkbox-list mt-">
+                        <label for="ContactActionsHistory_Completed" class="kt-checkbox">
+                            <input id="ContactActionsHistory_Completed" #ContactActionsHistory_Completed="ngModel"
+                                type="checkbox" name="Completed" [(ngModel)]="contactActionsHistory.completed">
+                            {{"Completed" | translate}}
+                            <span></span>
+                        </label>
+                        <validation-messages [formCtrl]="ContactActionsHistory_Completed"></validation-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="ContactActionsHistory_DueDate">{{"DueDate" | translate}}</label>
+                        <input required class="form-control m-input" type="date" [ngModel]="contactActionsHistory.dueDate | date:'yyyy-MM-dd'"
+                                    (ngModelChange)="contactActionsHistory.dueDate = $event" id="ContactActionsHistory_DueDate" name="ContactActionsHistory_DueDate">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!timelineForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

@@ -1,0 +1,176 @@
+<form #chapterTopicForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditZoomCallMeeting' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewZoomCallMeeting' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ChapterTopic_ChapterId">{{ 'Chapter' | translate
+                        }} *</label>
+                    <ng-select [items]="chapters" #ChapterTopic_ChapterId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ChapterTopic_ChapterId" name="chapterId"
+                        [(ngModel)]="chapterTopic.chapterId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="ChapterTopic_ChapterId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ChapterTopic_TopicName">{{ 'TopicName' | translate }} *</label>
+                    <input type="text" #ChapterTopic_TopicName="ngModel" id="ChapterTopic_TopicName"
+                        class="form-control" [(ngModel)]="chapterTopic.topicName" name="topicName" required />
+                    <validation-messages [formCtrl]="ChapterTopic_TopicName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ChapterTopic_TopicTypeId2">{{ 'TopicType' | translate
+                        }} *</label>
+                    <ng-select [items]="topicTypes" #ChapterTopic_TopicTypeId2="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ChapterTopic_TopicTypeId2" name="topicTypeId2"
+                        [(ngModel)]="chapterTopic.topicTypeId2" (change)="showHideTasks($event)" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="ChapterTopic_TopicTypeId2"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ChapterTopic_DurationInMinutes">{{ 'DurationInMinutes' | translate }} *</label>
+                    <input type="number" #ChapterTopic_DurationInMinutes="ngModel" id="ChapterTopic_DurationInMinutes"
+                        class="form-control" [(ngModel)]="chapterTopic.durationInMinutes" name="durationInMinutes"
+                        min="0" required />
+                    <validation-messages [formCtrl]="ChapterTopic_DurationInMinutes"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ChapterTopic_DayNo">{{ 'DayNo.' | translate }} *</label>
+                    <input type="number" #ChapterTopic_DayNo="ngModel" id="ChapterTopic_DayNo" class="form-control"
+                        [(ngModel)]="chapterTopic.dayNo" name="dayNo" min="0" required />
+                    <validation-messages [formCtrl]="ChapterTopic_DayNo"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ChapterTopic_SortIndex">{{ 'SortIndex' | translate }} *</label>
+                    <input type="number" #ChapterTopic_SortIndex="ngModel" id="ChapterTopic_SortIndex"
+                        class="form-control" [(ngModel)]="chapterTopic.sortIndex" name="sortIndex" min="0" required />
+                    <validation-messages [formCtrl]="ChapterTopic_SortIndex"></validation-messages>
+                </div>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="ChapterTopic_PartTimeTraining" class="kt-checkbox">
+                    <input id="ChapterTopic_PartTimeTraining" #ChapterTopic_PartTimeTraining="ngModel" type="checkbox"
+                        name="partTimeTraining" [(ngModel)]="chapterTopic.partTimeTraining">
+                    {{ "PartTimeContent" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ChapterTopic_PartTimeTraining"></validation-messages>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ChapterTopic_Description">{{ 'Description' | translate }}</label>
+                    <ckeditor #ChapterTopic_Description="ngModel" id="ChapterTopic_Description" [editor]="editor"
+                        [(ngModel)]="chapterTopic.description" name="description"></ckeditor>
+                    <validation-messages [formCtrl]="ChapterTopic_Description"></validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-3 m-checkbox-list" style="margin-top: 10px;">
+                <label for="ChapterTopic_ParallelParking" class="kt-checkbox">
+                    <input id="ChapterTopic_ParallelParking" #ChapterTopic_ParallelParking="ngModel" type="checkbox"
+                        name="parallelParking" [(ngModel)]="chapterTopic.parallelParking">
+                    {{ "ParallelParking" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ChapterTopic_ParallelParking"></validation-messages>
+            </div>
+            <div class="col-md-3 m-checkbox-list" style="margin-top: 10px;">
+                <label for="ChapterTopic_PreTrip" class="kt-checkbox">
+                    <input id="ChapterTopic_PreTrip" #ChapterTopic_PreTrip="ngModel" type="checkbox"
+                        name="preTrip" [(ngModel)]="chapterTopic.preTrip">
+                    {{ "PreTrip" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ChapterTopic_PreTrip"></validation-messages>
+            </div>
+            <div class="col-md-3 m-checkbox-list" style="margin-top: 10px;">
+                <label for="ChapterTopic_Air" class="kt-checkbox">
+                    <input id="ChapterTopic_Air" #ChapterTopic_Air="ngModel" type="checkbox"
+                        name="air" [(ngModel)]="chapterTopic.air">
+                    {{ "Air" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ChapterTopic_Air"></validation-messages>
+            </div>
+            <div class="col-md-3 m-checkbox-list" style="margin-top: 10px;">
+                <label for="ChapterTopic_StraighLine" class="kt-checkbox">
+                    <input id="ChapterTopic_StraighLine" #ChapterTopic_StraighLine="ngModel" type="checkbox"
+                        name="straighLine" [(ngModel)]="chapterTopic.straighLine">
+                    {{ "StraighLine" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ChapterTopic_StraighLine"></validation-messages>
+            </div>
+            <div class="col-md-3 m-checkbox-list" style="margin-top: 10px;">
+                <label for="ChapterTopic_OffSet" class="kt-checkbox">
+                    <input id="ChapterTopic_OffSet" #ChapterTopic_OffSet="ngModel" type="checkbox"
+                        name="offSet" [(ngModel)]="chapterTopic.offSet">
+                    {{ "OffSet" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ChapterTopic_OffSet"></validation-messages>
+            </div>
+            <div class="col-md-3 m-checkbox-list" style="margin-top: 10px;">
+                <label for="ChapterTopic_Alley" class="kt-checkbox">
+                    <input id="ChapterTopic_Alley" #ChapterTopic_Alley="ngModel" type="checkbox"
+                        name="alley" [(ngModel)]="chapterTopic.alley">
+                    {{ "Alley" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ChapterTopic_Alley"></validation-messages>
+            </div>
+            <div class="col-md-3 m-checkbox-list" style="margin-top: 10px;">
+                <label for="ChapterTopic_Simulator" class="kt-checkbox">
+                    <input id="ChapterTopic_Simulator" #ChapterTopic_Simulator="ngModel" type="checkbox"
+                        name="simulator" [(ngModel)]="chapterTopic.simulator">
+                    {{ "Alley" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ChapterTopic_Simulator"></validation-messages>
+            </div>
+            <div class="col-md-3 m-checkbox-list" style="margin-top: 10px;">
+                <label for="ChapterTopic_Road" class="kt-checkbox">
+                    <input id="ChapterTopic_Road" #ChapterTopic_Road="ngModel" type="checkbox"
+                        name="road" [(ngModel)]="chapterTopic.road">
+                    {{ "Road" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ChapterTopic_Road"></validation-messages>
+            </div>
+
+            <div class="col-md-4" *ngIf="isTaskTypeTopic">
+                <div class="form-group m-form__group">
+                    <label for="ChapterTopic_TopicTasks">{{ 'Tasks' | translate
+                        }}</label>
+                    <ng-select multiple="true" [items]="tasks" #ChapterTopic_TopicTasks="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ChapterTopic_TopicTasks" name="topicTasks"
+                        [(ngModel)]="chapterTopic.topicTasks">
+                    </ng-select>
+                    <validation-messages [formCtrl]="ChapterTopic_TopicTasks"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!chapterTopicForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

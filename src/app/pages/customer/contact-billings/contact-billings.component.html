@@ -1,0 +1,193 @@
+<div class="container-fluid">
+    <app-page-title title="ContactBillings" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateNewContactBilling' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-12">
+                            <div class="separator separator-dashed"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CardNameFilter">{{"CardName" | translate}}</label>
+                                <input type="text" class="form-control" id="CardNameFilter" name="cardNameFilter"
+                                    [(ngModel)]="cardNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CardNumberFilter">{{"CardNumber" | translate}}</label>
+                                <input type="text" class="form-control" id="CardNumberFilter" name="cardNumberFilter"
+                                    [(ngModel)]="cardNumberFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinExpirationMonthFilter">{{"MinMax" | translate}} {{"ExpirationMonth" |
+                                    translate}}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinExpirationMonthFilter"
+                                        [(ngModel)]="minExpirationMonthFilter" placeholder="{{'MinValue' | translate}}"
+                                        name="minExpirationMonthFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxExpirationMonthFilter"
+                                        placeholder="{{ 'MaxValue' | translate}}" name="maxExpirationMonthFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinExpirationYearFilter">{{"MinMax" | translate}} {{"ExpirationYear" |
+                                    translate}}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinExpirationYearFilter"
+                                        [(ngModel)]="minExpirationYearFilter" placeholder="{{'MinValue' | translate}}"
+                                        name="minExpirationYearFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxExpirationYearFilter"
+                                        placeholder="{{ 'MaxValue' | translate}}" name="maxExpirationYearFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PrimaryCCFilter">{{ "PrimaryCC" | translate}}</label>
+                                <select class="form-control" name="primaryCCFilter" id="PrimaryCCFilter"
+                                    [(ngModel)]="primaryCCFilter">
+                                    <option value="-1">{{ "All" | translate}}</option>
+                                    <option value="0">{{ "False" | translate}}</option>
+                                    <option value="1">{{ "True" | translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Address1Filter">{{"Address1" | translate}}</label>
+                                <input type="text" class="form-control" id="Address1Filter" name="address1Filter"
+                                    [(ngModel)]="address1Filter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Address2Filter">{{"Address2" | translate}}</label>
+                                <input type="text" class="form-control" id="Address2Filter" name="address2Filter"
+                                    [(ngModel)]="address2Filter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CityFilter">{{"City" | translate}}</label>
+                                <input type="text" class="form-control" id="CityFilter" name="cityFilter"
+                                    [(ngModel)]="cityFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="StateFilter">{{"State" | translate}}</label>
+                                <input type="text" class="form-control" id="StateFilter" name="stateFilter"
+                                    [(ngModel)]="stateFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CountryFilter">{{"Country" | translate}}</label>
+                                <input type="text" class="form-control" id="CountryFilter" name="countryFilter"
+                                    [(ngModel)]="countryFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ZipcodeFilter">{{"ZipCode" | translate}}</label>
+                                <input type="text" class="form-control" id="ZipcodeFilter" name="zipcodeFilter"
+                                    [(ngModel)]="zipcodeFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="GatewayFilter">{{"Gateway" | translate}}</label>
+                                <input type="text" class="form-control" id="GatewayFilter" name="gatewayFilter"
+                                    [(ngModel)]="gatewayFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="GatewayCustomerCodeFilter">{{"GatewayCustomerCode" | translate}}</label>
+                                <input type="text" class="form-control" id="GatewayCustomerCodeFilter"
+                                    name="gatewayCustomerCodeFilter" [(ngModel)]="gatewayCustomerCodeFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="GatewayTokenFilter">{{"GatewayCustomerCode" | translate}}</label>
+                                <input type="text" class="form-control" id="GatewayTokenFilter"
+                                    name="gatewayTokenFilter" [(ngModel)]="gatewayTokenFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ContactCompanyFilter">{{"Contact" | translate}} {{"Company" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="ContactCompanyFilter"
+                                    name="contactCompanyFilter" [(ngModel)]="contactCompanyFilter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shoe Hide Filters -->
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table>
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-create-or-edit-contact-billing-modal [modal]="modal" ($modalClose)='modalEmitEvent()'
+        [data]="editContactBilling">
+    </app-create-or-edit-contact-billing-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-view-contact-billing-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewContactBilling">
+    </app-view-contact-billing-modal>
+</ng-template>

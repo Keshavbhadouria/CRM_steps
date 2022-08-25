@@ -1,0 +1,78 @@
+<form #clientDatabaseForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditClientDatabase' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewClientDatabase' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group m-form__group">
+                    <label for="ClientDatabase_EngineId">{{ 'DatabaseEngine' | translate }} *</label>
+                    <ng-select [items]="databaseEngines" #ClientDatabase_EngineId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="ClientDatabase_EngineId" name="engineId" [(ngModel)]="clientDatabase.engineId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="ClientDatabase_EngineId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group m-form__group">
+                    <label for="ClientDatabase_ServerId">{{ 'ServerInventory' | translate }} *</label>
+                    <ng-select [items]="serverInventories" #ClientDatabase_ServerId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="ClientDatabase_ServerId" name="serverId" [(ngModel)]="clientDatabase.serverId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="ClientDatabase_ServerId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group m-form__group">
+                    <label for="ClientDatabase_ResponsibleId">{{ 'Responsible' | translate }} *</label>
+                    <ng-select [items]="responsibles" #ClientDatabase_ResponsibleId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="ClientDatabase_ResponsibleId" name="responsibleId" [(ngModel)]="clientDatabase.responsibleId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="ClientDatabase_ResponsibleId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ClientDatabase_DatabaseName">{{ 'DatabaseName' | translate }} *</label>
+                    <input type="text" #ClientDatabase_DatabaseName="ngModel" id="ClientDatabase_DatabaseName" class="form-control"
+                        [(ngModel)]="clientDatabase.databaseName" name="databaseName" required/>
+                    <validation-messages [formCtrl]="ClientDatabase_DatabaseName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ClientDatabase_Username">{{ 'Username' | translate }}</label>
+                    <input type="text" #ClientDatabase_Username="ngModel" id="ClientDatabase_Username" class="form-control"
+                        [(ngModel)]="clientDatabase.username" name="username"/>
+                    <validation-messages [formCtrl]="ClientDatabase_Username"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ClientDatabase_UserPassword">{{ 'UserPassword' | translate }}</label>
+                    <input type="text" #ClientDatabase_UserPassword="ngModel" id="ClientDatabase_UserPassword" class="form-control"
+                        [(ngModel)]="clientDatabase.userPassword" name="userPassword"/>
+                    <validation-messages [formCtrl]="ClientDatabase_UserPassword"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ClientDatabase_Port">{{ 'Port' | translate }}</label>
+                    <input type="number" #ClientDatabase_Port="ngModel" id="ClientDatabase_Port" class="form-control"
+                        [(ngModel)]="clientDatabase.port" name="port" min="0"/>
+                    <validation-messages [formCtrl]="ClientDatabase_Port"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!clientDatabaseForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

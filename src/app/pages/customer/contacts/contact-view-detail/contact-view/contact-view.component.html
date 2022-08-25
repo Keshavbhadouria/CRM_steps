@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <app-page-title title="{{ 'ContactView' | translate }}"></app-page-title>
+
+  <!-- Filters -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="row text-center">
+            <div *ngFor="let item of tabMenu" class="col" (click)="onSelectTabMenu(item)"
+                [ngClass]="item.isActive == true ? 'tab-menu-active' : 'tab-menu'">
+                <img [src]="item.icon" width="20" height="20" alt="">
+                {{item.title}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="profile" *ngIf="activeIndex == 0">
+                <app-profile></app-profile>
+            </div>
+            <div id="Communication" *ngIf="activeIndex == 1">
+                <app-communication></app-communication>
+            </div>
+            <div id="Transactions" *ngIf="activeIndex == 2">
+                    <transactions></transactions>
+            </div>
+            <div id="Task" *ngIf="activeIndex == 3">
+                    <app-contact-task></app-contact-task>
+            </div>
+            <div id="Documents" *ngIf="activeIndex == 4">
+                <app-contact-document></app-contact-document>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

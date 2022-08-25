@@ -1,0 +1,73 @@
+<form #contentForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditContent' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateContent' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="LeadStageStageName">{{'Course Chapter' | translate }}</label>
+          <ng-select #allCourseChapterNews="ngModel" [items]="allCourseChapterNews" bindValue="id" bindLabel="displayName"
+            name="allCourseChapterNews" [(ngModel)]="content.chapterId" required></ng-select>
+            <validation-messages [formCtrl]="allCourseChapterNews"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="title">{{'Title' | translate }} *</label>
+          <input type="text" #title="ngModel" id="title"
+          class="form-control" [(ngModel)]="content.title" name="title"     required/>
+            <validation-messages [formCtrl]="title"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="description">{{ 'Description' | translate }} *</label>
+          <ckeditor [editor]="editor"  debounce="500" #description="ngModel" id="description"
+            [(ngModel)]="content.description" name="description"></ckeditor>
+          <validation-messages [formCtrl]="description"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="MultimediaUrl">{{'MultimediaUrl' | translate }}</label>
+          <input type="text" #MultimediaUrl="ngModel" id="MultimediaUrl" class="form-control" [(ngModel)]="content.multimediaUrl" name="MultimediaUrl"    />
+            <validation-messages [formCtrl]="MultimediaUrl"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="DayNo">{{'DayNo' | translate }}</label>
+          <input type="number" #DayNo="ngModel" id="DayNo" class="form-control" [(ngModel)]="content.dayNo" name="DayNo" />
+            <validation-messages [formCtrl]="DayNo"></validation-messages>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-2">
+          <span class="text-default-d3 text-90 text-600 pl-5">
+            IsActive
+          </span>
+        </div>
+        <div class="col-md-2">
+          <span class="ml-auto text-dark-l2 text-nowrap">
+            <div class="form-check form-switch">
+              <input class="form-check-input text-90" style="font-size: 20px;" type="checkbox" [(ngModel)]="content.active">
+            </div>
+          </span>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!contentForm.form.valid" > <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+        *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

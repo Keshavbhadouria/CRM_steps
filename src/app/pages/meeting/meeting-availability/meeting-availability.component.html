@@ -1,0 +1,83 @@
+<div class="container-fluid">
+    <app-page-title title="MeetingAvailability" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-custom gutter-b">
+        <div class="card-body">
+            <div class="col-md-12">
+            </div>
+            <div class="row" [busyIf]="loading">
+                <accordion [closeOthers]="true">
+                    <accordion-group [isOpen]="isContentOpen" *ngFor="let item of filterLawyersList" id="{{item.id}}"
+                        heading="{{item.name}}" (isOpenChange)="onSelect(item.id , $event)">
+                        <div class="row">
+                            <div class="col-md-5 ml-2 mt-2" *ngFor="let item of meetingDays">
+                                <div class="row slot-header">
+                                    <div class="row">
+                                        <div class="col-8 pl-10 mt-2">
+
+                                            <label class="switch">
+
+                                                <input type="checkbox" style="font-size: 20px;" [checked]="item.isSelected"
+                                                (change)="onCheckboxChange(item , $event)" class="form-check-input">
+
+                                                <span class="slider round"></span>
+                                            </label>
+                                            <label style="margin-left: 5px;"
+                                                >{{item.dayFullName}}</label>
+                                        </div>
+                                        <div class="col-4 float-right" *ngIf="item.isSelected">
+                                            <button class="btn btn-light float-right" (click)="addSlot(item)">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2" *ngFor="let slot of item.meetingTimeSlots">
+                                    <div class="col-5">
+                                        <label> Start Time </label>
+                                        <select class="form-control" [(ngModel)]="slot.startTime"
+                                            (ngModelChange)="timeChanged(item.id , slot, $event)">
+                                            <option *ngFor="let opt of timeSlots" [value]="opt.startTime">
+                                                {{opt.startTime}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-5">
+                                        <label> End Time </label>
+                                        <input readonly [(ngModel)]="slot.endTime" class="form-control"
+                                            placement="bottom" />
+                                    </div>
+                                    <div class="col-2"><span> <i class="fa fa-trash pointer"
+                                                (click)="deleteTimeSlot(item , slot)"
+                                                style="font-size: 26px;margin-top: 30px;"></i></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </accordion-group>
+                </accordion>
+            </div>
+        </div>
+    </div>
+</div>

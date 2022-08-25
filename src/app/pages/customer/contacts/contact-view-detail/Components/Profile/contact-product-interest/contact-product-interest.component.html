@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <app-page-title title="{{ 'Product Interest' | translate }}" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="card">
+    <div class="card shadow-none border mb-0">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table" [busyIf]="loading">
+            <thead>
+              <tr>
+                <th style="width: 70px;">Sr#</th>
+                <th class="text-center">Product Name</th>
+                <th class="text-center">Interest</th>
+                <th class="text-center">Sold</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of myData;let i = index">
+                <td>{{i + 1}}</td>
+                <td class="text-center">{{detail.lawfirmServiceName}}</td>
+                <td class="text-center">
+
+                  <div *ngIf="detail.interest" class="text-left"><i class="fa fa-check-circle text-success"
+                      title="True"></i></div>
+                  <div *ngIf="!detail.interest" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                  <br> {{ detail.interestDate | date : 'dd/MM/yyyy' }}
+                </td>
+                <td class="text-center">
+
+                  <div *ngIf="detail.sold" class="text-left"><i class="fa fa-check-circle text-success"
+                      title="True"></i></div>
+                  <div *ngIf="!detail.sold" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+                  <br> <span *ngIf="detail.sold"> {{ detail.soldDate | date : 'dd/MM/yyyy' }} </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

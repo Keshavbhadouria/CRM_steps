@@ -1,0 +1,44 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewContractTemplateName' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>{{'ContractName' | translate }} :</h6>
+          {{ item.customerContratTemplate.contractName }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'PhysicalFileUrl' | translate }} :</h6>
+          {{ item.customerContratTemplate.physicalFileUrl }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'CreatedOn' | translate }} :</h6>
+          {{ item.customerContratTemplate.createdOn |  date:'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+
+      <div class="col-6 mb-3">
+          <h6>({{'Contact' | translate }}) {{'Company' | translate }} :</h6>
+          {{item.contactCompany}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'ContracTemplateName' | translate }}) {{'ContractName' | translate }} :</h6>
+          {{item.contracTemplateNameContractName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'ContractStatus' | translate }}) {{'StatusName' | translate }} :</h6>
+          {{item.contractStatusStatusName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'User' | translate }}) {{'Name' | translate }} :</h6>
+          {{item.userName}}
+      </div>
+
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

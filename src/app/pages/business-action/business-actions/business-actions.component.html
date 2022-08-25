@@ -1,0 +1,150 @@
+<div class="container-fluid">
+    <app-page-title *ngIf="!isOpenForWorkflowTrigger"  title="BusinessActions" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <!-- Filters -->
+    <div class="row" >
+      <div class="col-md-4">
+            <a class="btn btn-primary" (click)="openCreateModal(createModal)" >{{'BusinessAction' | translate}} <i class="fa fa-plus"> </i> </a>
+    </div>
+
+    </div>
+    <div class="row" *ngIf="!isOpenForWorkflowTrigger">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- (click)="openCreateModal(createOrEditContent)" -->
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateBusinessAction' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinDayNoFilter">{{"MinMax" | translate}} {{"DayNo" | translate}}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinDayNoFilter" [(ngModel)]="minDayNoFilter" placeholder="{{'MinValue' | translate}}" name="minDayNoFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxDayNoFilter" placeholder="{{'MaxValue' | translate}}" name="maxDayNoFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ContentScriptFilter">{{"ContentScript" | translate}}</label>
+                                <input type="text" class="form-control" id="ContentScriptFilter" name="contentScriptFilter" [(ngModel)]="contentScriptFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="ActiveFilterSelect">{{"Active" | translate}}</label>
+                            <select class="form-control" name="ActiveFilter" id="ActiveFilterSelect" [(ngModel)]="activeFilter">
+                            <option value="-1">{{"All" | translate}}</option>
+                            <option value="0">{{"False" | translate}}</option>
+                            <option value="1">{{"True" | translate}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="TitleFilter">{{"Title" | translate}}</label>
+                                <input type="text" class="form-control" id="TitleFilter" name="titleFilter" [(ngModel)]="titleFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinWeekNoFilter">{{"MinMax" | translate}} {{"WeekNo" | translate}}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinWeekNoFilter" [(ngModel)]="minWeekNoFilter" placeholder="{{'MinValue' | translate}}" name="minWeekNoFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxWeekNoFilter" placeholder="{{'MaxValue' | translate}}" name="maxWeekNoFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ActionTypeActionNameFilter">({{"ActionType" | translate}}) {{"ActionName" | translate}}</label>
+                                <input type="text" class="form-control" id="ActionTypeActionNameFilter" name="actionTypeActionNameFilter" [(ngModel)]="actionTypeActionNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="LeadTemperatureTemperatureFilter">({{"LeadTemperature" | translate}}) {{"Temperature" | translate}}</label>
+                                <input type="text" class="form-control" id="LeadTemperatureTemperatureFilter" name="leadTemperatureTemperatureFilter" [(ngModel)]="leadTemperatureTemperatureFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="TargetTitleTitleFilter">({{"TargetTitle" | translate}}) {{"Title" | translate}}</label>
+                                <input type="text" class="form-control" id="TargetTitleTitleFilter" name="targetTitleTitleFilter" [(ngModel)]="targetTitleTitleFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="LawfirmServiceServicesNameFilter">({{"LawfirmService" | translate}}) {{"ServicesName" | translate}}</label>
+                                <input type="text" class="form-control" id="LawfirmServiceServicesNameFilter" name="lawfirmServiceServicesNameFilter" [(ngModel)]="lawfirmServiceServicesNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ServiceActivityActivityNameFilter">({{"ServiceActivity" | translate}}) {{"ActivityName"  | translate}}</label>
+                                <input type="text" class="form-control" id="ServiceActivityActivityNameFilter" name="serviceActivityActivityNameFilter" [(ngModel)]="serviceActivityActivityNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ServicesActivityStepStepFilter">({{"ServicesActivityStep" | translate}}) {{"Step" | translate}}</label>
+                                <input type="text" class="form-control" id="ServicesActivityStepStepFilter" name="servicesActivityStepStepFilter" [(ngModel)]="servicesActivityStepStepFilter">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Shoe Hide Filters -->
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table List -->
+
+    <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table>
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-business-actions-create-edit [modal]="modal" ($modalClose)='modalEmitEvent()' [businessWorkflowId]="businessWorkflowId"  [data]="editStatus">
+    </app-business-actions-create-edit>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-business-actions-view [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewStatus">
+    </app-business-actions-view>
+</ng-template>

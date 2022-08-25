@@ -1,0 +1,82 @@
+<div class="card card-custom h-100">
+    <div class="card-header align-items-center border-0" style="color: #2E7DBA;">
+        <h3 class="card-title align-items-start flex-column">
+            <span class="font-weight-bolder text-dark">
+                {{'Last50Subscriptions' | translate}}
+            </span>
+        </h3>
+    </div>
+    <div class="card-body overflow-auto">
+        <div class="row align-items-center">
+            <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                <p-table #dataTable (onLazyLoad)="getLast50Subscriptions($event)" [value]="primengTableHelper.records"
+                    rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false" [lazy]="true"
+                    [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                    [resizableColumns]="primengTableHelper.resizableColumns">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 150px">
+                                {{'Date' | translate}}
+                            </th>
+                            <th style="width: 150px">
+                                {{'Tenant' | translate}}
+                            </th>
+                            <th style="width: 150px">
+                                {{'Contact' | translate}}
+                            </th>
+                            <th style="width: 150px">
+                                {{'Phone' | translate}}
+                            </th>
+                            <th style="width: 250px">
+                                {{'Email' | translate}}
+                            </th>
+                            <th style="width: 150px">
+                                {{'Plan' | translate}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                        <tr>
+                            <td style="width:150px">
+                                <span class="ui-column-title"> {{'Date' | translate}}</span>
+                                {{record.creationTime | date : 'yyyy-MM-dd'}}
+                            </td>
+                            <td style="width:150px">
+                                <span class="ui-column-title"> {{'Tenant' | translate}}</span>
+                                {{record.tenant}}
+                            </td>
+                            <td style="width:150px">
+                                <span class="ui-column-title"> {{'Contact' | translate}}</span>
+                                {{record.contact}}
+                            </td>
+                            <td style="width:150px">
+                                <span class="ui-column-title"> {{'Phone' | translate}}</span>
+                                {{record.phone}}
+                            </td>
+                            <td style="width:250px">
+                                <span class="ui-column-title"> {{'Email' | translate}}</span>
+                                {{record.email}}
+                            </td>
+                            <td style="width:150px">
+                                <span class="ui-column-title"> {{'Plan' | translate}}</span>
+                                {{record.plan}}
+                            </td>
+                        </tr>
+
+                    </ng-template>
+                </p-table>
+                <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                    {{'NoData' | translate}}
+                </div>
+                <div class="primeng-paging-container">
+                    <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                        (onPageChange)="getLast50Subscriptions($event)"
+                        [totalRecords]="primengTableHelper.totalRecordsCount"
+                        [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                        [showCurrentPageReport]="true" [currentPageReportTemplate]="'TotalRecordsCount'">
+                    </p-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

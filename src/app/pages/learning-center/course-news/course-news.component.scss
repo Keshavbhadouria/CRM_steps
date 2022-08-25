@@ -1,0 +1,100 @@
+.activity-section {
+  position: fixed;
+  right: 0px;
+  top: 70px;
+  height: 100vh;
+  div.card {
+      div.card-body {
+          min-height: calc(100vh - 100px);
+      }
+  }
+}
+.bottom-border-flat{
+      border-bottom-left-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
+}
+
+.img-fit {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.activity-item-section-body {
+  max-height: 300px !important;
+  min-height: 300px !important;
+}
+
+.course-lbl{
+  font-weight: 300;
+    margin-bottom: -0.8rem;
+    margin-top: 1rem;
+
+
+}
+
+.course-lbl label{
+  color: #2172b2;
+}
+
+
+
+.course-lbl p{
+  margin-top: -12px;
+}
+
+.activity-item-section-footer div {
+  width: 33.33% !important;
+}
+
+.activity-item-section-header {
+  background: #fe0000 !important;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.activity-item-section {
+  border: 1px solid #fe0000;
+  border-radius: 12px;
+}
+
+button{
+  padding: 8px 60px 8px 60px;
+  border-radius: 8px;
+}
+
+.cus-primary{
+
+  background-color: #2e7dba !important;
+
+}
+
+.card{
+  border-radius: 10px !important;
+}
+
+.course-list-overflow{
+  max-height: 820px !important;
+  overflow-y: auto;
+}
+
+.scrollbar::-webkit-scrollbar,
+.course-list-overflow::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 20px !important;
+}
+
+.scrollbar::-webkit-scrollbar-track,
+.course-list-overflow::-webkit-scrollbar-track {
+  background-color: rgb(169, 169, 169) !important;
+  border-radius: 20px !important;
+}
+
+.scrollbar::-webkit-scrollbar-thumb,
+.course-list-overflow::-webkit-scrollbar-thumb {
+  background-color: #ffab00 !important;
+  box-shadow: inset 0 0 6px rgba(1, 71, 152, 0.3) !important;
+  border-radius: 20px !important;
+}

@@ -1,0 +1,56 @@
+<style>
+    .card.card-custom>.card-body {
+        padding: 1rem 1.25rem;
+    }
+</style>
+<div class="row row-no-padding row-col-separator-xl">
+    <div class="col pr-0">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics">
+            <div class="card-header" style="background-color: #2E7CBA;">
+                <h3 class="card-title" style="color: #fff;">{{'StartDate' | translate}}</h3>
+            </div>
+            <div class="card-body">
+                <div *ngIf="data.length > 0" class="data-widget-section">
+                    <div class="date" style="color: #2E7CBA;">{{data[0].day}}</div>
+                    <div class="month-year">
+                        <div style="color: #FB0101;">{{data[0].month}}</div>
+                        <div style="color: #ffab00;">{{data[0].year}}</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col pr-0">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics">
+            <div class="card-header"  style="background-color: #FB0101;">
+                <h3 class="card-title" style="color: #fff;">{{'EndDate' |translate}}</h3>
+            </div>
+            <div class="card-body">
+                <div *ngIf="data.length > 0" class="data-widget-section">
+                    <div class="date" style="color: #2E7CBA;">{{data[1].day}}</div>
+                    <div class="month-year">
+                        <div style="color: #FB0101;">{{data[1].month}}</div>
+                        <div style="color: #ffab00;">{{data[1].year}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col pr-0">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics">
+            <div class="card-header"  style="background-color: #ffab00;">
+                <h3 class="card-title" style="color: #fff;">{{'ReleaseDate' | translate}}</h3>
+            </div>
+            <div class="card-body">
+                <div *ngIf="data.length > 0" class="data-widget-section">
+                    <div class="date" style="color: #2E7CBA;">{{data[2].day}}</div>
+                    <div class="month-year">
+                        <div style="color: #FB0101;">{{data[2].month}}</div>
+                        <div style="color: #ffab00;">{{data[2].year}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

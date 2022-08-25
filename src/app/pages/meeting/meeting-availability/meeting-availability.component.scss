@@ -1,0 +1,21 @@
+.slot-header{
+    height: 50px;
+    border: 2px solid #2e7dba;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+
+.pointer{
+    cursor: pointer;
+}
+.float-right{
+    float: right;
+}
+.accordion-toggle:before {
+    content: "\f106";
+    font: normal normal normal 14px/1 FontAwesome;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

@@ -1,0 +1,52 @@
+<form #courseChapterForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditChapter' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewChapter' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="LMSCourseChapter_ChapterName">{{ 'ChapterName' | translate }} *</label>
+                    <input type="text" #LMSCourseChapter_ChapterName="ngModel" id="LMSCourseChapter_ChapterName" class="form-control"
+                        [(ngModel)]="lmsCourseChapter.chapterName" name="chapterName" required />
+                    <validation-messages [formCtrl]="LMSCourseChapter_ChapterName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="LMSCourseChapter_DurationInMinutes">{{ 'DurationInMinutes' | translate }} *</label>
+                    <input type="number" #LMSCourseChapter_DurationInMinutes="ngModel" id="LMSCourseChapter_DurationInMinutes" class="form-control"
+                        [(ngModel)]="lmsCourseChapter.durationInMinutes" name="durationInMinutes" required min="0"/>
+                    <validation-messages [formCtrl]="LMSCourseChapter_DurationInMinutes"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="LMSCourseChapter_SortIndex">{{ 'SortIndex' | translate }} *</label>
+                    <input type="number" #LMSCourseChapter_SortIndex="ngModel" id="LMSCourseChapter_SortIndex" class="form-control"
+                        [(ngModel)]="lmsCourseChapter.sortIndex" name="sortIndex" required min="0"/>
+                    <validation-messages [formCtrl]="LMSCourseChapter_SortIndex"></validation-messages>
+                </div>
+            </div>
+           
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="LMSCourseChapter_Description">{{ 'Description' | translate }} *</label>
+                    <ckeditor #LMSCourseChapter_Description="ngModel" id="LMSCourseChapter_Description" [editor]="editor"
+                        [(ngModel)]="lmsCourseChapter.description" name="description" required></ckeditor>
+                    <validation-messages [formCtrl]="LMSCourseChapter_Description"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!courseChapterForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

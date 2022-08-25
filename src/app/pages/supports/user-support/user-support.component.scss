@@ -1,0 +1,148 @@
+.support-heading{
+    color: #386D96  !important;
+}
+ .status-row .col-md-3 button i{
+    color: #fff !important;
+}
+ .status-row .col-md-3 button{ 
+    width: 100%;
+    border-radius:  5px !important;
+    text-align: left;
+    min-height: 60px;
+    font-size: 25px !important;
+    text-transform: capitalize;
+}
+ .status-row .col-md-3 button:hover{
+    opacity: 0.5;
+}
+ .card-body{
+    background-color: transparent !important;
+}
+ .status-row .col-md-3 button .fas.fa-headset{
+    font-size: 30px;
+}
+ .status-row .col-md-3 button .badge{
+    display: block;
+    width: 75%;
+    margin: 10px auto;
+    font-weight: bold;
+}
+ .status-row .col-md-3 button.all-ticket{
+    background-color: #2E7CBA !important;
+    border-color: #2E7CBA !important;
+}
+ .status-row .col-md-3 button.all-ticket .badge{
+    color: #2E7CBA !important;
+    font-size: 30px;
+}
+
+ .status-row .col-md-3 button.new-ticket{
+    background-color: #FE0000 !important;
+    border-color: #FE0000  !important;
+}
+ .status-row .col-md-3 button.new-ticket .badge{
+    color: #FE0000  !important;
+    font-size: 30px;
+}
+ .status-row .col-md-3 button.inprogress-ticket{
+    background-color: #FFAB00 !important;
+    border-color: #FFAB00 !important;
+}
+ .status-row .col-md-3 button.inprogress-ticket .badge{
+    color: #FFAB00 !important;
+    font-size: 30px;
+}
+ .status-row .col-md-3 button.solved-ticket{
+    background-color: #02C463 !important;
+    border-color: #02C463 !important;
+}
+ .status-row .col-md-3 button.solved-ticket .badge{
+    color: #02C463 !important;
+    font-size: 30px;
+}
+ .status-row .col-md-3 button .fa.fa-check{
+    display: none !important;
+    font-size: 150%;
+}
+ .status-row .col-md-3 button.active .fa.fa-check{
+    display: inline-block !important;
+}
+ .support-filter  span.clickable-item{
+    display: inline-block;
+    padding: 15px 10px;
+    background: #fff;
+    border-radius: 5px;
+    position: relative;
+    margin-bottom: 10px;
+    width: calc(100% - 150px);
+    margin-right: 10px;
+}
+ .support-filter  span.clickable-item .fa{
+    color: #3699FF !important;
+    position: absolute;
+    right: 19px;
+    top: 18px;
+}
+.support-filter-section{
+    background-color: white;
+    margin: 0px;
+    padding-top: 20px;
+    margin-bottom: 15px;
+}
+ .row.status-row:first-child{
+    background: #fff;
+    padding: 10px 0px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    margin: 0px 0px 25px;
+}
+.header-fixed.subheader-fixed.subheader-enabled .wrapper {
+    padding-top: 65px !important; 
+}
+.support-filter button{
+    width: 140px;
+    padding: 15px 10px;
+    background-color: #10679E !important;
+    color: #fff;
+}
+
+/* for grid css */
+table.ui-table-scrollable-header-table thead.ui-table-thead tr{
+    border-radius: 5px;
+}
+table.ui-table-scrollable-header-table thead.ui-table-thead tr th{
+    background-color: #2E7CBA !important;
+    color: #fff;
+    padding: 1em 0.7em !important;
+}
+table.ui-table-scrollable-header-table thead.ui-table-thead tr th:first-child{
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    padding-left: 10px !important;
+}
+table.ui-table-scrollable-header-table thead.ui-table-thead tr th:last-child{
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    padding-right: 10px !important;
+}
+tbody.ui-table-tbody tr td{
+    color: #4498D6 !important;
+}
+body .ui-table .ui-table-tbody > tr:nth-child(even){
+    background-color: #F1F1F1 !important;
+}
+/* tbody.ui-table-tbody tr td div.btn-group.dropdown .btn.btn-primary{
+    background-color: #FEAC00 !important;
+    border-color: #FEAC00 !important;
+} */
+body .ui-table .ui-sortable-column .ui-sortable-column-icon{
+    color: #fff !important;
+}
+button.blue.btn.btn-primary{
+    background-color:#2E7CBA !important;
+}
+.badge-light {
+    color: #212121;
+    background-color: #f3f6f9;
+}

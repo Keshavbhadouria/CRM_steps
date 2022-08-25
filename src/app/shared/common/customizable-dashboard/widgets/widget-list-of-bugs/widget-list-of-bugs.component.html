@@ -1,0 +1,39 @@
+<div class="card card-custom h-100">
+    <div class="card-header align-items-center border-0" style="background-color: #FB0101;">
+        <h3 class="card-title align-items-start flex-column">
+                <span class="font-weight-bolder" style="color: #fff;">
+                    {{'ListOfBugs' | translate}}
+                </span>
+        </h3>
+        <!-- <div class="card-toolbar">
+            <button (click)="memberActivityTable.reload()" class="btn btn-primary"><i
+                class="fa fa-sync"></i> Refresh</button>
+        </div> -->
+    </div>
+    <div class="card-body overflow-auto">
+        <div class="table-scrollable table-scrollable-borderless">
+            <table class="table table-hover table-light">
+                <thead>
+                <tr class="uppercase">
+                    <th>
+                        {{'Title' | translate}}
+                    </th>
+                    <th style="width: 150px;">
+                        {{'Date' | translate}}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let m of data; let index = index">
+                        <td>
+                            {{m.title}}
+                        </td>
+                        <td>
+                            {{m.bugDate | date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<form #contactDocSigForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditContactDocumentSignature' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewContactDocumentSignature' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactDocSignature_ContactDocumentId">{{ 'ContactDocument' | translate }} *</label>
+                    <ng-select [items]="contactDocuments" #ContactDocSignature_ContactDocumentId="ngModel"
+                        bindValue="id" bindLabel="displayName" id="ContactDocSignature_ContactDocumentId"
+                        name="contactDocumentId" [(ngModel)]="contactDocSignature.contactDocumentId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactDocSignature_ContactDocumentId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactDocSignature_UserId">{{ 'User' | translate }} *</label>
+                    <ng-select [items]="users" #ContactDocSignature_UserId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ContactDocSignature_UserId" name="userId"
+                        [(ngModel)]="contactDocSignature.userId" required></ng-select>
+                    <validation-messages [formCtrl]="ContactDocSignature_UserId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactDocSignature_RoleId">{{ 'Role' | translate }} *</label>
+                    <ng-select [items]="roles" #ContactDocSignature_RoleId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ContactDocSignature_RoleId" name="roleId"
+                        [(ngModel)]="contactDocSignature.roleId" required></ng-select>
+                    <validation-messages [formCtrl]="ContactDocSignature_RoleId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactDocSignature_SignatureDate">{{ 'SignatureDate' | translate }} *</label>
+                    <input class="form-control m-input" #ContactDocSignature_SignatureDate="ngModel" type="date"
+                        [ngModel]="contactDocSignature.signatureDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="contactDocSignature.signatureDate = $event"
+                        id="ContactDocSignature_SignatureDate" name="signatureDate" required />
+                    <validation-messages [formCtrl]="ContactDocSignature_SignatureDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactDocSignature_FullName">{{ 'FullName' | translate }} *</label>
+                    <input type="text" #ContactDocSignature_FullName="ngModel" id="ContactDocSignature_FullName"
+                        class="form-control" [(ngModel)]="contactDocSignature.fullName" name="fullName" required />
+                    <validation-messages [formCtrl]="ContactDocSignature_FullName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="SupportComment_Attachment">{{'Attachment' | translate}}</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile"
+                        accept="image/*" (change)="handleUpload($event)" required>
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+                        <img [src]="imageUrl" style="height: 50px;width:auto;" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!contactDocSigForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

@@ -1,0 +1,83 @@
+
+<div class="card" style="padding: 0rem 1.25rem;">
+    <div class="card-body container-fluid">
+        <div class="row" [busyIf]="loading">
+            <label class="box-label">{{'NewTenants' | translate}}</label>
+            <div class="col-md-4">
+                <div class="box-dashboard green">
+                    <div class="img-section"><img src="../../../assets/images/calender-one.png" alt=""></div>
+                    <div class="text">{{'Today' | translate}}</div>
+                    <div class="records">{{data.todaysTenants}}</div>
+                    <div class="amt"><span>{{data.todaysTenantAmt | currency}}</span></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box-dashboard green">
+                    <div class="img-section"><img src="../../../assets/images/calendar-seven.png" alt=""></div>
+                    <div class="text">{{'ThisWeek' | translate}}</div>
+                    <div class="records">{{data.thisWeekTenants}}</div>
+                    <div class="amt"><span>{{data.thisWeekTenantAmt | currency}}</span></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box-dashboard green">
+                    <div class="img-section"><img src="../../../assets/images/calendar-thirty-one.png" alt=""></div>
+                    <div class="text">{{'ThisMonth' | translate}}</div>
+                    <div class="records">{{data.thisMonthTenants}}</div>
+                    <div class="amt"><span>{{data.thisMonthTenantAmt | currency}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="row row-no-padding row-col-separator-xl" [perfectScrollbar]>
+    <div class="col pr-0">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics">
+            <div class="card-header">
+                <h3 class="card-title">{{'Today' | translate}}</h3>
+            </div>
+            <div class="card-body">
+                <div class="data-widget-section">
+                    <div class="date">#{{data.todaysTenants}} ${{data.todaysTenantAmt}}</div>
+                    <div class="month-year">
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col pr-0">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics">
+            <div class="card-header">
+                <h3 class="card-title">{{'ThisWeek' |translate}}</h3>
+            </div>
+            <div class="card-body">
+                <div class="data-widget-section">
+                    <div class="date">#{{data.thisWeekTenants}} ${{data.thisWeekTenantAmt}}</div>
+                    <div class="month-year">
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col pr-0">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics">
+            <div class="card-header">
+                <h3 class="card-title">{{'ThisMonth' | translate}}</h3>
+            </div>
+            <div class="card-body">
+                <div class="data-widget-section">
+                    <div class="date">#{{data.thisMonthTenants}} ${{data.thisMonthTenantAmt}}</div>
+                    <div class="month-year">
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

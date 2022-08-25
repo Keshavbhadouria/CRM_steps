@@ -1,0 +1,103 @@
+<div class="container-fluid">
+    <app-page-title title="DeploymentManagement" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <!-- Filters -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- (click)="openCreateModal(createOrEditContent)" -->
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateDeploymentManagement' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                       <div class="col-md-3">
+                           <div class="form-group">
+                               <label for="NameFilter">{{"Name"| translate }}</label>
+                               <input type="text" class="form-control" id="NameFilter" name="nameFilter" [(ngModel)]="nameFilter">
+                           </div>
+                       </div>
+                       <div class="col-md-3">
+                           <div class="form-group">
+                               <label  for="MinReleaseDateFilter">{{"ReleaseDateRange"| translate }}</label>
+                               <div class="input-group">
+                                   <input class="form-control m-input" id="MinReleaseDateFilter" name="MinReleaseDateFilter" type="datetime" bsDatepicker  placeholder="{{'MinValue'| translate }}" [(ngModel)]="minReleaseDateFilter">
+                                   <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                   <input class="form-control m-input" id="MaxReleaseDateFilter" name="MaxReleaseDateFilter" type="datetime" bsDatepicker  placeholder="{{'MaxValue'| translate }}" [(ngModel)]="maxReleaseDateFilter">
+                               </div>
+                           </div>
+                       </div>
+                       <div class="col-md-3">
+                           <div class="form-group">
+                               <label for="ClientApplicationApplicationNameFilter">({{"ClientApplication"| translate }}) {{"ApplicationName"| translate }}</label>
+                               <input type="text" class="form-control" id="ClientApplicationApplicationNameFilter" name="clientApplicationApplicationNameFilter" [(ngModel)]="clientApplicationApplicationNameFilter">
+                           </div>
+                       </div>
+                       <div class="col-md-3">
+                           <div class="form-group">
+                               <label for="UserNameFilter">({{"User"| translate }}) {{"Name"| translate }}</label>
+                               <input type="text" class="form-control" id="UserNameFilter" name="userNameFilter" [(ngModel)]="userNameFilter">
+                           </div>
+                       </div>
+                       <div class="col-md-3">
+                           <div class="form-group">
+                               <label for="PMProjectProjectNameFilter">({{"PMProject"| translate }}) {{"ProjectName"| translate }}</label>
+                               <input type="text" class="form-control" id="PMProjectProjectNameFilter" name="pmProjectProjectNameFilter" [(ngModel)]="pmProjectProjectNameFilter">
+                           </div>
+                       </div>
+
+                   </div>
+                    <!-- Shoe Hide Filters -->
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table List -->
+
+    <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table>
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-deployment-create-edit [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editStatus">
+    </app-deployment-create-edit>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-deployment-view [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewStatus">
+    </app-deployment-view>
+</ng-template>

@@ -1,0 +1,53 @@
+<div class="card" style="padding: 0rem 1.25rem;">
+    <div class="card-body container-fluid">
+        <div class="row" [busyIf]="tenantTrialSubscriptionChart.loading">
+            <label class="box-label">{{'Trials' | translate}}</label>
+            <div class="col-md-4">
+                <div class="box-dashboard blue">
+                    <div class="img-section"><img src="../../../assets/images/calender-one.png" alt=""></div>
+                    <div class="text">{{'Today' | translate}}</div>
+                    <div class="records">{{tenantTrialSubscriptionChart.data.todaysTenants}}</div>
+                    <!-- <div class="amt"><span>{{data.todaysTenantAmt | currency}}</span></div> -->
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box-dashboard blue">
+                    <div class="img-section"><img src="../../../assets/images/calendar-seven.png" alt=""></div>
+                    <div class="text">{{'ThisWeek' | translate}}</div>
+                    <div class="records">{{tenantTrialSubscriptionChart.data.thisWeekTenants}}</div>
+                    <!-- <div class="amt"><span>{{data.thisWeekTenantAmt | currency}}</span></div> -->
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="box-dashboard blue">
+                    <div class="img-section"><img src="../../../assets/images/calendar-thirty-one.png" alt=""></div>
+                    <div class="text">{{'ThisMonth' | translate}}</div>
+                    <div class="records">{{tenantTrialSubscriptionChart.data.thisMonthTenants}}</div>
+                    <!-- <div class="amt"><span>{{data.thisMonthTenantAmt | currency}}</span></div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="card card-custom h-100">
+    <div class="card-header align-items-center border-0">
+        <div class="card-title">
+            <h3 class="card-label text-dark">
+                <small class="text-muted">{{'Trials' | translate}}</small>
+            </h3>
+        </div>
+    </div>
+    <div class="card-body" [perfectScrollbar]>
+        <div>
+            <div class="row">
+                <div class="col-lg- 6 col-md-12" style="max-height:300px ">
+                    <ngx-charts-number-card [view]="view" [scheme]="tenantTrialSubscriptionChart.scheme" [results]="tenantTrialSubscriptionChart.chartData"
+                        [cardColor]="cardColor">
+                    </ngx-charts-number-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

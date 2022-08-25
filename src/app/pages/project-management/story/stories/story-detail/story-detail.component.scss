@@ -1,0 +1,72 @@
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 60px !important;
+}
+.image-section{
+    position: relative;
+    margin-top: 10px;
+    width: 50px;
+    display: inline-block;
+    margin-right: 20px;
+}
+.image-section img{
+    width: 50px;
+    height: 50px;
+}
+.image-section .cross-image{
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: #000;
+    color: #fff;
+    padding: 2px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.custom-close-btn{
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    background: #eee;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.detail-tabs{
+    border-bottom: #ddd solid 1px;
+    padding-left: 10px;
+    margin: 5px 0px 10px;
+}
+.detail-tabs a{
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.detail-tabs a.active{
+    background: #fff;
+    position: relative;
+    top: 1px;
+    color: #000;
+    pointer-events: none;
+    cursor: text;
+    border: solid 1px #ddd;
+    border-bottom: 0;
+    z-index: 9;
+    font-weight: bold;
+}
+
+.history-item{
+    margin-bottom: 15px;
+}
+
+.in-edit-mode{
+    border: solid 1px #ddd;
+    color: #ddd !important;
+}
+
+.in-edit-mode .action-btn, .in-edit-mode .cross-image{
+    display: none;
+    }

@@ -1,0 +1,73 @@
+<form #knowledgeBaseForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditKnowledgeBase' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewKnowledgeBase' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group m-form__group">
+                    <label for="KnowledgeBase_ProjectId">{{ 'ProjectName' | translate }} *</label>
+                    <ng-select [items]="projects" #KnowledgeBase_ProjectId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="KnowledgeBase_ProjectId" name="projectid"
+                        [(ngModel)]="knowledgeBase.projectid" required></ng-select>
+                    <validation-messages [formCtrl]="KnowledgeBase_ProjectId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="KnowledgeBase_Title">{{ 'Title' | translate }} *</label>
+                    <input type="text" #KnowledgeBase_Title="ngModel" id="KnowledgeBase_Title" class="form-control"
+                        [(ngModel)]="knowledgeBase.title" name="title" required />
+                    <validation-messages [formCtrl]="KnowledgeBase_Title"></validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="KnowledgeBase_Comments">{{ 'Comments' | translate }} *</label>
+                    <ckeditor #KnowledgeBase_Comments="ngModel" id="KnowledgeBase_Comments" [editor]="editor"
+                        [(ngModel)]="knowledgeBase.comments" name="comments" required></ckeditor>
+                    <validation-messages [formCtrl]="KnowledgeBase_Comments"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="KnowledgeBase_Attachment">{{'Attachment' | translate}}</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile"
+                        (change)="handleUpload($event)">
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+
+                        <div *ngIf="fileType == 'doc' || fileType == 'docx' ">
+                            <img style="height: 50px; max-width: 100%;" class="card-img-left"
+                                src="../../../../assets/images/microsoft-doc.png" alt="image" />
+                        </div>
+                        <div *ngIf="fileType == 'xlsx' || fileType == 'xls' ">
+                            <img style="height: 50px; max-width: 100%;" class="card-img-left"
+                                src="../../../../assets/images/microsoft-excel.png" alt="image" />
+                        </div>
+                        <div *ngIf="fileType == 'pdf' ">
+                            <img style="height: 50px; max-width: 100%;" class="card-img-left"
+                                src="../../../../assets/images/icons8-pdf.png" alt="image" />
+                        </div>
+                        <div *ngIf="fileType == 'png' || fileType == 'jpg' || fileType == 'jpeg' ">
+                            <img style="height: 50px; max-width: 100%;" class="card-img-left" [src]="imageUrl"
+                                alt="image" />
+                        </div>
+                        <!-- <img [src]="imageUrl" style="height: 50px;width:auto;" alt=""> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!knowledgeBaseForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

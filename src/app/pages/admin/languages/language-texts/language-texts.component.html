@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <app-page-title title="{{'Languages' | translate }}" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+      <div class="col-lg-12">
+          <div class="card">
+              <div class="card-body">
+                  <!-- Filter -->
+                  <div class="row">
+                      <div class="col-md-10">
+                      </div>
+                      <div class="col-md-2">
+                          <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                              'CreateLanguage' | translate}}</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+      [pagination]="paginationSettings">
+  </app-dynamic-table>
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-language-create-edit-modal [languageId]="languageId" ($modalClose)='modalCloseEvent()'>
+  </app-language-create-edit-modal>
+</ng-template>
+

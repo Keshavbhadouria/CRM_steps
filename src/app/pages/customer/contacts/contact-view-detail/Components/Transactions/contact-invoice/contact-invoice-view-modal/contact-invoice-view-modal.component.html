@@ -1,0 +1,150 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{ 'ViewContactInvoice' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading" >
+    <div class="row">
+      <div class="col-4 mb-3">
+          <h6>{{'ReteinerCode' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.reteinerCode }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'SubTotal' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.subTotal }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'Tax' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.tax }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'Total' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.total }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'Paid' | translate }} :</h6>
+          <div *ngIf="item.contactInvoiceHeader.paid" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.contactInvoiceHeader.paid" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-4 mb-3">
+          <h6>{{'Gateway' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.gateway }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'TransactionID' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.transactionID }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'GatewayResponse' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.gatewayResponse }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'Refunded' | translate }} :</h6>
+          <div *ngIf="item.contactInvoiceHeader.refunded" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.contactInvoiceHeader.refunded" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-4 mb-3">
+          <h6>{{'RefundedDate' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.refundedDate |  date :'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'RefundedAmount' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.refundedAmount }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'RefundedReason' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.refundedReason }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'RefundedBy' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.refundedBy }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'Voided' | translate }} :</h6>
+          <div *ngIf="item.contactInvoiceHeader.voided" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.contactInvoiceHeader.voided" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-4 mb-3">
+          <h6>{{'VoidedBy' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.voidedBy }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'VoidedDate' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.voidedDate | date:'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'QuickBookTransactionID' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.quickBookTransactionID }}
+      </div>
+      <div class="col-4 mb-3">
+          <h6>{{'PostedQuickBook' | translate }} :</h6>
+          <div *ngIf="item.contactInvoiceHeader.postedQuickBook" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.contactInvoiceHeader.postedQuickBook" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>                    <div class="col-4 mb-3">
+          <h6>{{'InvoiceCode' | translate }} :</h6>
+          {{ item.contactInvoiceHeader.invoiceCode }}
+      </div>
+
+      <div class="col-4 mb-3">
+          <h6>({{'ContactQuoteHeader' | translate }}) {{'Total' | translate }} :</h6>
+          {{item.contactQuoteHeaderTotal}}
+      </div>
+
+  </div>
+
+  <div class="card">
+      <div class="card shadow-none border mb-0">
+        <div class="card-body">
+          <h4 class="card-title mb-4">{{'InvoiceDetail'}}</h4>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width: 70px;">Sr#</th>
+                  <th>Service</th>
+                  <th class="text-end">Price</th>
+                  <th class="text-end">Quantity</th>
+                  <th class="text-end">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let detail of invoiceDetail;let i = index"  >
+                  <td>{{i + 1}}</td>
+                  <td>{{detail.servicesName}}</td>
+                  <td class="text-end">${{detail.price}}</td>
+                  <td class="text-end">{{detail.quantity}}</td>
+                  <td class="text-end">${{detail.total}}</td>
+                </tr>
+                <tr>
+
+                  <td colspan="4" class="text-end">
+                    <strong>{{'Sub Total' | translate}}</strong></td>
+                  <td class="text-end"><strong>${{subTotal}}</strong> </td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="border-0 text-end">
+                    <strong>{{'Tax' | translate}}</strong></td>
+                  <td class="border-0 text-end"> <strong>${{item.contactInvoiceHeader.tax}}</strong> </td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="border-0 text-end">
+                    <strong>{{'Total' | translate}}</strong></td>
+                  <td class="border-0 text-end">
+                    <h4 class="m-0">${{total + item.contactInvoiceHeader.tax}}</h4>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

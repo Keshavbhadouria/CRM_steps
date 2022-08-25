@@ -1,0 +1,319 @@
+<div class="container-fluid">
+
+  <!-- <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="col-md-6 heading text-primary">
+            <a [routerLink]="['/lawfirm/services']" class="breadcrumbs__item"><img
+                src="../../../../assets/CRMSteps/MenuIcons/services_white.png" width="20" height="20"> {{ 'Service' |
+              translate }}</a>
+            <a class="breadcrumbs__item"><img src="../../../../assets/CRMSteps/MenuIcons/service-activity-white.png"
+                width="20" height="20"> {{ 'ServiceActivities' | translate }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+  <!-- Filters -->
+  <div class="row" style="--bs-gutter-x: 10px !important" [busyIf]="loading">
+    <div class="col-lg-12">
+      <app-page-title [title]="serviceName" [icon]="pageIcon" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+
+              <div class="input-group">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Filter"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i
+                      class="bx bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-secondery btn-create" (click)="openCreateModal(createModal)">{{
+                'CreateNewActivity' | translate}}</button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body row">
+          <div class="col-md-4" style="margin-bottom: 10px;" *ngFor="let item of myData">
+            <div class="activity-item-section">
+              <div class="activity-item-section-header">
+                <p>
+                  {{item.serviceActivity.activityName}}
+                </p>
+                <p>
+                  <img *ngIf="item.serviceActivity.active" src="../../../../assets/icons/check.png" alt="">
+                  <img *ngIf="!item.serviceActivity.active" src="../../../../assets/icons/cross.png" alt="">
+                </p>
+              </div>
+              <div class="activity-item-section-body">
+                <div [innerHtml]="item.serviceActivity.description"></div>
+              </div>
+              <div class="activity-item-section-footer">
+                <div>
+                  <img src="../../../../assets/icons/Visual.png" (click)="openViewModal(viewModal, item)" alt="">
+                </div>
+                <div>
+                  <img src="../../../../assets/icons/editIcon.png" alt="" (click)="openEditModal(createModal,item)">
+                </div>
+                <div>
+                  <img src="../../../../assets/icons/deleteIcon.png" (click)="onDelete(item)" alt="">
+                </div>
+                <div>
+                  <img src="../../../../assets/CRMSteps/MenuIcons/service-activity-step.png"
+                    (click)="getStepByActivityId(item)"
+                    alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="activity-section col-md-5" *ngIf="displayStep">
+      <div class="card">
+        <div class="card-body">
+          <div  style="cursor: pointer;text-align: right;"><i class="fa fa-times" style="cursor: pointer;" (click)="closeStepModal()"></i></div>
+          <div *ngIf="isStepSection">
+            <div class="step-header-section">
+              <p><img src="../../../../assets/CRMSteps/MenuIcons/service-activity-step.png" style="height: 24px;"
+                  alt="" > {{currentActivityName}}</p>
+              <p>
+                <button type="button" class="btn btn-secondery btn-create" (click)="openCreateActivityStepModal(createModalActivityStep)">{{
+                  'CreateNewStep' | translate}}</button>
+              </p>
+            </div>
+            <div class="step-section" *ngFor="let item of stepsData;let i=index;">
+              <div class="step-section-header" [class.bottom-border-flat] = "item.servicesActivityStep.isSelected">
+                <div class="left-section text-center">
+                  <div>
+                    <label for="" style="margin: 0px;">{{"DoOnDay" | translate}}</label>
+                    <br />
+                    <span>
+                      {{item.servicesActivityStep.doOnDay}}
+                    </span>
+                  </div>
+                  <div>{{item.servicesActivityStep.step}}</div>
+                </div>
+                <div class="right-section">
+                  <div>
+                    <img *ngIf="item.servicesActivityStep.active" src="../../../../assets/icons/check.png" alt="">
+                    <img *ngIf="!item.servicesActivityStep.active" src="../../../../assets/icons/cross.png" alt="">
+                  </div>
+                  <div>
+                    <img src="../../../../assets/icons/down.png" *ngIf="!item.servicesActivityStep.isSelected" (click)="toggaleDiv(i)" alt="">
+                    <img src="../../../../assets/images/icons/up-arrow.png" *ngIf="item.servicesActivityStep.isSelected" (click)="toggaleDiv(i)" alt="">
+                  </div>
+                </div>
+              </div>
+              <div class="step-section-body" *ngIf="item.servicesActivityStep.isSelected">
+                <div [innerHtml]="item.servicesActivityStep.description"></div>
+                <div class="table-head">
+                  <div></div>
+                  <div class="justify-content-center">Overdue</div>
+                  <div class="justify-content-center">Completed</div>
+                  <div class="justify-content-center">Updates</div>
+                </div>
+                <div class="table-body">
+                  <div>Admin</div>
+                  <div class="justify-content-center">
+                    <img *ngIf="item.servicesActivityStep.a_OverDue" src="../../../../assets/icons/check-box.png"
+                      alt="">
+                    <img *ngIf="!item.servicesActivityStep.a_OverDue" src="../../../../assets/icons/uncheck-box.png"
+                      alt="">
+                  </div>
+                  <div class="justify-content-center">
+                    <img *ngIf="item.servicesActivityStep.a_Completed" src="../../../../assets/icons/check-box.png"
+                      alt="">
+                    <img *ngIf="!item.servicesActivityStep.a_Completed" src="../../../../assets/icons/uncheck-box.png"
+                      alt="">
+                  </div>
+                  <div class="justify-content-center">
+                    <img *ngIf="item.servicesActivityStep.a_Updated" src="../../../../assets/icons/check-box.png"
+                      alt="">
+                    <img *ngIf="!item.servicesActivityStep.a_Updated" src="../../../../assets/icons/uncheck-box.png"
+                      alt="">
+                  </div>
+                </div>
+                <div class="table-body">
+                  <div>Responsible</div>
+                  <div class="justify-content-center">
+                    <img *ngIf="item.servicesActivityStep.l_OverDue" src="../../../../assets/icons/check-box.png"
+                      alt="">
+                    <img *ngIf="!item.servicesActivityStep.l_OverDue" src="../../../../assets/icons/uncheck-box.png"
+                      alt="">
+                  </div>
+                  <div class="justify-content-center">
+                    <img *ngIf="item.servicesActivityStep.l_Completed" src="../../../../assets/icons/check-box.png"
+                      alt="">
+                    <img *ngIf="!item.servicesActivityStep.l_Completed" src="../../../../assets/icons/uncheck-box.png"
+                      alt="">
+                  </div>
+                  <div class="justify-content-center">
+                    <img *ngIf="item.servicesActivityStep.l_Updated" src="../../../../assets/icons/check-box.png"
+                      alt="">
+                    <img *ngIf="!item.servicesActivityStep.l_Updated" src="../../../../assets/icons/uncheck-box.png"
+                      alt="">
+                  </div>
+                </div>
+                <div class="table-body">
+                  <div>Client</div>
+                  <div class="justify-content-center">
+                    <img *ngIf="item.servicesActivityStep.c_OverDue" src="../../../../assets/icons/check-box.png"
+                      alt="">
+                    <img *ngIf="!item.servicesActivityStep.c_OverDue" src="../../../../assets/icons/uncheck-box.png"
+                      alt="">
+                  </div>
+                  <div class="justify-content-center">
+                    <img *ngIf="item.servicesActivityStep.c_Completed" src="../../../../assets/icons/check-box.png"
+                      alt="">
+                    <img *ngIf="!item.servicesActivityStep.c_Completed" src="../../../../assets/icons/uncheck-box.png"
+                      alt="">
+                  </div>
+                  <div class="justify-content-center">
+                    <img *ngIf="item.servicesActivityStep.c_Updated" src="../../../../assets/icons/check-box.png"
+                      alt="">
+                    <img *ngIf="!item.servicesActivityStep.c_Updated" src="../../../../assets/icons/uncheck-box.png"
+                      alt="">
+                  </div>
+                </div>
+              </div>
+              <div class="step-section-footer" *ngIf="item.servicesActivityStep.isSelected">
+                <div>
+                  <img src="../../../../assets/icons/Visual.png" (click)="openViewActivityStepModal(viewModalActivityStep, item)" alt="">
+                </div>
+                <div>
+                  <img src="../../../../assets/icons/editIcon.png" (click)="openEditActivityStepModal(createModalActivityStep, item)" alt="">
+                </div>
+                <div>
+                  <img src="../../../../assets/icons/deleteIcon.png" (click)="onDeleteActivityStep(item)" alt="">
+                </div>
+                <div>
+                  <img src="../../../../assets/CRMSteps/MenuIcons/step-documents.png" alt=""
+                    (click)="getDocuments(item)">
+                </div>
+              </div>
+              <div style="margin-top: 10px; padding: 5px;" *ngIf="item.servicesActivityStep.isSelected && isDocuments">
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn btn-secondery btn-create" (click)="openCreateDocModal(createDocModal, item)" >{{
+                    'AddDocument' | translate}}</button>
+                </div>
+                <div class="document-section" *ngFor="let doc of allDocuments; let j=index;" >
+                  <div class="document-section-header" [class.bottom-border-flat] = "doc.stepDocuments.isSelected">
+                    <div>
+                      {{doc.stepDocuments.document}}
+                    </div>
+                    <div>
+                      <img src="../../../../assets/icons/down.png" *ngIf="!doc.stepDocuments.isSelected" style="cursor: pointer;" alt="" (click)="toggaleDoc(j)">
+                      <img src="../../../../assets/images/icons/up-arrow.png" *ngIf="doc.stepDocuments.isSelected" style="cursor: pointer;" alt="" (click)="toggaleDoc(j)">
+
+                    </div>
+                  </div>
+                  <div class="document-section-body" *ngIf="doc.stepDocuments.isSelected">
+                    <div class="d-flex">
+                      <img src="../../../../assets/icons/check-box.png" alt=""
+                        *ngIf="doc.stepDocuments.uploadByClientOrDeliverByLawyer">
+                      <img src="../../../../assets/icons/uncheck-box.png" alt=""
+                        *ngIf="!doc.stepDocuments.uploadByClientOrDeliverByLawyer">
+                      <span>UploadByClientOrDeliverByLawyer</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex">
+                        <img src="../../../../assets/icons/check-box.png" alt="" *ngIf="doc.stepDocuments.notifyAdmin">
+                        <img src="../../../../assets/icons/uncheck-box.png" alt=""
+                          *ngIf="!doc.stepDocuments.notifyAdmin">
+                        <span>NotifyAdmin</span>
+                      </div>
+                      <div class="d-flex">
+                        <img src="../../../../assets/icons/check-box.png" alt=""
+                          *ngIf="doc.stepDocuments.notifyCustomer">
+                        <img src="../../../../assets/icons/uncheck-box.png" alt=""
+                          *ngIf="!doc.stepDocuments.notifyCustomer">
+                        <span>
+                          Notify Customer
+                        </span>
+                      </div>
+                    </div>
+                    <div class="d-flex">
+                      <img src="../../../../assets/icons/check-box.png" alt="" *ngIf="doc.stepDocuments.notifyLaywer">
+                      <img src="../../../../assets/icons/uncheck-box.png" alt=""
+                        *ngIf="!doc.stepDocuments.notifyLaywer">
+                      <span>Notify Laywer</span>
+                    </div>
+                  </div>
+                  <div class="document-section-footer" *ngIf="doc.stepDocuments.isSelected">
+                    <div>
+                      <img src="../../../../assets/icons/Visual.png" (click)="openViewDocModal(viewDocModal, doc)" alt="">
+                    </div>
+                    <div>
+                      <img src="../../../../assets/icons/editIcon.png" (click)="openEditDocModal(createDocModal, doc)" alt="">
+                    </div>
+                    <div>
+                      <img src="../../../../assets/icons/deleteIcon.png" (click)="onDocDelete(doc)" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table> -->
+
+  <!-- end row -->
+
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-service-activity-create-edit-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editProject">
+  </app-service-activity-create-edit-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-service-activity-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewProject">
+  </app-service-activity-view-modal>
+</ng-template>
+
+<ng-template #createModalActivityStep role="document" let-modal>
+  <app-service-activity-steps-create-edit-modal [modal]="modal" ($modalClose)='modalStepEmitEvent()' [data]="editActivityStep">
+  </app-service-activity-steps-create-edit-modal>
+</ng-template>
+
+<ng-template #viewModalActivityStep role="document" let-modal>
+  <app-service-activity-steps-view-modal [modal]="modal" ($modalClose)='modalStepEmitEvent()' [data]="viewActivityStep">
+  </app-service-activity-steps-view-modal>
+</ng-template>
+
+<ng-template #createDocModal role="document" let-modal>
+  <app-step-document-create-edit-modal [modal]="modal" ($modalClose)='modalDocEmitEvent()' [data]="editDoc">
+  </app-step-document-create-edit-modal>
+</ng-template>
+
+
+<ng-template #viewDocModal role="document" let-modal>
+  <app-step-document-view-modal [modal]="modal" ($modalClose)='modalDocEmitEvent()' [data]="viewDoc">
+  </app-step-document-view-modal>
+</ng-template>

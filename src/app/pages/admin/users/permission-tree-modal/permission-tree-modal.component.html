@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase">
+        <span> {{'SelectPermissions' | translate}}
+        </span>
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="closePermissionTreeModal()"></button>
+</div>
+<!-- [busyIf]="loading" -->
+<div class="modal-body">
+    <app-permission-tree #permissionTree [singleSelect]="singleSelect" [existingSelectedPermissions]="selectedPermissions">
+
+    </app-permission-tree>
+</div>
+<!-- 
+(click)="modal.close('Close click')"
+[disabled]="!pushNotificationForm.form.valid"
+*ngIf="createLoader"
+ -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="closePermissionTreeModal()">
+        <i class="font-size-16 align-middle me-2"></i>
+        {{ 'Select' | translate}}
+    </button>
+</div>

@@ -1,0 +1,67 @@
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'Pages.Collaborator.ViewCollaborator' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>{{'Fullname' | translate }} :</h6>
+          {{ item.collaborator.fullname }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Phone' | translate }} :</h6>
+          {{ item.collaborator.phone }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Country' | translate }} :</h6>
+          {{ item.collaborator.country }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Timezone' | translate }} :</h6>
+          {{ item.collaborator.timezone }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'WeeklyHoursAvailabilty' | translate }} :</h6>
+          {{ item.collaborator.weeklyHoursAvailabilty }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'WorkingTimeFromToEstTime' | translate }} :</h6>
+          {{ item.collaborator.workingTimeFromToEstTime }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Active' | translate }} :</h6>
+          <div *ngIf="item.collaborator.active" class="text-left"><i class="fa fa-check-circle text-success"
+                  title="True"></i></div>
+          <div *ngIf="!item.collaborator.active" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'PMRole' | translate }}) {{'Role' | translate }} :</h6>
+          {{item.pmRoleRole}}
+      </div>
+      <div class="col-6 mb-3">
+        <h6>{{'Job' | translate }} :</h6>
+        {{item.jobDescription}}
+      </div>
+      <div class="col-6 mb-3">
+        <h6>({{'Velocity' | translate }}) {{'velocity' | translate }} :</h6>
+        {{item.collaborator.velocity }}
+    </div>
+    <div class="col-6 mb-3">
+      <h6>({{'Performance' | translate }}) {{'Performance' | translate }} :</h6>
+      {{item.collaborator.performance}}
+  </div>
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="Description">Description</label>
+      <p [innerHtml]="item.collaborator.description"></p>
+    </div>
+  </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+

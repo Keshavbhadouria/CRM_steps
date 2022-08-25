@@ -1,0 +1,72 @@
+<form #businessTypeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditOnlineTool' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateOnlineTool' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="OnlineTools_URL">{{"URL" | translate}} *</label>
+                    <input type="text" #OnlineTools_URL="ngModel" id="OnlineTools_URL" class="form-control" [(ngModel)]="onlineTools.url" name="URL"     required/>
+                    <validation-messages [formCtrl]="OnlineTools_URL"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="OnlineTools_ServiceName">{{"ServiceName" | translate}} *</label>
+                    <input type="text" #OnlineTools_ServiceName="ngModel" id="OnlineTools_ServiceName" class="form-control" [(ngModel)]="onlineTools.serviceName" name="ServiceName"     required/>
+                    <validation-messages [formCtrl]="OnlineTools_ServiceName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="OnlineTools_Description">{{"Description" | translate}}</label>
+                    <ckeditor #OnlineTools_Description="ngModel" [editor]="Editor" [(ngModel)]="onlineTools.description"
+                    name="onlineTools.description"></ckeditor>
+                    <validation-messages [formCtrl]="OnlineTools_Description"></validation-messages>
+                </div>
+    
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="OnlineTools_Username">{{"Username" | translate}}</label>
+                    <input type="text" #OnlineTools_Username="ngModel" id="OnlineTools_Username" class="form-control" [(ngModel)]="onlineTools.username" name="Username"    />
+                    <validation-messages [formCtrl]="OnlineTools_Username"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="OnlineTools_Password">{{"Password" | translate}}</label>
+                    <input type="text" #OnlineTools_Password="ngModel" id="OnlineTools_Password" class="form-control" [(ngModel)]="onlineTools.password" name="Password"    />
+                    <validation-messages [formCtrl]="OnlineTools_Password"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="OnlineTools_MonthlyFee">{{"MonthlyFee" | translate}}</label>
+                    <input type="number" #OnlineTools_MonthlyFee="ngModel" id="OnlineTools_MonthlyFee" class="form-control" [(ngModel)]="onlineTools.monthlyFee" name="MonthlyFee"   />
+                    <validation-messages [formCtrl]="OnlineTools_MonthlyFee"></validation-messages>
+                </div>
+            </div>
+            <br/><div class="m-checkbox-list mt-2">
+                <label for="OnlineTools_Active" class="kt-checkbox">
+                    <input id="OnlineTools_Active" #OnlineTools_Active="ngModel" type="checkbox" name="Active" [(ngModel)]="onlineTools.active"> 
+                    {{"Active" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="OnlineTools_Active"></validation-messages>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!businessTypeForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

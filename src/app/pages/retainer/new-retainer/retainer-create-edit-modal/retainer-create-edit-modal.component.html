@@ -1,0 +1,132 @@
+<form #form="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditRetainer' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateRetainer' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="KnowledgeBase_ProjectId">{{ 'Contact' | translate }} *</label>
+          <ng-select [items]="allContactList" #KnowledgeBase_ProjectId="ngModel" bindValue="id" bindLabel="displayName"
+            id="contactCompany" name="contactCompany" [(ngModel)]="reteiner.contactId" required></ng-select>
+          <validation-messages [formCtrl]="contactCompany"></validation-messages>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="ContracTemplateName_ContractName">{{'ContractName' | translate }} *</label>
+          <input type="text" disabled #contracTemplateName_ref="ngModel" id="contracTemplateName_ref"
+            class="form-control" [(ngModel)]="contracTemplateName" name="contracTemplateName_ref" required />
+          <validation-messages [formCtrl]="contracTemplateName_ref"></validation-messages>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="KnowledgeBase_ProjectId">{{ 'User' | translate }} *</label>
+          <ng-select [items]="allUserList" #userId="ngModel" bindValue="id" bindLabel="displayName" id="userId"
+            name="userId" [(ngModel)]="reteiner.userId" required></ng-select>
+          <validation-messages [formCtrl]="userId"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Reteiner_ExpirationDate">{{'ExpirationDate' | translate }}</label>
+          <input required class="form-control m-input" #Reteiner_ExpirationDate type="date" bsDatepicker
+            datePickerMomentModifier [(ngModel)]="reteiner.expirationDate" id="Reteiner_ExpirationDate"
+            name="Reteiner_ExpirationDate">
+          <validation-messages [formCtrl]="Reteiner_ExpirationDate"></validation-messages>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Reteiner_TotalAmount">{{'TotalAmount' | translate }}</label>
+          <input type="number" #Reteiner_TotalAmount="ngModel" id="Reteiner_TotalAmount" class="form-control"
+            [(ngModel)]="reteiner.totalAmount" name="TotalAmount" />
+          <validation-messages [formCtrl]="Reteiner_TotalAmount"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Reteiner_InitialPaymentDate">{{'InitialPaymentDate' | translate }}</label>
+          <input required class="form-control m-input" #Reteiner_InitialPaymentDate type="date" bsDatepicker
+            datePickerMomentModifier [(ngModel)]="reteiner.initialPaymentDate" id="Reteiner_InitialPaymentDate"
+            name="Reteiner_InitialPaymentDate">
+          <validation-messages [formCtrl]="Reteiner_InitialPaymentDate"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Reteiner_Downpayment">{{'Downpayment' | translate }}</label>
+          <input type="number" #Reteiner_Downpayment="ngModel" id="Reteiner_Downpayment" class="form-control"
+            [(ngModel)]="reteiner.downpayment" name="Downpayment" />
+          <validation-messages [formCtrl]="Reteiner_Downpayment"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Reteiner_PaymentAmount">{{'PaymentAmount' | translate }}</label>
+          <input type="number" #Reteiner_PaymentAmount="ngModel" id="Reteiner_PaymentAmount" class="form-control"
+            [(ngModel)]="reteiner.paymentAmount" name="PaymentAmount" />
+          <validation-messages [formCtrl]="Reteiner_PaymentAmount"></validation-messages>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="Reteiner_Payments">{{'Payments' | translate }}</label>
+          <input type="number" #Reteiner_Payments="ngModel" id="Reteiner_Payments" class="form-control"
+            [(ngModel)]="reteiner.payments" name="Payments" />
+          <validation-messages [formCtrl]="Reteiner_Payments"></validation-messages>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="m-checkbox-list">
+          <label for="Reteiner_PaymentPlan" class="kt-checkbox">
+            <input id="Reteiner_PaymentPlan" #Reteiner_PaymentPlan="ngModel" type="checkbox" name="PaymentPlan"
+              [(ngModel)]="reteiner.paymentPlan">
+            {{'PaymentPlan' | translate }}
+            <span></span>
+          </label>
+          <validation-messages [formCtrl]="Reteiner_PaymentPlan"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="m-checkbox-list">
+          <label for="Reteiner_SignatureRequired" class="kt-checkbox">
+            <input id="Reteiner_SignatureRequired" #Reteiner_SignatureRequired="ngModel" type="checkbox"
+              name="SignatureRequired" [(ngModel)]="reteiner.signatureRequired">
+            {{'SignatureRequired' | translate }}
+            <span></span>
+          </label>
+          <validation-messages [formCtrl]="Reteiner_SignatureRequired"></validation-messages>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

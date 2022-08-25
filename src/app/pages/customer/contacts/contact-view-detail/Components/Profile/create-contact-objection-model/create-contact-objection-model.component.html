@@ -1,0 +1,47 @@
+<form #contactForm="ngForm" novalidate autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'AddObjection' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'AddObjection' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+
+    <div class="container">
+      <div class="row">
+          <div class="card ccard radius-t-0 h-100">
+            <div class="position-tl w-102 border-t-3 brc-primary-tp3 ml-n1px mt-n1px"></div>
+
+            <div class="card-body pt-2 pb-1" [busyIf]="loading">
+              <div role="button" *ngFor="let item of objectionList; let i = index"
+                class="align-items-center my-2 bgc-secondary-l4 bgc-h-secondary-l3 radius-1 p-25 d-style">
+                <div class="row">
+                  <div class="col-md-10">
+                    <span class="text-default-d3 text-90 text-600">
+                      {{item.objectionEntity.objection}}
+                    </span>
+                  </div>
+                  <div class="col-md-2 d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary" [disabled]="saving"
+                      (click)="save(item.objectionEntity,i)">
+                      <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="saving && i == selectedIndex"></i>
+                      Add</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+
+  </div>
+  <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!contactForm.form.valid"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div> -->
+</form>

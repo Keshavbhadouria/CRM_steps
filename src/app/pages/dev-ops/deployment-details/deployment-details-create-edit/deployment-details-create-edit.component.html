@@ -1,0 +1,40 @@
+<form #deployDetailsMgtForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditDeploymentManagementDetail' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateDeploymentManagementDetail' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="DeploymentManagementName">{{"DeploymentManagement" | translate}}</label>
+                <ng-select [items]="allDeploys" bindValue="id" bindLabel="displayName"
+                    name="deploymentManagementDetail.deploymentId" [(ngModel)]="deploymentManagementDetail.deploymentId">
+                </ng-select>
+            </div>
+            <div class="col-md-6">
+                <label for="PMtaskTitle">{{"PMtask" | translate}}</label>
+                <ng-select [items]="allTasks" bindValue="id" bindLabel="displayName"
+                    name="deploymentManagementDetail.taskId" [(ngModel)]="deploymentManagementDetail.taskId">
+                </ng-select>
+            </div>
+            <br/><div class="m-checkbox-list mt-2">
+                <label for="DeploymentManagementDetail_Certified" class="kt-checkbox">
+                    <input id="DeploymentManagementDetail_Certified" #DeploymentManagementDetail_Certified="ngModel" type="checkbox" name="Certified" [(ngModel)]="deploymentManagementDetail.certified"> 
+                    {{"Certified" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="DeploymentManagementDetail_Certified"></validation-messages>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!deployDetailsMgtForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

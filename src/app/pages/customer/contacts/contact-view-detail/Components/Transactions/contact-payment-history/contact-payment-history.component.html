@@ -1,0 +1,197 @@
+<div class="container-fluid">
+  <app-page-title title="{{'ContactPaymentHistory' | translate }}" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i class="bx
+                                      bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2" *ngIf="contactId === 0">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'CreateNewContactPaymentHistory' | translate}}</button>
+            </div>
+          </div>
+
+          <!-- Advanced Filter  -->
+          <div class="row" [hidden]="!advancedFiltersAreShown">
+            <div class="col-md-12">
+              <div class="separator separator-dashed"></div>
+            </div>
+
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinPaymentAmountFilter">{{'MinMax' | translate }} {{'PaymentAmount' | translate }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinPaymentAmountFilter"
+                    [(ngModel)]="minPaymentAmountFilter" placeholder="{{'MinValue' | translate }}"
+                    name="minPaymentAmountFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxPaymentAmountFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxPaymentAmountFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinPaymentDateFilter">{{'PaymentDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinPaymentDateFilter" name="MinPaymentDateFilter" type="date"
+                    bsDatepicker placeholder="{{'MinValue' | translate }}" [(ngModel)]="minPaymentDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxPaymentDateFilter" name="MaxPaymentDateFilter" type="date"
+                    bsDatepicker placeholder="{{'MaxValue' | translate }}" [(ngModel)]="maxPaymentDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="CommentFilter">{{'Comment' | translate }}</label>
+                <input type="text" class="form-control" id="CommentFilter" name="commentFilter"
+                  [(ngModel)]="commentFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="GatewayNameFilter">{{'GatewayName' | translate }}</label>
+                <input type="text" class="form-control" id="GatewayNameFilter" name="gatewayNameFilter"
+                  [(ngModel)]="gatewayNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="GatewayResponseFilter">{{'GatewayResponse' | translate }}</label>
+                <input type="text" class="form-control" id="GatewayResponseFilter" name="gatewayResponseFilter"
+                  [(ngModel)]="gatewayResponseFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="RefundedFilterSelect">{{'Refunded' | translate }}</label>
+              <select class="form-control" name="RefundedFilter" id="RefundedFilterSelect" [(ngModel)]="refundedFilter">
+                <option value="-1">{{'All' | translate }}</option>
+                <option value="0">{{'False' | translate }}</option>
+                <option value="1">{{'True' | translate }}</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinRefundDateFilter">{{'RefundDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinRefundDateFilter" name="MinRefundDateFilter" type="date"
+                    bsDatepicker placeholder="{{'MinValue' | translate }}" [(ngModel)]="minRefundDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxRefundDateFilter" name="MaxRefundDateFilter" type="date"
+                    bsDatepicker placeholder="{{'MaxValue' | translate }}" [(ngModel)]="maxRefundDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="VoidFilterSelect">{{'Void' | translate }}</label>
+              <select class="form-control" name="VoidFilter" id="VoidFilterSelect" [(ngModel)]="voidFilter">
+                <option value="-1">{{'All' | translate }}</option>
+                <option value="0">{{'False' | translate }}</option>
+                <option value="1">{{'True' | translate }}</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinVoidedDateFilter">{{'VoidedDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinVoidedDateFilter" name="MinVoidedDateFilter" type="date"
+                    bsDatepicker placeholder="{{'MinValue' | translate }}" [(ngModel)]="minVoidedDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxVoidedDateFilter" name="MaxVoidedDateFilter" type="date"
+                    bsDatepicker placeholder="{{'MaxValue' | translate }}" [(ngModel)]="maxVoidedDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactFirstnameFilter">{{'Contact' | translate }} {{'Firstname' | translate }}</label>
+                <input type="text" class="form-control" id="ContactFirstnameFilter" name="contactFirstnameFilter"
+                  [(ngModel)]="contactFirstnameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="UserNameFilter">{{'User' | translate }} {{'Name' | translate }}</label>
+                <input type="text" class="form-control" id="UserNameFilter" name="userNameFilter"
+                  [(ngModel)]="userNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="UserName2Filter"> {{'User2' | translate }} {{'Name' | translate }}</label>
+                <input type="text" class="form-control" id="UserName2Filter" name="userName2Filter"
+                  [(ngModel)]="userName2Filter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactPaymentHistoryGatewayNameFilter">{{'ContactPaymentHistory' | translate }}
+                  {{'GatewayName' | translate }}</label>
+                <input type="text" class="form-control" id="ContactPaymentHistoryGatewayNameFilter"
+                  name="contactPaymentHistoryGatewayNameFilter" [(ngModel)]="contactPaymentHistoryGatewayNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="CRMPaymentMethodNameFilter">{{'CRMPaymentMethod' | translate }} {{'Name' | translate
+                  }}</label>
+                <input type="text" class="form-control" id="CRMPaymentMethodNameFilter"
+                  name="crmPaymentMethodNameFilter" [(ngModel)]="crmPaymentMethodNameFilter">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Show Hide Filters -->
+          <div class="row mb-2 mt-2">
+            <div class="col-sm-12">
+              <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i>
+                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+              <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i>
+                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table>
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-create-or-edit-contact-payment-history-modal [modal]="modal" ($modalClose)='modalEmitEvent()'
+    [data]="editPaymentHistory">
+  </app-create-or-edit-contact-payment-history-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-contact-payment-history-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewPhoneCall">
+  </app-contact-payment-history-view-modal>
+</ng-template>
+
+<ng-template #refundModal role="document" let-modal>
+  <app-contact-payment-refund [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="contactPaymentRefund">
+  </app-contact-payment-refund>
+</ng-template>

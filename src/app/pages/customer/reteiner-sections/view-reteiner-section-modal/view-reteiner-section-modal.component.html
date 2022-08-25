@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewReteinerSection' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>{{ 'SortIndex' | translate }}</label>
+                <p> {{reteinerSection.reteinerSections.sortIndex}} </p>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>{{ 'ParagraphNo' | translate }}</label>
+                <p> {{reteinerSection.reteinerSections.paragraphNo}} </p>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>{{"ContractSection" |
+                    translate}} {{'Title' |translate}}</label>
+                <p> {{reteinerSection.contractSectionTitle}} </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

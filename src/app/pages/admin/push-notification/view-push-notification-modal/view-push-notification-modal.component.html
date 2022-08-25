@@ -1,0 +1,80 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewPushNotification' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'To' | translate }}</label>
+                <p> {{pushNotification.pushNotificationHistory.to}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Title' | translate }}</label>
+                <p> {{pushNotification.pushNotificationHistory.title}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'SubTitle' | translate }}</label>
+                <p> {{pushNotification.pushNotificationHistory.subTitle}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Type' | translate }}</label>
+                <p> {{pushNotification.pushNotificationHistory.type}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Body' | translate }}</label>
+                <p [innerHtml]="pushNotification.pushNotificationHistory.body"></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'UserId' | translate }}</label>
+                <p> {{pushNotification.pushNotificationHistory.userId}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Priority' | translate }}</label>
+                <p> {{pushNotification.pushNotificationHistory.priority}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ContactId' | translate }}</label>
+                <p> {{pushNotification.pushNotificationHistory.contactId}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'IsSent' | translate}}</label>
+                <p *ngIf="!pushNotification.pushNotificationHistory.isSent"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="pushNotification.pushNotificationHistory.isSent"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ScheduleDatetime' | translate }}</label>
+                <p> {{pushNotification.pushNotificationHistory.scheduleDatetime | date:'yyyy-MM-dd'}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'CreatedOn' | translate }}</label>
+                <p> {{pushNotification.pushNotificationHistory.createdOn | date:'yyyy-MM-dd'}} </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

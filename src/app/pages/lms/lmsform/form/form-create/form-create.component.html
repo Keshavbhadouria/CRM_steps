@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <app-page-title title="CreateForm" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="CreateForm_Name">{{"Name" | translate}} *</label>
+                                <input type="text" #CreateForm_Name="ngModel" id="CreateForm_Name" class="form-control"
+                                    [(ngModel)]="createForm.name" name="Name" required />
+                                <validation-messages [formCtrl]="CreateForm_Name"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="CreateForm_FormTypeId">{{ 'FormType' | translate
+                                    }}</label>
+                                <ng-select dropdownPosition="top" [items]="allFormsType" #CreateForm_FormTypeId="ngModel" bindValue="id"
+                                    bindLabel="displayName" id="CreateForm_FormTypeId" name="lmsFormTypeId"
+                                    [(ngModel)]="createForm.lmsFormTypeId">
+                                </ng-select>
+                                <validation-messages [formCtrl]="CreateForm_FormTypeId"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="CreateForm_lmsDisplayTypeId">{{ 'DisplayType' | translate
+                                    }}</label>
+                                <ng-select dropdownPosition="top" [items]="allDisplayTypes" #CreateForm_lmsDisplayTypeId="ngModel"
+                                    bindValue="id" bindLabel="displayName" id="CreateForm_lmsDisplayTypeId"
+                                    name="lmsDisplayTypeId" [(ngModel)]="createForm.lmsDisplayTypeId">
+                                </ng-select>
+                                <validation-messages [formCtrl]="CreateForm_lmsDisplayTypeId"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="form-group">
+                                <h4>{{'Questions' | translate}}</h4>
+                            </div>
+                        </div>
+                        <ng-template #viewContainerRef></ng-template>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <button class="btn btn-primary" (click)="addQuestion()">{{'AddQuestion' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

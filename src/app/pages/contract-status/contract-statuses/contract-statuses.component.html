@@ -1,0 +1,136 @@
+<div class="container-fluid">
+    <!-- Filters -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="getContractStatuses()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="getContractStatuses()"><i class="bx bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-secondery"
+                                (click)="openCreateModal(createOrEditContent)">{{
+                                'CreateNewStatus' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-12">
+                            <div class="separator separator-dashed"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="StatusNameFilter">{{'ContractStatusName' |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="StatusNameFilter" name="statusNameFilter"
+                                    [(ngModel)]="statusNameFilter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shoe Hide Filters -->
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table List -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive" style="min-height: 40vh;">
+                        <table class="table align-middle  table-nowrap table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col" style="width: 70px;">#</th>
+                                    <th scope="col">{{ 'StatusName' | translate}}</th>
+                                    <th scope="col">{{ 'Action' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody [busyIf]="loading">
+                                <tr *ngFor="let item of contractStatusList ; let i = index">
+                                    <td>
+                                        <div class="avatar-xs">
+                                            <span class="avatar-title rounded-circle">
+                                                {{ i + 1 }}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5 class="font-size-14 mb-1"><a href="javascript: void(0);"
+                                                class="text-dark">{{item.contractStatus.statusName}}</a>
+                                        </h5>
+                                    </td>
+
+                                    <td>
+                                        <div class="dropdown" ngbDropdown placement="bottom-right">
+                                            <a href="javascript: void(0);" class="dropdown-toggle card-drop"
+                                                ngbDropdownToggle>
+                                                <i class="mdi mdi-dots-horizontal font-size-18"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                                                <!-- (click)="onViewProject(item , viewModal)" -->
+                                                <a class="dropdown-item pointer" href="javascript: void(0);" (click)="onViewContractStatus(item , viewContent)"><img
+                                                        src="../../../../assets/icons/Visual.png" alt="visual"
+                                                        height="24px" class="mr-2">
+                                                    <span class="ms-2 fw-bold">View</span> </a>
+
+                                                <a class="dropdown-item pointer"
+                                                    (click)="onEditContractStatus(item , createOrEditContent)"><img
+                                                        src="../../../../assets/icons/editIcon.svg" alt="visual"
+                                                        height="24px" class="mr-2">
+                                                    <span class="ms-2 fw-bold">Edit</span> </a>
+
+                                                <a class="dropdown-item pointer" href="javascript: void(0);"
+                                                    (click)="onDelete(item)"><img
+                                                        src=" ../../../../assets/icons/deleteIcon.svg" alt="visual"
+                                                        height="24px" class="mr-2">
+                                                    <span class="ms-2 fw-bold">Delete</span> </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Model -->
+<ng-template #createOrEditContent role="document" let-modal>
+    <app-contract-status-create-edit-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editContractStatus">
+    </app-contract-status-create-edit-modal>
+</ng-template>
+<ng-template #viewContent role="document" let-modal>
+    <app-contract-status-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editContractStatus">
+    </app-contract-status-view-modal>
+</ng-template>

@@ -1,0 +1,117 @@
+<!-- <form #pmCollaboratorForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'Pages.Collaborator.EditCollaborator' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'Pages.Collaborator.CreateCollaborator' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+
+    <div class="row">
+
+      <div class="form-group m-form__group col-md-4">
+        <label for="collaborator_roleId">Role</label>
+        <ng-select [items]="allRoles" bindValue="id" bindLabel="displayName" name="collaborator_roleId"
+          [(ngModel)]="collaborator.roleId"></ng-select>
+      </div>
+      <div class="form-group m-form__group col-md-4">
+        <label for="collaborator_roleId">Job</label>
+        <ng-select [items]="allJobDescriptions" bindValue="id" bindLabel="displayName" name="collaborator_jobDescriptionId"
+          [(ngModel)]="collaborator.jobDescriptionId"></ng-select>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="Collaborator_Fullname">{{'Fullname' | translate }} *</label>
+        <input type="text" #Collaborator_Fullname="ngModel" id="Collaborator_Fullname" class="form-control"
+          [(ngModel)]="collaborator.fullname" name="Fullname" required />
+        <validation-messages [formCtrl]="Collaborator_Fullname"></validation-messages>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="Collaborator_Email">{{'Email' | translate }} *</label>
+        <input type="text" #Collaborator_Email="ngModel" id="Collaborator_Email" class="form-control"
+          [(ngModel)]="collaborator.email" name="Email" required />
+        <validation-messages [formCtrl]="Collaborator_Email"></validation-messages>
+      </div>
+
+        <div class="form-group col-md-4">
+          <label for="Collaborator_Phone">{{'Phone' | translate }}</label>
+          <input type="text" #Collaborator_Phone="ngModel" id="Collaborator_Phone" class="form-control"
+            [(ngModel)]="collaborator.phone" name="Phone" />
+          <validation-messages [formCtrl]="Collaborator_Phone"></validation-messages>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="Collaborator_Country">{{'Country' | translate }} *</label>
+          <input type="text" #Collaborator_Country="ngModel" id="Collaborator_Country" class="form-control"
+            [(ngModel)]="collaborator.country" name="Country" required />
+          <validation-messages [formCtrl]="Collaborator_Country"></validation-messages>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="Collaborator_Timezone">{{'Timezone' | translate }} *</label>
+          <input type="text" #Collaborator_Timezone="ngModel" id="Collaborator_Timezone" class="form-control"
+            [(ngModel)]="collaborator.timezone" name="Timezone" required />
+          <validation-messages [formCtrl]="Collaborator_Timezone"></validation-messages>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="Collaborator_WeeklyHoursAvailabilty">{{'WeeklyHoursAvailabilty' | translate }}</label>
+          <input type="number" #Collaborator_WeeklyHoursAvailabilty="ngModel" id="Collaborator_WeeklyHoursAvailabilty"
+            class="form-control" [(ngModel)]="collaborator.weeklyHoursAvailabilty" name="WeeklyHoursAvailabilty" />
+          <validation-messages [formCtrl]="Collaborator_WeeklyHoursAvailabilty"></validation-messages>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="Collaborator_WorkingTimeFromToEstTime">{{'WorkingTimeFromToEstTime' | translate }} *</label>
+          <input type="text" #Collaborator_WorkingTimeFromToEstTime="ngModel" id="Collaborator_WorkingTimeFromToEstTime"
+            class="form-control" [(ngModel)]="collaborator.workingTimeFromToEstTime" name="WorkingTimeFromToEstTime"
+            required />
+          <validation-messages [formCtrl]="Collaborator_WorkingTimeFromToEstTime"></validation-messages>
+        </div>
+
+
+
+        <div class="form-group col-md-4">
+          <label for="Collaborator_Velocity">{{'Velocity' | translate }}</label>
+          <input type="number" #Collaborator_Velocity="ngModel" id="Collaborator_Velocity" class="form-control"
+            [(ngModel)]="collaborator.velocity" name="Velocity" />
+          <validation-messages [formCtrl]="Collaborator_Velocity"></validation-messages>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="Collaborator_Performance">{{'Performance' | translate }}</label>
+          <input type="number" #Collaborator_Performance="ngModel" id="Collaborator_Performance" class="form-control"
+            [(ngModel)]="collaborator.performance" name="Performance" />
+          <validation-messages [formCtrl]="Collaborator_Performance"></validation-messages>
+        </div>
+        <br />
+        <div class="m-checkbox-list mt-3">
+          <label for="Collaborator_Active" class="kt-checkbox">
+            <input id="Collaborator_Active" #Collaborator_Active="ngModel" type="checkbox" name="Active"
+              [(ngModel)]="collaborator.active">
+            {{'Active' | translate }}
+            <span></span>
+          </label>
+          <validation-messages [formCtrl]="Collaborator_Active"></validation-messages>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Collaborator_Description">{{'Description' | translate }}</label>
+        <ckeditor [editor]="Editor" [(ngModel)]="collaborator.description" #Collaborator_Description="ngModel"
+          id="Collaborator_Description" name="Description"></ckeditor>
+        <validation-messages [formCtrl]="Collaborator_Description"></validation-messages>
+      </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary"> <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+        *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>
+
+
+
+ -->

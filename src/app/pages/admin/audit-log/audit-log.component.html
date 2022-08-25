@@ -1,0 +1,203 @@
+<div class="container-fluid">
+    <app-page-title title="AuditLog" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <tabset>
+        <tab heading="{{'OperationLogs' | translate}}">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Filter -->
+                            <!-- <div class="row">
+                                <div class="col-md-10">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                            placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                            aria-describedby="basic-addon1">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text pointer" id="basic-addon1"
+                                                (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-secondery"
+                                        (click)="openCreateModal(createModal)">{{
+                                        'CreateNewAffiliate' | translate}}</button>
+                                </div>
+                            </div> -->
+
+                            <!-- Advanced Filter  -->
+                            <div class="row" [hidden]="!advancedFiltersAreShown">
+                                <form #auditFilterForm="ngForm" (ngSubmit)="getAuditLog()">
+                                    <div class="row align-items-center mb-2">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <!-- <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="MinScheduleDateFilter">{{'ScheduleDateRange' | translate}} </label>
+                                                        <div class="input-group clockpicker">
+                                                            <input class="form-control m-input " id="MinScheduleDateFilter"
+                                                                name="minScheduleDateFilter" type="date"
+                                                                placeholder="{{'Pages.Project.Min' | translate}}"
+                                                                [(ngModel)]="minScheduleDateFilter">
+                                                            <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                                            <input class="form-control m-input" id="MaxScheduleDateFilter"
+                                                                name="maxScheduleDateFilter" type="date"
+                                                                placeholder="{{'Pages.Project.Max' | translate}}"
+                                                                [(ngModel)]="maxScheduleDateFilter">
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                                <label for="StartEndRange">{{"DateRange" | translate}}</label>
+                                                <input class="form-control m-input " id="StartEndRange"
+                                                    name="StartEndRange" type="date"
+                                                    placeholder="{{'Pages.Project.Min' | translate}}"
+                                                    [(ngModel)]="dateRange">
+
+                                                <!-- <input class="form-control" id="StartEndRange" name="StartEndRange"
+                                                    #drp="bsDaterangepicker" readonly="readonly" bsDaterangepicker
+                                                    dateRangePickerMomentModifier [(date)]="dateRange" /> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="UsernameAuditLog">{{"UserName" | translate}}</label>
+                                                <input id="UsernameAuditLog" type="text" name="UsernameAuditLog"
+                                                    class="form-control" [(ngModel)]="usernameAuditLog">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="ServiceName">{{"Service" | translate}}</label>
+                                                <input id="ServiceName" name="ServiceName" type="text"
+                                                    class="form-control" [(ngModel)]="serviceName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label style="display: block">{{"Duration" | translate}}</label>
+                                            <div class="input-group" style="width: 250px !important;">
+                                                <input type="text" name="MinExecutionDuration" only-number=""
+                                                    class="form-control" min="0" max="86400000" ng-minlength="0"
+                                                    ng-maxlength="8" [(ngModel)]="minExecutionDuration">
+                                                <div class="input-group-append"><span
+                                                        class="input-group-text">---</span></div>
+                                                <input type="text" name="MaxExecutionDuration" only-number=""
+                                                    class="form-control" min="0" max="86400000" ng-minlength="0"
+                                                    ng-maxlength="8" [(ngModel)]="maxExecutionDuration">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="MethodName">{{"Action" | translate}}</label>
+                                                <input id="MethodName" type="text" name="MethodName"
+                                                    class="form-control" [(ngModel)]="methodName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="HasException">{{"ErrorState" | translate}}</label>
+                                                <select id="HasException" name="HasException" class="form-control"
+                                                    [(ngModel)]="hasException">
+                                                    <option value="">{{"All" | translate}}</option>
+                                                    <option value="false">{{"Success" | translate}}</option>
+                                                    <option value="true">{{"HasError" | translate}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="BrowserInfo">{{"Browser" | translate}}</label>
+                                                <input id="BrowserInfo" type="text" name="BrowserInfo"
+                                                    class="form-control" [(ngModel)]="browserInfo">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Shoe Hide Filters -->
+                            <div class="row mb-2 mt-2">
+                                <div class="col-sm-12">
+                                    <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                        (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                            class="fa fa-angle-down"></i>
+                                        {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                                    <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                        (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                            class="fa fa-angle-up"></i>
+                                        {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings"
+                [buttons]="buttonSettings" [pagination]="paginationSettings">
+            </app-dynamic-table>
+        </tab>
+        <tab heading="{{'ChangeLogs' | translate}}">
+            <div class="row heading-common-section mt-2">
+                <form class="form" autocomplete="off">
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="StartEndRangeEntityChange">{{"DateRange" | translate}}</label>
+                                <input class="form-control m-input " id="StartEndRangeEntityChange"
+                                                    name="StartEndRangeEntityChange" type="date"
+                                                    placeholder="{{'Pages.Project.Min' | translate}}"
+                                                    [(ngModel)]="dateRange">
+
+                                <!-- <input class="form-control" id="StartEndRangeEntityChange"
+                                    name="StartEndRangeEntityChange" readonly="readonly" #drp="bsDaterangepicker"
+                                    bsDaterangepicker dateRangePickerMomentModifier [(date)]="dateRange"> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="UserNameEntityChange">{{"UserName" | translate}}</label>
+                                <input id="UserNameEntityChange" type="text" name="UserNameEntityChange"
+                                    class="form-control" [(ngModel)]="usernameEntityChange">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="EntityTypeFullName">{{"Object" | translate}}</label>
+
+                                <select id="EntityTypeFullName" name="EntityTypeFullName" class="form-control"
+                                    [(ngModel)]="entityTypeFullName">
+                                    <option value=undefined selected="selected">{{"All" | translate}}
+                                    </option>
+                                    <option *ngFor="let objectType of objectTypes" [value]="objectType.value">
+                                        {{objectType.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <app-dynamic-table [busyIf]="loading" [records]="myData1" [settings]="tableSettings1"
+                [buttons]="buttonSettings1" [pagination]="paginationSettings1">
+            </app-dynamic-table>
+        </tab>
+    </tabset>
+</div>
+
+<!-- Create Model -->
+<!-- <ng-template #createModal role="document" let-modal>
+    <app-create-or-edit-affiliate-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editAffiliate">
+    </app-create-or-edit-affiliate-modal>
+</ng-template> -->
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-audit-log-view [modal]="modal" [data]="viewOperationLog">
+    </app-audit-log-view>
+</ng-template>

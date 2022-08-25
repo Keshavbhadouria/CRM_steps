@@ -1,0 +1,54 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewOnlineTool' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label>{{"URL" | translate}}</label>
+                <p>
+                    {{ onlineTools.url }}
+                </p>
+            </div>
+            <div class="col-6 mb-3">
+                <label>{{"ServiceName" | translate}}</label>
+                <p>
+                    {{ onlineTools.serviceName }}
+                </p>
+                
+            </div>
+            <div class="col-6 mb-3">
+                <label>{{"Description" | translate}}</label>
+                <p [innerHtml] ="onlineTools.description" >
+                </p>
+            </div>
+            <div class="col-6 mb-3">
+                <label>{{"Username" | translate}}</label>
+                <p>
+                    {{ onlineTools.username }}
+                </p>
+            </div>
+            <div class="col-6 mb-3">
+                <label>{{"Password" | translate}}</label>
+                <p>
+                    {{ onlineTools.password }}
+                </p>
+            </div>
+            <div class="col-6 mb-3">
+                <label>{{"MonthlyFee" | translate}}</label>
+                <p>
+                    {{ onlineTools.monthlyFee }}
+                </p>
+            </div>
+            <div class="col-6 mb-3">
+                <label>{{"Active" | translate}}</label>
+                <div *ngIf="onlineTools.active" class="text-left"><i class="fa fa-check-circle text-success"
+                        title="True"></i></div>
+                <div *ngIf="!onlineTools.active" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
+            </div>
+        </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

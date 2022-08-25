@@ -1,0 +1,117 @@
+<form autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> {{'ServiceActivityStepView' | translate}}
+        </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>{{'Step' | translate }} :</h6>
+                {{ item.servicesActivityStep.step }}
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'SortIndex' | translate }} :</h6>
+                {{ item.servicesActivityStep.sortIndex }}
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'Active' | translate }} :</h6>
+                <div *ngIf="item.servicesActivityStep.active" class="text-left"><i
+                        class="fa fa-check-circle text-success" title="True"></i></div>
+                <div *ngIf="!item.servicesActivityStep.active" class="text-left"><i class="fa fa-times-circle"
+                        title="False"></i></div>
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'DoOnDay' | translate }} :</h6>
+                {{ item.servicesActivityStep.doOnDay }}
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'A_OverDue' | translate }} :</h6>
+                <div *ngIf="item.servicesActivityStep.a_OverDue" class="text-left"><i
+                        class="fa fa-check-circle text-success" title="True"></i></div>
+                <div *ngIf="!item.servicesActivityStep.a_OverDue" class="text-left"><i class="fa fa-times-circle"
+                        title="False"></i></div>
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'A_Completed' | translate }} :</h6>
+                <div *ngIf="item.servicesActivityStep.a_Completed" class="text-left"><i
+                        class="fa fa-check-circle text-success" title="True"></i></div>
+                <div *ngIf="!item.servicesActivityStep.a_Completed" class="text-left"><i class="fa fa-times-circle"
+                        title="False"></i></div>
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'A_Updated' | translate }} :</h6>
+                <div *ngIf="item.servicesActivityStep.a_Updated" class="text-left"><i
+                        class="fa fa-check-circle text-success" title="True"></i></div>
+                <div *ngIf="!item.servicesActivityStep.a_Updated" class="text-left"><i class="fa fa-times-circle"
+                        title="False"></i></div>
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'L_Overdue' | translate }} :</h6>
+                <div *ngIf="item.servicesActivityStep.l_Overdue" class="text-left"><i
+                        class="fa fa-check-circle text-success" title="True"></i></div>
+                <div *ngIf="!item.servicesActivityStep.l_Overdue" class="text-left"><i class="fa fa-times-circle"
+                        title="False"></i></div>
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'L_Completed' | translate }} :</h6>
+                <div *ngIf="item.servicesActivityStep.l_Completed" class="text-left"><i
+                        class="fa fa-check-circle text-success" title="True"></i></div>
+                <div *ngIf="!item.servicesActivityStep.l_Completed" class="text-left"><i class="fa fa-times-circle"
+                        title="False"></i></div>
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'L_Update' | translate }} :</h6>
+                <div *ngIf="item.servicesActivityStep.l_Update" class="text-left"><i
+                        class="fa fa-check-circle text-success" title="True"></i></div>
+                <div *ngIf="!item.servicesActivityStep.l_Update" class="text-left"><i class="fa fa-times-circle"
+                        title="False"></i></div>
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'C_Overdue' | translate }} :</h6>
+                <div *ngIf="item.servicesActivityStep.c_Overdue" class="text-left"><i
+                        class="fa fa-check-circle text-success" title="True"></i></div>
+                <div *ngIf="!item.servicesActivityStep.c_Overdue" class="text-left"><i class="fa fa-times-circle"
+                        title="False"></i></div>
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'C_Completed' | translate }} :</h6>
+                <div *ngIf="item.servicesActivityStep.c_Completed" class="text-left"><i
+                        class="fa fa-check-circle text-success" title="True"></i></div>
+                <div *ngIf="!item.servicesActivityStep.c_Completed" class="text-left"><i class="fa fa-times-circle"
+                        title="False"></i></div>
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'C_Update' | translate }} :</h6>
+                <div *ngIf="item.servicesActivityStep.c_Update" class="text-left"><i
+                        class="fa fa-check-circle text-success" title="True"></i></div>
+                <div *ngIf="!item.servicesActivityStep.c_Update" class="text-left"><i class="fa fa-times-circle"
+                        title="False"></i></div>
+            </div>
+            <div class="col-6 mb-3">
+                <h6>{{'Description' | translate }} :</h6>
+                <span [innerHtml] = "item.servicesActivityStep.description"></span>
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>({{'ServiceActivity' | translate }}) {{'ActivityName' | translate }} :</h6>
+                {{item.serviceActivityActivityName}}
+            </div>
+            <div class="col-6 mb-3">
+                <h6>({{'LawfirmService' | translate }}) {{'ServicesName' | translate }} :</h6>
+                {{item.lawfirmServiceServicesName}}
+            </div>
+            <div class="col-6 mb-3">
+                <h6>({{'ContactTaskRole' | translate }}) {{'RoleName' | translate }} :</h6>
+                {{item.contactTaskRoleRoleName}}
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+    </div>
+</form>

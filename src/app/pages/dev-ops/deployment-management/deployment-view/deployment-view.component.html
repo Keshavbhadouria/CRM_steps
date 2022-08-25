@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewDeployManagement' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{"Name" | translate }} </label>
+            <p>
+                {{ dm.deploymentManagement.name }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"ReleaseDate" | translate }} </label>
+            <p>
+                {{ dm.deploymentManagement.releaseDate | date: 'dd/MM/yyyy' }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{"Approved" | translate }} </label>
+            <div *ngIf="dm.deploymentManagement.approved" class="text-left"><i class="fa fa-check-circle text-success"
+                    title="True"></i></div>
+            <div *ngIf="!dm.deploymentManagement.approved" class="text-left"><i class="fa fa-times-circle"
+                    title="False"></i></div>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"ClientApplication" | translate }}) {{"ApplicationName" | translate }} </label>
+            <p>
+                {{dm.clientApplicationApplicationName}}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"User" | translate }}) {{"Name" | translate }} </label>
+            <p>
+                {{dm.userName}}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>({{"PMProject" | translate }}) {{"ProjectName" | translate }} </label>
+            <p>
+                {{dm.pmProjectProjectName}}
+            </p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

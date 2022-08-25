@@ -1,0 +1,174 @@
+<div class="container-fluid">
+    <app-page-title title="PhysicalExam" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <!-- Filters -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <!-- (click)="openCreateModal(createOrEditContent)" -->
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreatePhysicalExam' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="FCFilter">{{"FC" | translate }}</label>
+                                <input type="text" class="form-control" id="FCFilter" name="fcFilter" [(ngModel)]="fcFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinPulsoFilter">{{"MinMax" | translate }} {{"Pulso" | translate }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinPulsoFilter" [(ngModel)]="minPulsoFilter" placeholder="{{'MinValue' | translate }}" name="minPulsoFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxPulsoFilter" placeholder="{{'MaxValue' | translate }}" name="maxPulsoFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="TAFilter">{{"TA" | translate }}</label>
+                                <input type="text" class="form-control" id="TAFilter" name="taFilter" [(ngModel)]="taFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinTemperaturaFilter">{{"MinMax" | translate }} {{"Temperatura" | translate }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinTemperaturaFilter" [(ngModel)]="minTemperaturaFilter" placeholder="{{'MinValue' | translate }}" name="minTemperaturaFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxTemperaturaFilter" placeholder="{{'MaxValue' | translate }}" name="maxTemperaturaFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinTalla_PiesFilter">{{"MinMax" | translate }} {{"Talla_Pies" | translate }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinTalla_PiesFilter" [(ngModel)]="minTalla_PiesFilter" placeholder="{{'MinValue' | translate }}" name="minTalla_PiesFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxTalla_PiesFilter" placeholder="{{'MaxValue' | translate }}" name="maxTalla_PiesFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinTalla_pulgadasFilter">{{"MinMax" | translate }} {{"Talla_pulgadas" | translate }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinTalla_pulgadasFilter" [(ngModel)]="minTalla_pulgadasFilter" placeholder="{{'MinValue' | translate }}" name="minTalla_pulgadasFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxTalla_pulgadasFilter" placeholder="{{'MaxValue' | translate }}" name="maxTalla_pulgadasFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinPesoFilter">{{"MinMax" | translate }} {{"Peso" | translate }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinPesoFilter" [(ngModel)]="minPesoFilter" placeholder="{{'MinValue' | translate }}" name="minPesoFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxPesoFilter" placeholder="{{'MaxValue' | translate }}" name="maxPesoFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinSCm2Filter">{{"MinMax" | translate }} {{"SCm2" | translate }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinSCm2Filter" [(ngModel)]="minSCm2Filter" placeholder="{{'MinValue' | translate }}" name="minSCm2Filter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxSCm2Filter" placeholder="{{'MaxValue' | translate }}" name="maxSCm2Filter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PalidezFilter">{{"Palidez" | translate }}</label>
+                                <input type="text" class="form-control" id="PalidezFilter" name="palidezFilter" [(ngModel)]="palidezFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinIctericiaFilter">{{"MinMax" | translate }} {{"Ictericia" | translate }}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinIctericiaFilter" [(ngModel)]="minIctericiaFilter" placeholder="{{'MinValue' | translate }}" name="minIctericiaFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxIctericiaFilter" placeholder="{{'MaxValue' | translate }}" name="maxIctericiaFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="PeloFilter">{{"Pelo" | translate }}</label>
+                                <input type="text" class="form-control" id="PeloFilter" name="peloFilter" [(ngModel)]="peloFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="UnasFilter">{{"Unas" | translate }}</label>
+                                <input type="text" class="form-control" id="UnasFilter" name="unasFilter" [(ngModel)]="unasFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ComentariosFilter">{{"Comentarios" | translate }}</label>
+                                <input type="text" class="form-control" id="ComentariosFilter" name="comentariosFilter" [(ngModel)]="comentariosFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ContactCompanyFilter">({{"Contact" | translate }}) {{"Company" | translate }}</label>
+                                <input type="text" class="form-control" id="ContactCompanyFilter" name="contactCompanyFilter" [(ngModel)]="contactCompanyFilter">
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Shoe Hide Filters -->
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table List -->
+
+    <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table>
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-physical-exam-create-edit [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editStatus">
+    </app-physical-exam-create-edit>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-physical-exam-view [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewStatus">
+    </app-physical-exam-view>
+</ng-template>
+

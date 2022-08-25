@@ -1,0 +1,47 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewContactEmail' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-6 mb-3">
+        <h6>{{'Subject' | translate }} :</h6>
+        {{ item.contactEmailHistory.subject }}
+      </div>
+      <div class="col-6 mb-3">
+        <h6>{{'BodyMessage' | translate }} :</h6>
+        <div [innerHTML]="item.contactEmailHistory.bodyMessage"></div>
+      </div>
+      <div class="col-6 mb-3">
+        <h6>{{'Gateway' | translate }} :</h6>
+        {{ item.contactEmailHistory.gateway }}
+      </div>
+      <div class="col-6 mb-3">
+        <h6>{{'GatewayResponse' | translate }} :</h6>
+        {{ item.contactEmailHistory.gatewayResponse }}
+      </div>
+      <div class="col-6 mb-3">
+        <h6>{{'AttachmentUrl' | translate }} :</h6>
+        <a href="java"></a>
+        <a *ngIf="item.contactEmailHistory.attachmentUrl"
+        href="javascript: void(0)"
+        (click)="openLinkInNewTab(item.contactEmailHistory.attachmentUrl)">Attachment Link</a>
+      </div>
+
+      <div class="col-6 mb-3">
+        <h6>({{'User' | translate }}) {{'Name' | translate }} :</h6>
+        {{item.userName}}
+      </div>
+      <div class="col-6 mb-3">
+        <h6>({{'Contact' | translate }}) {{'Company' | translate }} :</h6>
+        {{item.contactCompany}}
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

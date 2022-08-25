@@ -1,0 +1,102 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewContact' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>{{'Company' | translate }} :</h6>
+          {{ item.contact.company }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Firstname' | translate }} :</h6>
+          {{ item.contact.firstname }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Lastname' | translate }} :</h6>
+          {{ item.contact.lastname }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Email' | translate }} :</h6>
+          {{ item.contact.email }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Phone' | translate }} :</h6>
+          {{ item.contact.phone }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Extension' | translate }} :</h6>
+          {{ item.contact.extension }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'PreferredTime1' | translate }} :</h6>
+          {{ item.contact.preferredTime1 |  date:'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'PreferredTime2' | translate }} :</h6>
+          {{ item.contact.preferredTime2 |  date:'YYYY-MM-DD HH:mm:ss'  }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Address1' | translate }} :</h6>
+          {{ item.contact.address1 }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Address2' | translate }} :</h6>
+          {{ item.contact.address2 }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'City' | translate }} :</h6>
+          {{ item.contact.city }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'State' | translate }} :</h6>
+          {{ item.contact.state }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Country' | translate }} :</h6>
+          {{ item.contact.country }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Zipcode' | translate }} :</h6>
+          {{ item.contact.zipcode }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Score' | translate }} :</h6>
+          {{ item.contact.score }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'WebURL' | translate }} :</h6>
+          {{ item.contact.webURL }}
+      </div>
+
+      <div class="col-6 mb-3">
+          <h6>({{'TargetTitle' | translate }}) {{'Title' | translate }} :</h6>
+          {{item.targetTitleTitle}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'LeadTemperature' | translate }}) {{'Temperature' | translate }} :</h6>
+          {{item.leadTemperatureTemperature}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'LeadSource' | translate }}) {{'SourceName' | translate }} :</h6>
+          {{item.leadSourceSourceName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'LeadStage' | translate }}) {{'StageName' | translate }} :</h6>
+          {{item.leadStageStageName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'LeadStatus' | translate }}) {{'StatusName' | translate }} :</h6>
+          {{item.leadStatusStatusName}}
+      </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

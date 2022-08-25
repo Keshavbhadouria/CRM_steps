@@ -1,0 +1,15 @@
+.activity-section {
+    position: fixed;
+    right: 0px;
+    top: 70px;
+    height: 100vh;
+    div.card {
+        div.card-body {
+            min-height: calc(100vh - 100px);
+        }
+    }
+}
+.bottom-border-flat{
+        border-bottom-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+}

@@ -1,0 +1,104 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewApplicationRecurrentJob' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'ClientApplicationName' | translate}}</label>
+                <p> {{recurrentJob.clientApplicationApplicationName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'ServerInventoryName' | translate}}</label>
+                <p> {{recurrentJob.serverInventoryServerName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Responsible' | translate}}</label>
+                <p> {{recurrentJob.userName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'JobName' | translate}}</label>
+                <p> {{recurrentJob.applicationRecurrentJob.jobName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'RunningAtTime' | translate}}</label>
+                <p> {{recurrentJob.applicationRecurrentJob.runningAtTime | date:'yyyy-mm-dd'}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'DayOfTheMonth' | translate}}</label>
+                <p> {{recurrentJob.applicationRecurrentJob.dayOfTheMonth}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Monday' | translate}}</label>
+                <p *ngIf="!recurrentJob.applicationRecurrentJob.monday"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="recurrentJob.applicationRecurrentJob.monday"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Tuesday' | translate}}</label>
+                <p *ngIf="!recurrentJob.applicationRecurrentJob.tuesday"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="recurrentJob.applicationRecurrentJob.tuesday"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Wednesday' | translate}}</label>
+                <p *ngIf="!recurrentJob.applicationRecurrentJob.wednesday"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="recurrentJob.applicationRecurrentJob.wednesday"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Thursday' | translate}}</label>
+                <p *ngIf="!recurrentJob.applicationRecurrentJob.thursday"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="recurrentJob.applicationRecurrentJob.thursday"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Friday' | translate}}</label>
+                <p *ngIf="!recurrentJob.applicationRecurrentJob.friday"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="recurrentJob.applicationRecurrentJob.friday"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Saturday' | translate}}</label>
+                <p *ngIf="!recurrentJob.applicationRecurrentJob.saturday"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="recurrentJob.applicationRecurrentJob.saturday"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'Sunday' | translate}}</label>
+                <p *ngIf="!recurrentJob.applicationRecurrentJob.sunday"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="recurrentJob.applicationRecurrentJob.sunday"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

@@ -1,0 +1,107 @@
+<div class="container-fluid">
+  <app-page-title title="CustomerContractSignature" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <!-- Filters -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Filter"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i
+                      class="bx bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-2">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'CreateContractTemplateDetail' | translate}}</button>
+            </div> -->
+          </div>
+
+          <!-- Advanced Filter  -->
+          <div class="row" [hidden]="!advancedFiltersAreShown">
+            <div class="col-md-12">
+              <div class="separator separator-dashed"></div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinAgreementDateFilter">{{'AgreementDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinAgreementDateFilter" name="MinAgreementDateFilter"
+                    type="datetime" bsDatepicker placeholder="{{'MinValue' | translate }}"
+                    [(ngModel)]="minAgreementDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxAgreementDateFilter" name="MaxAgreementDateFilter"
+                    type="datetime" bsDatepicker placeholder="{{'MaxValue' | translate }}"
+                    [(ngModel)]="maxAgreementDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="SignatureUrlFilter">{{'SignatureUrl' | translate }}</label>
+                <input type="text" class="form-control" id="SignatureUrlFilter" name="signatureUrlFilter"
+                  [(ngModel)]="signatureUrlFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="CustomerContratTemplateContractNameFilter">({{'CustomerContratTemplate' | translate }})
+                  {{'ContractName' | translate }}</label>
+                <input type="text" class="form-control" id="CustomerContratTemplateContractNameFilter"
+                  name="customerContratTemplateContractNameFilter"
+                  [(ngModel)]="customerContratTemplateContractNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="UserNameFilter">({{'User' | translate }}) {{'Name' | translate }}</label>
+                <input type="text" class="form-control" id="UserNameFilter" name="userNameFilter"
+                  [(ngModel)]="userNameFilter">
+              </div>
+            </div>
+
+          </div>
+          <!-- Shoe Hide Filters -->
+          <div class="row mb-2 mt-2">
+            <div class="col-sm-12">
+              <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i>
+                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+              <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i>
+                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table>
+
+  <!-- end row -->
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <!-- <app-customer-contract-detail-create-edit-modal [modal]="modal" ($modalClose)='modalEmitEvent()'
+    [data]="editProject">
+  </app-customer-contract-detail-create-edit-modal> -->
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-customer-contract-signatures-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewProject">
+  </app-customer-contract-signatures-view-modal>
+</ng-template>

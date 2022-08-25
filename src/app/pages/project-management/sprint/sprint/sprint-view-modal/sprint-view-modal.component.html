@@ -1,0 +1,50 @@
+<form novalidate autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'Pages.Sprint.ViewSprint' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-6 mb-3">
+          <h6>{{'Sprint' | translate }} :</h6>
+          {{ item.pmSprint.sprint }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'Description' | translate }} :</h6>
+          <p [innerHtml]="item.pmSprint.description"></p>
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'StartDate' | translate }} :</h6>
+          {{ item.pmSprint.startDate |  date: 'dd/MM/yyyy'  }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'EndDate' | translate }} :</h6>
+          {{ item.pmSprint.endDate |  date: 'dd/MM/yyyy'  }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'ReleaseDate' | translate }} :</h6>
+          {{ item.pmSprint.releaseDate |  date: 'dd/MM/yyyy'  }}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>{{'StoryPoints' | translate }} :</h6>
+          {{ item.pmSprint.storyPoints }}
+      </div>
+
+      <div class="col-6 mb-3">
+          <h6>({{'PMProject' | translate }}) {{'ProjectName' | translate }} :</h6>
+          {{item.pmProjectProjectName}}
+      </div>
+      <div class="col-6 mb-3">
+          <h6>({{'PMSprintStatus' | translate }}) {{'Status' | translate }} :</h6>
+          {{item.pmSprintStatusStatus}}
+      </div>
+
+  </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

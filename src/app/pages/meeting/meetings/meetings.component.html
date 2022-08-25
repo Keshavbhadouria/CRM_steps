@@ -1,0 +1,198 @@
+<div class="container-fluid">
+    <app-page-title title="Meetings" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                                    placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateNewZoomCallMeeting' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-12">
+                            <div class="separator separator-dashed"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ZoomMeetingUrlFilter">{{"ZoomMeetingUrl" | translate}}</label>
+                                <input type="text" class="form-control" id="ZoomMeetingUrlFilter"
+                                    name="zoomMeetingUrlFilter" [(ngModel)]="zoomMeetingUrlFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinScheduleDateFilter">{{'ScheduleDateRange' | translate}} </label>
+                                <div class="input-group clockpicker">
+                                    <input class="form-control m-input " id="MinScheduleDateFilter"
+                                        name="minScheduleDateFilter" type="date"
+                                        placeholder="{{'Pages.Project.Min' | translate}}"
+                                        [(ngModel)]="minScheduleDateFilter">
+                                    <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                                    <input class="form-control m-input" id="MaxScheduleDateFilter"
+                                        name="maxScheduleDateFilter" type="date"
+                                        placeholder="{{'Pages.Project.Max' | translate}}"
+                                        [(ngModel)]="maxScheduleDateFilter">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CommentsFilter">{{"Comments" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="CommentsFilter" name="commentsFilter"
+                                    [(ngModel)]="commentsFilter">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinMeetingStatusIdFilter">{{"MinMax" | translate}} {{"MeetingStatus" |
+                                    translate}}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinMeetingStatusIdFilter"
+                                        [(ngModel)]="minMeetingStatusIdFilter" placeholder="{{'MinValue' | translate}}"
+                                        name="minMeetingStatusIdFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxMeetingStatusIdFilter"
+                                        placeholder="{{ 'MaxValue' | translate}}" name="maxMeetingStatusIdFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="IsActiveFilter">{{ "Active" | translate}}</label>
+                                <select class="form-control" name="isActiveFilter" id="IsActiveFilter"
+                                    [(ngModel)]="isActiveFilter">
+                                    <option value="-1">{{ "All" | translate}}</option>
+                                    <option value="0">{{ "False" | translate}}</option>
+                                    <option value="1">{{ "True" | translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ZoomUUIDFilter">{{"ZoomUUID" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="ZoomUUIDFilter" name="zoomUUIDFilter"
+                                    [(ngModel)]="zoomUUIDFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ZoomMeetingIdFilter">{{"ZoomMeetingId" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="ZoomMeetingIdFilter" name="zoomMeetingIdFilter"
+                                    [(ngModel)]="zoomMeetingIdFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ContactCompanyFilter">{{"Company" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="ContactCompanyFilter" name="contactCompanyFilter"
+                                    [(ngModel)]="contactCompanyFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="UserNameFilter">{{"UserName" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="UserNameFilter" name="userNameFilter"
+                                    [(ngModel)]="userNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MeetingTimeSlotsStartTimeFilter">{{"MeetingTimeSlots" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="MeetingTimeSlotsStartTimeFilter" name="meetingTimeSlotsStartTimeFilter"
+                                    [(ngModel)]="meetingTimeSlotsStartTimeFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MeetingDaysLookupDayShortNameFilter">{{"MeetingDay" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="MeetingDaysLookupDayShortNameFilter" name="meetingDaysLookupDayShortNameFilter"
+                                    [(ngModel)]="meetingDaysLookupDayShortNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ContactZoomMeetingAppointmentReasonReasonFilter">{{"AppointmentReason" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="ContactZoomMeetingAppointmentReasonReasonFilter" name="contactZoomMeetingAppointmentReasonReasonFilter"
+                                    [(ngModel)]="contactZoomMeetingAppointmentReasonReasonFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ContactZoomMeetingOutputOutputFilter">{{"ExpectedOutput" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="ContactZoomMeetingOutputOutputFilter" name="contactZoomMeetingOutputOutputFilter"
+                                    [(ngModel)]="contactZoomMeetingOutputOutputFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ContactZoomMeetingOutputOutput2Filter">{{"ActualOutput" |
+                                    translate}}</label>
+                                <input type="text" class="form-control" id="ContactZoomMeetingOutputOutput2Filter" name="contactZoomMeetingOutputOutput2Filter"
+                                    [(ngModel)]="contactZoomMeetingOutputOutput2Filter">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shoe Hide Filters -->
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table>
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-create-or-meeting-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editMeeting">
+    </app-create-or-meeting-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-view-meeting-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewMeeting">
+    </app-view-meeting-modal>
+</ng-template>

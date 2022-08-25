@@ -1,0 +1,21 @@
+<form #pmIndustryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditIndustry' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateIndustry' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <label for="PMIndustry_Industry">{{'Industry' | translate}} *</label>
+            <input type="text" #PMIndustry_Industry="ngModel" id="PMIndustry_Industry" class="form-control" [(ngModel)]="pmIndustry.industry" name="Industry"  required/>
+            <!-- <validation-messages [formCtrl]="PMIndustry_Industry"></validation-messages> -->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+        <button type="submit" class="btn btn-primary"> <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+                *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

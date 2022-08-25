@@ -1,0 +1,117 @@
+<form #invoiceTemplateForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditInvoiceTemplate' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateInvoiceTemplate' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="InvoiceTemplate_Name">{{"Name" | translate}} *</label>
+                    <input type="text" #InvoiceTemplate_Name="ngModel" id="InvoiceTemplate_Name" class="form-control"
+                        [(ngModel)]="invoiceTemplate.name" name="Name" minlength="1" maxlength="1000" required />
+                    <validation-messages [formCtrl]="InvoiceTemplate_Name"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group invoice-modal-body">
+                    <label for="InvoiceTemplate_Template">{{"Template" | translate}}</label>
+                    <div class="row">
+                        <div class="col-4 text-center col-image-section-for-certificate">
+                            <img class="mb-5 highlightDefaultImg"
+                                [class.highlightImg]="InvoiceTemplate_Template == 'invoice1'" style="width: 100%;height: 500px;"
+                                src="../../../../assets/invoice-design/Invoice1.PNG" alt="">
+                            <div class="div-center-for-buttons">
+
+                                <button type="button" (click)="selectInvoice('invoice1')"
+                                    class="btn btn-primary mr-5">Select</button>
+                                <a class="btn btn-secondary" (click)="open(1)">Preview</a>
+                            </div>
+                        </div>
+                        <div class="col-4 text-center col-image-section-for-certificate">
+                            <img class="mb-5 highlightDefaultImg"
+                                [class.highlightImg]="InvoiceTemplate_Template == 'invoice2'" style="width: 100%;height: 500px;"
+                                src="../../../../assets/invoice-design/Invoice2.PNG" alt="">
+                            <div class="div-center-for-buttons">
+
+                                <button type="button" (click)="selectInvoice('invoice2')"
+                                    class="btn btn-primary mr-5">Select</button>
+                                <a class="btn btn-secondary" (click)="open(2)">Preview</a>
+                            </div>
+                        </div>
+                        <div class="col-4 text-center col-image-section-for-certificate">
+                            <img class="mb-5 highlightDefaultImg"
+                                [class.highlightImg]="InvoiceTemplate_Template == 'invoice3'" style="width: 100%;height: 500px;"
+                                src="../../../../assets/invoice-design/Invoice3.PNG" alt="">
+                            <div class="div-center-for-buttons">
+
+                                <button type="button" (click)="selectInvoice('invoice3')"
+                                    class="btn btn-primary mr-5">Select</button>
+                                <a class="btn btn-secondary" (click)="open(3)">Preview</a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-4 text-center col-image-section-for-certificate">
+                            <img class="mb-5 highlightDefaultImg"
+                                [class.highlightImg]="InvoiceTemplate_Template == 'invoice4'" style="width: 100%;height: 500px;"
+                                src="../../../../assets/invoice-design/Invoice4.PNG" alt="">
+                            <div class="div-center-for-buttons">
+
+                                <button type="button" (click)="selectInvoice('invoice4')"
+                                    class="btn btn-primary mr-5">Select</button>
+                                <a class="btn btn-secondary" (click)="open(4)">Preview</a>
+
+                            </div>
+                        </div>
+                        <div class="col-4 text-center col-image-section-for-certificate">
+                            <img class="mb-5 highlightDefaultImg"
+                                [class.highlightImg]="InvoiceTemplate_Template == 'invoice5'" style="width: 100%;height: 500px;"
+                                src="../../../../assets/invoice-design/Invoice5.PNG" alt="">
+                            <div class="div-center-for-buttons">
+
+                                <button type="button" (click)="selectInvoice('invoice5')"
+                                    class="btn btn-primary mr-5">Select</button>
+                                <a class="btn btn-secondary" (click)="open(5)">Preview</a>
+                            </div>
+                        </div>
+                        <div class="col-4 text-center col-image-section-for-certificate">
+                            <img class="mb-5 highlightDefaultImg"
+                                [class.highlightImg]="InvoiceTemplate_Template == 'invoice6'" style="width: 100%;height: 500px;"
+                                src="../../../../assets/invoice-design/Invoice6.PNG" alt="">
+                            <div class="div-center-for-buttons">
+
+                                <button type="button" (click)="selectInvoice('invoice6')"
+                                    class="btn btn-primary mr-5">Select</button>
+                                <a class="btn btn-secondary" (click)="open(6)">Preview</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="m-checkbox-list">
+                <label for="InvoiceTemplate_IsDefault" class="kt-checkbox">
+                    <input id="InvoiceTemplate_IsDefault" #InvoiceTemplate_IsDefault="ngModel" type="checkbox"
+                        name="IsDefault" [(ngModel)]="invoiceTemplate.isDefault">
+                    {{"IsDefault" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="InvoiceTemplate_IsDefault"></validation-messages>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!invoiceTemplateForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

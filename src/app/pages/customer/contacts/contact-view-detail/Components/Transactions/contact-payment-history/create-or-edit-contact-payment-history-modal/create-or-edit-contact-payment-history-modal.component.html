@@ -1,0 +1,147 @@
+<form #contactPaymentHistoryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditContactPaymentHistory' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewContactPaymentHistory' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactPaymentHistory_ContactId">{{ 'Contact' | translate }}</label>
+                    <ng-select [items]="contacts" #ContactPaymentHistory_ContactId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ContactPaymentHistory_ContactId" name="contactId"
+                        [(ngModel)]="contactPaymentHistory.contactId">
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactPaymentHistory_ContactId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactPaymentHistory_VoidBy">{{ 'VoidBy' | translate }}</label>
+                    <ng-select [items]="users" #ContactPaymentHistory_VoidBy="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ContactPaymentHistory_VoidBy" name="voidBy"
+                        [(ngModel)]="contactPaymentHistory.voidBy">
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactPaymentHistory_VoidBy"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactPaymentHistory_RefundedBy">{{ 'RefundedBy' | translate }}</label>
+                    <ng-select [items]="users" #ContactPaymentHistory_RefundedBy="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ContactPaymentHistory_RefundedBy" name="refundedBy"
+                        [(ngModel)]="contactPaymentHistory.refundedBy">
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactPaymentHistory_RefundedBy"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactPaymentHistory_ContactPaymentHistoryId">{{ 'ContactPaymentHistory' | translate
+                        }}</label>
+                    <ng-select [items]="contactPaymentHistories" #ContactPaymentHistory_ContactPaymentHistoryId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ContactPaymentHistory_ContactPaymentHistoryId"
+                        name="contactPaymentHistoryId" [(ngModel)]="contactPaymentHistory.contactPaymentHistoryId">
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactPaymentHistory_ContactPaymentHistoryId">
+                    </validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentHistory_PaymentAmount">{{ 'PaymentAmount' | translate }}</label>
+                    <input type="number" #ContactPaymentHistory_PaymentAmount="ngModel"
+                        id="ContactPaymentHistory_PaymentAmount" class="form-control"
+                        [(ngModel)]="contactPaymentHistory.paymentAmount" name="paymentAmount"
+                        (keypress)="numberOnly($event)" min="0" required />
+                    <validation-messages [formCtrl]="ContactPaymentHistory_PaymentAmount"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentHistory_PaymentDate">{{ 'PaymentDate' | translate }}</label>
+                    <input class="form-control m-input" #ContactPaymentHistory_PaymentDate="ngModel" type="date"
+                        [ngModel]="contactPaymentHistory.paymentDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="contactPaymentHistory.paymentDate = $event"
+                        id="ContactPaymentHistory_PaymentDate" name="paymentDate" />
+                    <validation-messages [formCtrl]="ContactPaymentHistory_PaymentDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentHistory_GatewayName">{{ 'GatewayName' | translate }}</label>
+                    <input type="text" #ContactPaymentHistory_GatewayName="ngModel"
+                        id="ContactPaymentHistory_GatewayName" class="form-control"
+                        [(ngModel)]="contactPaymentHistory.gatewayName" name="gatewayName" />
+                    <validation-messages [formCtrl]="ContactPaymentHistory_GatewayName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentHistory_GatewayResponse">{{ 'GatewayResponse' | translate }}</label>
+                    <input type="text" #ContactPaymentHistory_GatewayResponse="ngModel"
+                        id="ContactPaymentHistory_GatewayResponse" class="form-control"
+                        [(ngModel)]="contactPaymentHistory.gatewayResponse" name="gatewayResponse" />
+                    <validation-messages [formCtrl]="ContactPaymentHistory_GatewayResponse"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4 m-checkbox-list" style="margin: 50px 0px 0px 0px;">
+                <label for="ContactPaymentHistory_Refunded" class="kt-checkbox">
+                    <input id="ContactPaymentHistory_Refunded" #ContactPaymentHistory_Refunded="ngModel" type="checkbox"
+                        name="refunded" [(ngModel)]="contactPaymentHistory.refunded">
+                    {{ "Refunded" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ContactPaymentHistory_Refunded"></validation-messages>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentHistory_RefundDate">{{ 'RefundDate' | translate }}</label>
+                    <input class="form-control m-input" #ContactPaymentHistory_RefundDate="ngModel" type="date"
+                        [ngModel]="contactPaymentHistory.refundDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="contactPaymentHistory.refundDate = $event"
+                        id="ContactPaymentHistory_RefundDate" name="refundDate" />
+                    <validation-messages [formCtrl]="ContactPaymentHistory_RefundDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4 m-checkbox-list" style="margin: 50px 0px 0px 0px;">
+                <label for="ContactPaymentHistory_Void" class="kt-checkbox">
+                    <input id="ContactPaymentHistory_Void" #ContactPaymentHistory_Void="ngModel" type="checkbox"
+                        name="void" [(ngModel)]="contactPaymentHistory.void">
+                    {{ "Void" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="ContactPaymentHistory_Void"></validation-messages>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentHistory_VoidedDate">{{ 'VoidedDate' | translate }}</label>
+                    <input class="form-control m-input" #ContactPaymentHistory_VoidedDate="ngModel" type="date"
+                        [ngModel]="contactPaymentHistory.voidedDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="contactPaymentHistory.voidedDate = $event"
+                        id="ContactPaymentHistory_VoidedDate" name="voidedDate" />
+                    <validation-messages [formCtrl]="ContactPaymentHistory_VoidedDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ContactPaymentHistory_Comment">{{ 'Comment' | translate }} *</label>
+                    <ckeditor #ContactPaymentHistory_Comment="ngModel" id="ContactPaymentHistory_Comment"
+                        [editor]="editor" [(ngModel)]="contactPaymentHistory.comment" name="comment"></ckeditor>
+                    <validation-messages [formCtrl]="ContactPaymentHistory_Comment"></validation-messages>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!contactPaymentHistoryForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

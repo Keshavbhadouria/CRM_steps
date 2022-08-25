@@ -1,0 +1,131 @@
+<form #businessActionForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditBusinessType' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateBusinessAction' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="BusinessActionScript_Title">{{"Title" | translate}} *</label>
+          <input type="text" #BusinessActionScript_Title="ngModel" id="BusinessActionScript_Title" class="form-control"
+            [(ngModel)]="businessActionScript.title" name="Title" required />
+          <validation-messages [formCtrl]="BusinessActionScript_Title"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="ActionTypeActionName">{{"ActionType" | translate}}</label>
+          <ng-select [items]="allActionType" bindValue="id" bindLabel="displayName"
+            name="businessActionScript.actionTypeId" [(ngModel)]="businessActionScript.actionTypeId">
+          </ng-select>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="LeadTemperatureTemperature">{{"LeadTemperature" | translate}}</label>
+          <ng-select [items]="allLeadTemprature" bindValue="id" bindLabel="displayName"
+            name="businessActionScript.leadTemperatureId" [(ngModel)]="businessActionScript.leadTemperatureId">
+          </ng-select>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="TargetTitleTitle">{{"TargetTitle" | translate}}</label>
+          <ng-select [items]="allTargetTitle" bindValue="id" bindLabel="displayName"
+            name="businessActionScript.targetTitleId" [(ngModel)]="businessActionScript.targetTitleId">
+          </ng-select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="LawfirmServiceServicesName">{{"LawfirmService" | translate}}</label>
+          <ng-select [items]="allFirmSerices" bindValue="id" bindLabel="displayName"
+            name="businessActionScript.lawfirmServiceId" [(ngModel)]="businessActionScript.lawfirmServiceId"
+            (change)="changeLawService($event)">
+          </ng-select>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="ServiceActivityActivityName">{{"ServiceActivity" | translate}}</label>
+          <ng-select [items]="allActivity" bindValue="id" bindLabel="displayName"
+            name="businessActionScript.serviceActivityId" [(ngModel)]="businessActionScript.serviceActivityId"
+            (change)="changeActivity($event)">
+          </ng-select>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="ServicesActivityStepStep">{{"ServicesActivityStep" | translate}}</label>
+          <ng-select [items]="allStep" bindValue="id" bindLabel="displayName"
+            name="businessActionScript.servicesActivityStepId"
+            [(ngModel)]="businessActionScript.servicesActivityStepId"></ng-select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="BusinessActionScript_DayNo">{{"DayNo" | translate}} *</label>
+          <input type="number" #BusinessActionScript_DayNo="ngModel" id="BusinessActionScript_DayNo"
+            class="form-control" [(ngModel)]="businessActionScript.dayNo" name="DayNo" required />
+          <validation-messages [formCtrl]="BusinessActionScript_DayNo"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="BusinessActionScript_WeekNo">{{"WeekNo" | translate}}</label>
+          <input type="number" #BusinessActionScript_WeekNo="ngModel" id="BusinessActionScript_WeekNo"
+            class="form-control" [(ngModel)]="businessActionScript.weekNo" name="WeekNo" />
+          <validation-messages [formCtrl]="BusinessActionScript_WeekNo"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="BusinessActionScript_ContentScript">{{"ContentScript" | translate}} *</label>
+          <ckeditor #BusinessActionScript_ContentScript="ngModel" [editor]="Editor"
+            [(ngModel)]="businessActionScript.contentScript" name="businessActionScript.contentScript" required>
+          </ckeditor>
+          <!-- <input type="text" #BusinessActionScript_ContentScript="ngModel" id="BusinessActionScript_ContentScript" class="form-control" [(ngModel)]="businessActionScript.contentScript" name="ContentScript"     required/> -->
+          <!-- <p-editor #BusinessActionScript_ContentScript="ngModel" id="BusinessActionScript_ContentScript"
+                    [(ngModel)]="businessActionScript.contentScript" name="ContentScript" [style]="{'height':'300px'}"
+                    required></p-editor> -->
+          <validation-messages [formCtrl]="BusinessActionScript_ContentScript"></validation-messages>
+        </div>
+      </div>
+
+      <div class="m-checkbox-list mt-2">
+        <label for="BusinessActionScript_Active" class="kt-checkbox">
+          <input id="BusinessActionScript_Active" #BusinessActionScript_Active="ngModel" type="checkbox" name="Active"
+            [(ngModel)]="businessActionScript.active">
+          {{"Active" | translate}}
+          <span></span>
+        </label>
+        <validation-messages [formCtrl]="BusinessActionScript_Active"></validation-messages>
+      </div>
+
+
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+      translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!businessActionForm.form.valid">
+      <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+      {{ 'Common.Label.Save' | translate}}
+    </button>
+  </div>
+</form>

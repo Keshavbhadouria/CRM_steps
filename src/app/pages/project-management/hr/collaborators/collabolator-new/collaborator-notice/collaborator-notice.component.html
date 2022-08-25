@@ -1,0 +1,64 @@
+<form #userForm="ngForm" novalidate autocomplete="off" [busyIf]="loading">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+          <label for="NoticeDate">{{ 'Date' | translate }}</label>
+          <input class="form-control m-input" #NoticeDate="ngModel" type="date"
+              [(ngModel)]="CollaboratorNotice.NoticeDate"
+              id="NoticeDate"
+              name="NoticeDate" required/>
+          <validation-messages [formCtrl]="NoticeDate"></validation-messages>
+      </div>
+  </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="Reason">{{ 'Reason' | translate }}</label>
+        <input class="form-control m-input" #Reason="ngModel" type="text"
+            [(ngModel)]="CollaboratorNotice.Reason"
+            id="Reason"
+            name="scheduleDate" required/>
+        <validation-messages [formCtrl]="Reason"></validation-messages>
+    </div>
+    </div>
+
+
+
+
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="Note">{{"Note" | translate}}</label>
+        <textarea id="Note" rows="5" name="Note" class="form-control"
+            [(ngModel)]="CollaboratorNotice.Note"></textarea>
+    </div>
+    </div>
+  </div>
+<div class="row">
+  <div class="col-md-8 mt-2">
+    <div class="form-group m-form__group">
+        <input class="form-control" #myInputFile type="file" id="formFile" accept="image/* , pdf"
+            (change)="handleUpload($event)">
+    </div>
+  </div>
+
+  <div class="col-md-4 text-right">
+    <div class="form-group">
+      <label for="collaborator_roleId"></label>
+      <button type="button" class="btn btn-primary mt-3" [disabled]="!userForm.form.valid"  (click)="save()">Add</button>
+    </div>
+  </div>
+
+</div>
+
+
+
+  <div class="row">
+    <app-dynamic-table [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+      [pagination]="paginationSettings">
+    </app-dynamic-table>
+  </div>
+</form>

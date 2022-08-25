@@ -1,0 +1,71 @@
+<form #businessKPIForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditBusinessKPI' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewBusinessKPI' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="BusinessKPI_KPICategoryId">{{ 'KPICategoryName' | translate }} *</label>
+                    <ng-select [items]="kpiCategories" #BusinessKPI_KPICategoryId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="BusinessKPI_KPICategoryId" name="kpiCategoryId"
+                        [(ngModel)]="businessKPI.kpiCategoryId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="BusinessKPI_KPICategoryId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="BusinessKPI_KPIName">{{ 'KPIName' | translate }} *</label>
+                    <input type="text" #BusinessKPI_KPIName="ngModel" id="BusinessKPI_KPIName" class="form-control"
+                        [(ngModel)]="businessKPI.kpiName" name="kpiName" required/>
+                    <validation-messages [formCtrl]="BusinessKPI_KPIName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="BusinessKPI_WeeklyTarget">{{ 'WeeklyTarget' | translate }}</label>
+                    <input type="number" #BusinessKPI_WeeklyTarget="ngModel" id="BusinessKPI_WeeklyTarget"
+                        class="form-control" [(ngModel)]="businessKPI.weeklyTarget" name="weeklyTarget" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="BusinessKPI_MonthlyTarget">{{ 'MonthlyTarget' | translate }}</label>
+                    <input type="number" #BusinessKPI_MonthlyTarget="ngModel" id="BusinessKPI_MonthlyTarget"
+                        class="form-control" [(ngModel)]="businessKPI.monthlyTarget" name="monthlyTarget" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="BusinessKPI_Quarterly">{{ 'Quarterly' | translate }}</label>
+                    <input type="number" #BusinessKPI_Quarterly="ngModel" id="BusinessKPI_Quarterly"
+                        class="form-control" [(ngModel)]="businessKPI.quarterly" name="quarterly" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="BusinessKPI_Semester">{{ 'Semester' | translate }}</label>
+                    <input type="number" #BusinessKPI_Semester="ngModel" id="BusinessKPI_Semester" class="form-control"
+                        [(ngModel)]="businessKPI.semester" name="semester" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="BusinessKPI_Yearly">{{ 'Yearly' | translate }}</label>
+                    <input type="number" #BusinessKPI_Yearly="ngModel" id="BusinessKPI_Yearly" class="form-control"
+                        [(ngModel)]="businessKPI.yearly" name="yearly" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!businessKPIForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

@@ -1,0 +1,210 @@
+<form #storyForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditStory' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewStory' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Story_Title">{{ 'Title' | translate }} *</label>
+                    <input type="text" #Story_Title="ngModel" id="Story_Title" class="form-control"
+                        [(ngModel)]="story.title" name="story.title" required />
+                    <validation-messages [formCtrl]="Story_Title"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Story_pmProjectId">{{ 'Project' | translate }} *</label>
+                    <ng-select [items]="projects" #Story_pmProjectId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="Story_pmProjectId" name="story.pmProjectId" [(ngModel)]="story.pmProjectId" required
+                        (change)="onChangeProject($event)" (clear)="onChangeProject($event)"
+                        [disabled]="this.sprintId!=0">
+                    </ng-select>
+                    <validation-messages [formCtrl]="Story_pmProjectId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Story_epicId">{{ 'Epic' | translate }}</label>
+                    <ng-select [items]="epics" bindValue="id" bindLabel="displayName" id="Story_epicId"
+                        name="story.epicId" [(ngModel)]="story.epicId"></ng-select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Story_pmSprintId">{{ 'Sprint' | translate }}</label>
+                    <ng-select [items]="sprints" bindValue="id" bindLabel="displayName" id="Story_pmSprintId"
+                        name="story.pmSprintId" [(ngModel)]="story.pmSprintId">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Story_pmStoryPriorityId">{{ 'Priority' | translate }} *</label>
+                    <ng-select [items]="priorities" #Story_pmStoryPriorityId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="Story_pmStoryPriorityId" name="story.pmStoryPriorityId"
+                        [(ngModel)]="story.pmStoryPriorityId" required></ng-select>
+                    <validation-messages [formCtrl]="Story_pmStoryPriorityId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Story_owner">{{ 'Owner' | translate }}</label>
+                    <ng-select [items]="owners" bindValue="id" bindLabel="displayName" id="Story_owner"
+                        name="story.owner" [(ngModel)]="story.owner"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Story_pmStoryStatusId">{{ 'Status' | translate }} *</label>
+                    <ng-select [items]="statuses" #Story_pmStoryStatusId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="Story_pmStoryStatusId" name="story.pmStoryStatusId"
+                        [(ngModel)]="story.pmStoryStatusId" required></ng-select>
+                    <validation-messages [formCtrl]="Story_pmStoryStatusId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Story_initialResponsible">{{ 'InitialResponsible' | translate }}</label>
+                    <ng-select [items]="responsibles" bindValue="id" bindLabel="displayName"
+                        id="Story_initialResponsible" name="story.initialResponsible"
+                        [(ngModel)]="story.initialResponsible"></ng-select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="Story_Dependency">{{ 'Dependency' | translate }}</label>
+                    <ng-select [items]="dependentStories" bindValue="id" bindLabel="displayName" id="Story_Dependency"
+                        name="dependency" [(ngModel)]="story.dependency"></ng-select>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="isAllowToChangeHrAndMin">
+                <div class="form-group">
+                    <label for="Story_EstimationHours">{{ 'Estimation (HH:MM)' | translate }}</label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input type="text" #Story_EstimationHours="ngModel" id="Story_EstimationHours"
+                                class="form-control" [(ngModel)]="story.estimationHours" name="estimationHours"
+                                (keypress)="numberOnly($event)" maxlength="3" />
+                            <validation-messages [formCtrl]="Story_EstimationHours"></validation-messages>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" #Story_EstimationMinutes="ngModel" id="Story_EstimationMinutes"
+                                class="form-control" [(ngModel)]="story.estimationMinutes" name="estimationMinutes" maxlength="2"
+                                (keypress)="numberOnly($event)" (ngModelChange)="checkMinutesValue($event, 60,storyForm,'estimationMinutes')"/>
+
+                        </div>
+                        <div class="has-danger"
+                                *ngIf="Story_EstimationMinutes.invalid && (Story_EstimationMinutes.dirty || Story_EstimationMinutes.touched)">
+                                <div>
+                                    <div class="form-control-feedback text-danger">
+                                        {{minutesValiMsg}}
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4" *ngIf="isAllowToChangeHrAndMin">
+                <div class="form-group">
+                    <label for="Story_EstimationMinutes">{{ 'EstimationMinutes' | translate }}</label>
+
+                </div>
+            </div> -->
+            <div class="col-md-2" *ngIf="isAllowToChangeHrAndMin">
+                <div class="form-group">
+                    <label for="Story_ExecutionHours">{{ 'Execution (HH:MM)' | translate }}</label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input type="text" #Story_ExecutionHours="ngModel" id="Story_ExecutionHours"
+                                class="form-control" [(ngModel)]="story.executionHours" name="executionHours"
+                                (keypress)="numberOnly($event)" maxlength="3" />
+                            <validation-messages [formCtrl]="Story_ExecutionHours"></validation-messages>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" #Story_ExecutionMinutes="ngModel" id="Story_ExecutionMinutes"
+                                class="form-control" [(ngModel)]="story.executionMinutes" name="executionMinutes" maxlength="2"
+                                (keypress)="numberOnly($event)" (ngModelChange)="checkMinutesValue($event, 60,storyForm,'executionMinutes')"/>
+
+                        </div>
+                        <div class="has-danger"
+                                *ngIf="Story_ExecutionMinutes.invalid && (Story_ExecutionMinutes.dirty || Story_ExecutionMinutes.touched)">
+                                <div>
+                                    <div class="form-control-feedback text-danger">
+                                        {{minutesValiMsg}}
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- <div class="col-md-4" *ngIf="isAllowToChangeHrAndMin">
+                <div class="form-group">
+                    <label for="Story_ExecutionMinutes">{{ 'ExecutionMinutes' | translate }}</label>
+
+                </div>
+            </div> -->
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Story_Description">{{ 'Description' | translate }} *</label>
+                    <ckeditor #Story_Description="ngModel" id="Story_Description" [editor]="description_editor"
+                        [(ngModel)]="story.description" name="story.description" required></ckeditor>
+                    <validation-messages [formCtrl]="Story_Description"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Story_AcceptanceCriteria">{{ 'AcceptanceCriteria' | translate }} *</label>
+                    <ckeditor #Story_AcceptanceCriteria="ngModel" id="Story_AcceptanceCriteria"
+                        [editor]="acceptanceCriteria_editor" [(ngModel)]="story.acceptanceCriteria"
+                        name="story.acceptanceCriteria" required></ckeditor>
+                    <validation-messages [formCtrl]="Story_AcceptanceCriteria"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Story_StartDate">{{ 'StartDate' | translate }} *</label>
+                    <input class="form-control m-input" #startDate="ngModel" type="date"
+                        [ngModel]="story.startDate | date:'yyyy-MM-dd'" (ngModelChange)="story.startDate = $event"
+                        id="Story_StartDate" name="story.startDate" required />
+                    <validation-messages [formCtrl]="startDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Story_EndDate">{{ 'EndDate' | translate }} *</label>
+                    <input class="form-control m-input" #endDate="ngModel" type="date"
+                        [ngModel]="story.endDate | date:'yyyy-MM-dd'" (ngModelChange)="story.endDate = $event"
+                        id="Story_EndDate" name="story.endDate" required />
+                    <validation-messages [formCtrl]="endDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="pmTask_Attachment">{{'Attachment' | translate}}</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile"
+                        accept="image/*,application/pdf,application/vnd.ms-excel" (change)="handleUpload($event)">
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+                        <img [src]="imageUrl" style="height: 50px;width:auto;" alt="">
+                    </div>
+                    <!-- <input type="text" #pmTask_Attachment="ngModel" id="pmTask_Attachment" class="form-control" [(ngModel)]="pmTask.attachment" name="Attachment"    /> -->
+                    <!-- <validation-messages [formCtrl]="pmTask_Attachment"></validation-messages> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!storyForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

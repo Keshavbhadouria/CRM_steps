@@ -1,0 +1,22 @@
+<div class="row row-no-padding row-col-separator-xl">
+    <div class="col pr-0">
+        <div class="card card-custom bgi-no-repeat card-stretch new-subscription-statistics">
+            <div class="card-header" [style.background-color]="widColor">
+                <h3 class="card-title" [ngStyle] = "widColor? '{color: #fff}': '{color: inherit}'"style="color: #fff;">{{'Remaining Days' | translate}}</h3>
+            </div>
+            <div class="card-body">
+                <div class="data-widget-section" *ngIf="data">
+                    <div style="display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto;"><span class="{{widColor}}" style="font-size: 70px;
+                        margin: 0;
+                        display: block;
+                        padding: 0;
+                        line-height: 1;">{{data.days}}</span> <span>days</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

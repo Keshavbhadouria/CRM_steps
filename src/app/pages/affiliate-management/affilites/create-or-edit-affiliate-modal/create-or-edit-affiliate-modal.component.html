@@ -1,0 +1,61 @@
+<form #affiliateForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditAffiliate' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewAffiliate' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="Affiliate_AffiliateTierId">{{ 'TierName' | translate }} *</label>
+                    <ng-select [items]="tierNames" #Affiliate_AffiliateTierId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="Affiliate_AffiliateTierId" name="affiliateTierId"
+                        [(ngModel)]="affiliate.affiliateTierId" required></ng-select>
+                    <validation-messages [formCtrl]="Affiliate_AffiliateTierId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Affiliate_FullName">{{ 'FullName' | translate }} *</label>
+                    <input type="text" #Affiliate_FullName="ngModel" id="Affiliate_FullName" class="form-control"
+                        [(ngModel)]="affiliate.fullName" name="fullName" required />
+                    <validation-messages [formCtrl]="Affiliate_FullName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Affiliate_Email">{{ 'Email' | translate }}</label>
+                    <input type="text" #Affiliate_Email="ngModel" id="Affiliate_Email" class="form-control"
+                        [(ngModel)]="affiliate.email" name="email" email />
+                    <validation-messages [formCtrl]="Affiliate_Email"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Affiliate_Phone">{{ 'Phone' | translate }}</label>
+                    <input type="text" #Affiliate_Phone="ngModel" id="Affiliate_Phone" class="form-control"
+                        [(ngModel)]="affiliate.phone" name="phone" (keypress)="numberOnly($event)" />
+                    <validation-messages [formCtrl]="Affiliate_Phone"></validation-messages>
+                </div>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="Affiliate_Active" class="kt-checkbox">
+                    <input id="Affiliate_Active" #Affiliate_Active="ngModel" type="checkbox" name="active"
+                        [(ngModel)]="affiliate.active">
+                    {{ "Active" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="Affiliate_Active"></validation-messages>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!affiliateForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

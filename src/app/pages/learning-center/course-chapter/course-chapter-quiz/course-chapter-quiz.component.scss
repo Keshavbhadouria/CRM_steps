@@ -1,0 +1,29 @@
+.form-check-input:checked {
+  background-color: #2e7cba;
+  border-color: #2e7cba;
+}
+
+
+.c-b{
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}
+
+.chev-b{
+  border: 1px solid;
+  border-radius: 5px;
+  color: #2e7dba;
+  height: 24px;
+}
+
+.chev-left{
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.chev-right{
+  position: absolute;
+  top: 5px;
+  right: 8px;
+}

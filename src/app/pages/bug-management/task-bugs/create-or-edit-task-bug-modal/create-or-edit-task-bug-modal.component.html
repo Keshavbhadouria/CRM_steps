@@ -1,0 +1,119 @@
+<form #taskBugForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditTaskBug' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewTaskBug' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="TaskBug_Title">{{ 'Title' | translate }} *</label>
+                    <input type="text" #TaskBug_Title="ngModel" id="TaskBug_Title" class="form-control"
+                        [(ngModel)]="taskBug.title" name="title" required />
+                    <validation-messages [formCtrl]="TaskBug_Title"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="TaskBug_Project">{{ 'ProjectName' | translate }}</label>
+                    <ng-select [items]="projectNames" #TaskBug_Project="ngModel" bindValue="id" bindLabel="displayName"
+                        id="TaskBug_Project" name="project" [(ngModel)]="taskBug.project">
+                    </ng-select>
+                    <validation-messages [formCtrl]="TaskBug_Project"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="TaskBug_Sprint">{{ 'Sprint' | translate }}</label>
+                    <ng-select [items]="sprints" #TaskBug_Sprint="ngModel" bindValue="id" bindLabel="displayName"
+                        id="TaskBug_Sprint" name="sprint" [(ngModel)]="taskBug.sprint">
+                    </ng-select>
+                    <validation-messages [formCtrl]="TaskBug_Sprint"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="TaskBug_BugStatus">{{ 'BugStatus' | translate }} *</label>
+                    <ng-select [items]="bugStatuses" #TaskBug_BugStatus="ngModel" bindValue="id" bindLabel="displayName"
+                        id="TaskBug_BugStatus" name="bugStatus" [(ngModel)]="taskBug.bugStatus" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="TaskBug_BugStatus"></validation-messages>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="TaskBug_Responsible">{{ 'Responsible' | translate }}</label>
+                    <ng-select [items]="users" #TaskBug_Responsible="ngModel" bindValue="id" bindLabel="displayName"
+                        id="TaskBug_Responsible" name="responsible" [(ngModel)]="taskBug.responsible">
+                    </ng-select>
+                    <validation-messages [formCtrl]="TaskBug_Responsible"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="TaskBug_Task">{{ 'TaskTitle' | translate }}</label>
+                    <ng-select [items]="tasks" #TaskBug_Task="ngModel" bindValue="id" bindLabel="displayName"
+                        id="TaskBug_Task" name="task" [(ngModel)]="taskBug.task">
+                    </ng-select>
+                    <validation-messages [formCtrl]="TaskBug_Task"></validation-messages>
+                </div>
+            </div>
+           
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="TaskBug_SeverityId">{{ 'Severity' | translate }} *</label>
+                    <ng-select [items]="bugSeverities" #TaskBug_SeverityId="ngModel" bindValue="id" bindLabel="displayName"
+                        id="TaskBug_SeverityId" name="severityId" [(ngModel)]="taskBug.severityId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="TaskBug_SeverityId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="taskBug_DueDate">{{'DueDate' | translate}}</label>
+                    <input class="form-control m-input" #dueDate type="date"
+                        [ngModel]="taskBug.dueDate | date:'yyyy-MM-dd'" (ngModelChange)="taskBug.dueDate = $event"
+                        id="taskBug_DueDate" name="pmTask_DueDate">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="TaskBug_Title">Screen Name</label>
+                    <input type="text" #TaskBug_Title="ngModel" id="TaskBug_ScreenName" class="form-control"
+                        [(ngModel)]="taskBug.screenName" name="screenName" />
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="TaskBug_Description">{{ 'Description' | translate }} *</label>
+                    <ckeditor #TaskBug_Description="ngModel" id="TaskBug_Description" [editor]="editor"
+                        [(ngModel)]="taskBug.description" name="taskBug.description" required></ckeditor>
+                    <validation-messages [formCtrl]="TaskBug_Description"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group m-form__group">
+                    <label for="pmTask_Attachment">{{'Attachment' | translate}}</label>
+                    <input class="form-control" *ngIf="!isAttachment" #myInputFile type="file" id="formFile"
+                        accept="image/*" (change)="handleUpload($event)">
+                    <div class="image-section" *ngIf="isAttachment">
+                        <a class="cross-image" (click)="changeImage()"><i class="fa fa-times"></i></a>
+                        <img [src]="imageUrl" style="height: 50px;width:auto;"
+                            alt="">
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!taskBugForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

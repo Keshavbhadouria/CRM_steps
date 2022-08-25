@@ -1,0 +1,119 @@
+<form #contactPaymentPlanForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditPaymentPlanHeader' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewPaymentPlanHeader' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactPaymentPlan_ContactInvoiceHeaderId">{{ 'ContactInvoiceHeader' | translate }}</label>
+                    <ng-select [items]="contactInvoiceHeaders" #ContactPaymentPlan_ContactInvoiceHeaderId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ContactPaymentPlan_ContactInvoiceHeaderId" name="contactInvoiceHeaderId"
+                        [(ngModel)]="contactPaymentPlan.contactInvoiceHeaderId">
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactPaymentPlan_ContactInvoiceHeaderId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactPaymentPlan_ContactId">{{ 'Contact' | translate }}</label>
+                    <ng-select [items]="contacts" #ContactPaymentPlan_ContactId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ContactPaymentPlan_ContactId" name="contactId"
+                        [(ngModel)]="contactPaymentPlan.contactId">
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactPaymentPlan_ContactId"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group m-form__group">
+                    <label for="ContactPaymentPlan_UserId">{{ 'User' | translate }}</label>
+                    <ng-select [items]="users" #ContactPaymentPlan_UserId="ngModel" bindValue="id"
+                        bindLabel="displayName" id="ContactPaymentPlan_UserId" name="userId"
+                        [(ngModel)]="contactPaymentPlan.userId">
+                    </ng-select>
+                    <validation-messages [formCtrl]="ContactPaymentPlan_UserId"></validation-messages>
+                </div>
+            </div>
+           
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentPlan_Balance">{{ 'Balance' | translate }} *</label>
+                    <input type="number" #ContactPaymentPlan_Balance="ngModel"
+                        id="ContactPaymentPlan_Balance" class="form-control"
+                        [(ngModel)]="contactPaymentPlan.balance" name="balance"
+                        (keypress)="numberOnly($event)" min="0" required />
+                    <validation-messages [formCtrl]="ContactPaymentPlan_Balance"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentPlan_DownPayment">{{ 'DownPayment' | translate }} *</label>
+                    <input type="number" #ContactPaymentPlan_DownPayment="ngModel"
+                        id="ContactPaymentPlan_DownPayment" class="form-control"
+                        [(ngModel)]="contactPaymentPlan.downpayment" name="downpayment"
+                        (keypress)="numberOnly($event)" min="0" required />
+                    <validation-messages [formCtrl]="ContactPaymentPlan_DownPayment"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentPlan_Payments">{{ 'Payments' | translate }} *</label>
+                    <input type="number" #ContactPaymentPlan_Payments="ngModel"
+                        id="ContactPaymentPlan_Payments" class="form-control"
+                        [(ngModel)]="contactPaymentPlan.payments" name="payments"
+                        (keypress)="numberOnly($event)" min="0" required />
+                    <validation-messages [formCtrl]="ContactPaymentPlan_Payments"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentPlan_PaymentsAmount">{{ 'PaymentsAmount' | translate }} *</label>
+                    <input type="number" #ContactPaymentPlan_PaymentsAmount="ngModel"
+                        id="ContactPaymentPlan_PaymentsAmount" class="form-control"
+                        [(ngModel)]="contactPaymentPlan.paymentsAmount" name="paymentsAmount"
+                        (keypress)="numberOnly($event)" min="0" required />
+                    <validation-messages [formCtrl]="ContactPaymentPlan_PaymentsAmount"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentPlan_FirstQuotaDate">{{ 'FirstQuotaDate' | translate }} *</label>
+                    <input class="form-control m-input" #ContactPaymentPlan_FirstQuotaDate="ngModel" type="date"
+                        [ngModel]="contactPaymentPlan.firstQuotaDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="contactPaymentPlan.firstQuotaDate = $event"
+                        id="ContactPaymentPlan_FirstQuotaDate" name="firstQuotaDate" required/>
+                    <validation-messages [formCtrl]="ContactPaymentPlan_FirstQuotaDate"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentPlan_PaymentPlanNumber">{{ 'PaymentPlanNumber' | translate }}</label>
+                    <input type="text" #ContactPaymentPlan_PaymentPlanNumber="ngModel"
+                        id="ContactPaymentPlan_PaymentPlanNumber" class="form-control"
+                        [(ngModel)]="contactPaymentPlan.paymentPlanNumber" name="paymentPlanNumber" />
+                    <validation-messages [formCtrl]="ContactPaymentPlan_PaymentPlanNumber"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="ContactPaymentPlan_PaymentPlanQRCode">{{ 'PaymentPlanQRCode' | translate }}</label>
+                    <input type="text" #ContactPaymentPlan_PaymentPlanQRCode="ngModel"
+                        id="ContactPaymentPlan_PaymentPlanQRCode" class="form-control"
+                        [(ngModel)]="contactPaymentPlan.paymentPlanQRCode" name="paymentPlanQRCode" />
+                    <validation-messages [formCtrl]="ContactPaymentPlan_PaymentPlanQRCode"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!contactPaymentPlanForm.form.valid"> <i
+                class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+            'Common.Label.Save' | translate}}</button>
+    </div>
+</form>

@@ -1,0 +1,102 @@
+<form novalidate autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{pmProject.pmProject.id}} {{pmProject.pmProject.projectName}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="closeModal();"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <!-- <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_ProjectName">ProjectName*</label>
+          <p> {{pmProject.pmProject.projectName}} </p>
+        </div>
+      </div> -->
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="PMIndustryIndustry">Contact</label>
+          <p>
+            <img class="rounded avatar-sm" [src]="baseURL +'\\'+ pmProject.pmProject.logo"
+              onerror="this.src='https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640';"
+              alt="projectlogo">
+            {{pmProject.contactCompany}}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="UserName">User</label>
+          <p> {{pmProject.userName}} </p>
+        </div>
+      </div>
+      
+      
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="PMProject_Goal">Goal*</label>
+
+          <p [innerHtml]="pmProject.pmProject.goal"></p>
+
+        </div>
+      </div>
+      <hr>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="PMIndustryIndustry">PMIndustry</label>
+          <p> {{pmProject.pmIndustryIndustry}} </p>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="PMTaskPriorityPriority">PMTaskPriority</label>
+          <p> {{pmProject.pmTaskPriorityPriority}} </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group m-form__group">
+          <label for="PMProjectStatusStatus">PMProjectStatus</label>
+          <p> {{pmProject.pmProjectStatusStatus}} </p>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_StartDate">StartDate</label>
+          <p> {{pmProject.pmProject.startDate | date: 'dd/MM/yyyy' }} </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_TargetDate">TargetDate</label>
+          <p> {{pmProject.pmProject.targetDate | date: 'dd/MM/yyyy' }} </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_BaselineVelocity">BaselineVelocity</label>
+          <p> {{pmProject.pmProject.baselineVelocity}} </p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_ActualVelocity">ActualVelocity</label>
+
+          <p> {{pmProject.pmProject.actualVelocity}} </p>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="PMProject_TeamChannel">TeamChannel</label>
+          <p> {{pmProject.pmProject.teamChannel}} </p>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

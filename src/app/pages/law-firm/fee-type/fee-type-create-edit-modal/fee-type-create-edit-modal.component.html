@@ -1,0 +1,28 @@
+<form #feeTypeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditFeeType' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateFeeType' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="feeType">Name</label>
+          <input type="text" #feeTypeRef="ngModel" id="feeType" class="form-control"
+            [(ngModel)]="feeType.typeName" name="feeType" required minlength="3"  maxlength="20" />
+          <validation-messages [formCtrl]="feeTypeRef"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <script></script>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!feeTypeForm.form.valid" > <i class="bx bx-loader bx-spin font-size-16 align-middle me-2"
+        *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

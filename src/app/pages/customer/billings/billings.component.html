@@ -1,0 +1,434 @@
+<div class="container-fluid">
+    <app-page-title title="Billing" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Filter -->
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" (keyup.enter)="filterRecords()"
+                                    [(ngModel)]="filterText" placeholder="{{'Common.Label.Filter' | translate }}"
+                                    aria-label="Username" aria-describedby="basic-addon1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text pointer" id="basic-addon1"
+                                        (click)="filterRecords()"><i class=" bx
+                                        bx-search-alt-2"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                                'CreateNewBillingInfo' | translate}}</button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filter  -->
+                    <!-- <div class="row" [hidden]="!advancedFiltersAreShown">
+                        <div class="col-md-12">
+                            <div class="separator separator-dashed"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CardNameFilter">{{"CardName" | translate}}</label>
+                                <input type="text" class="form-control" id="CardNameFilter" name="cardNameFilter"
+                                    [(ngModel)]="cardNameFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CardNumberFilter">{{"CardNumber" | translate}}</label>
+                                <input type="text" class="form-control" id="CardNumberFilter" name="cardNumberFilter"
+                                    [(ngModel)]="cardNumberFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinExpirationMonthFilter">{{"MinMax" | translate}} {{"ExpirationMonth" |
+                                    translate}}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinExpirationMonthFilter"
+                                        [(ngModel)]="minExpirationMonthFilter" placeholder="{{'MinValue' | translate}}"
+                                        name="minExpirationMonthFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxExpirationMonthFilter"
+                                        placeholder="{{ 'MaxValue' | translate}}" name="maxExpirationMonthFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="MinExpirationYearFilter">{{"MinMax" | translate}} {{"ExpirationYear" |
+                                    translate}}</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="MinExpirationYearFilter"
+                                        [(ngModel)]="minExpirationYearFilter" placeholder="{{'MinValue' | translate}}"
+                                        name="minExpirationYearFilter" />
+                                    <input type="number" class="form-control" [(ngModel)]="maxExpirationYearFilter"
+                                        placeholder="{{ 'MaxValue' | translate}}" name="maxExpirationYearFilter" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CvvFilter">{{"CVV" | translate}}</label>
+                                <input type="text" class="form-control" id="CvvFilter" name="cvvFilter"
+                                    [(ngModel)]="cvvFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Address1Filter">{{"Address1" | translate}}</label>
+                                <input type="text" class="form-control" id="Address1Filter" name="address1Filter"
+                                    [(ngModel)]="address1Filter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Address2Filter">{{"address2Filter" | translate}}</label>
+                                <input type="text" class="form-control" id="Address2Filter" name="address2Filter"
+                                    [(ngModel)]="address2Filter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CityFilter">{{"City" | translate}}</label>
+                                <input type="text" class="form-control" id="CityFilter" name="cityFilter"
+                                    [(ngModel)]="cityFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="StateFilter">{{"State" | translate}}</label>
+                                <input type="text" class="form-control" id="StateFilter" name="stateFilter"
+                                    [(ngModel)]="stateFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="CountryFilter">{{"Country" | translate}}</label>
+                                <input type="text" class="form-control" id="CountryFilter" name="countryFilter"
+                                    [(ngModel)]="countryFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ZipcodeFilter">{{"ZipCode" | translate}}</label>
+                                <input type="text" class="form-control" id="ZipcodeFilter" name="zipcodeFilter"
+                                    [(ngModel)]="zipcodeFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="GatewayFilter">{{"Gateway" | translate}}</label>
+                                <input type="text" class="form-control" id="GatewayFilter" name="gatewayFilter"
+                                    [(ngModel)]="gatewayFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="GatewayCustomerCodeFilter">{{"GatewayCustomerCode" | translate}}</label>
+                                <input type="text" class="form-control" id="GatewayCustomerCodeFilter"
+                                    name="gatewayCustomerCodeFilter" [(ngModel)]="gatewayCustomerCodeFilter">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="GatewayTokenFilter">{{"GatewayCustomerCode" | translate}}</label>
+                                <input type="text" class="form-control" id="GatewayTokenFilter"
+                                    name="gatewayTokenFilter" [(ngModel)]="gatewayTokenFilter">
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- Shoe Hide Filters -->
+                    <!-- <div class="row mb-2 mt-2">
+                        <div class="col-sm-12">
+                            <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-down"></i>
+                                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+                            <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i
+                                    class="fa fa-angle-up"></i>
+                                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center" [busyIf]="primengTableHelper.isLoading">
+        <!--<Primeng-Datatable-Start>-->
+        <div class="primeng-datatable-container col-12">
+            <p-table #dataTable (onLazyLoad)="getRecords($event)" [value]="primengTableHelper.records"
+                rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false" [lazy]="true"
+                [scrollable]="true" ScrollWidth="100%" [responsive]="primengTableHelper.isResponsive"
+                [resizableColumns]="primengTableHelper.resizableColumns">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 150px">{{'Actions'| translate }}</th>
+                        <th style="width: 180px" pSortableColumn="cardName">
+                            {{'CardName'| translate }}
+                            <p-sortIcon field="contactBilling.cardName"></p-sortIcon>
+                            <p-columnFilter type="text" field="cardName" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 250px" pSortableColumn="cardNumber">
+                            {{'CardNumber'| translate }}
+                            <p-sortIcon field="contactBilling.cardNumber"></p-sortIcon>
+                            <p-columnFilter type="text" field="cardNumber" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 180px" pSortableColumn="expirationYear">
+                            {{'ExpirationYear'| translate }}
+                            <p-sortIcon field="contactBilling.expirationYear"></p-sortIcon>
+                            <p-columnFilter field="expirationYear" display="menu" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" [showApplyButton]="false"
+                                [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinExpirationYearFilter"
+                                            [(ngModel)]="minExpirationYearFilter"
+                                            placeholder="{{'MinValue' | translate}}" name="minExpirationYearFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxExpirationYearFilter"
+                                            placeholder="{{ 'MaxValue' | translate}}" name="maxExpirationYearFilter" />
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <button type="button"
+                                            class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                                            style="margin-right: 5px;"><span class="p-button-label"
+                                                (click)="clearYearData($event)">Clear</span></button>
+                                        <button type="button"
+                                            class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                                            ng-reflect-label="Apply"><span class="p-button-label"
+                                                (click)="applyData($event)">Apply</span></button>
+                                    </div>
+                                </ng-template>
+                            </p-columnFilter>
+
+                        </th>
+                        <th style="width: 200px" pSortableColumn="expirationMonth">
+                            {{'ExpirationMonth'| translate }}
+                            <p-sortIcon field="contactBilling.expirationMonth"></p-sortIcon>
+                            <p-columnFilter field="expirationMonth" display="menu" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" [showApplyButton]="false"
+                                [showClearButton]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="MinExpirationMonthFilter"
+                                            [(ngModel)]="minExpirationMonthFilter"
+                                            placeholder="{{'MinValue' | translate}}" name="minExpirationMonthFilter" />
+                                        <input type="number" class="form-control" [(ngModel)]="maxExpirationMonthFilter"
+                                            placeholder="{{ 'MaxValue' | translate}}" name="maxExpirationMonthFilter" />
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <button type="button"
+                                            class="p-element p-button-outlined p-button-sm ng-tns-c187-8 p-button p-component"
+                                            style="margin-right: 5px;"><span class="p-button-label"
+                                                (click)="clearData($event)">Clear</span></button>
+                                        <button type="button"
+                                            class="p-element p-button-sm ng-tns-c187-8 p-button p-component"
+                                            ng-reflect-label="Apply"><span class="p-button-label"
+                                                (click)="applyData($event)">Apply</span></button>
+                                    </div>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th style="width: 150px" pSortableColumn="primaryCC">
+                            {{'PrimaryCC'| translate }}
+                            <p-sortIcon field="contactBilling.primaryCC"></p-sortIcon>
+                        </th>
+                        <th style="width: 180px" pSortableColumn="address1">
+                            {{'Address1'| translate }}
+                            <p-sortIcon field="contactBilling.address1"></p-sortIcon>
+                            <p-columnFilter type="text" field="address1" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 180px" pSortableColumn="address2">
+                            {{'Address2'| translate }}
+                            <p-sortIcon field="contactBilling.address2"></p-sortIcon>
+                            <p-columnFilter type="text" field="address2" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 150px" pSortableColumn="city">
+                            {{'City'| translate }}
+                            <p-sortIcon field="contactBilling.city"></p-sortIcon>
+                            <p-columnFilter type="text" field="city" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 150px" pSortableColumn="state">
+                            {{'State'| translate }}
+                            <p-sortIcon field="contactBilling.state"></p-sortIcon>
+                            <p-columnFilter type="text" field="state" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 150px" pSortableColumn="country">
+                            {{'Country'| translate }}
+                            <p-sortIcon field="contactBilling.country"></p-sortIcon>
+                            <p-columnFilter type="text" field="country" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 150px" pSortableColumn="zipcode">
+                            {{'Zipcode'| translate }}
+                            <p-sortIcon field="contactBilling.zipcode"></p-sortIcon>
+                            <p-columnFilter type="text" field="zipcode" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 150px" pSortableColumn="gateway">
+                            {{'Gateway'| translate }}
+                            <p-sortIcon field="contactBilling.gateway"></p-sortIcon>
+                            <p-columnFilter type="text" field="gateway" [showMatchModes]="false" [showOperator]="false"
+                                [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 250px" pSortableColumn="gatewayCustomerCode">
+                            {{'GatewayCustomerCode'| translate }}
+                            <p-sortIcon field="contactBilling.gatewayCustomerCode"></p-sortIcon>
+                            <p-columnFilter type="text" field="gatewayCustomerCode" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+                        </th>
+                        <th style="width: 200px" pSortableColumn="gatewayToken">
+                            {{'GatewayToken'| translate }}
+                            <p-sortIcon field="contactBilling.gatewayToken"></p-sortIcon>
+                            <p-columnFilter type="text" field="gatewayToken" [showMatchModes]="false"
+                                [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+
+                        </th>
+                        <!-- <th style="width: 180px;">
+
+                        </th> -->
+
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                    <tr>
+                        <td style="width: 130px">
+                            <div class="btn-group dropdown" dropdown container="body">
+                                <button dropdownToggle class="dropdown-toggle btn btn-sm btn-primary">
+                                    <i class="fa fa-plus-circle"></i>
+                                    {{"Actions" | translate}}
+                                </button>
+                                <ul class="dropdown-menu custom-dropdown" *dropdownMenu>
+                                    <li>
+                                        <img src="../../../../../assets/icons/Visual.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="onViewBilling(record)">{{'View' | translate}}</a>
+                                    </li>
+                                    <li>
+                                        <img src="../../../../../assets/icons/editIcon.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="onEditBilling(record)">{{'Edit' | translate}}</a>
+                                    </li>
+                                    <li>
+                                        <img src="../../../../../assets/icons/deleteIcon.png">
+                                        <a href="javascript:;" class="dropdown-item"
+                                            (click)="onDelete(record.contactBilling.id)">{{'Delete' | translate}}</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </td>
+                        <td style="width:180px">
+                            <span class="ui-column-title"> {{'CardName'| translate }}</span>
+                            {{record.billingInfo.cardName}}
+                        </td>
+                        <td style="width:250px">
+                            <span class="ui-column-title"> {{'CardNumber'| translate }}</span>
+                            {{record.billingInfo.cardNumber}}
+                        </td>
+                        <td style="width:180px">
+                            <span class="ui-column-title"> {{'ExpirationYear'| translate }}</span>
+                            {{record.billingInfo.expirationYear}}
+                        </td>
+                        <td style="width:200px">
+                            <span class="ui-column-title"> {{'ExpirationMonth'| translate }}</span>
+                            {{record.billingInfo.expirationMonth}}
+                        </td>
+                        <td style="width:150px">
+                            <span class="ui-column-title"> {{'PrimaryCC'| translate }}</span>
+                            <div *ngIf="record.billingInfo.primaryCC" class="text-center"><i
+                                    class="fa fa-check-circle text-success" title="True"></i></div>
+                            <div *ngIf="!record.billingInfo.primaryCC" class="text-center"><i class="fa fa-times-circle"
+                                    title="False"></i></div>
+                        </td>
+                        <td style="width:180px">
+                            <span class="ui-column-title"> {{'Address1'| translate }}</span>
+                            {{record.billingInfo.address1}}
+                        </td>
+                        <td style="width:180px">
+                            <span class="ui-column-title"> {{'Address2'| translate }}</span>
+                            {{record.billingInfo.address2}}
+                        </td>
+                        <td style="width:150px">
+                            <span class="ui-column-title"> {{'City'| translate }}</span>
+                            {{record.billingInfo.city}}
+                        </td>
+                        <td style="width:150px">
+                            <span class="ui-column-title"> {{'State'| translate }}</span>
+                            {{record.billingInfo.state}}
+                        </td>
+                        <td style="width:150px">
+                            <span class="ui-column-title"> {{'Country'| translate }}</span>
+                            {{record.billingInfo.country}}
+                        </td>
+                        <td style="width:150px">
+                            <span class="ui-column-title"> {{'Zipcode'| translate }}</span>
+                            {{record.billingInfo.zipcode}}
+                        </td>
+                        <td style="width:150px">
+                            <span class="ui-column-title"> {{'Gateway'| translate }}</span>
+                            {{record.billingInfo.gateway}}
+                        </td>
+                        <td style="width:250px">
+                            <span class="ui-column-title"> {{'GatewayCustomerCode'| translate }}</span>
+                            {{record.billingInfo.gatewayCustomerCode}}
+                        </td>
+                        <td style="width:200px">
+                            <span class="ui-column-title"> {{'GatewayToken'| translate }}</span>
+                            {{record.billingInfo.gatewayToken}}
+                        </td>
+                        <!-- <td style="width: 180px;">
+                            <button type="button" *ngIf="record.contactBilling.isCardExpire"
+                                (click)="sendPushNotification(record.contactBilling.id)" class="btn btn-primary"> Send
+                                Notification </button>
+                        </td> -->
+
+                    </tr>
+
+                </ng-template>
+            </p-table>
+            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                {{'NoData'| translate }}
+            </div>
+            <div class="primeng-paging-container">
+                <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                    (onPageChange)="getRecords($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
+                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                    [showCurrentPageReport]="true"
+                    [currentPageReportTemplate]="'TotalRecordsCount' | translate:primengTableHelper.totalRecordsCount">
+                </p-paginator>
+            </div>
+        </div>
+        <!--<Primeng-Datatable-End>-->
+    </div>
+    <!-- <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+        [pagination]="paginationSettings">
+    </app-dynamic-table> -->
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+    <app-create-or-edit-billing-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editBilling">
+    </app-create-or-edit-billing-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+    <app-view-billing-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewBilling">
+    </app-view-billing-modal>
+</ng-template>

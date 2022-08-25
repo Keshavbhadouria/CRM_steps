@@ -1,0 +1,163 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-9" >
+      <div class="row">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="mb-0 font-size-18" style="color: #2e7dba;"><img
+                src="../../../../assets/CRMSteps/MenuIcons/invoice-templates.png">
+              {{'Courses' | translate }} </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="card">
+          <div class="card-body modal-body">
+              <div class="row" [busyIf]="loading">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="LMSCourse_CourseName">{{ 'Title' | translate }} *</label>
+                    <input type="text" #LMSCourse_CourseName="ngModel" id="LMSCourse_CourseName" class="form-control"
+                      [(ngModel)]="lcCourse.title" name="courseName" required />
+                    <validation-messages [formCtrl]="LMSCourse_CourseName"></validation-messages>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group m-form__group">
+                    <label for="categoryId">{{ 'Category' | translate
+                      }} *</label>
+                    <ng-select [items]="categories" #categoryId="ngModel" bindValue="id" bindLabel="displayName"
+                      id="categoryId" name="categoryId" [(ngModel)]="lcCourse.categoryId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="categoryId"></validation-messages>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="URL">{{ 'URL' | translate }} *</label>
+                    <input type="text" #URL="ngModel" id="URL" class="form-control" [(ngModel)]="lcCourse.url"
+                      name="courseName" required />
+                    <validation-messages [formCtrl]="URL"></validation-messages>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group m-form__group">
+                    <label for="certificate">{{ 'Certificate' | translate
+                      }} *</label>
+                    <ng-select [items]="certificates" #certificate="ngModel" bindValue="id" bindLabel="displayName"
+                      id="certificate" name="chapterId" [(ngModel)]="lcCourse.certificateId" required>
+                    </ng-select>
+                    <validation-messages [formCtrl]="certificate"></validation-messages>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="LMSCourse_Description">{{ 'Description' | translate }} *</label>
+                    <ckeditor [editor]="editor" debounce="500" #LMSCourse_Description="ngModel"
+                      id="LMSCourse_Description" [editor]="editor" [(ngModel)]="lcCourse.description"
+                      name="description"></ckeditor>
+                    <validation-messages [formCtrl]="LMSCourse_Description"></validation-messages>
+                  </div>
+                </div>
+                <div class="col-md-12 mt-2">
+                  <div class="form-group m-form__group">
+                    <label for="Thumbnail">{{ 'Thumbnail' | translate }} *</label>
+                    <input class="form-control" #myInputFile type="file" id="formFile" accept="image/* , pdf"
+                      (change)="handleUpload($event)">
+                  </div>
+                </div>
+                <br>
+                <div class="col-md-12 mt-3">
+                    <button type="button" (click)="onSave()" class="btn btn-primary pull-right cus-primary"
+                        >{{'Save' |
+                        translate}}</button>
+                        <button type="button" (click)="onCancel()" class="me-3 btn btn-light pull-right" style="border-color: #2e7dba;"
+                        >{{'Cancel' |
+                        translate}}</button>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body course-list-overflow">
+          <div class="mb-4">
+            <h4 class="mb-0 font-size-18" style="color: #2e7dba;"><img
+              src="../../../../assets/CRMSteps/MenuIcons/invoice-templates.png">
+            {{'Courses' | translate }} </h4>
+          </div>
+
+          <div class="row" [busyIf]="listLoader">
+            <div class="col-md-12" style="margin-bottom: 10px;" *ngFor="let item of myData">
+              <div class="activity-item-section">
+                <div class="activity-item-section-header">
+                  <p>
+                    {{item.courseNew.title}}
+                  </p>
+                </div>
+                <div class="activity-item-section-body">
+                  <div class="row">
+                    <div class="col-md-12 text-center">
+                      <!-- <img src="../../../../assets/images/layouts/layout-2.jpg" class="img-fit" alt=""> -->
+                      <img [src]="apiURL +'\\' + item.courseNew.thumbnail" class="img-fit" alt="">
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="course-lbl">
+                        <label for="LMSCourse_Title">{{ 'Title' | translate }}</label>
+                        <p>{{item.courseNew.title}}</p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="course-lbl">
+                        <label for="LMSCourse_Description">{{ 'Description' | translate }}</label>
+                        <p [innerHtml]="item.courseNew.description | customslice : 20"></p>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="course-lbl">
+                        <label for="LMSCourse_Student">{{ 'Student' | translate }}</label>
+                        <p>Lorem IPsum</p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="course-lbl">
+                        <label for="LMSCourse_Completion">{{ 'Completion' | translate }}</label>
+                        <p>Lorem IPsum</p>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="activity-item-section-footer">
+                  <div>
+                    <img src="../../../../assets/icons/Visual.png" alt="view" (click)="onView(item)">
+                  </div>
+                  <div>
+                    <img src="../../../../assets/icons/editIcon.png" alt="edit" (click)="edit(item)">
+                  </div>
+                  <div>
+                    <img src="../../../../assets/icons/deleteIcon.png" alt="delete" (click)="onDelete(item.courseNew.id)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-course-new-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewCourse">
+  </app-course-new-view-modal>
+</ng-template>

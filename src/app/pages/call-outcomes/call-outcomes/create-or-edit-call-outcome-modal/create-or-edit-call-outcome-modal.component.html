@@ -1,0 +1,36 @@
+<form #callOutcomeForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditContactPhoneCallOutcome' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewContactPhoneCallOutcome' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="CallOutcome_Outcome">{{ 'Outcome' | translate }} *</label>
+                    <input type="text" #CallOutcome_Outcome="ngModel" id="CallOutcome_Outcome"
+                        class="form-control" [(ngModel)]="callOutcome.outcome" name="outcome" required />
+                    <validation-messages [formCtrl]="CallOutcome_Outcome"></validation-messages>
+                </div>
+            </div>
+            <div class="m-checkbox-list" style="margin-top: 10px;">
+                <label for="CallOutcome_Active" class="kt-checkbox">
+                    <input id="CallOutcome_Active" #CallOutcome_Active="ngModel" type="checkbox" name="active"
+                        [(ngModel)]="callOutcome.active">
+                    {{ "Active" | translate}}
+                    <span></span>
+                </label>
+                <validation-messages [formCtrl]="CallOutcome_Active"></validation-messages>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!callOutcomeForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <app-page-title title="{{'Policies' | translate}}" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <div class="card card-custom gutter-b">
+        <div class="card-body" [busyIf]="loading">
+            <accordion [closeOthers]="true">
+                <accordion-group [isOpen]="isContentOpen" *ngFor="let item of policyType" id="{{item.type}}"
+                    heading="{{item.name}}" (isOpenChange)="onSelect(item.type)">
+                    <form [formGroup]="appPolicyForm" (ngSubmit)="onSubmit(item.type)">
+                        <div formGroupName="appPolicy">
+                            <ckeditor id="description" [editor]="Editor" formControlName="description" name="description">
+                            </ckeditor>
+
+                            <div style="float: right; margin: 10px 0px;">
+                                <button type="submit" class="btn btn-primary blue">
+                                    <span>{{"Save" | translate}}</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </accordion-group>
+            </accordion>
+        </div>
+    </div>
+</div>

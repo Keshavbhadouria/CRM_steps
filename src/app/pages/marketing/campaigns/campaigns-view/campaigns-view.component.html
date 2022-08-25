@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewCampaign' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label>{{ 'CampaignName' | translate }}</label>
+            <p>{{ campaign.campaign.campaignName }}<p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'StartDate' | translate }}</label>
+            <p>
+                {{ campaign.campaign.startDate  }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'EndDate' | translate }}</label>
+            <p>
+                {{ campaign.campaign.endDate  }}
+            </p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'Budget' | translate }}</label>
+            <p>{{ campaign.campaign.budget }}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'SpecialCode' | translate }}</label>
+            {{ campaign.campaign.specialCode }}
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'ExpectedOutcome' | translate }}</label>
+            <p> {{ campaign.campaign.expectedOutcome }}</p>
+        </div>
+
+        <div class="col-6 mb-3">
+            <label>{{ 'CampaignObjetive' | translate }}</label>
+            <p>{{campaign.campaignObjetiveObjetive}}</p>
+        </div>
+        <div class="col-6 mb-3">
+            <label>{{ 'LeadSource' | translate }}</label>
+            <p>
+                {{campaign.leadSourceSourceName}}
+            </p>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

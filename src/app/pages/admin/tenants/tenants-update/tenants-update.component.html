@@ -1,0 +1,95 @@
+<form #tenantEditForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditTenant' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateNewTenant' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+
+        <div class="form-group">
+            <label for="Name">{{"TenantName" | translate}} *</label>
+            <input id="Name" #nameInput="ngModel" type="text" name="Name" class="form-control"
+                [ngClass]="{'edited':tenant.name}" [(ngModel)]="tenant.name" required maxlength="128">
+            <validation-messages [formCtrl]="nameInput"></validation-messages>
+        </div>
+
+        <div class="form-group" *ngIf="currentConnectionString">
+            <label for="DatabaseConnectionString">{{"DatabaseConnectionString" | translate}} *</label>
+            <input id="DatabaseConnectionString" #connectionStringInput="ngModel" type="text"
+                name="ConnectionString" class="form-control" [(ngModel)]="tenant.connectionString" required
+                maxlength="1024">
+            <validation-messages [formCtrl]="connectionStringInput"></validation-messages>
+        </div>
+
+        <div *ngIf="currentConnectionString">
+            <span
+                class="help-block text-warning">{{"TenantDatabaseConnectionStringChangeWarningMessage" | translate}}</span>
+        </div>
+
+        <div class="form-group">
+            <label for="edition">{{"Edition" | translate}}</label>
+            <select id="edition" name="edition" class="form-control" [(ngModel)]="tenant.editionId"
+                (change)="onEditionChange()">
+                <option *ngFor="let edition of editions" [value]="edition.value">{{edition.displayText}}
+                </option>
+            </select>
+        </div>
+        <br/>
+        <div [hidden]="!isSubscriptionFieldsVisible" class="checkbox-list">
+            <label class="checkbox">
+                <input id="CreateTenant_IsUnlimited" type="checkbox" name="IsUnlimited"
+                    [(ngModel)]="isUnlimited" (ngModelChange)="onUnlimitedChange()" />
+                {{"UnlimitedTimeSubscription" | translate}}
+                <span></span>
+            </label>
+        </div>
+        <div [hidden]="isUnlimited || !isSubscriptionFieldsVisible" class="form-group"
+            [ngClass]="{'has-error': !subscriptionEndDateUtcIsValid }">
+            <label for="SubscriptionEndDateUtc">{{"SubscriptionEndDateUtc" | translate}}</label>
+
+            
+            <input class="form-control m-input"  (change)="subscriptionEndDateChange($event)" #SubscriptionEndDateUtc id="SubscriptionEndDate" name="SubscriptionEndDateUtc" type="date"
+                              [(ngModel)]="tenant.subscriptionEndDateUtc" autocomplete="new-password" [required]="!isUnlimited">
+
+            <!-- <input id="SubscriptionEndDateUtc" type="datetime" #SubscriptionEndDateUtc
+                name="SubscriptionEndDateUtc" class="form-control" bsDatepicker datePickerMomentModifier
+                (dateChange)="subscriptionEndDateChange($event)" [(date)]="tenant.subscriptionEndDateUtc"
+                [bsConfig]="{ adaptivePosition: true }" [required]="!isUnlimited" /> -->
+        </div>
+        <br/>
+        <div [hidden]="isUnlimited ||!isSubscriptionFieldsVisible" class="checkbox-list">
+            <label class="checkbox">
+                <input id="CreateTenant_IsInTrialPeriod" type="checkbox" name="IsInTrialPeriod"
+                    [disabled]="selectedEditionIsFree()" [(ngModel)]="tenant.isInTrialPeriod">
+                {{"IsInTrialPeriod" | translate}}
+                <span></span>
+            </label>
+        </div>
+        <div class="checkbox-list">
+            <label class="checkbox">
+                <input id="EditTenant_IsActive" type="checkbox" name="IsActive"
+                    [(ngModel)]="tenant.isActive">
+                {{"Active" | translate}}
+                <span></span>
+            </label>
+        </div>
+        <div class="checkbox-list">
+            <label class="checkbox">
+                <input id="EditTenant_IsManualTrackingEnabled" type="checkbox" name="isManualTrackingEnabled"
+                    [(ngModel)]="tenant.isManualTrackingEnabled">
+                {{"EnableManualTimeTracking" | translate}}
+                <span></span>
+            </label>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!tenantEditForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>
+

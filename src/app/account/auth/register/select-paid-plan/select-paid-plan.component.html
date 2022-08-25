@@ -1,0 +1,93 @@
+<div class="modal-header">
+  <h5 class="modal-title mt-0 text-uppercase"> {{'PaymentInfo' | translate}}
+  </h5>
+  <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <div class="card card-custom gutter-b shadow-lg">
+    <div class="card-body" [busyIf]="isLoading">
+
+      <form class="login-form form" method="post">
+
+        <h4 class="mb-5">{{"Edition" | translate}}: {{edition.displayName}}</h4>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div *ngIf="edition.dailyPrice > 0" class="form-group mr-5">
+              <label class="radio fs-22">
+                <input type="radio" name="PaymentPeriodType"
+                  [checked]="selectedPaymentPeriodType==paymentPeriodType.Daily" [value]="paymentPeriodType.Daily"
+                  (change)="onPaymentPeriodChangeChange(paymentPeriodType.Daily)" />
+                {{'DailyPrice' | translate}}:
+                {{appSession.application.currencySign}}{{edition.dailyPrice | number : '1.2-2'}}
+                <span></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div *ngIf="edition.weeklyPrice > 0" class="form-group">
+              <label class="radio fs-22">
+                <input type="radio" name="PaymentPeriodType"
+                  [checked]="selectedPaymentPeriodType==paymentPeriodType.Weekly" [value]="paymentPeriodType.Weekly"
+                  (change)="onPaymentPeriodChangeChange(paymentPeriodType.Weekly)" />
+                {{"WeeklyPrice" | translate}}:
+                {{appSession.application.currencySign}}{{edition.weeklyPrice | number : '1.2-2'}}
+                <span></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div *ngIf="edition.monthlyPrice > 0" class="form-group mr-5">
+              <label class="radio fs-22">
+                <input type="radio" name="PaymentPeriodType"
+                  [checked]="selectedPaymentPeriodType==paymentPeriodType.Monthly" [value]="paymentPeriodType.Monthly"
+                  (change)="onPaymentPeriodChangeChange(paymentPeriodType.Monthly)" />
+                {{"MonthlyPrice" | translate}}:
+                {{appSession.application.currencySign}}{{edition.monthlyPrice | number : '1.2-2'}}
+                <span></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div *ngIf="edition.annualPrice > 0" class="form-group">
+              <label class="radio fs-22">
+                <input type="radio" class="form-radio-outline" name="PaymentPeriodType"
+                  [checked]="selectedPaymentPeriodType==paymentPeriodType.Annual" [value]="paymentPeriodType.Annual"
+                  (change)="onPaymentPeriodChangeChange(paymentPeriodType.Annual)" />
+                {{"AnnualPrice" | translate}}:
+                {{appSession.application.currencySign}}{{edition.annualPrice | number : '1.2-2'}}
+                <span></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="separator separator-border-dashed"></div>
+
+        <div *ngIf="supportsRecurringPayments" class="form-group">
+          <label class="switch">
+            <input type="checkbox" name="RecurringPaymentEnabled" [(ngModel)]="recurringPaymentEnabled" />
+            <span class="slider round"></span>
+          </label>
+          <label style="margin-left: 5px;">{{"AutomaticallyBillMyAccount" |
+            translate}}</label>
+        </div>
+
+        <!-- <div class="pb-lg-0 pb-5">
+          <div *ngFor="let paymentGateway of paymentGateways" class="mb-2">
+            <button *ngIf="paymentGateway.supportsRecurringPayments || !recurringPaymentEnabled"
+              (click)="checkout(paymentGateway.gatewayType)" class="btn btn-success btn-block">
+              {{"CheckoutWith" + getPaymentGatewayType(paymentGateway.gatewayType) | translate}}
+            </button>
+          </div>
+        </div> -->
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  <button type="button" class="btn btn-primary" (click)="onDone()">{{'Done' | translate}}</button>
+</div>

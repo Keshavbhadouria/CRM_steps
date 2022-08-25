@@ -1,0 +1,135 @@
+<form #applicationForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditApplication' |
+                translate}}
+            </span> <span *ngIf="data == null"> {{'CreateApplication' | translate}} </span> </h5>
+        <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body" [busyIf]="loading">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="PMProjectProjectName">{{"PMProject" | translate }}</label>
+                    <ng-select [items]="allProjects" bindValue="id" bindLabel="displayName"
+                        name="clientApplication.projectId" [(ngModel)]="clientApplication.projectId">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ContactCompany">{{"Contact" | translate }}</label>
+                    <ng-select [items]="allContacts" bindValue="id" bindLabel="displayName"
+                        name="clientApplication.contactId" [(ngModel)]="clientApplication.contactId">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="UserName">{{"User" | translate }}</label>
+                    <ng-select [items]="allUsers" bindValue="id" bindLabel="displayName"
+                        name="clientApplication.responsibleId" [(ngModel)]="clientApplication.responsibleId">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ServerInventoryServerName">{{"ServerInventory" | translate }}</label>
+                    <ng-select [items]="allServerInvontries" bindValue="id" bindLabel="displayName"
+                        name="clientApplication.serverId" [(ngModel)]="clientApplication.serverId">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ClientApplicationStatusStatusName">{{"ClientApplicationStatus" | translate }}</label>
+                    <ng-select [items]="allClientStatuses" bindValue="id" bindLabel="displayName"
+                        name="clientApplication.statusId" [(ngModel)]="clientApplication.statusId">
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ClientApplication_ApplicationName">{{"ApplicationName" | translate }} *</label>
+                    <input type="text" #ClientApplication_ApplicationName="ngModel"
+                        id="ClientApplication_ApplicationName" class="form-control"
+                        [(ngModel)]="clientApplication.applicationName" name="ApplicationName" required />
+                    <validation-messages [formCtrl]="ClientApplication_ApplicationName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ClientApplication_DomainName">{{"DomainName" | translate }}</label>
+                    <input type="text" #ClientApplication_DomainName="ngModel" id="ClientApplication_DomainName"
+                        class="form-control" [(ngModel)]="clientApplication.domainName" name="DomainName" />
+                    <validation-messages [formCtrl]="ClientApplication_DomainName"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ClientApplication_SLAHours">{{"SLAHours" | translate }}</label>
+                    <input type="number" #ClientApplication_SLAHours="ngModel" id="ClientApplication_SLAHours"
+                        class="form-control" [(ngModel)]="clientApplication.slaHours" name="SLAHours" />
+                    <validation-messages [formCtrl]="ClientApplication_SLAHours"></validation-messages>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ClientApplication_Description">{{"Description" | translate }}</label>
+                    <ckeditor #ClientApplication_Description="ngModel" id="ClientApplication_Description"
+                        [editor]="Editor_des" [(ngModel)]="clientApplication.description" name="body"></ckeditor>
+                    <validation-messages [formCtrl]="ClientApplication_Description"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ClientApplication_DevEnvironmentDetail">{{"DevEnvironmentDetail" | translate }}</label>
+                    <ckeditor #ClientApplication_DevEnvironmentDetail="ngModel"
+                        id="ClientApplication_DevEnvironmentDetail" [editor]="Editor_dev"
+                        [(ngModel)]="clientApplication.devEnvironmentDetail" name="body"></ckeditor>
+                    <validation-messages [formCtrl]="ClientApplication_DevEnvironmentDetail"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ClientApplication_LiveEnvironmentDetail">{{"LiveEnvironmentDetail" | translate
+                        }}</label>
+                    <ckeditor #ClientApplication_LiveEnvironmentDetail="ngModel"
+                        id="ClientApplication_LiveEnvironmentDetail" [editor]="Editor_live"
+                        [(ngModel)]="clientApplication.liveEnvironmentDetail" name="body"></ckeditor>
+                    <validation-messages [formCtrl]="ClientApplication_LiveEnvironmentDetail"></validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ClientApplication_QualityAssuranceEnvironment">{{"QualityAssuranceEnvironment" |
+                        translate}}</label>
+                    <ckeditor #ClientApplication_QualityAssuranceEnvironment="ngModel"
+                        id="ClientApplication_QualityAssuranceEnvironment" [editor]="Editor_quality"
+                        [(ngModel)]="clientApplication.qualityAssuranceEnvironment" name="body"></ckeditor>
+                    <validation-messages [formCtrl]="ClientApplication_QualityAssuranceEnvironment">
+                    </validation-messages>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ClientApplication_CertificationEnvironment">{{"CertificationEnvironment" |
+                        translate}}</label>
+                    <ckeditor #ClientApplication_CertificationEnvironment="ngModel"
+                        id="ClientApplication_CertificationEnvironment" [editor]="Editor_certification"
+                        [(ngModel)]="clientApplication.certificationEnvironment" name="body"></ckeditor>
+                    <validation-messages [formCtrl]="ClientApplication_CertificationEnvironment"></validation-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' |
+            translate}}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!applicationForm.form.valid">
+            <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i>
+            {{ 'Common.Label.Save' | translate}}
+        </button>
+    </div>
+</form>

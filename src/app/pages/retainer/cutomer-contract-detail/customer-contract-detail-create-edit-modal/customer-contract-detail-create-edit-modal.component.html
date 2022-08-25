@@ -1,0 +1,54 @@
+<form #form="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> <span *ngIf="data != null"> {{'EditContractTemplateDetail' |
+        translate}}
+      </span> <span *ngIf="data == null"> {{'CreateContractTemplateDetail' | translate}} </span> </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body" [busyIf]="loading">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="ContracTemplateName_ContractName">{{'ContractName' | translate }} *</label>
+          <input type="text" disabled #contracTemplateName_ref="ngModel" id="contracTemplateName_ref"
+            class="form-control" [(ngModel)]="contracTemplateName" name="contracTemplateName_ref" required />
+          <validation-messages [formCtrl]="contracTemplateName_ref"></validation-messages>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="CustomerContractDetail_Title">{{'Title' | translate }} *</label>
+          <input type="text" #CustomerContractDetail_Title="ngModel" id="CustomerContractDetail_Title"
+            class="form-control" [(ngModel)]="customerContractDetail.title" name="Title" required />
+          <validation-messages [formCtrl]="CustomerContractDetail_Title"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="CustomerContractDetail_SortIndex">{{'SortIndex' | translate }} *</label>
+          <input type="number" #CustomerContractDetail_SortIndex="ngModel" id="CustomerContractDetail_SortIndex"
+            class="form-control" [(ngModel)]="customerContractDetail.sortIndex" name="SortIndex" />
+          <validation-messages [formCtrl]="CustomerContractDetail_SortIndex"></validation-messages>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="CustomerContractDetail_Content">{{"Content" | translate}} *</label>
+          <ckeditor [editor]="Editor" #CustomerContractDetail_Content="ngModel"
+            [(ngModel)]="customerContractDetail.content" name="CustomerContractDetail_Content" required></ckeditor>
+          <validation-messages [formCtrl]="CustomerContractDetail_Content"></validation-messages>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.form.valid"> <i
+        class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader"></i> {{
+      'Common.Label.Save' | translate}}</button>
+  </div>
+</form>

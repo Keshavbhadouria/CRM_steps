@@ -1,0 +1,23 @@
+
+ <div class="modal-footer">
+
+  <button type="submit" class="btn btn-primary" (click)="sendEmails()" >
+      <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader" ></i>
+      Send Emails
+  </button>
+
+  <button type="submit" class="btn btn-primary" (click)="sendSMS()" >
+    <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader" ></i>
+    Send SMS
+</button>
+
+<button type="submit" class="btn btn-primary" (click)="createContactTask()" >
+  <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader" ></i>
+  Create Contact Task
+</button>
+
+<button type="submit" class="btn btn-primary" (click)="createStaffTask()">
+  <i class="bx bx-loader bx-spin font-size-16 align-middle me-2" *ngIf="createLoader" ></i>
+  Create Staff Task
+</button>
+</div>

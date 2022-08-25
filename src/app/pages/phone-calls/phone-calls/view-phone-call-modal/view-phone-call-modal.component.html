@@ -1,0 +1,112 @@
+<div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewContactPhoneCallHistory' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'InboundCall' | translate}}</label>
+                <p *ngIf="!phoneCall.contactPhoneCallHistory.inboundCall"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="phoneCall.contactPhoneCallHistory.inboundCall"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'PhoneNumber' | translate }}</label>
+                <p> {{phoneCall.contactPhoneCallHistory.phoneNumber}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'VoiceMail' | translate }}</label>
+                <p> {{phoneCall.contactPhoneCallHistory.voiceMail}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{'CallAgainToday' | translate}}</label>
+                <p *ngIf="!phoneCall.contactPhoneCallHistory.callAgainToday"><i class="fa fa-times-circle" title="False"></i></p>
+                <p *ngIf="phoneCall.contactPhoneCallHistory.callAgainToday"><i class="fa fa-check-circle text-success"
+                        title="True"></i></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'CallAgainDate' | translate }}</label>
+                <p> {{phoneCall.contactPhoneCallHistory.callAgainDate | date:'yyyy-MM-dd'}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'CallAgainTime' | translate }}</label>
+                <p> {{phoneCall.contactPhoneCallHistory.callAgainTime}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ContactName' | translate }}</label>
+                <p> {{phoneCall.contactCompany}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'LawyerName' | translate }}</label>
+                <p> {{phoneCall.userName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'LawyerName' | translate }}</label>
+                <p> {{phoneCall.userName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'PhoneCallObjective' | translate }}</label>
+                <p> {{phoneCall.phoneCallObjetiveObjetiveName}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'ContactPhoneCallOutcome' | translate }}</label>
+                <p> {{phoneCall.contactPhoneCallOutcomeOutcome}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'BusinessActionScript' | translate }}</label>
+                <p> {{phoneCall.businessActionScriptContentScript}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'NextPhoneCallObjective' | translate }}</label>
+                <p> {{phoneCall.phoneCallObjetiveObjetiveName2}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'Date' | translate }}</label>
+                <p> {{phoneCall.contactPhoneCallHistory.creationTime | date:'yyyy-MM-dd'}} </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group m-form__group">
+                <label>{{ 'LeadTemperature' | translate }}</label>
+                <p> {{phoneCall.leadTemprature}} </p>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>{{ 'Comments' | translate }}</label>
+                <p [innerHtml]="phoneCall.contactPhoneCallHistory.comments"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+</div>

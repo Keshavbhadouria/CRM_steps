@@ -1,0 +1,181 @@
+<div class="container-fluid">
+  <app-page-title title="{{'ContactZoomMeeting' | translate }}" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Username"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i class=" bx
+                                      bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-2">
+                          <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                              'CreateNewContactPhoneCallHistory' | translate}}</button>
+                      </div> -->
+          </div>
+
+          <!-- Advanced Filter  -->
+          <div class="row" [hidden]="!advancedFiltersAreShown">
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ZoomMeetingUrlFilter">{{'ZoomMeetingUrl' | translate }}</label>
+                <input type="text" class="form-control" id="ZoomMeetingUrlFilter" name="zoomMeetingUrlFilter"
+                  [(ngModel)]="zoomMeetingUrlFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinScheduleDateFilter">{{'ScheduleDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinScheduleDateFilter" name="MinScheduleDateFilter"
+                    type="datetime" bsDatepicker placeholder="{{'MinValue' | translate }}" [(ngModel)]="minScheduleDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxScheduleDateFilter" name="MaxScheduleDateFilter"
+                    type="datetime" bsDatepicker placeholder="{{'MaxValue' | translate }}" [(ngModel)]="maxScheduleDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="CommentsFilter">{{'Comments' | translate }}</label>
+                <input type="text" class="form-control" id="CommentsFilter" name="commentsFilter"
+                  [(ngModel)]="commentsFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinMeetingStatusIdFilter">{{'MinMax' | translate }} {{'MeetingStatusId' | translate
+                  }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinMeetingStatusIdFilter"
+                    [(ngModel)]="minMeetingStatusIdFilter" placeholder="{{'MinValue' | translate }}"
+                    name="minMeetingStatusIdFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxMeetingStatusIdFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxMeetingStatusIdFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="IsActiveFilterSelect">{{'IsActive' | translate }}</label>
+              <select class="form-control" name="IsActiveFilter" id="IsActiveFilterSelect" [(ngModel)]="isActiveFilter">
+                <option value="-1">{{'All' | translate }}</option>
+                <option value="0">{{'False' | translate }}</option>
+                <option value="1">{{'True' | translate }}</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ZoomUUIDFilter">{{'ZoomUUID' | translate }}</label>
+                <input type="text" class="form-control" id="ZoomUUIDFilter" name="zoomUUIDFilter"
+                  [(ngModel)]="zoomUUIDFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ZoomMeetingIdFilter">{{'ZoomMeetingId' | translate }}</label>
+                <input type="text" class="form-control" id="ZoomMeetingIdFilter" name="zoomMeetingIdFilter"
+                  [(ngModel)]="zoomMeetingIdFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactCompanyFilter">({{'Contact' | translate }}) {{'Company' | translate }}</label>
+                <input type="text" class="form-control" id="ContactCompanyFilter" name="contactCompanyFilter"
+                  [(ngModel)]="contactCompanyFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="UserNameFilter">({{'User' | translate }}) {{'Name' | translate }}</label>
+                <input type="text" class="form-control" id="UserNameFilter" name="userNameFilter"
+                  [(ngModel)]="userNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MeetingTimeSlotsStartTimeFilter">({{'MeetingTimeSlots' | translate }}) {{'StartTime' |
+                  translate }}</label>
+                <input type="text" class="form-control" id="MeetingTimeSlotsStartTimeFilter"
+                  name="meetingTimeSlotsStartTimeFilter" [(ngModel)]="meetingTimeSlotsStartTimeFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MeetingDaysLookupDayShortNameFilter">({{'MeetingDaysLookup' | translate }}) {{'DayShortName'
+                  | translate }}</label>
+                <input type="text" class="form-control" id="MeetingDaysLookupDayShortNameFilter"
+                  name="meetingDaysLookupDayShortNameFilter" [(ngModel)]="meetingDaysLookupDayShortNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactZoomMeetingAppointmentReasonReasonFilter">({{'ContactZoomMeetingAppointmentReason' |
+                  translate }}) {{'Reason' | translate }}</label>
+                <input type="text" class="form-control" id="ContactZoomMeetingAppointmentReasonReasonFilter"
+                  name="contactZoomMeetingAppointmentReasonReasonFilter"
+                  [(ngModel)]="contactZoomMeetingAppointmentReasonReasonFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactZoomMeetingOutputOutputFilter">({{'ContactZoomMeetingOutput' | translate }})
+                  {{'Output' | translate }}</label>
+                <input type="text" class="form-control" id="ContactZoomMeetingOutputOutputFilter"
+                  name="contactZoomMeetingOutputOutputFilter" [(ngModel)]="contactZoomMeetingOutputOutputFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactZoomMeetingOutputOutput2Filter">({{'ContactZoomMeetingOutput2' | translate }})
+                  {{'Output' | translate }}</label>
+                <input type="text" class="form-control" id="ContactZoomMeetingOutputOutput2Filter"
+                  name="contactZoomMeetingOutputOutput2Filter" [(ngModel)]="contactZoomMeetingOutputOutput2Filter">
+              </div>
+            </div>
+          </div>
+
+          <!-- Shoe Hide Filters -->
+          <div class="row mb-2 mt-2">
+            <div class="col-sm-12">
+              <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i>
+                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+              <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i>
+                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table>
+
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <!-- <app-create-or-edit-phone-call-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="editPhoneCall">
+  </app-create-or-edit-phone-call-modal> -->
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-contact-zoom-meeting-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewPhoneCall">
+  </app-contact-zoom-meeting-view-modal>
+</ng-template>

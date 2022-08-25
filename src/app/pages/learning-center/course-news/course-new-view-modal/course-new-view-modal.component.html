@@ -1,0 +1,53 @@
+<form autocomplete="off">
+  <div class="modal-header">
+    <h5 class="modal-title mt-0 text-uppercase"> {{'ViewCourse' | translate}}
+    </h5>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="typeName">{{'Title' | translate}}</label>
+          <p> {{course.courseNew.title}} </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="typeName">{{'Category' | translate}}</label>
+          <p> {{course.courseCategoryCategory}} </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="typeName">{{'Certificate' | translate}}</label>
+          <p> {{course.courseCertificateName}} </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group m-form__group">
+          <label for="typeName">{{'URL' | translate}}</label>
+          <p> {{course.courseNew.url}} </p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group m-form__group">
+          <label for="typeName">{{'Description' | translate}}</label>
+          <p [innerHtml]="course.courseNew.description"></p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group m-form__group">
+          <label for="typeName">{{'Thumbnail' | translate}}</label>
+          <br/>
+          <a class="pointer" (click)="open(course.courseNew.thumbnail)"> Link </a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">{{'Close' | translate}}</button>
+  </div>
+</form>

@@ -1,0 +1,10 @@
+<div class="form-group m-form__group">
+    <label for="Project">{{ 'Projects' | translate }}</label>
+    <ng-select [items]="projects" bindValue="id" bindLabel="projectName"
+        id="Project" name="project" [(ngModel)]="projectId" (change)="projectChange()"></ng-select>
+</div>
+<div class="form-group m-form__group">
+    <label for="Sprint">{{ 'Sprints' | translate }}</label>
+    <ng-select [items]="sprints" bindValue="id" bindLabel="sprintName"
+        id="Sprint" name="sprint" [(ngModel)]="sprintId" (change)="onChange()"></ng-select>
+</div>

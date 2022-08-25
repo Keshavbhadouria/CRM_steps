@@ -1,0 +1,183 @@
+<div class="container-fluid">
+  <app-page-title title="RetainerList" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <!-- Filters -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <!-- Filter -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (keyup.enter)="filterRecords()" [(ngModel)]="filterText"
+                  placeholder="{{'Common.Label.Filter' | translate }}" aria-label="Filter"
+                  aria-describedby="basic-addon1">
+                <div class="input-group-prepend">
+                  <span class="input-group-text pointer" id="basic-addon1" (click)="filterRecords()"><i
+                      class="bx bx-search-alt-2"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-secondery" (click)="openCreateModal(createModal)">{{
+                'CreateRetainer' | translate}}</button>
+            </div>
+          </div>
+
+          <!-- Advanced Filter  -->
+          <div class="row" [hidden]="!advancedFiltersAreShown">
+            <div class="col-md-12">
+              <div class="separator separator-dashed"></div>
+            </div>
+
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinExpirationDateFilter">{{'ExpirationDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinExpirationDateFilter" name="MinExpirationDateFilter"
+                    type="datetime" bsDatepicker placeholder="{{'MinValue' | translate }}" [(ngModel)]="minExpirationDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxExpirationDateFilter" name="MaxExpirationDateFilter"
+                    type="datetime" bsDatepicker placeholder="{{'MaxValue' | translate }}" [(ngModel)]="maxExpirationDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinTotalAmountFilter">{{'MinMax' | translate }} {{'TotalAmount' | translate }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinTotalAmountFilter" [(ngModel)]="minTotalAmountFilter"
+                    placeholder="{{'MinValue' | translate }}" name="minTotalAmountFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxTotalAmountFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxTotalAmountFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="PaymentPlanFilterSelect">{{'PaymentPlan' | translate }}</label>
+              <select class="form-control" name="PaymentPlanFilter" id="PaymentPlanFilterSelect"
+                [(ngModel)]="paymentPlanFilter">
+                <option value="-1">{{'All' | translate }}</option>
+                <option value="0">{{'False' | translate }}</option>
+                <option value="1">{{'True' | translate }}</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinDownpaymentFilter">{{'MinMax' | translate }} {{'Downpayment' | translate }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinDownpaymentFilter" [(ngModel)]="minDownpaymentFilter"
+                    placeholder="{{'MinValue' | translate }}" name="minDownpaymentFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxDownpaymentFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxDownpaymentFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinPaymentsFilter">{{'MinMax' | translate }} {{'Payments' | translate }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinPaymentsFilter" [(ngModel)]="minPaymentsFilter"
+                    placeholder="{{'MinValue' | translate }}" name="minPaymentsFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxPaymentsFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxPaymentsFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinPaymentAmountFilter">{{'MinMax' | translate }} {{'PaymentAmount' | translate }}</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="MinPaymentAmountFilter"
+                    [(ngModel)]="minPaymentAmountFilter" placeholder="{{'MinValue' | translate }}"
+                    name="minPaymentAmountFilter" />
+                  <input type="number" class="form-control" [(ngModel)]="maxPaymentAmountFilter"
+                    placeholder="{{'MaxValue' | translate }}" name="maxPaymentAmountFilter" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="MinInitialPaymentDateFilter">{{'InitialPaymentDateRange' | translate }}</label>
+                <div class="input-group">
+                  <input class="form-control m-input" id="MinInitialPaymentDateFilter"
+                    name="MinInitialPaymentDateFilter" type="datetime" bsDatepicker placeholder="{{'MinValue' | translate }}"
+                    [(ngModel)]="minInitialPaymentDateFilter">
+                  <span style="line-height: 40px;padding: 0 15px 0 15px;"> &mdash; </span>
+                  <input class="form-control m-input" id="MaxInitialPaymentDateFilter"
+                    name="MaxInitialPaymentDateFilter" type="datetime" bsDatepicker placeholder="{{'MaxValue' | translate }}"
+                    [(ngModel)]="maxInitialPaymentDateFilter">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="SignatureRequiredFilterSelect">{{'SignatureRequired' | translate }}</label>
+              <select class="form-control" name="SignatureRequiredFilter" id="SignatureRequiredFilterSelect"
+                [(ngModel)]="signatureRequiredFilter">
+                <option value="-1">{{'All' | translate }}</option>
+                <option value="0">{{'False' | translate }}</option>
+                <option value="1">{{'True' | translate }}</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContactFirstnameFilter">({{'Contact' | translate }}) {{'Firstname' | translate }}</label>
+                <input type="text" class="form-control" id="ContactFirstnameFilter" name="contactFirstnameFilter"
+                  [(ngModel)]="contactFirstnameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="UserNameFilter">({{'User' | translate }}) {{'Name' | translate }}</label>
+                <input type="text" class="form-control" id="UserNameFilter" name="userNameFilter"
+                  [(ngModel)]="userNameFilter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ContracTemplateNameContractNameFilter">({{'ContracTemplateName' | translate }})
+                  {{'ContractName' | translate }}</label>
+                <input type="text" class="form-control" id="ContracTemplateNameContractNameFilter"
+                  name="contracTemplateNameContractNameFilter" [(ngModel)]="contracTemplateNameContractNameFilter">
+              </div>
+            </div>
+          </div>
+
+          <!-- Shoe Hide Filters -->
+          <div class="row mb-2 mt-2">
+            <div class="col-sm-12">
+              <span class="clickable-item text-muted pointer" *ngIf="!advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i>
+                {{'Common.Label.ShowAdvanceFilter' | translate}}</span>
+              <span class="clickable-item text-muted pointer" *ngIf="advancedFiltersAreShown"
+                (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i>
+                {{'Common.Label.HideAdvanceFilter' | translate}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-dynamic-table [busyIf]="loading" [records]="myData" [settings]="tableSettings" [buttons]="buttonSettings"
+    [pagination]="paginationSettings">
+  </app-dynamic-table>
+
+  <!-- end row -->
+</div>
+
+<!-- Create Model -->
+<ng-template #createModal role="document" let-modal>
+  <app-retainer-create-edit-modal [modal]="modal" ($modalClose)='modalEmitEvent()'
+    [data]="editProject">
+  </app-retainer-create-edit-modal>
+</ng-template>
+
+<!-- View Model -->
+<ng-template #viewModal role="document" let-modal>
+  <app-retainer-view-modal [modal]="modal" ($modalClose)='modalEmitEvent()' [data]="viewProject">
+  </app-retainer-view-modal>
+</ng-template>
